@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D47F92E81597C81A00B61C32 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92E71597C81A00B61C32 /* Cocoa.framework */; };
-		D47F92F21597C81A00B61C32 /* Hammer.m in Sources */ = {isa = PBXBuildFile; fileRef = D47F92F11597C81A00B61C32 /* Hammer.m */; };
 		D47F92FA1597C81A00B61C32 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92F91597C81A00B61C32 /* SenTestingKit.framework */; };
 		D47F92FB1597C81A00B61C32 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92E71597C81A00B61C32 /* Cocoa.framework */; };
 		D47F92FE1597C81A00B61C32 /* libHammer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92E41597C81A00B61C32 /* libHammer.a */; };
@@ -32,14 +31,13 @@
 		D47F92EA1597C81A00B61C32 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		D47F92EB1597C81A00B61C32 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D47F92EC1597C81A00B61C32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D47F92EF1597C81A00B61C32 /* Hammer-Prefix.pch */ = {isa = PBXFileReference; path = "Hammer-Prefix.pch"; sourceTree = "<group>"; };
-		D47F92F01597C81A00B61C32 /* Hammer.h */ = {isa = PBXFileReference; path = Hammer.h; sourceTree = "<group>"; };
-		D47F92F11597C81A00B61C32 /* Hammer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hammer.m; sourceTree = "<group>"; };
+		D47F92EF1597C81A00B61C32 /* Hammer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hammer-Prefix.pch"; sourceTree = "<group>"; };
+		D47F92F01597C81A00B61C32 /* Hammer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hammer.h; sourceTree = "<group>"; };
 		D47F92F81597C81A00B61C32 /* HammerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HammerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D47F92F91597C81A00B61C32 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		D47F93011597C81A00B61C32 /* HammerTests-Info.plist */ = {isa = PBXFileReference; path = "HammerTests-Info.plist"; sourceTree = "<group>"; };
+		D47F93011597C81A00B61C32 /* HammerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HammerTests-Info.plist"; sourceTree = "<group>"; };
 		D47F93031597C81A00B61C32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D47F93051597C81A00B61C32 /* HammerTests.h */ = {isa = PBXFileReference; path = HammerTests.h; sourceTree = "<group>"; };
+		D47F93051597C81A00B61C32 /* HammerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HammerTests.h; sourceTree = "<group>"; };
 		D47F93061597C81A00B61C32 /* HammerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HammerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				D47F92F01597C81A00B61C32 /* Hammer.h */,
-				D47F92F11597C81A00B61C32 /* Hammer.m */,
 				D47F92EE1597C81A00B61C32 /* Supporting Files */,
 			);
 			path = Hammer;
@@ -196,8 +193,9 @@
 		D47F92DB1597C81A00B61C32 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = Hammer;
 				LastUpgradeCheck = 0430;
-				ORGANIZATIONNAME = "Black Pixel";
+				ORGANIZATIONNAME = "Monochrome Industries";
 			};
 			buildConfigurationList = D47F92DE1597C81A00B61C32 /* Build configuration list for PBXProject "Hammer" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -249,7 +247,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D47F92F21597C81A00B61C32 /* Hammer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
