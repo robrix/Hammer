@@ -1,0 +1,406 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D47F92E81597C81A00B61C32 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92E71597C81A00B61C32 /* Cocoa.framework */; };
+		D47F92F21597C81A00B61C32 /* Hammer.m in Sources */ = {isa = PBXBuildFile; fileRef = D47F92F11597C81A00B61C32 /* Hammer.m */; };
+		D47F92FA1597C81A00B61C32 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92F91597C81A00B61C32 /* SenTestingKit.framework */; };
+		D47F92FB1597C81A00B61C32 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92E71597C81A00B61C32 /* Cocoa.framework */; };
+		D47F92FE1597C81A00B61C32 /* libHammer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92E41597C81A00B61C32 /* libHammer.a */; };
+		D47F93041597C81A00B61C32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47F93021597C81A00B61C32 /* InfoPlist.strings */; };
+		D47F93071597C81A00B61C32 /* HammerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D47F93061597C81A00B61C32 /* HammerTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D47F92FC1597C81A00B61C32 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D47F92DB1597C81A00B61C32 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D47F92E31597C81A00B61C32;
+			remoteInfo = Hammer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D47F92E41597C81A00B61C32 /* libHammer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHammer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D47F92E71597C81A00B61C32 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		D47F92EA1597C81A00B61C32 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D47F92EB1597C81A00B61C32 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D47F92EC1597C81A00B61C32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D47F92EF1597C81A00B61C32 /* Hammer-Prefix.pch */ = {isa = PBXFileReference; path = "Hammer-Prefix.pch"; sourceTree = "<group>"; };
+		D47F92F01597C81A00B61C32 /* Hammer.h */ = {isa = PBXFileReference; path = Hammer.h; sourceTree = "<group>"; };
+		D47F92F11597C81A00B61C32 /* Hammer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hammer.m; sourceTree = "<group>"; };
+		D47F92F81597C81A00B61C32 /* HammerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HammerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D47F92F91597C81A00B61C32 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		D47F93011597C81A00B61C32 /* HammerTests-Info.plist */ = {isa = PBXFileReference; path = "HammerTests-Info.plist"; sourceTree = "<group>"; };
+		D47F93031597C81A00B61C32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D47F93051597C81A00B61C32 /* HammerTests.h */ = {isa = PBXFileReference; path = HammerTests.h; sourceTree = "<group>"; };
+		D47F93061597C81A00B61C32 /* HammerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HammerTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D47F92E11597C81A00B61C32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D47F92E81597C81A00B61C32 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D47F92F41597C81A00B61C32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D47F92FA1597C81A00B61C32 /* SenTestingKit.framework in Frameworks */,
+				D47F92FB1597C81A00B61C32 /* Cocoa.framework in Frameworks */,
+				D47F92FE1597C81A00B61C32 /* libHammer.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D47F92D91597C81A00B61C32 = {
+			isa = PBXGroup;
+			children = (
+				D47F92ED1597C81A00B61C32 /* Hammer */,
+				D47F92FF1597C81A00B61C32 /* HammerTests */,
+				D47F92E61597C81A00B61C32 /* Frameworks */,
+				D47F92E51597C81A00B61C32 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D47F92E51597C81A00B61C32 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D47F92E41597C81A00B61C32 /* libHammer.a */,
+				D47F92F81597C81A00B61C32 /* HammerTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D47F92E61597C81A00B61C32 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D47F92E71597C81A00B61C32 /* Cocoa.framework */,
+				D47F92F91597C81A00B61C32 /* SenTestingKit.framework */,
+				D47F92E91597C81A00B61C32 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D47F92E91597C81A00B61C32 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D47F92EA1597C81A00B61C32 /* AppKit.framework */,
+				D47F92EB1597C81A00B61C32 /* CoreData.framework */,
+				D47F92EC1597C81A00B61C32 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		D47F92ED1597C81A00B61C32 /* Hammer */ = {
+			isa = PBXGroup;
+			children = (
+				D47F92F01597C81A00B61C32 /* Hammer.h */,
+				D47F92F11597C81A00B61C32 /* Hammer.m */,
+				D47F92EE1597C81A00B61C32 /* Supporting Files */,
+			);
+			path = Hammer;
+			sourceTree = "<group>";
+		};
+		D47F92EE1597C81A00B61C32 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D47F92EF1597C81A00B61C32 /* Hammer-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D47F92FF1597C81A00B61C32 /* HammerTests */ = {
+			isa = PBXGroup;
+			children = (
+				D47F93051597C81A00B61C32 /* HammerTests.h */,
+				D47F93061597C81A00B61C32 /* HammerTests.m */,
+				D47F93001597C81A00B61C32 /* Supporting Files */,
+			);
+			path = HammerTests;
+			sourceTree = "<group>";
+		};
+		D47F93001597C81A00B61C32 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D47F93011597C81A00B61C32 /* HammerTests-Info.plist */,
+				D47F93021597C81A00B61C32 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D47F92E21597C81A00B61C32 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D47F92E31597C81A00B61C32 /* Hammer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D47F930A1597C81A00B61C32 /* Build configuration list for PBXNativeTarget "Hammer" */;
+			buildPhases = (
+				D47F92E01597C81A00B61C32 /* Sources */,
+				D47F92E11597C81A00B61C32 /* Frameworks */,
+				D47F92E21597C81A00B61C32 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Hammer;
+			productName = Hammer;
+			productReference = D47F92E41597C81A00B61C32 /* libHammer.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D47F92F71597C81A00B61C32 /* HammerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D47F930D1597C81A00B61C32 /* Build configuration list for PBXNativeTarget "HammerTests" */;
+			buildPhases = (
+				D47F92F31597C81A00B61C32 /* Sources */,
+				D47F92F41597C81A00B61C32 /* Frameworks */,
+				D47F92F51597C81A00B61C32 /* Resources */,
+				D47F92F61597C81A00B61C32 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D47F92FD1597C81A00B61C32 /* PBXTargetDependency */,
+			);
+			name = HammerTests;
+			productName = HammerTests;
+			productReference = D47F92F81597C81A00B61C32 /* HammerTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D47F92DB1597C81A00B61C32 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Black Pixel";
+			};
+			buildConfigurationList = D47F92DE1597C81A00B61C32 /* Build configuration list for PBXProject "Hammer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D47F92D91597C81A00B61C32;
+			productRefGroup = D47F92E51597C81A00B61C32 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D47F92E31597C81A00B61C32 /* Hammer */,
+				D47F92F71597C81A00B61C32 /* HammerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D47F92F51597C81A00B61C32 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D47F93041597C81A00B61C32 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D47F92F61597C81A00B61C32 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D47F92E01597C81A00B61C32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D47F92F21597C81A00B61C32 /* Hammer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D47F92F31597C81A00B61C32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D47F93071597C81A00B61C32 /* HammerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D47F92FD1597C81A00B61C32 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D47F92E31597C81A00B61C32 /* Hammer */;
+			targetProxy = D47F92FC1597C81A00B61C32 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D47F93021597C81A00B61C32 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D47F93031597C81A00B61C32 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D47F93081597C81A00B61C32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D47F93091597C81A00B61C32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D47F930B1597C81A00B61C32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D47F930C1597C81A00B61C32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D47F930E1597C81A00B61C32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
+				INFOPLIST_FILE = "HammerTests/HammerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D47F930F1597C81A00B61C32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
+				INFOPLIST_FILE = "HammerTests/HammerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D47F92DE1597C81A00B61C32 /* Build configuration list for PBXProject "Hammer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D47F93081597C81A00B61C32 /* Debug */,
+				D47F93091597C81A00B61C32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D47F930A1597C81A00B61C32 /* Build configuration list for PBXNativeTarget "Hammer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D47F930B1597C81A00B61C32 /* Debug */,
+				D47F930C1597C81A00B61C32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D47F930D1597C81A00B61C32 /* Build configuration list for PBXNativeTarget "HammerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D47F930E1597C81A00B61C32 /* Debug */,
+				D47F930F1597C81A00B61C32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D47F92DB1597C81A00B61C32 /* Project object */;
+}
