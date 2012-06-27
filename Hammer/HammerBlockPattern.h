@@ -4,8 +4,10 @@
 
 #import <Hammer/HammerPattern.h>
 
+typedef BOOL (^HammerPatternBlock)(id object);
+
 @interface HammerBlockPattern : NSObject <HammerPattern>
 
-@property (copy) BOOL(^block)(id sequence);
++(HammerBlockPattern *)patternWithBlock:(HammerPatternBlock)block;
 
 @end

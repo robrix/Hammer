@@ -4,12 +4,23 @@
 
 #import "HammerBlockPattern.h"
 
-@implementation HammerBlockPattern
+@implementation HammerBlockPattern {
+	HammerPatternBlock _block;
+}
 
-@synthesize block;
++(HammerBlockPattern *)patternWithBlock:(HammerPatternBlock)block {
+	HammerBlockPattern *pattern = [self new];
+	pattern->_block = [block copy];
+	return pattern;
+}
 
--(BOOL)match:(id)sequence {
-	return block(sequence);
+-(BOOL)match:(id)object {
+	return _block(object);
+}
+
+
+-(id)copyWithZone:(NSZone *)zone {
+	return self;
 }
 
 @end

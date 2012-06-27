@@ -20,4 +20,9 @@
 	||	[object isEqual:_object];
 }
 
+
+-(id)copyWithZone:(NSZone *)zone {
+	return self;
+}
+
 @end

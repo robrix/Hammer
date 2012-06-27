@@ -4,4 +4,4 @@
 
 #import <Foundation/Foundation.h>
 
-//#import <Hammer/HammerPattern.h>
+#import <Hammer/HammerPattern.h>

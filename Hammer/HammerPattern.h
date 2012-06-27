@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol HammerPattern <NSObject>
+@protocol HammerPattern <NSObject, NSCopying>
 
 -(BOOL)match:(id)object;
 
