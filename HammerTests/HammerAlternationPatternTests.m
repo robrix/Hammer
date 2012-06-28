@@ -13,7 +13,7 @@
 @implementation HammerAlternationPatternTests
 
 -(HammerAlternationPattern *)pattern {
-	return [HammerAlternationPattern patternWithAlternatives:[NSArray arrayWithObjects:[HammerEqualsPattern patternWithObject:@"a"], [HammerEqualsPattern patternWithObject:@"b"],nil]];
+	return [HammerAlternationPattern patternWithLeftPattern:[HammerEqualsPattern patternWithObject:@"a"] rightPattern:[HammerEqualsPattern patternWithObject:@"b"]];
 }
 
 -(void)testMatchesItsFirstAlternative {

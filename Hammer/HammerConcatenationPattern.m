@@ -1,0 +1,56 @@
+//  HammerConcatenationPattern.m
+//  Created by Rob Rix on 12-06-27.
+//  Copyright (c) 2012 Monochrome Industries. All rights reserved.
+
+#import "HammerAlternationPattern.h"
+#import "HammerConcatenationPattern.h"
+#import "HammerNullPattern.h"
+
+@implementation HammerConcatenationPattern {
+	id<HammerDerivativePattern> _left;
+	id<HammerDerivativePattern> _right;
+}
+
++(id<HammerDerivativePattern>)patternWithLeftPattern:(id<HammerDerivativePattern>)left rightPattern:(id<HammerDerivativePattern>)right {
+	if (left.isNull || right.isNull)
+		return [HammerNullPattern pattern];
+	if (left.isEmpty)
+		return right;
+	if (right.isEmpty)
+		return left;
+	HammerConcatenationPattern *pattern = [self new];
+	pattern->_left = left;
+	pattern->_right = right;
+	return pattern;
+}
+
+
+-(BOOL)match:(id)object {
+	return [_left match:object];
+}
+
+-(id<HammerDerivativePattern>)delta {
+	return [HammerConcatenationPattern patternWithLeftPattern:_left.delta rightPattern:_right.delta];
+}
+
+-(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
+	id<HammerDerivativePattern> left = [HammerConcatenationPattern patternWithLeftPattern:_left.delta rightPattern:[_right derivativeWithRespectTo:object]];
+	id<HammerDerivativePattern> right = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
+	return [HammerAlternationPattern patternWithLeftPattern:left rightPattern:right];
+}
+
+
+-(BOOL)isNull {
+	return NO;
+}
+
+-(BOOL)isEmpty {
+	return NO;
+}
+
+
+-(id)copyWithZone:(NSZone *)zone {
+	return self;
+}
+
+@end

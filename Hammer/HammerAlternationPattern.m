@@ -5,23 +5,39 @@
 #import "HammerAlternationPattern.h"
 
 @implementation HammerAlternationPattern {
-	NSArray *_patterns;
+	id<HammerDerivativePattern> _left;
+	id<HammerDerivativePattern> _right;
 }
 
-+(HammerAlternationPattern *)patternWithAlternatives:(NSArray *)patterns {
++(id<HammerDerivativePattern>)patternWithLeftPattern:(id<HammerDerivativePattern>)left rightPattern:(id<HammerDerivativePattern>)right {
+	if (left.isNull) return right;
+	if (right.isNull) return left;
 	HammerAlternationPattern *pattern = [self new];
-	pattern->_patterns = patterns;
+	pattern->_left = left;
+	pattern->_right = right;
 	return pattern;
 }
 
 
 -(BOOL)match:(id)object {
-	BOOL matched = NO;
-	for (id<HammerPattern> pattern in _patterns) {
-		if ((matched = [pattern match:object]))
-			break;
-	}
-	return matched;
+	return [_left match:object] || [_right match:object];
+}
+
+-(id<HammerDerivativePattern>)delta {
+	return [HammerAlternationPattern patternWithLeftPattern:_left.delta rightPattern:_right.delta];
+}
+
+-(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
+	return [HammerAlternationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:[_right derivativeWithRespectTo:object]];
+}
+
+
+-(BOOL)isNull {
+	return NO;
+}
+
+-(BOOL)isEmpty {
+	return NO;
 }
 
 
