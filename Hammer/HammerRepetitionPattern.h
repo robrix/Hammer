@@ -8,4 +8,8 @@
 
 +(id<HammerDerivativePattern>)patternWithPattern:(id<HammerDerivativePattern>)pattern;
 
+@property (nonatomic, readonly) id<HammerDerivativePattern> pattern;
+
+-(BOOL)isEqualToRepetitionPattern:(HammerRepetitionPattern *)other;
+
 @end

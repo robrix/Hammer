@@ -18,6 +18,9 @@
 }
 
 
+@synthesize pattern = _pattern;
+
+
 -(BOOL)match:(id)object {
 	return [_pattern match:object] || YES;
 }
@@ -37,6 +40,17 @@
 
 -(BOOL)isEmpty {
 	return NO;
+}
+
+
+-(BOOL)isEqualToRepetitionPattern:(HammerRepetitionPattern *)other {
+	return
+		[other isKindOfClass:self.class]
+	&&	[_pattern isEqual:other.pattern];
+}
+
+-(BOOL)isEqual:(id)object {
+	return [self isEqualToRepetitionPattern:object];
 }
 
 
