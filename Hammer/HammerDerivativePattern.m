@@ -9,5 +9,5 @@ BOOL HammerMatchDerivativePattern(id<HammerDerivativePattern> pattern, NSEnumera
 	id term = [sequence nextObject];
 	return term?
 		HammerMatchDerivativePattern([pattern derivativeWithRespectTo:term], sequence)
-	:	pattern.isEmpty;
+	:	pattern.delta.isEmpty;
 }
