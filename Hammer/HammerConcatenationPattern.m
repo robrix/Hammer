@@ -25,6 +25,10 @@
 }
 
 
+@synthesize left = _left;
+@synthesize right = _right;
+
+
 -(BOOL)match:(id)object {
 	return [_left match:object];
 }
@@ -46,6 +50,18 @@
 
 -(BOOL)isEmpty {
 	return NO;
+}
+
+
+-(BOOL)isEqualToConcatenationPattern:(HammerConcatenationPattern *)other {
+	return
+		[other isKindOfClass:self.class]
+	&&	[_left isEqual:other.left]
+	&&	[_right isEqual:other.right];
+}
+
+-(BOOL)isEqual:(id)object {
+	return [self isEqualToConcatenationPattern:object];
 }
 
 
