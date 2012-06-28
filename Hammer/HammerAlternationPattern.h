@@ -8,4 +8,9 @@
 
 +(id<HammerDerivativePattern>)patternWithLeftPattern:(id<HammerDerivativePattern>)left rightPattern:(id<HammerDerivativePattern>)right;
 
+@property (nonatomic, readonly) id<HammerDerivativePattern> left;
+@property (nonatomic, readonly) id<HammerDerivativePattern> right;
+
+-(BOOL)isEqualToAlternationPattern:(HammerAlternationPattern *)other;
+
 @end
