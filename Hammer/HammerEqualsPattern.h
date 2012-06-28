@@ -8,4 +8,8 @@
 
 +(HammerEqualsPattern *)patternWithObject:(id)object;
 
+@property (nonatomic, readonly) id object;
+
+-(BOOL)isEqualToEqualsPattern:(HammerEqualsPattern *)other;
+
 @end

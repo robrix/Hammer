@@ -16,6 +16,10 @@
 	return pattern;
 }
 
+
+@synthesize object = _object;
+
+
 -(BOOL)match:(id)object {
 	return
 		(object == _object)
@@ -39,6 +43,17 @@
 
 -(BOOL)isEmpty {
 	return NO;
+}
+
+
+-(BOOL)isEqualToEqualsPattern:(HammerEqualsPattern *)other {
+	return
+		[other isKindOfClass:self.class]
+	&&	[_object isEqual:other.object];
+}
+
+-(BOOL)isEqual:(id)object {
+	return [self isEqualToEqualsPattern:object];
 }
 
 
