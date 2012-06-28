@@ -38,6 +38,11 @@
 }
 
 
+-(BOOL)isEqual:(id)object {
+	return [object isKindOfClass:self.class];
+}
+
+
 -(id)copyWithZone:(NSZone *)zone {
 	return self;
 }
