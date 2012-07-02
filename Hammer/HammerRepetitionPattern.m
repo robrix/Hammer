@@ -21,10 +21,6 @@
 @synthesize pattern = _pattern;
 
 
--(id<HammerDerivativePattern>)delta {
-	return [HammerBlankPattern pattern];
-}
-
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
 	return [HammerConcatenationPattern patternWithLeftPattern:[_pattern derivativeWithRespectTo:object] rightPattern:self];
 }

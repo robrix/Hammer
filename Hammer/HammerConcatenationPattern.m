@@ -30,11 +30,11 @@
 
 
 -(id<HammerDerivativePattern>)delta {
-	return [HammerConcatenationPattern patternWithLeftPattern:_left.delta rightPattern:_right.delta];
+	return [HammerConcatenationPattern patternWithLeftPattern:HammerPatternDelta(_left) rightPattern:HammerPatternDelta(_right)];
 }
 
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
-	id<HammerDerivativePattern> left = [HammerConcatenationPattern patternWithLeftPattern:_left.delta rightPattern:[_right derivativeWithRespectTo:object]];
+	id<HammerDerivativePattern> left = [HammerConcatenationPattern patternWithLeftPattern:HammerPatternDelta(_left) rightPattern:[_right derivativeWithRespectTo:object]];
 	id<HammerDerivativePattern> right = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
 	return [HammerAlternationPattern patternWithLeftPattern:left rightPattern:right];
 }

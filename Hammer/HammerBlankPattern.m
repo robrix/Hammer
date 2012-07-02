@@ -17,10 +17,6 @@
 }
 
 
--(id<HammerDerivativePattern>)delta {
-	return self;
-}
-
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
 	return [HammerNullPattern pattern];
 }

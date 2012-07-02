@@ -26,9 +26,6 @@
 	||	[object isEqual:_object];
 }
 
--(id<HammerDerivativePattern>)delta {
-	return [HammerNullPattern pattern];
-}
 
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
 	return [self match:object]?

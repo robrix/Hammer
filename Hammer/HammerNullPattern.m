@@ -16,14 +16,6 @@
 }
 
 
--(BOOL)match:(id)object {
-	return NO;
-}
-
--(id<HammerDerivativePattern>)delta {
-	return self;
-}
-
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
 	return self;
 }

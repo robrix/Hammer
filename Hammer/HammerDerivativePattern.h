@@ -6,8 +6,10 @@
 
 @protocol HammerDerivativePattern <NSObject, NSCopying>
 
-@property (nonatomic, readonly) id<HammerDerivativePattern> delta;
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object;
+
+@optional
+@property (nonatomic, readonly) id<HammerDerivativePattern> delta;
 
 @end
 
@@ -15,3 +17,4 @@ extern BOOL HammerMatchDerivativePattern(id<HammerDerivativePattern> pattern, NS
 extern BOOL HammerPatternIsNull(id<HammerDerivativePattern> pattern);
 extern BOOL HammerPatternIsEmpty(id<HammerDerivativePattern> pattern);
 extern BOOL HammerPatternMatch(id<HammerDerivativePattern> pattern, id object);
+extern id<HammerDerivativePattern> HammerPatternDelta(id<HammerDerivativePattern> pattern);
