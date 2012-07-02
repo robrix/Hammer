@@ -12,7 +12,7 @@
 
 +(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)_pattern {
 	id<HammerDerivativePattern> pattern = HammerDerivativePattern(_pattern);
-	if (pattern.isNull || pattern.isEmpty) return [HammerBlankPattern pattern];
+	if (pattern.isNull || pattern.matchesAtEnd) return [HammerBlankPattern pattern];
 	HammerRepetitionPattern *instance = [self new];
 	instance->_pattern = pattern;
 	return instance;

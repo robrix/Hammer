@@ -43,7 +43,7 @@
 	return [_pattern isKindOfClass:[HammerNullPattern class]];
 }
 
--(BOOL)isEmpty {
+-(BOOL)matchesAtEnd {
 	return [_pattern isKindOfClass:[HammerBlankPattern class]];
 }
 
@@ -67,7 +67,7 @@ BOOL HammerPatternMatchSequence(id<HammerPattern> _pattern, NSEnumerator *sequen
 	id term = [sequence nextObject];
 	return term?
 		HammerPatternMatchSequence([pattern derivativeWithRespectTo:term], sequence)
-	:	HammerDerivativePattern(pattern.delta).isEmpty;
+	:	HammerDerivativePattern(pattern.delta).matchesAtEnd;
 }
 
 BOOL HammerPatternMatch(id<HammerPattern> pattern, id object) {

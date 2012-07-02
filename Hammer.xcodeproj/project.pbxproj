@@ -63,7 +63,7 @@
 		D48A8D48159A8E420069AC6F /* HammerAlternationPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerAlternationPattern.h; sourceTree = "<group>"; };
 		D48A8D49159A8E420069AC6F /* HammerAlternationPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerAlternationPattern.m; sourceTree = "<group>"; };
 		D48A8D4C159A95430069AC6F /* HammerAlternationPatternTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerAlternationPatternTests.m; sourceTree = "<group>"; };
-		D48A8D4E159BD0200069AC6F /* HammerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerPattern.h; sourceTree = "<group>"; };
+		D48A8D4E159BD0200069AC6F /* HammerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HammerPattern.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D48A8D50159BD1480069AC6F /* HammerNullPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerNullPattern.h; sourceTree = "<group>"; };
 		D48A8D51159BD1480069AC6F /* HammerNullPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerNullPattern.m; sourceTree = "<group>"; };
 		D48A8D54159BD2920069AC6F /* HammerBlankPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerBlankPattern.h; sourceTree = "<group>"; };
@@ -72,7 +72,7 @@
 		D48A8D59159BD3470069AC6F /* HammerConcatenationPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerConcatenationPattern.m; sourceTree = "<group>"; };
 		D48A8D5C159BE4280069AC6F /* HammerRepetitionPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerRepetitionPattern.h; sourceTree = "<group>"; };
 		D48A8D5D159BE4280069AC6F /* HammerRepetitionPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerRepetitionPattern.m; sourceTree = "<group>"; };
-		D48A8D60159BE8810069AC6F /* HammerPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerPattern.m; sourceTree = "<group>"; };
+		D48A8D60159BE8810069AC6F /* HammerPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HammerPattern.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		D48A8D62159BE8BF0069AC6F /* HammerPatternTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerPatternTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

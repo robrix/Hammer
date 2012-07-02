@@ -16,7 +16,7 @@
 @property (nonatomic, readonly) id<HammerPattern> delta;
 
 @property (nonatomic, readonly, getter = isNull) BOOL null;
-@property (nonatomic, readonly, getter = isEmpty) BOOL empty;
+@property (nonatomic, readonly, getter = matchesAtEnd) BOOL matchesAtEnd;
 
 @end
 

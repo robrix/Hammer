@@ -16,9 +16,9 @@
 	id<HammerDerivativePattern> right = HammerDerivativePattern(_right);
 	if (left.isNull || right.isNull)
 		return [HammerNullPattern pattern];
-	if (left.isEmpty)
+	if (left.matchesAtEnd)
 		return right;
-	if (right.isEmpty)
+	if (right.matchesAtEnd)
 		return left;
 	HammerConcatenationPattern *pattern = [self new];
 	pattern->_left = left;
