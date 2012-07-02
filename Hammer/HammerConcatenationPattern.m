@@ -7,11 +7,11 @@
 #import "HammerNullPattern.h"
 
 @implementation HammerConcatenationPattern {
-	id<HammerDerivativePattern> _left;
-	id<HammerDerivativePattern> _right;
+	id<HammerPattern> _left;
+	id<HammerPattern> _right;
 }
 
-+(id<HammerDerivativePattern>)patternWithLeftPattern:(id<HammerDerivativePattern>)left rightPattern:(id<HammerDerivativePattern>)right {
++(id<HammerPattern>)patternWithLeftPattern:(id<HammerPattern>)left rightPattern:(id<HammerPattern>)right {
 	if (HammerPatternIsNull(left) || HammerPatternIsNull(right))
 		return [HammerNullPattern pattern];
 	if (HammerPatternIsEmpty(left))
@@ -29,13 +29,13 @@
 @synthesize right = _right;
 
 
--(id<HammerDerivativePattern>)delta {
+-(id<HammerPattern>)delta {
 	return [HammerConcatenationPattern patternWithLeftPattern:HammerPatternDelta(_left) rightPattern:HammerPatternDelta(_right)];
 }
 
--(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
-	id<HammerDerivativePattern> left = [HammerConcatenationPattern patternWithLeftPattern:HammerPatternDelta(_left) rightPattern:[_right derivativeWithRespectTo:object]];
-	id<HammerDerivativePattern> right = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
+-(id<HammerPattern>)derivativeWithRespectTo:(id)object {
+	id<HammerPattern> left = [HammerConcatenationPattern patternWithLeftPattern:HammerPatternDelta(_left) rightPattern:[_right derivativeWithRespectTo:object]];
+	id<HammerPattern> right = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
 	return [HammerAlternationPattern patternWithLeftPattern:left rightPattern:right];
 }
 

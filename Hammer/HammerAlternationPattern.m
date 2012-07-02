@@ -5,11 +5,11 @@
 #import "HammerAlternationPattern.h"
 
 @implementation HammerAlternationPattern {
-	id<HammerDerivativePattern> _left;
-	id<HammerDerivativePattern> _right;
+	id<HammerPattern> _left;
+	id<HammerPattern> _right;
 }
 
-+(id<HammerDerivativePattern>)patternWithLeftPattern:(id<HammerDerivativePattern>)left rightPattern:(id<HammerDerivativePattern>)right {
++(id<HammerPattern>)patternWithLeftPattern:(id<HammerPattern>)left rightPattern:(id<HammerPattern>)right {
 	if (HammerPatternIsNull(left)) return right;
 	if (HammerPatternIsNull(right)) return left;
 	HammerAlternationPattern *pattern = [self new];
@@ -23,11 +23,11 @@
 @synthesize right = _right;
 
 
--(id<HammerDerivativePattern>)delta {
+-(id<HammerPattern>)delta {
 	return [HammerAlternationPattern patternWithLeftPattern:_left.delta rightPattern:_right.delta];
 }
 
--(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
+-(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return [HammerAlternationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:[_right derivativeWithRespectTo:object]];
 }
 

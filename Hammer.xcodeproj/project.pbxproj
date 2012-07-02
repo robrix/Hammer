@@ -20,7 +20,7 @@
 		D48A8D4A159A8E420069AC6F /* HammerAlternationPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D48159A8E420069AC6F /* HammerAlternationPattern.h */; };
 		D48A8D4B159A8E420069AC6F /* HammerAlternationPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D49159A8E420069AC6F /* HammerAlternationPattern.m */; };
 		D48A8D4D159A95430069AC6F /* HammerAlternationPatternTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D4C159A95430069AC6F /* HammerAlternationPatternTests.m */; };
-		D48A8D4F159BD0200069AC6F /* HammerDerivativePattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D4E159BD0200069AC6F /* HammerDerivativePattern.h */; };
+		D48A8D4F159BD0200069AC6F /* HammerPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D4E159BD0200069AC6F /* HammerPattern.h */; };
 		D48A8D52159BD1480069AC6F /* HammerNullPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D50159BD1480069AC6F /* HammerNullPattern.h */; };
 		D48A8D53159BD1480069AC6F /* HammerNullPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D51159BD1480069AC6F /* HammerNullPattern.m */; };
 		D48A8D56159BD2920069AC6F /* HammerBlankPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D54159BD2920069AC6F /* HammerBlankPattern.h */; };
@@ -29,8 +29,8 @@
 		D48A8D5B159BD3470069AC6F /* HammerConcatenationPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D59159BD3470069AC6F /* HammerConcatenationPattern.m */; };
 		D48A8D5E159BE4280069AC6F /* HammerRepetitionPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D5C159BE4280069AC6F /* HammerRepetitionPattern.h */; };
 		D48A8D5F159BE4280069AC6F /* HammerRepetitionPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D5D159BE4280069AC6F /* HammerRepetitionPattern.m */; };
-		D48A8D61159BE8810069AC6F /* HammerDerivativePattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D60159BE8810069AC6F /* HammerDerivativePattern.m */; };
-		D48A8D63159BE8BF0069AC6F /* HammerDerivativePatternTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D62159BE8BF0069AC6F /* HammerDerivativePatternTests.m */; };
+		D48A8D61159BE8810069AC6F /* HammerPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D60159BE8810069AC6F /* HammerPattern.m */; };
+		D48A8D63159BE8BF0069AC6F /* HammerPatternTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D62159BE8BF0069AC6F /* HammerPatternTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +63,7 @@
 		D48A8D48159A8E420069AC6F /* HammerAlternationPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerAlternationPattern.h; sourceTree = "<group>"; };
 		D48A8D49159A8E420069AC6F /* HammerAlternationPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerAlternationPattern.m; sourceTree = "<group>"; };
 		D48A8D4C159A95430069AC6F /* HammerAlternationPatternTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerAlternationPatternTests.m; sourceTree = "<group>"; };
-		D48A8D4E159BD0200069AC6F /* HammerDerivativePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerDerivativePattern.h; sourceTree = "<group>"; };
+		D48A8D4E159BD0200069AC6F /* HammerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerPattern.h; sourceTree = "<group>"; };
 		D48A8D50159BD1480069AC6F /* HammerNullPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerNullPattern.h; sourceTree = "<group>"; };
 		D48A8D51159BD1480069AC6F /* HammerNullPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerNullPattern.m; sourceTree = "<group>"; };
 		D48A8D54159BD2920069AC6F /* HammerBlankPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerBlankPattern.h; sourceTree = "<group>"; };
@@ -72,8 +72,8 @@
 		D48A8D59159BD3470069AC6F /* HammerConcatenationPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerConcatenationPattern.m; sourceTree = "<group>"; };
 		D48A8D5C159BE4280069AC6F /* HammerRepetitionPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerRepetitionPattern.h; sourceTree = "<group>"; };
 		D48A8D5D159BE4280069AC6F /* HammerRepetitionPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerRepetitionPattern.m; sourceTree = "<group>"; };
-		D48A8D60159BE8810069AC6F /* HammerDerivativePattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerDerivativePattern.m; sourceTree = "<group>"; };
-		D48A8D62159BE8BF0069AC6F /* HammerDerivativePatternTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerDerivativePatternTests.m; sourceTree = "<group>"; };
+		D48A8D60159BE8810069AC6F /* HammerPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerPattern.m; sourceTree = "<group>"; };
+		D48A8D62159BE8BF0069AC6F /* HammerPatternTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerPatternTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,8 +147,8 @@
 				D48A8D55159BD2920069AC6F /* HammerBlankPattern.m */,
 				D47F93161598250A00B61C32 /* HammerBlockPattern.h */,
 				D47F93171598250A00B61C32 /* HammerBlockPattern.m */,
-				D48A8D4E159BD0200069AC6F /* HammerDerivativePattern.h */,
-				D48A8D60159BE8810069AC6F /* HammerDerivativePattern.m */,
+				D48A8D4E159BD0200069AC6F /* HammerPattern.h */,
+				D48A8D60159BE8810069AC6F /* HammerPattern.m */,
 				D48A8D58159BD3470069AC6F /* HammerConcatenationPattern.h */,
 				D48A8D59159BD3470069AC6F /* HammerConcatenationPattern.m */,
 				D48A8D3E159954E50069AC6F /* HammerEqualsPattern.h */,
@@ -174,7 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				D48A8D4C159A95430069AC6F /* HammerAlternationPatternTests.m */,
-				D48A8D62159BE8BF0069AC6F /* HammerDerivativePatternTests.m */,
+				D48A8D62159BE8BF0069AC6F /* HammerPatternTests.m */,
 				D48A8D421599557A0069AC6F /* HammerEqualsPatternTests.m */,
 				D47F93001597C81A00B61C32 /* Supporting Files */,
 			);
@@ -200,7 +200,7 @@
 				D47F93181598250A00B61C32 /* HammerBlockPattern.h in Headers */,
 				D48A8D40159954E50069AC6F /* HammerEqualsPattern.h in Headers */,
 				D48A8D4A159A8E420069AC6F /* HammerAlternationPattern.h in Headers */,
-				D48A8D4F159BD0200069AC6F /* HammerDerivativePattern.h in Headers */,
+				D48A8D4F159BD0200069AC6F /* HammerPattern.h in Headers */,
 				D48A8D52159BD1480069AC6F /* HammerNullPattern.h in Headers */,
 				D48A8D56159BD2920069AC6F /* HammerBlankPattern.h in Headers */,
 				D48A8D5A159BD3470069AC6F /* HammerConcatenationPattern.h in Headers */,
@@ -314,7 +314,7 @@
 				D48A8D57159BD2920069AC6F /* HammerBlankPattern.m in Sources */,
 				D48A8D5B159BD3470069AC6F /* HammerConcatenationPattern.m in Sources */,
 				D48A8D5F159BE4280069AC6F /* HammerRepetitionPattern.m in Sources */,
-				D48A8D61159BE8810069AC6F /* HammerDerivativePattern.m in Sources */,
+				D48A8D61159BE8810069AC6F /* HammerPattern.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,7 +324,7 @@
 			files = (
 				D48A8D431599557A0069AC6F /* HammerEqualsPatternTests.m in Sources */,
 				D48A8D4D159A95430069AC6F /* HammerAlternationPatternTests.m in Sources */,
-				D48A8D63159BE8BF0069AC6F /* HammerDerivativePatternTests.m in Sources */,
+				D48A8D63159BE8BF0069AC6F /* HammerPatternTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

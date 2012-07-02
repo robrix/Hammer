@@ -7,10 +7,10 @@
 #import "HammerRepetitionPattern.h"
 
 @implementation HammerRepetitionPattern {
-	id<HammerDerivativePattern> _pattern;
+	id<HammerPattern> _pattern;
 }
 
-+(id<HammerDerivativePattern>)patternWithPattern:(id<HammerDerivativePattern>)pattern {
++(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)pattern {
 	if (HammerPatternIsNull(pattern) || HammerPatternIsEmpty(pattern)) return [HammerBlankPattern pattern];
 	HammerRepetitionPattern *instance = [self new];
 	instance->_pattern = pattern;
@@ -21,7 +21,7 @@
 @synthesize pattern = _pattern;
 
 
--(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
+-(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return [HammerConcatenationPattern patternWithLeftPattern:[_pattern derivativeWithRespectTo:object] rightPattern:self];
 }
 

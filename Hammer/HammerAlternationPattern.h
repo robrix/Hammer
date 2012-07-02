@@ -2,14 +2,14 @@
 //  Created by Rob Rix on 12-06-26.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-#import <Hammer/HammerDerivativePattern.h>
+#import <Hammer/HammerPattern.h>
 
-@interface HammerAlternationPattern : NSObject <HammerDerivativePattern>
+@interface HammerAlternationPattern : NSObject <HammerPattern>
 
-+(id<HammerDerivativePattern>)patternWithLeftPattern:(id<HammerDerivativePattern>)left rightPattern:(id<HammerDerivativePattern>)right;
++(id<HammerPattern>)patternWithLeftPattern:(id<HammerPattern>)left rightPattern:(id<HammerPattern>)right;
 
-@property (nonatomic, readonly) id<HammerDerivativePattern> left;
-@property (nonatomic, readonly) id<HammerDerivativePattern> right;
+@property (nonatomic, readonly) id<HammerPattern> left;
+@property (nonatomic, readonly) id<HammerPattern> right;
 
 -(BOOL)isEqualToAlternationPattern:(HammerAlternationPattern *)other;
 

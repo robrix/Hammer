@@ -16,7 +16,7 @@
 }
 
 
--(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
+-(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return self;
 }
 

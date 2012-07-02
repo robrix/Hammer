@@ -2,13 +2,13 @@
 //  Created by Rob Rix on 12-06-27.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-#import <Hammer/HammerDerivativePattern.h>
+#import <Hammer/HammerPattern.h>
 
-@interface HammerRepetitionPattern : NSObject <HammerDerivativePattern>
+@interface HammerRepetitionPattern : NSObject <HammerPattern>
 
-+(id<HammerDerivativePattern>)patternWithPattern:(id<HammerDerivativePattern>)pattern;
++(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)pattern;
 
-@property (nonatomic, readonly) id<HammerDerivativePattern> pattern;
+@property (nonatomic, readonly) id<HammerPattern> pattern;
 
 -(BOOL)isEqualToRepetitionPattern:(HammerRepetitionPattern *)other;
 
