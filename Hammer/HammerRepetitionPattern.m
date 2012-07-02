@@ -21,10 +21,6 @@
 @synthesize pattern = _pattern;
 
 
--(BOOL)match:(id)object {
-	return [_pattern match:object] || YES;
-}
-
 -(id<HammerDerivativePattern>)delta {
 	return [HammerBlankPattern pattern];
 }

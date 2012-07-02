@@ -13,10 +13,14 @@ BOOL HammerMatchDerivativePattern(id<HammerDerivativePattern> pattern, NSEnumera
 	:	HammerPatternIsEmpty(pattern.delta);
 }
 
-BOOL HammerPatternIsNull(id<HammerPattern> pattern) {
+BOOL HammerPatternIsNull(id<HammerDerivativePattern> pattern) {
 	return [pattern isKindOfClass:[HammerNullPattern class]];
 }
 
-BOOL HammerPatternIsEmpty(id<HammerPattern> pattern) {
+BOOL HammerPatternIsEmpty(id<HammerDerivativePattern> pattern) {
 	return [pattern isKindOfClass:[HammerBlankPattern class]];
+}
+
+BOOL HammerPatternMatch(id<HammerDerivativePattern> pattern, id object) {
+	return !HammerPatternIsNull([pattern derivativeWithRespectTo:object]);
 }

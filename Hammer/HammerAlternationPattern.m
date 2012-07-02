@@ -23,10 +23,6 @@
 @synthesize right = _right;
 
 
--(BOOL)match:(id)object {
-	return [_left match:object] || [_right match:object];
-}
-
 -(id<HammerDerivativePattern>)delta {
 	return [HammerAlternationPattern patternWithLeftPattern:_left.delta rightPattern:_right.delta];
 }

@@ -24,16 +24,16 @@
 
 -(void)testMatchesIdenticalObjects {
 	HammerTestIdentity *identity = [HammerTestIdentity new];
-	STAssertTrue([[HammerEqualsPattern patternWithObject:identity] match:identity], @"Expected to match.");
-	STAssertFalse([[HammerEqualsPattern patternWithObject:identity] match:[HammerTestIdentity new]], @"Expected not to match.");
+	STAssertTrue(HammerPatternMatch([HammerEqualsPattern patternWithObject:identity], identity), @"Expected to match.");
+	STAssertFalse(HammerPatternMatch([HammerEqualsPattern patternWithObject:identity], [HammerTestIdentity new]), @"Expected not to match.");
 }
 
 -(void)testMatchesEqualObjects {
-	STAssertTrue([[HammerEqualsPattern patternWithObject:@"a"] match:[@"a" mutableCopy]], @"Expected to match.");
+	STAssertTrue(HammerPatternMatch([HammerEqualsPattern patternWithObject:@"a"], [@"a" mutableCopy]), @"Expected to match.");
 }
 
 -(void)testDoesNotMatchInequalObjects {
-	STAssertFalse([[HammerEqualsPattern patternWithObject:@"a"] match:@"b"], @"Expected not to match.");
+	STAssertFalse(HammerPatternMatch([HammerEqualsPattern patternWithObject:@"a"], @"b"), @"Expected not to match.");
 }
 
 @end

@@ -17,10 +17,6 @@
 }
 
 
--(BOOL)match:(id)object {
-	return object == nil;
-}
-
 -(id<HammerDerivativePattern>)delta {
 	return self;
 }

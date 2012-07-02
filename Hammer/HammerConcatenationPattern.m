@@ -29,10 +29,6 @@
 @synthesize right = _right;
 
 
--(BOOL)match:(id)object {
-	return [_left match:object];
-}
-
 -(id<HammerDerivativePattern>)delta {
 	return [HammerConcatenationPattern patternWithLeftPattern:_left.delta rightPattern:_right.delta];
 }

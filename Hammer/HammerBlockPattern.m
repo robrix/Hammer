@@ -2,7 +2,9 @@
 //  Created by Rob Rix on 12-06-25.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
+#import "HammerBlankPattern.h"
 #import "HammerBlockPattern.h"
+#import "HammerNullPattern.h"
 
 @implementation HammerBlockPattern {
 	HammerPatternBlock _block;
@@ -14,8 +16,15 @@
 	return pattern;
 }
 
--(BOOL)match:(id)object {
-	return _block(object);
+
+-(id<HammerDerivativePattern>)delta {
+	return [HammerNullPattern pattern];
+}
+
+-(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
+	return _block(object)?
+		[HammerBlankPattern pattern]
+	:	[HammerNullPattern pattern];
 }
 
 

@@ -17,15 +17,15 @@
 }
 
 -(void)testMatchesItsFirstAlternative {
-	STAssertTrue([self.pattern match:@"a"], @"Expected to match.");
+	STAssertTrue(HammerPatternMatch(self.pattern, @"a"), @"Expected to match.");
 }
 
 -(void)testMatchesItsSecondAlternative {
-	STAssertTrue([self.pattern match:@"b"], @"Expected to match.");
+	STAssertTrue(HammerPatternMatch(self.pattern, @"b"), @"Expected to match.");
 }
 
 -(void)testFailsToMatchWhenBothAlternativesFailToMatch {
-	STAssertFalse([self.pattern match:@"c"], @"Expected not to match.");
+	STAssertFalse(HammerPatternMatch(self.pattern, @"c"), @"Expected not to match.");
 }
 
 @end

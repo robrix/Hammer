@@ -12,7 +12,6 @@
 		D47F92FB1597C81A00B61C32 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92E71597C81A00B61C32 /* Cocoa.framework */; };
 		D47F92FE1597C81A00B61C32 /* libHammer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F92E41597C81A00B61C32 /* libHammer.a */; };
 		D47F93041597C81A00B61C32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47F93021597C81A00B61C32 /* InfoPlist.strings */; };
-		D47F93111597C91600B61C32 /* HammerPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D47F93101597C91600B61C32 /* HammerPattern.h */; };
 		D47F93181598250A00B61C32 /* HammerBlockPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D47F93161598250A00B61C32 /* HammerBlockPattern.h */; };
 		D47F93191598250A00B61C32 /* HammerBlockPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D47F93171598250A00B61C32 /* HammerBlockPattern.m */; };
 		D48A8D40159954E50069AC6F /* HammerEqualsPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D3E159954E50069AC6F /* HammerEqualsPattern.h */; };
@@ -56,7 +55,6 @@
 		D47F92F91597C81A00B61C32 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		D47F93011597C81A00B61C32 /* HammerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HammerTests-Info.plist"; sourceTree = "<group>"; };
 		D47F93031597C81A00B61C32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D47F93101597C91600B61C32 /* HammerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerPattern.h; sourceTree = "<group>"; };
 		D47F93161598250A00B61C32 /* HammerBlockPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerBlockPattern.h; sourceTree = "<group>"; };
 		D47F93171598250A00B61C32 /* HammerBlockPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerBlockPattern.m; sourceTree = "<group>"; };
 		D48A8D3E159954E50069AC6F /* HammerEqualsPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerEqualsPattern.h; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				D48A8D3F159954E50069AC6F /* HammerEqualsPattern.m */,
 				D48A8D50159BD1480069AC6F /* HammerNullPattern.h */,
 				D48A8D51159BD1480069AC6F /* HammerNullPattern.m */,
-				D47F93101597C91600B61C32 /* HammerPattern.h */,
 				D48A8D5C159BE4280069AC6F /* HammerRepetitionPattern.h */,
 				D48A8D5D159BE4280069AC6F /* HammerRepetitionPattern.m */,
 				D47F92EE1597C81A00B61C32 /* Supporting Files */,
@@ -200,7 +197,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D47F93111597C91600B61C32 /* HammerPattern.h in Headers */,
 				D47F93181598250A00B61C32 /* HammerBlockPattern.h in Headers */,
 				D48A8D40159954E50069AC6F /* HammerEqualsPattern.h in Headers */,
 				D48A8D4A159A8E420069AC6F /* HammerAlternationPattern.h in Headers */,
