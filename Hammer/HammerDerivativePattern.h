@@ -9,9 +9,8 @@
 @property (nonatomic, readonly) id<HammerDerivativePattern> delta;
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object;
 
-@property (nonatomic, readonly, getter = isNull) BOOL null;
-@property (nonatomic, readonly, getter = isEmpty) BOOL empty;
-
 @end
 
 extern BOOL HammerMatchDerivativePattern(id<HammerDerivativePattern> pattern, NSEnumerator *sequence);
+extern BOOL HammerPatternIsNull(id<HammerPattern> pattern);
+extern BOOL HammerPatternIsEmpty(id<HammerPattern> pattern);

@@ -11,7 +11,7 @@
 }
 
 +(id<HammerDerivativePattern>)patternWithPattern:(id<HammerDerivativePattern>)pattern {
-	if (pattern.isNull || pattern.isEmpty) return [HammerBlankPattern pattern];
+	if (HammerPatternIsNull(pattern) || HammerPatternIsEmpty(pattern)) return [HammerBlankPattern pattern];
 	HammerRepetitionPattern *instance = [self new];
 	instance->_pattern = pattern;
 	return instance;
@@ -31,15 +31,6 @@
 
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
 	return [HammerConcatenationPattern patternWithLeftPattern:[_pattern derivativeWithRespectTo:object] rightPattern:self];
-}
-
-
--(BOOL)isNull {
-	return NO;
-}
-
--(BOOL)isEmpty {
-	return NO;
 }
 
 

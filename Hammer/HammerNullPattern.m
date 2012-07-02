@@ -29,15 +29,6 @@
 }
 
 
--(BOOL)isNull {
-	return YES;
-}
-
--(BOOL)isEmpty {
-	return NO;
-}
-
-
 -(BOOL)isEqual:(id)object {
 	return [object isKindOfClass:self.class];
 }

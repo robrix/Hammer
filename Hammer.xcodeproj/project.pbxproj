@@ -18,8 +18,6 @@
 		D48A8D40159954E50069AC6F /* HammerEqualsPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D3E159954E50069AC6F /* HammerEqualsPattern.h */; };
 		D48A8D41159954E50069AC6F /* HammerEqualsPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D3F159954E50069AC6F /* HammerEqualsPattern.m */; };
 		D48A8D431599557A0069AC6F /* HammerEqualsPatternTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D421599557A0069AC6F /* HammerEqualsPatternTests.m */; };
-		D48A8D46159955ED0069AC6F /* HammerSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D44159955ED0069AC6F /* HammerSequence.h */; };
-		D48A8D47159955ED0069AC6F /* HammerSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D45159955ED0069AC6F /* HammerSequence.m */; };
 		D48A8D4A159A8E420069AC6F /* HammerAlternationPattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8D48159A8E420069AC6F /* HammerAlternationPattern.h */; };
 		D48A8D4B159A8E420069AC6F /* HammerAlternationPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D49159A8E420069AC6F /* HammerAlternationPattern.m */; };
 		D48A8D4D159A95430069AC6F /* HammerAlternationPatternTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8D4C159A95430069AC6F /* HammerAlternationPatternTests.m */; };
@@ -64,8 +62,6 @@
 		D48A8D3E159954E50069AC6F /* HammerEqualsPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerEqualsPattern.h; sourceTree = "<group>"; };
 		D48A8D3F159954E50069AC6F /* HammerEqualsPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerEqualsPattern.m; sourceTree = "<group>"; };
 		D48A8D421599557A0069AC6F /* HammerEqualsPatternTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerEqualsPatternTests.m; sourceTree = "<group>"; };
-		D48A8D44159955ED0069AC6F /* HammerSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerSequence.h; sourceTree = "<group>"; };
-		D48A8D45159955ED0069AC6F /* HammerSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerSequence.m; sourceTree = "<group>"; };
 		D48A8D48159A8E420069AC6F /* HammerAlternationPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerAlternationPattern.h; sourceTree = "<group>"; };
 		D48A8D49159A8E420069AC6F /* HammerAlternationPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerAlternationPattern.m; sourceTree = "<group>"; };
 		D48A8D4C159A95430069AC6F /* HammerAlternationPatternTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerAlternationPatternTests.m; sourceTree = "<group>"; };
@@ -164,8 +160,6 @@
 				D47F93101597C91600B61C32 /* HammerPattern.h */,
 				D48A8D5C159BE4280069AC6F /* HammerRepetitionPattern.h */,
 				D48A8D5D159BE4280069AC6F /* HammerRepetitionPattern.m */,
-				D48A8D44159955ED0069AC6F /* HammerSequence.h */,
-				D48A8D45159955ED0069AC6F /* HammerSequence.m */,
 				D47F92EE1597C81A00B61C32 /* Supporting Files */,
 			);
 			path = Hammer;
@@ -209,7 +203,6 @@
 				D47F93111597C91600B61C32 /* HammerPattern.h in Headers */,
 				D47F93181598250A00B61C32 /* HammerBlockPattern.h in Headers */,
 				D48A8D40159954E50069AC6F /* HammerEqualsPattern.h in Headers */,
-				D48A8D46159955ED0069AC6F /* HammerSequence.h in Headers */,
 				D48A8D4A159A8E420069AC6F /* HammerAlternationPattern.h in Headers */,
 				D48A8D4F159BD0200069AC6F /* HammerDerivativePattern.h in Headers */,
 				D48A8D52159BD1480069AC6F /* HammerNullPattern.h in Headers */,
@@ -320,7 +313,6 @@
 			files = (
 				D47F93191598250A00B61C32 /* HammerBlockPattern.m in Sources */,
 				D48A8D41159954E50069AC6F /* HammerEqualsPattern.m in Sources */,
-				D48A8D47159955ED0069AC6F /* HammerSequence.m in Sources */,
 				D48A8D4B159A8E420069AC6F /* HammerAlternationPattern.m in Sources */,
 				D48A8D53159BD1480069AC6F /* HammerNullPattern.m in Sources */,
 				D48A8D57159BD2920069AC6F /* HammerBlankPattern.m in Sources */,

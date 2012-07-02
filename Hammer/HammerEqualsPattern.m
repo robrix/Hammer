@@ -37,15 +37,6 @@
 }
 
 
--(BOOL)isNull {
-	return NO;
-}
-
--(BOOL)isEmpty {
-	return NO;
-}
-
-
 -(BOOL)isEqualToEqualsPattern:(HammerEqualsPattern *)other {
 	return
 		[other isKindOfClass:self.class]

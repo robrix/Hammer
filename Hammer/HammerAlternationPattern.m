@@ -10,8 +10,8 @@
 }
 
 +(id<HammerDerivativePattern>)patternWithLeftPattern:(id<HammerDerivativePattern>)left rightPattern:(id<HammerDerivativePattern>)right {
-	if (left.isNull) return right;
-	if (right.isNull) return left;
+	if (HammerPatternIsNull(left)) return right;
+	if (HammerPatternIsNull(right)) return left;
 	HammerAlternationPattern *pattern = [self new];
 	pattern->_left = left;
 	pattern->_right = right;
@@ -33,15 +33,6 @@
 
 -(id<HammerDerivativePattern>)derivativeWithRespectTo:(id)object {
 	return [HammerAlternationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:[_right derivativeWithRespectTo:object]];
-}
-
-
--(BOOL)isNull {
-	return NO;
-}
-
--(BOOL)isEmpty {
-	return NO;
 }
 
 

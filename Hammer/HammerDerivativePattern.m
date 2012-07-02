@@ -4,10 +4,19 @@
 
 #import "HammerBlankPattern.h"
 #import "HammerDerivativePattern.h"
+#import "HammerNullPattern.h"
 
 BOOL HammerMatchDerivativePattern(id<HammerDerivativePattern> pattern, NSEnumerator *sequence) {
 	id term = [sequence nextObject];
 	return term?
 		HammerMatchDerivativePattern([pattern derivativeWithRespectTo:term], sequence)
-	:	pattern.delta.isEmpty;
+	:	HammerPatternIsEmpty(pattern.delta);
+}
+
+BOOL HammerPatternIsNull(id<HammerPattern> pattern) {
+	return [pattern isKindOfClass:[HammerNullPattern class]];
+}
+
+BOOL HammerPatternIsEmpty(id<HammerPattern> pattern) {
+	return [pattern isKindOfClass:[HammerBlankPattern class]];
 }

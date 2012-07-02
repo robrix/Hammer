@@ -12,11 +12,11 @@
 }
 
 +(id<HammerDerivativePattern>)patternWithLeftPattern:(id<HammerDerivativePattern>)left rightPattern:(id<HammerDerivativePattern>)right {
-	if (left.isNull || right.isNull)
+	if (HammerPatternIsNull(left) || HammerPatternIsNull(right))
 		return [HammerNullPattern pattern];
-	if (left.isEmpty)
+	if (HammerPatternIsEmpty(left))
 		return right;
-	if (right.isEmpty)
+	if (HammerPatternIsEmpty(right))
 		return left;
 	HammerConcatenationPattern *pattern = [self new];
 	pattern->_left = left;
@@ -41,15 +41,6 @@
 	id<HammerDerivativePattern> left = [HammerConcatenationPattern patternWithLeftPattern:_left.delta rightPattern:[_right derivativeWithRespectTo:object]];
 	id<HammerDerivativePattern> right = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
 	return [HammerAlternationPattern patternWithLeftPattern:left rightPattern:right];
-}
-
-
--(BOOL)isNull {
-	return NO;
-}
-
--(BOOL)isEmpty {
-	return NO;
 }
 
 
