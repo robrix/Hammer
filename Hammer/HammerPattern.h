@@ -8,13 +8,19 @@
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object;
 
-@optional
+@end
+
+
+@protocol HammerDerivativePattern <HammerPattern>
+
 @property (nonatomic, readonly) id<HammerPattern> delta;
+
+@property (nonatomic, readonly, getter = isNull) BOOL null;
+@property (nonatomic, readonly, getter = isEmpty) BOOL empty;
 
 @end
 
-extern BOOL HammerMatchDerivativePattern(id<HammerPattern> pattern, NSEnumerator *sequence);
-extern BOOL HammerPatternIsNull(id<HammerPattern> pattern);
-extern BOOL HammerPatternIsEmpty(id<HammerPattern> pattern);
+id<HammerDerivativePattern> HammerDerivativePattern(id<HammerPattern> pattern);
+
+extern BOOL HammerPatternMatchSequence(id<HammerPattern> pattern, NSEnumerator *sequence);
 extern BOOL HammerPatternMatch(id<HammerPattern> pattern, id object);
-extern id<HammerPattern> HammerPatternDelta(id<HammerPattern> pattern);

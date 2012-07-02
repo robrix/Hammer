@@ -5,13 +5,15 @@
 #import "HammerAlternationPattern.h"
 
 @implementation HammerAlternationPattern {
-	id<HammerPattern> _left;
-	id<HammerPattern> _right;
+	id<HammerDerivativePattern> _left;
+	id<HammerDerivativePattern> _right;
 }
 
-+(id<HammerPattern>)patternWithLeftPattern:(id<HammerPattern>)left rightPattern:(id<HammerPattern>)right {
-	if (HammerPatternIsNull(left)) return right;
-	if (HammerPatternIsNull(right)) return left;
++(id<HammerPattern>)patternWithLeftPattern:(id<HammerPattern>)_left rightPattern:(id<HammerPattern>)_right {
+	id<HammerDerivativePattern> left = HammerDerivativePattern(_left);
+	id<HammerDerivativePattern> right = HammerDerivativePattern(_right);
+	if (left.isNull) return right;
+	if (right.isNull) return left;
 	HammerAlternationPattern *pattern = [self new];
 	pattern->_left = left;
 	pattern->_right = right;

@@ -7,11 +7,12 @@
 #import "HammerRepetitionPattern.h"
 
 @implementation HammerRepetitionPattern {
-	id<HammerPattern> _pattern;
+	id<HammerDerivativePattern> _pattern;
 }
 
-+(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)pattern {
-	if (HammerPatternIsNull(pattern) || HammerPatternIsEmpty(pattern)) return [HammerBlankPattern pattern];
++(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)_pattern {
+	id<HammerDerivativePattern> pattern = HammerDerivativePattern(_pattern);
+	if (pattern.isNull || pattern.isEmpty) return [HammerBlankPattern pattern];
 	HammerRepetitionPattern *instance = [self new];
 	instance->_pattern = pattern;
 	return instance;

@@ -32,36 +32,36 @@
 -(void)testMatchesAlternation {
 	id<HammerPattern> pattern = [HammerAlternationPattern patternWithLeftPattern:[HammerEqualsPattern patternWithObject:@"a"] rightPattern:[HammerEqualsPattern patternWithObject:@"b"]];
 	
-	STAssertTrue(HammerMatchDerivativePattern(pattern, @"a".objectEnumerator), @"Expected to match");
-	STAssertTrue(HammerMatchDerivativePattern(pattern, @"b".objectEnumerator), @"Expected to match");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, @"c".objectEnumerator), @"Expected not to match");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected not to match");
+	STAssertTrue(HammerPatternMatchSequence(pattern, @"a".objectEnumerator), @"Expected to match");
+	STAssertTrue(HammerPatternMatchSequence(pattern, @"b".objectEnumerator), @"Expected to match");
+	STAssertFalse(HammerPatternMatchSequence(pattern, @"c".objectEnumerator), @"Expected not to match");
+	STAssertFalse(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected not to match");
 }
 
 -(void)testMatchesEquality {
 	id<HammerPattern> pattern = [HammerEqualsPattern patternWithObject:@"a"];
 	
-	STAssertTrue(HammerMatchDerivativePattern(pattern, @"a".objectEnumerator), @"Expected to match.");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, @"b".objectEnumerator), @"Expected not to match.");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected not to match.");
+	STAssertTrue(HammerPatternMatchSequence(pattern, @"a".objectEnumerator), @"Expected to match.");
+	STAssertFalse(HammerPatternMatchSequence(pattern, @"b".objectEnumerator), @"Expected not to match.");
+	STAssertFalse(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected not to match.");
 }
 
 -(void)testMatchesRepetition {
 	id<HammerPattern> pattern = [HammerRepetitionPattern patternWithPattern:[HammerEqualsPattern patternWithObject:@"a"]];
 	
-	STAssertTrue(HammerMatchDerivativePattern(pattern, @"a".objectEnumerator), @"Expected to match.");
-	STAssertTrue(HammerMatchDerivativePattern(pattern, [[NSArray arrayWithObjects:@"a", @"a", nil] objectEnumerator]), @"Expected to match.");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, @"b".objectEnumerator), @"Expected not to match.");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected not to match.");
+	STAssertTrue(HammerPatternMatchSequence(pattern, @"a".objectEnumerator), @"Expected to match.");
+	STAssertTrue(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"a", nil] objectEnumerator]), @"Expected to match.");
+	STAssertFalse(HammerPatternMatchSequence(pattern, @"b".objectEnumerator), @"Expected not to match.");
+	STAssertFalse(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected not to match.");
 }
 
 -(void)testMatchesConcatenation {
 	id<HammerPattern> pattern = [HammerConcatenationPattern patternWithLeftPattern:[HammerEqualsPattern patternWithObject:@"a"] rightPattern:[HammerEqualsPattern patternWithObject:@"b"]];
 	
-	STAssertTrue(HammerMatchDerivativePattern(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected to match.");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, @"a".objectEnumerator), @"Expected not to match.");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, [[NSArray arrayWithObjects:@"a", @"a", nil] objectEnumerator]), @"Expected not to match.");
-	STAssertFalse(HammerMatchDerivativePattern(pattern, [[NSArray arrayWithObjects:@"a", @"b", @"c", nil] objectEnumerator]), @"Expected not to match.");
+	STAssertTrue(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected to match.");
+	STAssertFalse(HammerPatternMatchSequence(pattern, @"a".objectEnumerator), @"Expected not to match.");
+	STAssertFalse(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"a", nil] objectEnumerator]), @"Expected not to match.");
+	STAssertFalse(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"b", @"c", nil] objectEnumerator]), @"Expected not to match.");
 }
 
 @end
