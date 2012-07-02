@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerAlternationPattern.h"
+#import "HammerDerivativePattern.h"
 
 @implementation HammerAlternationPattern {
 	id<HammerDerivativePattern> _left;

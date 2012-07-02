@@ -4,6 +4,7 @@
 
 #import "HammerBlankPattern.h"
 #import "HammerConcatenationPattern.h"
+#import "HammerDerivativePattern.h"
 #import "HammerRepetitionPattern.h"
 
 @implementation HammerRepetitionPattern {
