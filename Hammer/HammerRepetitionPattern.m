@@ -13,7 +13,7 @@
 
 +(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)_pattern {
 	id<HammerDerivativePattern> pattern = HammerDerivativePattern(_pattern);
-	if (pattern.isNull || pattern.matchesAtEnd) return [HammerEpsilonPattern pattern];
+	if (pattern.isNull || pattern.isEpsilon) return [HammerEpsilonPattern pattern];
 	HammerRepetitionPattern *instance = [self new];
 	instance->_pattern = pattern;
 	return instance;
@@ -25,6 +25,11 @@
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return [HammerConcatenationPattern patternWithLeftPattern:[_pattern derivativeWithRespectTo:object] rightPattern:self];
+}
+
+
+-(BOOL)isNullable {
+	return YES;
 }
 
 

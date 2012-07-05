@@ -33,8 +33,6 @@
 	BOOL isNullable = NO;
 	if ([_pattern respondsToSelector:@selector(isNullable)])
 		isNullable = ((id<HammerDerivativePattern>)_pattern).isNullable;
-	else if ([_pattern isKindOfClass:[HammerEpsilonPattern class]] || [_pattern isKindOfClass:[HammerRepetitionPattern class]])
-		isNullable = YES;
 	return isNullable;
 }
 
