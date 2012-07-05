@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 12-06-27.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-#import "HammerBlankPattern.h"
+#import "HammerEpsilonPattern.h"
 #import "HammerConcatenationPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerRepetitionPattern.h"
@@ -13,7 +13,7 @@
 
 +(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)_pattern {
 	id<HammerDerivativePattern> pattern = HammerDerivativePattern(_pattern);
-	if (pattern.isNull || pattern.matchesAtEnd) return [HammerBlankPattern pattern];
+	if (pattern.isNull || pattern.matchesAtEnd) return [HammerEpsilonPattern pattern];
 	HammerRepetitionPattern *instance = [self new];
 	instance->_pattern = pattern;
 	return instance;

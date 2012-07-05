@@ -3,7 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerAlternationPattern.h"
-#import "HammerBlankPattern.h"
+#import "HammerEpsilonPattern.h"
 #import "HammerConcatenationPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerNullPattern.h"

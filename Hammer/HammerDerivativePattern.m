@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 12-07-01.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-#import "HammerBlankPattern.h"
+#import "HammerEpsilonPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerNullPattern.h"
 #import "HammerRepetitionPattern.h"
@@ -33,7 +33,7 @@
 	BOOL isNullable = NO;
 	if ([_pattern respondsToSelector:@selector(isNullable)])
 		isNullable = ((id<HammerDerivativePattern>)_pattern).isNullable;
-	else if ([_pattern isKindOfClass:[HammerBlankPattern class]] || [_pattern isKindOfClass:[HammerRepetitionPattern class]])
+	else if ([_pattern isKindOfClass:[HammerEpsilonPattern class]] || [_pattern isKindOfClass:[HammerRepetitionPattern class]])
 		isNullable = YES;
 	return isNullable;
 }
@@ -44,7 +44,7 @@
 }
 
 -(BOOL)matchesAtEnd {
-	return [_pattern isKindOfClass:[HammerBlankPattern class]];
+	return [_pattern isKindOfClass:[HammerEpsilonPattern class]];
 }
 
 
