@@ -2,7 +2,15 @@
 //  Created by Rob Rix on 12-07-01.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-___IMPORTHEADER_cocoaSubclass___
+#import <Hammer/HammerPattern.h>
 
-@interface HammerReferencePattern : NSObject
+typedef id<HammerPattern> (^HammerLazyPattern)();
+
+@interface HammerReferencePattern : NSObject <HammerPattern>
+
++(instancetype)patternWithPattern:(id<HammerPattern>)pattern;
++(instancetype)patternWithLazyPattern:(HammerLazyPattern)pattern;
+
+@property (nonatomic, readonly) id<HammerPattern> pattern;
+
 @end

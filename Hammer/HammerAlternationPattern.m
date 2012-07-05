@@ -26,8 +26,8 @@
 @synthesize right = _right;
 
 
--(id<HammerPattern>)delta {
-	return [HammerAlternationPattern patternWithLeftPattern:_left.delta rightPattern:_right.delta];
+-(BOOL)isNullable {
+	return _left.isNullable || _right.isNullable;
 }
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {

@@ -6,7 +6,7 @@
 
 @protocol HammerDerivativePattern <HammerPattern>
 
-@property (nonatomic, readonly) id<HammerPattern> delta;
+@property (nonatomic, readonly, getter = isNullable) BOOL nullable;
 
 @property (nonatomic, readonly, getter = isNull) BOOL null;
 @property (nonatomic, readonly, getter = matchesAtEnd) BOOL matchesAtEnd;

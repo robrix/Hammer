@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerAlternationPattern.h"
+#import "HammerBlankPattern.h"
 #import "HammerConcatenationPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerNullPattern.h"
@@ -32,14 +33,15 @@
 @synthesize right = _right;
 
 
--(id<HammerPattern>)delta {
-	return [HammerConcatenationPattern patternWithLeftPattern:_left.delta rightPattern:_right.delta];
+-(BOOL)isNullable {
+	return _left.isNullable && _right.isNullable;
 }
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
-	id<HammerPattern> left = [HammerConcatenationPattern patternWithLeftPattern:_left.delta rightPattern:[_right derivativeWithRespectTo:object]];
-	id<HammerPattern> right = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
-	return [HammerAlternationPattern patternWithLeftPattern:left rightPattern:right];
+	id<HammerPattern> partial = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
+	return _left.isNullable?
+		[HammerAlternationPattern patternWithLeftPattern:partial rightPattern:_right]
+	:	partial;
 }
 
 

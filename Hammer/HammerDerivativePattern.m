@@ -29,13 +29,13 @@
 }
 
 
--(id<HammerPattern>)delta {
-	id<HammerPattern> delta = [HammerNullPattern pattern];
-	if ([_pattern respondsToSelector:@selector(delta)])
-		delta = [(id<HammerDerivativePattern>)_pattern delta];
+-(BOOL)isNullable {
+	BOOL isNullable = NO;
+	if ([_pattern respondsToSelector:@selector(isNullable)])
+		isNullable = ((id<HammerDerivativePattern>)_pattern).isNullable;
 	else if ([_pattern isKindOfClass:[HammerBlankPattern class]] || [_pattern isKindOfClass:[HammerRepetitionPattern class]])
-		delta = [HammerBlankPattern pattern];
-	return delta;
+		isNullable = YES;
+	return isNullable;
 }
 
 
