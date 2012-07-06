@@ -41,7 +41,7 @@
 	return [_pattern isKindOfClass:[HammerNullPattern class]];
 }
 
--(BOOL)matchesAtEnd {
+-(BOOL)isEpsilon {
 	return [_pattern isKindOfClass:[HammerEpsilonPattern class]];
 }
 
