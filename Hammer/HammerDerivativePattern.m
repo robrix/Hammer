@@ -11,6 +11,8 @@
 
 +(id<HammerDerivativePattern>)derivativePatternWithPattern:(id<HammerPattern>)pattern;
 
+@property (nonatomic, readonly) id<HammerPattern> pattern;
+
 @end
 
 @implementation HammerDerivativePatternDecorator {
@@ -22,6 +24,9 @@
 	decorator->_pattern = pattern;
 	return decorator;
 }
+
+
+@synthesize pattern = _pattern;
 
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
@@ -45,6 +50,12 @@
 	return [_pattern respondsToSelector:@selector(isEpsilon)] && ((id<HammerDerivativePattern>)_pattern).isEpsilon;
 }
 
+
+-(BOOL)isEqual:(id)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[self.pattern isEqual:[object pattern]];
+}
 
 -(id)copyWithZone:(NSZone *)zone {
 	return self;
