@@ -16,6 +16,11 @@
 }
 
 
+-(BOOL)isNull {
+	return YES;
+}
+
+
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return self;
 }

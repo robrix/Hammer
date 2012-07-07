@@ -38,7 +38,7 @@
 
 
 -(BOOL)isNull {
-	return [_pattern isKindOfClass:[HammerNullPattern class]];
+	return [_pattern respondsToSelector:@selector(isNull)] && ((id<HammerDerivativePattern>)_pattern).isNull;
 }
 
 -(BOOL)isEpsilon {
