@@ -30,8 +30,10 @@
 @implementation HammerPatternTests
 
 -(void)testMatchesAlternation {
-	id<HammerPattern> pattern = [HammerAlternationPattern patternWithLeftPattern:[HammerEqualsPattern patternWithObject:@"a"] rightPattern:[HammerEqualsPattern patternWithObject:@"b"]];
+	id<HammerPattern> pattern = [HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"a"]) rightPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"b"])];
 	
+	STAssertTrue(HammerPatternMatch(pattern, @"a"), @"Expected to match.");
+	STAssertTrue(HammerPatternMatch(pattern, @"b"), @"Expected to match.");
 	STAssertTrue(HammerPatternMatchSequence(pattern, @"a".objectEnumerator), @"Expected to match");
 	STAssertTrue(HammerPatternMatchSequence(pattern, @"b".objectEnumerator), @"Expected to match");
 	STAssertFalse(HammerPatternMatchSequence(pattern, @"c".objectEnumerator), @"Expected not to match");

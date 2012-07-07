@@ -40,7 +40,7 @@
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	id<HammerPattern> partial = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
 	return _left.isNullable?
-		[HammerAlternationPattern patternWithLeftPattern:partial rightPattern:_right]
+		[HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern(partial) rightPattern:HammerDelayPattern(_right)]
 	:	partial;
 }
 

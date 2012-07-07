@@ -13,7 +13,7 @@
 @implementation HammerAlternationPatternTests
 
 -(HammerAlternationPattern *)pattern {
-	return [HammerAlternationPattern patternWithLeftPattern:[HammerEqualsPattern patternWithObject:@"a"] rightPattern:[HammerEqualsPattern patternWithObject:@"b"]];
+	return [HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"a"]) rightPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"b"])];
 }
 
 -(void)testMatchesItsFirstAlternative {
