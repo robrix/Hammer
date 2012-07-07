@@ -6,6 +6,7 @@
 
 @interface HammerConcatenationPattern : NSObject <HammerPattern>
 
++(id<HammerPattern>)patternWithPatterns:(NSArray *)patterns;
 +(id<HammerPattern>)patternWithLeftPattern:(HammerLazyPattern)left rightPattern:(HammerLazyPattern)right;
 
 -(BOOL)isEqualToConcatenationPattern:(HammerConcatenationPattern *)other;

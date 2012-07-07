@@ -6,6 +6,7 @@
 #import "HammerEpsilonPattern.h"
 #import "HammerConcatenationPattern.h"
 #import "HammerDerivativePattern.h"
+#import "HammerList.h"
 #import "HammerNullPattern.h"
 
 @implementation HammerConcatenationPattern {
@@ -13,6 +14,17 @@
 	id<HammerDerivativePattern> _right;
 	HammerLazyPattern _lazyLeft;
 	HammerLazyPattern _lazyRight;
+}
+
++(id<HammerPattern>)patternWithPatterns:(NSArray *)patterns {
+	HammerLazyPattern lazy = HammerArrayToList(patterns, 0, ^{
+		return (id)HammerDelayPattern([HammerEpsilonPattern pattern]);
+	}, ^(id (^pattern)()) {
+		return (id)pattern;
+	}, ^(id (^left)(), id (^right)()) {
+		return (id)HammerDelayPattern([self patternWithLeftPattern:left rightPattern:right]);
+	});
+	return lazy();
 }
 
 +(id<HammerPattern>)patternWithLeftPattern:(HammerLazyPattern)left rightPattern:(HammerLazyPattern)right {
