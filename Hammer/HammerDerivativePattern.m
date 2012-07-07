@@ -42,7 +42,7 @@
 }
 
 -(BOOL)isEpsilon {
-	return [_pattern isKindOfClass:[HammerEpsilonPattern class]];
+	return [_pattern respondsToSelector:@selector(isEpsilon)] && ((id<HammerDerivativePattern>)_pattern).isEpsilon;
 }
 
 
