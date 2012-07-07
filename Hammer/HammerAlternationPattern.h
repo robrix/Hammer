@@ -6,6 +6,7 @@
 
 @interface HammerAlternationPattern : NSObject <HammerPattern>
 
++(id<HammerPattern>)patternWithPatterns:(NSArray *)patterns;
 +(id<HammerPattern>)patternWithLeftPattern:(HammerLazyPattern)left rightPattern:(HammerLazyPattern)right;
 
 -(BOOL)isEqualToAlternationPattern:(HammerAlternationPattern *)other;

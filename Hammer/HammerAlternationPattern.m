@@ -4,6 +4,7 @@
 
 #import "HammerAlternationPattern.h"
 #import "HammerDerivativePattern.h"
+#import "HammerEpsilonPattern.h"
 
 @implementation HammerAlternationPattern {
 	id<HammerDerivativePattern> _left;
@@ -12,6 +13,20 @@
 	HammerLazyPattern _lazyRight;
 	BOOL _hasMemoizedNullability;
 	BOOL _isNullable;
+}
+
++(id<HammerPattern>)patternWithPatterns:(NSArray *)patterns {
+	id<HammerPattern> pattern = nil;
+	if (patterns.count == 0) {
+		pattern = [HammerEpsilonPattern pattern];
+	} else if (patterns.count == 1) {
+		pattern = ((HammerLazyPattern)patterns.lastObject)();
+	} else if (patterns.count == 2) {
+		pattern = [self patternWithLeftPattern:[patterns objectAtIndex:0] rightPattern:[patterns objectAtIndex:1]];
+	} else {
+		pattern = [self patternWithLeftPattern:[patterns objectAtIndex:0] rightPattern:HammerDelayPattern([self patternWithPatterns:[patterns subarrayWithRange:NSMakeRange(1, patterns.count - 1)]])];
+	}
+	return pattern;
 }
 
 +(id<HammerPattern>)patternWithLeftPattern:(HammerLazyPattern)left rightPattern:(HammerLazyPattern)right {

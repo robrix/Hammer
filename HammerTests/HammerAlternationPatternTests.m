@@ -4,6 +4,7 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "HammerAlternationPattern.h"
+#import "HammerEpsilonPattern.h"
 #import "HammerEqualsPattern.h"
 
 @interface HammerAlternationPatternTests : SenTestCase
@@ -26,6 +27,24 @@
 
 -(void)testFailsToMatchWhenBothAlternativesFailToMatch {
 	STAssertFalse(HammerPatternMatch(self.pattern, @"c"), @"Expected not to match.");
+}
+
+
+-(void)testNullaryListsBecomeEpsilon {
+	STAssertEqualObjects([HammerAlternationPattern patternWithPatterns:[NSArray array]], [HammerEpsilonPattern pattern], @"Expected to match.");
+}
+
+-(void)testUnaryListsBecomeIdentity {
+	id<HammerPattern> pattern = [HammerEqualsPattern patternWithObject:@"a"];
+	STAssertEqualObjects([HammerAlternationPattern patternWithPatterns:[NSArray arrayWithObject:HammerDelayPattern(pattern)]], pattern, @"Expected to match.");
+}
+
+-(void)testBinaryListsBecomeAnAlternationPattern {
+	HammerLazyPattern a = HammerDelayPattern([HammerEqualsPattern patternWithObject:@"a"]);
+	HammerLazyPattern b = HammerDelayPattern([HammerEqualsPattern patternWithObject:@"b"]);
+	id<HammerPattern> pattern = [HammerAlternationPattern patternWithLeftPattern:a rightPattern:b];
+	
+	STAssertEqualObjects(([HammerAlternationPattern patternWithPatterns:@[a, b]]), pattern, @"Expected to match.");
 }
 
 @end
