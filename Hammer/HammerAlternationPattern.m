@@ -8,6 +8,8 @@
 @implementation HammerAlternationPattern {
 	id<HammerDerivativePattern> _left;
 	id<HammerDerivativePattern> _right;
+	BOOL _hasMemoizedNullability;
+	BOOL _isNullable;
 }
 
 +(id<HammerPattern>)patternWithLeftPattern:(id<HammerPattern>)_left rightPattern:(id<HammerPattern>)_right {
@@ -26,8 +28,20 @@
 @synthesize right = _right;
 
 
+-(BOOL)leastFixedPointNullability {
+	_isNullable = NO;
+	_hasMemoizedNullability = YES;
+	BOOL previous = NO;
+	while ((previous = _left.isNullable || _right.isNullable) != _isNullable) {
+		_isNullable = previous;
+	}
+	return _isNullable;
+}
+
 -(BOOL)isNullable {
-	return _left.isNullable || _right.isNullable;
+	return _hasMemoizedNullability?
+		_isNullable
+	:	self.leastFixedPointNullability;
 }
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
