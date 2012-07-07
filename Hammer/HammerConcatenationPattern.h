@@ -6,10 +6,7 @@
 
 @interface HammerConcatenationPattern : NSObject <HammerPattern>
 
-+(id<HammerPattern>)patternWithLeftPattern:(id<HammerPattern>)left rightPattern:(id<HammerPattern>)right;
-
-@property (nonatomic, readonly) id<HammerPattern> left;
-@property (nonatomic, readonly) id<HammerPattern> right;
++(id<HammerPattern>)patternWithLeftPattern:(HammerLazyPattern)left rightPattern:(HammerLazyPattern)right;
 
 -(BOOL)isEqualToConcatenationPattern:(HammerConcatenationPattern *)other;
 

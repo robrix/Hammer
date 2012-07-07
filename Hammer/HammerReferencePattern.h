@@ -4,6 +4,9 @@
 
 #import <Hammer/HammerPattern.h>
 
+#ifndef HAMMER_REFERENCE_PATTERN_H
+#define HAMMER_REFERENCE_PATTERN_H
+
 typedef id<HammerPattern> (^HammerLazyPattern)();
 
 @interface HammerReferencePattern : NSObject <HammerPattern>
@@ -14,3 +17,5 @@ typedef id<HammerPattern> (^HammerLazyPattern)();
 @property (nonatomic, readonly) id<HammerPattern> pattern;
 
 @end
+
+#endif

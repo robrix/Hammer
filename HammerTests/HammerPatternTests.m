@@ -59,7 +59,7 @@
 }
 
 -(void)testMatchesConcatenation {
-	id<HammerPattern> pattern = [HammerConcatenationPattern patternWithLeftPattern:[HammerEqualsPattern patternWithObject:@"a"] rightPattern:[HammerEqualsPattern patternWithObject:@"b"]];
+	id<HammerPattern> pattern = [HammerConcatenationPattern patternWithLeftPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"a"]) rightPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"b"])];
 	
 	STAssertTrue(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"b", nil] objectEnumerator]), @"Expected to match.");
 	STAssertFalse(HammerPatternMatchSequence(pattern, @"a".objectEnumerator), @"Expected not to match.");

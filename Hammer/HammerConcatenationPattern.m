@@ -11,45 +11,56 @@
 @implementation HammerConcatenationPattern {
 	id<HammerDerivativePattern> _left;
 	id<HammerDerivativePattern> _right;
+	HammerLazyPattern _lazyLeft;
+	HammerLazyPattern _lazyRight;
 }
 
-+(id<HammerPattern>)patternWithLeftPattern:(id<HammerPattern>)_left rightPattern:(id<HammerPattern>)_right {
-	id<HammerDerivativePattern> left = HammerDerivativePattern(_left);
-	id<HammerDerivativePattern> right = HammerDerivativePattern(_right);
-	if (left.isNull || right.isNull)
-		return [HammerNullPattern pattern];
-	if (left.isEpsilon)
-		return right;
-	if (right.isEpsilon)
-		return left;
++(id<HammerPattern>)patternWithLeftPattern:(HammerLazyPattern)left rightPattern:(HammerLazyPattern)right {
 	HammerConcatenationPattern *pattern = [self new];
-	pattern->_left = left;
-	pattern->_right = right;
+	pattern->_lazyLeft = left;
+	pattern->_lazyRight = right;
 	return pattern;
 }
 
 
-@synthesize left = _left;
-@synthesize right = _right;
+-(id<HammerDerivativePattern>)left {
+	return _left ?: (_left = HammerDerivativePattern(_lazyLeft()));
+}
+
+-(id<HammerDerivativePattern>)right {
+	return _right ?: (_right = HammerDerivativePattern(_lazyRight()));
+}
 
 
 -(BOOL)isNullable {
-	return _left.isNullable && _right.isNullable;
+	return self.left.isNullable && self.right.isNullable;
+}
+
+-(BOOL)isNull {
+	return self.left.isNull || self.right.isNull;
+}
+
+-(BOOL)isEpsilon {
+	return self.left.isEpsilon && self.right.isEpsilon;
 }
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
-	id<HammerPattern> partial = [HammerConcatenationPattern patternWithLeftPattern:[_left derivativeWithRespectTo:object] rightPattern:_right];
-	return _left.isNullable?
-		[HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern(partial) rightPattern:HammerDelayPattern(_right)]
-	:	partial;
+	if (self.left.isEpsilon)
+		return [self.right derivativeWithRespectTo:object];
+	else if (self.right.isEpsilon)
+		return [self.left derivativeWithRespectTo:object];
+	HammerLazyPattern partial = HammerDelayPattern([HammerConcatenationPattern patternWithLeftPattern:HammerDelayPattern([self.left derivativeWithRespectTo:object]) rightPattern:_lazyRight]);
+	return self.left.isNullable?
+		[HammerAlternationPattern patternWithLeftPattern:partial rightPattern:_lazyRight]
+	:	partial();
 }
 
 
 -(BOOL)isEqualToConcatenationPattern:(HammerConcatenationPattern *)other {
 	return
 		[other isKindOfClass:self.class]
-	&&	[_left isEqual:other.left]
-	&&	[_right isEqual:other.right];
+	&&	[self.left isEqual:other.left]
+	&&	[self.right isEqual:other.right];
 }
 
 -(BOOL)isEqual:(id)object {

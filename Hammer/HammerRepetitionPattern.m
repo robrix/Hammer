@@ -25,7 +25,7 @@
 
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
-	return [HammerConcatenationPattern patternWithLeftPattern:[self.pattern derivativeWithRespectTo:object] rightPattern:self];
+	return [HammerConcatenationPattern patternWithLeftPattern:HammerDelayPattern([self.pattern derivativeWithRespectTo:object]) rightPattern:HammerDelayPattern(self)];
 }
 
 
