@@ -49,8 +49,9 @@
 }
 
 -(void)testMatchesRepetition {
-	id<HammerPattern> pattern = [HammerRepetitionPattern patternWithPattern:[HammerEqualsPattern patternWithObject:@"a"]];
+	id<HammerPattern> pattern = [HammerRepetitionPattern patternWithPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"a"])];
 	
+	STAssertTrue(HammerPatternMatch(pattern, @"a"), @"Expected to match.");
 	STAssertTrue(HammerPatternMatchSequence(pattern, @"a".objectEnumerator), @"Expected to match.");
 	STAssertTrue(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"a", nil] objectEnumerator]), @"Expected to match.");
 	STAssertFalse(HammerPatternMatchSequence(pattern, @"b".objectEnumerator), @"Expected not to match.");

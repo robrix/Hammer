@@ -6,9 +6,7 @@
 
 @interface HammerRepetitionPattern : NSObject <HammerPattern>
 
-+(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)pattern;
-
-@property (nonatomic, readonly) id<HammerPattern> pattern;
++(id<HammerPattern>)patternWithPattern:(HammerLazyPattern)pattern;
 
 -(BOOL)isEqualToRepetitionPattern:(HammerRepetitionPattern *)other;
 

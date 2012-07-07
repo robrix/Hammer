@@ -9,22 +9,23 @@
 
 @implementation HammerRepetitionPattern {
 	id<HammerDerivativePattern> _pattern;
+	HammerLazyPattern _lazyPattern;
 }
 
-+(id<HammerPattern>)patternWithPattern:(id<HammerPattern>)_pattern {
-	id<HammerDerivativePattern> pattern = HammerDerivativePattern(_pattern);
-	if (pattern.isNull || pattern.isEpsilon) return [HammerEpsilonPattern pattern];
++(id<HammerPattern>)patternWithPattern:(HammerLazyPattern)pattern {
 	HammerRepetitionPattern *instance = [self new];
-	instance->_pattern = pattern;
+	instance->_lazyPattern = pattern;
 	return instance;
 }
 
 
-@synthesize pattern = _pattern;
+-(id<HammerDerivativePattern>)pattern {
+	return _pattern ?: (_pattern = HammerDerivativePattern(_lazyPattern()));
+}
 
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
-	return [HammerConcatenationPattern patternWithLeftPattern:[_pattern derivativeWithRespectTo:object] rightPattern:self];
+	return [HammerConcatenationPattern patternWithLeftPattern:[self.pattern derivativeWithRespectTo:object] rightPattern:self];
 }
 
 
@@ -33,10 +34,15 @@
 }
 
 
+-(BOOL)isEpsilon {
+	return self.pattern.isNull || self.pattern.isEpsilon;
+}
+
+
 -(BOOL)isEqualToRepetitionPattern:(HammerRepetitionPattern *)other {
 	return
 		[other isKindOfClass:self.class]
-	&&	[_pattern isEqual:other.pattern];
+	&&	[self.pattern isEqual:other.pattern];
 }
 
 -(BOOL)isEqual:(id)object {
