@@ -10,6 +10,8 @@
 
 @end
 
+typedef id<HammerPattern> (^HammerLazyPattern)();
+#define HammerDelayPattern(p) ^{ return (p); }
 
 extern BOOL HammerPatternMatchSequence(id<HammerPattern> pattern, NSEnumerator *sequence);
 extern BOOL HammerPatternMatch(id<HammerPattern> pattern, id object);
