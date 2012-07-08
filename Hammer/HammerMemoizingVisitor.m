@@ -4,6 +4,11 @@
 
 #import "HammerMemoizingVisitor.h"
 
+@interface HammerMemoizingVisitorNullPlaceholder : NSObject
++(instancetype)placeholder;
+@end
+
+
 @implementation HammerMemoizingVisitor {
 	id<HammerVisitor> _visitor;
 	NSMutableDictionary *_resultsByVisitedObject;
@@ -21,7 +26,7 @@
 -(id<NSCopying>)keyForVisitableObject:(id<HammerVisitable>)object {
 	return [object conformsToProtocol:@protocol(NSCopying)]?
 		(id<NSCopying>)object
-	:	[NSValue valueWithPointer:(__bridge const void *)object];
+	:	[NSNumber numberWithUnsignedInteger:(NSUInteger)object];
 }
 
 -(id)resultForVisitedObject:(id<HammerVisitable>)object {
@@ -29,7 +34,7 @@
 }
 
 -(id)memoizeResult:(id)result forVisitedObject:(id<HammerVisitable>)object {
-	[_resultsByVisitedObject setObject:result forKey:[self keyForVisitableObject:object]];
+	[_resultsByVisitedObject setObject:result ?: [HammerMemoizingVisitorNullPlaceholder placeholder] forKey:[self keyForVisitableObject:object]];
 	return result;
 }
 
@@ -41,7 +46,24 @@
 }
 
 -(id)leaveObject:(id)object withVisitedChildren:(id)children {
-	return [self resultForVisitedObject:object] ?: [self memoizeResult:[_visitor leaveObject:object withVisitedChildren:children] forVisitedObject:object];
+	id result = [self resultForVisitedObject:object] ?: [self memoizeResult:[_visitor leaveObject:object withVisitedChildren:children] forVisitedObject:object];
+	return result == [HammerMemoizingVisitorNullPlaceholder placeholder]?
+		nil
+	:	result;
+}
+
+@end
+
+
+@implementation HammerMemoizingVisitorNullPlaceholder
+
++(instancetype)placeholder {
+	static HammerMemoizingVisitorNullPlaceholder *placeholder = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		placeholder = [self new];
+	});
+	return placeholder;
 }
 
 @end
