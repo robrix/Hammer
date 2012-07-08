@@ -3,8 +3,9 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import <Hammer/HammerPattern.h>
+#import <Hammer/HammerVisitor.h>
 
-@protocol HammerDerivativePattern <HammerPattern>
+@protocol HammerDerivativePattern <HammerPattern, HammerVisitable>
 
 @property (nonatomic, readonly, getter = isNullable) BOOL nullable;
 

@@ -51,6 +51,19 @@
 }
 
 
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	id result = nil;
+	if ([_pattern respondsToSelector:@selector(acceptVisitor:)])
+		result = [(id<HammerVisitable>)_pattern acceptVisitor:visitor];
+	else {
+		if ([visitor visitPattern:_pattern]) {
+			result = [visitor leavePattern:_pattern withVisitedChildren:nil];
+		}
+	}
+	return result;
+}
+
+
 -(BOOL)isEqual:(id)object {
 	return
 		[object isKindOfClass:self.class]
