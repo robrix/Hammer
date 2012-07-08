@@ -11,6 +11,7 @@
 
 -(instancetype)initWithVisitor:(id<HammerVisitor>)visitor {
 	if ((self = [super init])) {
+		_visitor = visitor;
 		_resultsByVisitedObject = [NSMutableDictionary new];
 	}
 	return self;
