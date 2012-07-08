@@ -56,9 +56,8 @@
 	if ([_pattern respondsToSelector:@selector(acceptVisitor:)])
 		result = [(id<HammerVisitable>)_pattern acceptVisitor:visitor];
 	else {
-		if ([visitor visitPattern:_pattern]) {
-			result = [visitor leavePattern:_pattern withVisitedChildren:nil];
-		}
+		[visitor visitObject:_pattern];
+		result = [visitor leaveObject:_pattern withVisitedChildren:nil];
 	}
 	return result;
 }
