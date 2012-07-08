@@ -78,6 +78,6 @@
 
 id<HammerDerivativePattern> HammerDerivativePattern(id<HammerPattern> pattern) {
 	return [pattern conformsToProtocol:@protocol(HammerDerivativePattern)]?
-	(id<HammerDerivativePattern>)pattern
+		(id<HammerDerivativePattern>)pattern
 	:	[HammerDerivativePatternDecorator derivativePatternWithPattern:pattern];
 }

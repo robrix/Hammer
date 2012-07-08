@@ -7,6 +7,9 @@
 #import "HammerEpsilonPattern.h"
 #import "HammerList.h"
 
+@interface HammerAlternationPattern () <HammerVisitable>
+@end
+
 @implementation HammerAlternationPattern {
 	id<HammerDerivativePattern> _left;
 	id<HammerDerivativePattern> _right;
@@ -66,6 +69,18 @@
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return [HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern([self.left derivativeWithRespectTo:object]) rightPattern:HammerDelayPattern([self.right derivativeWithRespectTo:object])];
+}
+
+
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	id childrenResults = nil;
+	if ([visitor visitObject:self])  {
+		id leftResult = [self.left acceptVisitor:visitor];
+		id rightResult = [self.right acceptVisitor:visitor];
+		if(leftResult || rightResult)
+			childrenResults =  [NSArray arrayWithObjects:leftResult, rightResult, nil];
+	}
+	return [visitor leaveObject:self withVisitedChildren:childrenResults];
 }
 
 

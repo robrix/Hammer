@@ -68,6 +68,18 @@
 }
 
 
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	id childrenResults = nil;
+	if ([visitor visitObject:self])  {
+		id leftResult = [self.left acceptVisitor:visitor];
+		id rightResult = [self.right acceptVisitor:visitor];
+		if(leftResult || rightResult)
+			childrenResults =  [NSArray arrayWithObjects:leftResult, rightResult, nil];
+	}
+	return [visitor leaveObject:self withVisitedChildren:childrenResults];
+}
+
+
 -(BOOL)isEqualToConcatenationPattern:(HammerConcatenationPattern *)other {
 	return
 		[other isKindOfClass:self.class]

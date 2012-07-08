@@ -3,7 +3,9 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerDerivativePattern.h"
+#import "HammerMemoizingVisitor.h"
 #import "HammerPattern.h"
+#import "HammerPatternDescriptionVisitor.h"
 
 BOOL HammerPatternMatchSequence(id<HammerPattern> _pattern, NSEnumerator *sequence) {
 	id<HammerDerivativePattern> pattern = HammerDerivativePattern(_pattern);
@@ -15,4 +17,14 @@ BOOL HammerPatternMatchSequence(id<HammerPattern> _pattern, NSEnumerator *sequen
 
 BOOL HammerPatternMatch(id<HammerPattern> pattern, id object) {
 	return !HammerDerivativePattern([pattern derivativeWithRespectTo:object]).isNull;
+}
+
+
+id HammerPatternVisitGraph(id<HammerPattern> pattern, id<HammerVisitor> visitor) {
+	HammerMemoizingVisitor *memoizingVisitor = [[HammerMemoizingVisitor alloc] initWithVisitor:visitor];
+	return [HammerDerivativePattern(pattern) acceptVisitor:memoizingVisitor];
+}
+
+NSString *HammerPatternDescription(id<HammerPattern> pattern) {
+	return HammerPatternVisitGraph(pattern, [HammerPatternDescriptionVisitor new]);
 }

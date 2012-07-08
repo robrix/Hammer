@@ -39,6 +39,9 @@
 		D4F73DFB15A905CE000A1830 /* HammerVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F73DFA15A905CE000A1830 /* HammerVisitor.h */; };
 		D4F73DFE15A90C42000A1830 /* HammerMemoizingVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F73DFC15A90C42000A1830 /* HammerMemoizingVisitor.h */; };
 		D4F73DFF15A90C42000A1830 /* HammerMemoizingVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F73DFD15A90C42000A1830 /* HammerMemoizingVisitor.m */; };
+		D4F73E0215A915D3000A1830 /* HammerPatternDescriptionVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F73E0015A915D3000A1830 /* HammerPatternDescriptionVisitor.h */; };
+		D4F73E0315A915D3000A1830 /* HammerPatternDescriptionVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F73E0115A915D3000A1830 /* HammerPatternDescriptionVisitor.m */; };
+		D4F73E0515A919F3000A1830 /* HammerPatternDescriptionVisitorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F73E0415A919F3000A1830 /* HammerPatternDescriptionVisitorTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +93,9 @@
 		D4F73DFA15A905CE000A1830 /* HammerVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerVisitor.h; sourceTree = "<group>"; };
 		D4F73DFC15A90C42000A1830 /* HammerMemoizingVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerMemoizingVisitor.h; sourceTree = "<group>"; };
 		D4F73DFD15A90C42000A1830 /* HammerMemoizingVisitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerMemoizingVisitor.m; sourceTree = "<group>"; };
+		D4F73E0015A915D3000A1830 /* HammerPatternDescriptionVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerPatternDescriptionVisitor.h; sourceTree = "<group>"; };
+		D4F73E0115A915D3000A1830 /* HammerPatternDescriptionVisitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerPatternDescriptionVisitor.m; sourceTree = "<group>"; };
+		D4F73E0415A919F3000A1830 /* HammerPatternDescriptionVisitorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerPatternDescriptionVisitorTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +183,8 @@
 				D48A8D51159BD1480069AC6F /* HammerNullPattern.m */,
 				D48A8D4E159BD0200069AC6F /* HammerPattern.h */,
 				D48A8D60159BE8810069AC6F /* HammerPattern.m */,
+				D4F73E0015A915D3000A1830 /* HammerPatternDescriptionVisitor.h */,
+				D4F73E0115A915D3000A1830 /* HammerPatternDescriptionVisitor.m */,
 				D48A8D5C159BE4280069AC6F /* HammerRepetitionPattern.h */,
 				D48A8D5D159BE4280069AC6F /* HammerRepetitionPattern.m */,
 				D4F73DFA15A905CE000A1830 /* HammerVisitor.h */,
@@ -196,6 +204,7 @@
 		D47F92FF1597C81A00B61C32 /* HammerTests */ = {
 			isa = PBXGroup;
 			children = (
+				D4F73E0415A919F3000A1830 /* HammerPatternDescriptionVisitorTests.m */,
 				D4F73DF815A8FDD0000A1830 /* HammerConcatenationPatternTests.m */,
 				D48A8D4C159A95430069AC6F /* HammerAlternationPatternTests.m */,
 				D48A8D421599557A0069AC6F /* HammerEqualsPatternTests.m */,
@@ -233,6 +242,7 @@
 				D4F73DF515A8DAA8000A1830 /* HammerList.h in Headers */,
 				D4F73DFB15A905CE000A1830 /* HammerVisitor.h in Headers */,
 				D4F73DFE15A90C42000A1830 /* HammerMemoizingVisitor.h in Headers */,
+				D4F73E0215A915D3000A1830 /* HammerPatternDescriptionVisitor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +356,7 @@
 				D48A8D7115A12D3E0069AC6F /* HammerDerivativePattern.m in Sources */,
 				D4F73DF615A8DAA8000A1830 /* HammerList.m in Sources */,
 				D4F73DFF15A90C42000A1830 /* HammerMemoizingVisitor.m in Sources */,
+				D4F73E0315A915D3000A1830 /* HammerPatternDescriptionVisitor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +368,7 @@
 				D48A8D4D159A95430069AC6F /* HammerAlternationPatternTests.m in Sources */,
 				D48A8D63159BE8BF0069AC6F /* HammerPatternTests.m in Sources */,
 				D4F73DF915A8FDD0000A1830 /* HammerConcatenationPatternTests.m in Sources */,
+				D4F73E0515A919F3000A1830 /* HammerPatternDescriptionVisitorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,9 @@
 #import "HammerDerivativePattern.h"
 #import "HammerRepetitionPattern.h"
 
+@interface HammerRepetitionPattern () <HammerVisitable>
+@end
+
 @implementation HammerRepetitionPattern {
 	id<HammerDerivativePattern> _pattern;
 	HammerLazyPattern _lazyPattern;
@@ -36,6 +39,15 @@
 
 -(BOOL)isEpsilon {
 	return self.pattern.isNull || self.pattern.isEpsilon;
+}
+
+
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	id childResult = nil;
+	if ([visitor visitObject:self])  {
+		childResult = [self.pattern acceptVisitor:visitor];
+	}
+	return [visitor leaveObject:self withVisitedChildren:childResult];
 }
 
 
