@@ -292,7 +292,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Hammer;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Monochrome Industries";
 			};
 			buildConfigurationList = D47F92DE1597C81A00B61C32 /* Build configuration list for PBXProject "Hammer" */;
@@ -444,6 +444,7 @@
 		D47F930B1597C81A00B61C32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
@@ -454,6 +455,7 @@
 		D47F930C1597C81A00B61C32 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
@@ -464,6 +466,7 @@
 		D47F930E1597C81A00B61C32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
@@ -477,6 +480,7 @@
 		D47F930F1597C81A00B61C32 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
