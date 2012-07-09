@@ -204,11 +204,11 @@
 		D47F92FF1597C81A00B61C32 /* HammerTests */ = {
 			isa = PBXGroup;
 			children = (
-				D4F73E0415A919F3000A1830 /* HammerPatternDescriptionVisitorTests.m */,
-				D4F73DF815A8FDD0000A1830 /* HammerConcatenationPatternTests.m */,
 				D48A8D4C159A95430069AC6F /* HammerAlternationPatternTests.m */,
+				D4F73DF815A8FDD0000A1830 /* HammerConcatenationPatternTests.m */,
 				D48A8D421599557A0069AC6F /* HammerEqualsPatternTests.m */,
 				D48A8D62159BE8BF0069AC6F /* HammerPatternTests.m */,
+				D4F73E0415A919F3000A1830 /* HammerPatternDescriptionVisitorTests.m */,
 				D47F93001597C81A00B61C32 /* Supporting Files */,
 			);
 			path = HammerTests;
