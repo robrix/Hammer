@@ -4,15 +4,24 @@
 
 #import "HammerMemoizingVisitor.h"
 
-@interface HammerMemoizingVisitorNullPlaceholder : NSObject
-+(instancetype)placeholder;
+@interface HammerMemoizingVisitorValue : NSObject
+@property (nonatomic, strong) id value;
 @end
-
 
 @implementation HammerMemoizingVisitor {
 	id<HammerVisitor> _visitor;
 	NSMutableDictionary *_resultsByVisitedObject;
 }
+
++(id)nullPlaceholder {
+	static id placeholder = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		placeholder = [NSObject new];
+	});
+	return placeholder;
+}
+
 
 -(instancetype)initWithVisitor:(id<HammerVisitor>)visitor {
 	if ((self = [super init])) {
@@ -29,25 +38,31 @@
 	:	[NSNumber numberWithUnsignedInteger:(NSUInteger)object];
 }
 
--(id)resultForVisitedObject:(id<HammerVisitable>)object {
+-(HammerMemoizingVisitorValue *)resultForVisitedObject:(id<HammerVisitable>)object {
 	return [_resultsByVisitedObject objectForKey:[self keyForVisitableObject:object]];
 }
 
--(id)memoizeResult:(id)result forVisitedObject:(id<HammerVisitable>)object {
-	[_resultsByVisitedObject setObject:result ?: [HammerMemoizingVisitorNullPlaceholder placeholder] forKey:[self keyForVisitableObject:object]];
-	return result;
+-(void)memoizePlaceholderValueForVisitedObject:(id<HammerVisitable>)object {
+	[_resultsByVisitedObject setObject:[HammerMemoizingVisitorValue new] forKey:[self keyForVisitableObject:object]];
+}
+
+-(id)memoizeResultValue:(id)result forVisitedObject:(id<HammerVisitable>)object {
+	return [self resultForVisitedObject:object].value = result ?: [self.class nullPlaceholder];
 }
 
 
 -(BOOL)visitObject:(id)object {
-	return [self resultForVisitedObject:object]?
-		NO
-	:	[_visitor visitObject:object];
+	BOOL shouldRecurse = NO;
+	if (![self resultForVisitedObject:object]) {
+		[self memoizePlaceholderValueForVisitedObject:object];
+		shouldRecurse = [_visitor visitObject:object];
+	}
+	return shouldRecurse;
 }
 
 -(id)leaveObject:(id)object withVisitedChildren:(id)children {
-	id result = [self resultForVisitedObject:object] ?: [self memoizeResult:[_visitor leaveObject:object withVisitedChildren:children] forVisitedObject:object];
-	return result == [HammerMemoizingVisitorNullPlaceholder placeholder]?
+	id result = [self resultForVisitedObject:object].value ?: [self memoizeResultValue:[_visitor leaveObject:object withVisitedChildren:children] forVisitedObject:object];
+	return result == [self.class nullPlaceholder]?
 		nil
 	:	result;
 }
@@ -55,15 +70,6 @@
 @end
 
 
-@implementation HammerMemoizingVisitorNullPlaceholder
-
-+(instancetype)placeholder {
-	static HammerMemoizingVisitorNullPlaceholder *placeholder = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		placeholder = [self new];
-	});
-	return placeholder;
-}
-
+@implementation HammerMemoizingVisitorValue
+@synthesize value = _value;
 @end
