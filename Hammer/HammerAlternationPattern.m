@@ -77,8 +77,9 @@
 	if ([visitor visitObject:self])  {
 		id leftResult = [self.left acceptVisitor:visitor];
 		id rightResult = [self.right acceptVisitor:visitor];
-		if(leftResult || rightResult)
-			childrenResults =  [NSArray arrayWithObjects:leftResult, rightResult, nil];
+		childrenResults = (leftResult || rightResult)?
+			[NSArray arrayWithObjects:leftResult, rightResult, nil]
+		:	[NSArray array];
 	}
 	return [visitor leaveObject:self withVisitedChildren:childrenResults];
 }
