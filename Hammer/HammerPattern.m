@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerDerivativePattern.h"
+#import "HammerIdentitySymbolizer.h"
 #import "HammerMemoizingVisitor.h"
 #import "HammerPattern.h"
 #import "HammerPatternDescriptionVisitor.h"
@@ -21,7 +22,7 @@ BOOL HammerPatternMatch(id<HammerPattern> pattern, id object) {
 
 
 id HammerPatternVisitGraph(id<HammerPattern> pattern, id<HammerVisitor> visitor) {
-	HammerMemoizingVisitor *memoizingVisitor = [[HammerMemoizingVisitor alloc] initWithVisitor:visitor];
+	HammerMemoizingVisitor *memoizingVisitor = [[HammerMemoizingVisitor alloc] initWithVisitor:visitor symbolizer:[HammerIdentitySymbolizer symbolizer]];
 	return [HammerDerivativePattern(pattern) acceptVisitor:memoizingVisitor];
 }
 
