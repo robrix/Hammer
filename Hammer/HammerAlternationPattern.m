@@ -7,6 +7,7 @@
 #import "HammerEpsilonPattern.h"
 #import "HammerList.h"
 
+
 @interface HammerAlternationPattern () <HammerVisitable>
 @end
 
@@ -15,8 +16,6 @@
 	id<HammerDerivativePattern> _right;
 	HammerLazyPattern _lazyLeft;
 	HammerLazyPattern _lazyRight;
-	BOOL _hasMemoizedNullability;
-	BOOL _isNullable;
 }
 
 +(id<HammerPattern>)patternWithPatterns:(NSArray *)patterns {
@@ -47,28 +46,28 @@
 }
 
 
--(BOOL)leastFixedPointNullability {
-	_isNullable = NO;
-	_hasMemoizedNullability = YES;
-	BOOL previous = NO;
-	while ((previous = self.left.isNullable || self.right.isNullable) != _isNullable) {
-		_isNullable = previous;
-	}
-	return _isNullable;
-}
+//-(void)updateRecursiveAttributes:(HammerChangeCell *)change {
+//	[self.left updateRecursiveAttributes:change];
+//	[self.right updateRecursiveAttributes:change];
+//}
+
 
 -(BOOL)isNullable {
-	return _hasMemoizedNullability?
-		_isNullable
-	:	self.leastFixedPointNullability;
+	return !self.isNull && (self.left.isNullable || self.right.isNullable);
 }
 
 -(BOOL)isNull {
 	return self.left.isNull && self.right.isNull;
 }
 
+
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
-	return [HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern([self.left derivativeWithRespectTo:object]) rightPattern:HammerDelayPattern([self.right derivativeWithRespectTo:object])];
+	if (self.left.isNull)
+		return [self.right derivativeWithRespectTo:object];
+	else if (self.right.isNull)
+		return [self.left derivativeWithRespectTo:object];
+	else
+		return [HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern([self.left derivativeWithRespectTo:object]) rightPattern:HammerDelayPattern([self.right derivativeWithRespectTo:object])];
 }
 
 

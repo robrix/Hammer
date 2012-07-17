@@ -5,9 +5,9 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import "HammerAlternationPattern.h"
 #import "HammerConcatenationPattern.h"
-#import "HammerPattern.h"
 #import "HammerEqualsPattern.h"
 #import "HammerRepetitionPattern.h"
+#import "HammerPattern.h"
 
 @interface NSObject (HammerEnumerator)
 
@@ -65,6 +65,20 @@
 	STAssertFalse(HammerPatternMatchSequence(pattern, @"a".objectEnumerator), @"Expected not to match.");
 	STAssertFalse(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"a", nil] objectEnumerator]), @"Expected not to match.");
 	STAssertFalse(HammerPatternMatchSequence(pattern, [[NSArray arrayWithObjects:@"a", @"b", @"c", nil] objectEnumerator]), @"Expected not to match.");
+}
+
+
+-(void)testMatchesRecursively {
+	// this grammar matches ((((x)))) and similar
+	id<HammerPattern> terminal = [HammerEqualsPattern patternWithObject:@"x"];
+	__block id<HammerPattern> either = nil;
+	__block id<HammerPattern> nested = nil;
+	nested = [HammerConcatenationPattern patternWithLeftPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"["]) rightPattern:HammerDelayPattern([HammerConcatenationPattern patternWithLeftPattern:HammerDelayPattern(either) rightPattern:HammerDelayPattern([HammerEqualsPattern patternWithObject:@"]"])])];
+	either = [HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern(nested) rightPattern:HammerDelayPattern(terminal)];
+	
+	STAssertTrue(HammerPatternMatchSequence(either, @"x".objectEnumerator), @"Expected to match.");
+	STAssertTrue(HammerPatternMatchSequence(either, @[@"[", @"x", @"]"].objectEnumerator), @"Expected to match.");
+	STAssertTrue(HammerPatternMatchSequence(either, @[@"[", @"[", @"x", @"]", @"]"].objectEnumerator), @"Expected to match.");
 }
 
 @end

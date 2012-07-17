@@ -2,6 +2,7 @@
 //  Created by Rob Rix on 12-07-01.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
+#import "HammerChangeCell.h"
 #import "HammerEpsilonPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerNullPattern.h"
@@ -17,11 +18,17 @@
 
 @implementation HammerDerivativePatternDecorator {
 	id<HammerPattern> _pattern;
+	NSMutableDictionary *_memoizedDerivationsByTerm;
+	BOOL _hasMemoizedRecursiveAttributes;
+	BOOL _isNullable;
+	BOOL _isNull;
+//	BOOL _isEpsilon;
 }
 
 +(id<HammerDerivativePattern>)derivativePatternWithPattern:(id<HammerPattern>)pattern {
 	HammerDerivativePatternDecorator *decorator = [self new];
 	decorator->_pattern = pattern;
+	decorator->_memoizedDerivationsByTerm = [NSMutableDictionary new];
 	return decorator;
 }
 
@@ -30,24 +37,61 @@
 
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
-	return [_pattern derivativeWithRespectTo:object];
+	id<HammerPattern> derivative = [_memoizedDerivationsByTerm objectForKey:object];
+	if (!derivative) {
+		derivative = [_pattern derivativeWithRespectTo:object];
+		[_memoizedDerivationsByTerm setObject:derivative forKey:object];
+	}
+	return derivative;
+}
+
+-(void)memoizeRecursiveAttributes {
+	if (!_hasMemoizedRecursiveAttributes) {
+		_hasMemoizedRecursiveAttributes = YES;
+		
+		HammerChangeCell *change = nil;
+		do {
+			change = [HammerChangeCell new];
+			
+			[self updateRecursiveAttributes:change];
+		} while(change.changed);
+	}
+}
+
+-(void)updateRecursiveAttributes:(HammerChangeCell *)change {
+	if (![change.visitedPatterns containsObject:self]) {
+		[change.visitedPatterns addObject:self];
+		
+		if ([_pattern respondsToSelector:@selector(updateRecursiveAttributes:)])
+			[(id<HammerDerivativePattern>)_pattern updateRecursiveAttributes:change];
+	}
+	
+#define HammerDidAttributeChange(x) [_pattern respondsToSelector:@selector(x)] && (_ ## x != (_ ## x = ((id<HammerDerivativePattern>)_pattern).x))
+	[change orWith:HammerDidAttributeChange(isNullable)];
+	[change orWith:HammerDidAttributeChange(isNull)];
+//	[change orWith:HammerDidAttributeChange(isEpsilon)];
+#undef HammerDidAttributeChange
 }
 
 
 -(BOOL)isNullable {
-	BOOL isNullable = NO;
-	if ([_pattern respondsToSelector:@selector(isNullable)])
-		isNullable = ((id<HammerDerivativePattern>)_pattern).isNullable;
-	return isNullable;
+	[self memoizeRecursiveAttributes];
+	return _isNullable;
 }
-
 
 -(BOOL)isNull {
-	return [_pattern respondsToSelector:@selector(isNull)] && ((id<HammerDerivativePattern>)_pattern).isNull;
+	[self memoizeRecursiveAttributes];
+	return _isNull;
 }
 
--(BOOL)isEpsilon {
-	return [_pattern respondsToSelector:@selector(isEpsilon)] && ((id<HammerDerivativePattern>)_pattern).isEpsilon;
+//-(BOOL)isEpsilon {
+//	[self memoizeRecursiveAttributes];
+//	return _isEpsilon;
+//}
+
+
+-(NSString *)prettyPrintedDescription {
+	return HammerPatternDescription(_pattern);
 }
 
 

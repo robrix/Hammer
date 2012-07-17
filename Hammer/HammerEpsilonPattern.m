@@ -27,9 +27,9 @@
 }
 
 
--(BOOL)isEpsilon {
-	return YES;
-}
+//-(BOOL)isEpsilon {
+//	return YES;
+//}
 
 
 -(BOOL)isEqual:(id)object {

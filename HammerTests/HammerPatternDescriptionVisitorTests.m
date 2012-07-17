@@ -36,7 +36,7 @@
 
 
 -(void)testDescribesEqualsPatternsAsTheirOperands {
-	STAssertEqualObjects([self visit:[self eq:@"a"]], @"a", @"Expected to match.");
+	STAssertEqualObjects([self visit:[self eq:@"a"]], @"'a'", @"Expected to match.");
 }
 
 -(void)testDescribesEpsilonWithItsSymbol {
@@ -48,15 +48,15 @@
 }
 
 -(void)testDescribesRepetitionSuffixedWithTheKleeneStar {
-	STAssertEqualObjects([self visit:[HammerRepetitionPattern patternWithPattern:HammerDelayPattern([self eq:@"a"])]], @"a*", @"Expected to match.");
+	STAssertEqualObjects([self visit:[HammerRepetitionPattern patternWithPattern:HammerDelayPattern([self eq:@"a"])]], @"'a'*", @"Expected to match.");
 }
 
 -(void)testDescribesAlternationJoinedByPipes {
-	STAssertEqualObjects([self visit:([HammerAlternationPattern patternWithPatterns:@[HammerDelayPattern([self eq:@"a"]), HammerDelayPattern([self eq:@"b"]), HammerDelayPattern([self eq:@"c"])]])], @"a | b | c", @"Expected to match.");
+	STAssertEqualObjects([self visit:([HammerAlternationPattern patternWithPatterns:@[HammerDelayPattern([self eq:@"a"]), HammerDelayPattern([self eq:@"b"]), HammerDelayPattern([self eq:@"c"])]])], @"{'a' | {'b' | 'c'}}", @"Expected to match.");
 }
 
 -(void)testDescribesConcatenationJoinedBySpaces {
-	STAssertEqualObjects([self visit:([HammerConcatenationPattern patternWithPatterns:@[HammerDelayPattern([self eq:@"a"]), HammerDelayPattern([self eq:@"b"]), HammerDelayPattern([self eq:@"c"])]])], @"a b c", @"Expected to match.");
+	STAssertEqualObjects([self visit:([HammerConcatenationPattern patternWithPatterns:@[HammerDelayPattern([self eq:@"a"]), HammerDelayPattern([self eq:@"b"]), HammerDelayPattern([self eq:@"c"])]])], @"('a' ('b' 'c'))", @"Expected to match.");
 }
 
 @end

@@ -39,9 +39,7 @@
 
 
 -(id<NSCopying>)keyForVisitableObject:(id<HammerVisitable>)object {
-	return [object conformsToProtocol:@protocol(NSCopying)]?
-		(id<NSCopying>)object
-	:	[NSNumber numberWithUnsignedInteger:(NSUInteger)object];
+	return [NSNumber numberWithUnsignedInteger:(NSUInteger)object];
 }
 
 -(HammerMemoizedValue *)resultForVisitedObject:(id<HammerVisitable>)object {

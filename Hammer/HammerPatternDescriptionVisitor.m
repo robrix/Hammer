@@ -23,13 +23,13 @@
 	else if ([pattern isEqual:[HammerEpsilonPattern pattern]])
 		description = @"ε";
 	else if ([pattern isKindOfClass:[HammerEqualsPattern class]])
-		description = [[pattern object] description];
+		description = [NSString stringWithFormat:@"'%@'", [[pattern object] description]];
 	else if ([pattern isKindOfClass:[HammerRepetitionPattern class]])
 		description = [children stringByAppendingString:@"*"];
 	else if ([pattern isKindOfClass:[HammerAlternationPattern class]])
-		description = [children componentsJoinedByString:@" | "];
+		description = children? [NSString stringWithFormat:@"{%@}", [children componentsJoinedByString:@" | "]] : nil;
 	else if ([pattern isKindOfClass:[HammerConcatenationPattern class]])
-		description = [children componentsJoinedByString:@" "];
+		description = children? [NSString stringWithFormat:@"(%@)", [children componentsJoinedByString:@" "]] : nil;
 	return description ?: [pattern description];
 }
 

@@ -37,9 +37,9 @@
 }
 
 
--(BOOL)isEpsilon {
-	return self.pattern.isNull || self.pattern.isEpsilon;
-}
+//-(BOOL)isEpsilon {
+//	return self.pattern.isNull || self.pattern.isEpsilon;
+//}
 
 
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
