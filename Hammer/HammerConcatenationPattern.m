@@ -44,12 +44,6 @@
 }
 
 
-//-(void)updateRecursiveAttributes:(HammerChangeCell *)change {
-//	[self.left updateRecursiveAttributes:change];
-//	[self.right updateRecursiveAttributes:change];
-//}
-
-
 -(BOOL)isNullable {
 	return self.left.isNullable && self.right.isNullable;
 }
@@ -58,17 +52,8 @@
 	return self.left.isNull || self.right.isNull;
 }
 
-//-(BOOL)isEpsilon {
-//	return self.left.isEpsilon && self.right.isEpsilon;
-//}
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
-//	if (self.left.isEpsilon)
-//		return [self.right derivativeWithRespectTo:object];
-//	else if (self.right.isEpsilon)
-//		return [self.left derivativeWithRespectTo:object];
-	if (self.left.isNull)
-		return [HammerNullPattern pattern];
 	HammerLazyPattern partial = HammerDelayPattern([HammerConcatenationPattern patternWithLeftPattern:HammerDelayPattern([self.left derivativeWithRespectTo:object]) rightPattern:_lazyRight]);
 	return self.left.isNullable?
 		[HammerAlternationPattern patternWithLeftPattern:HammerDelayPattern([self.right derivativeWithRespectTo:object]) rightPattern:partial]

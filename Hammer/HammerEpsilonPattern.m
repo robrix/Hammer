@@ -27,11 +27,6 @@
 }
 
 
-//-(BOOL)isEpsilon {
-//	return YES;
-//}
-
-
 -(BOOL)isEqual:(id)object {
 	return [object isKindOfClass:self.class];
 }

@@ -22,7 +22,6 @@
 	BOOL _hasMemoizedRecursiveAttributes;
 	BOOL _isNullable;
 	BOOL _isNull;
-//	BOOL _isEpsilon;
 }
 
 +(id<HammerDerivativePattern>)derivativePatternWithPattern:(id<HammerPattern>)pattern {
@@ -69,7 +68,6 @@
 #define HammerDidAttributeChange(x) [_pattern respondsToSelector:@selector(x)] && (_ ## x != (_ ## x = ((id<HammerDerivativePattern>)_pattern).x))
 	[change orWith:HammerDidAttributeChange(isNullable)];
 	[change orWith:HammerDidAttributeChange(isNull)];
-//	[change orWith:HammerDidAttributeChange(isEpsilon)];
 #undef HammerDidAttributeChange
 }
 
@@ -83,11 +81,6 @@
 	[self memoizeRecursiveAttributes];
 	return _isNull;
 }
-
-//-(BOOL)isEpsilon {
-//	[self memoizeRecursiveAttributes];
-//	return _isEpsilon;
-//}
 
 
 -(NSString *)prettyPrintedDescription {

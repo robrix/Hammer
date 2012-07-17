@@ -12,11 +12,8 @@
 @property (nonatomic, readonly, getter = isNullable) BOOL nullable;
 
 @property (nonatomic, readonly, getter = isNull) BOOL null;
-//@property (nonatomic, readonly, getter = isEpsilon) BOOL epsilon;
 
 @property (nonatomic, readonly) NSString *prettyPrintedDescription;
-
-// CFGs are recursive, as are properties relevant to the derivative
 
 -(void)updateRecursiveAttributes:(HammerChangeCell *)change;
 
