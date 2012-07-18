@@ -17,7 +17,7 @@ And it’s fully extensible; add your own patterns with HammerBlockPattern or ju
 Future work includes:
 
 - a lexer
-- a [derivative-based CFG parser](http://matt.might.net/articles/parsing-with-derivatives/)
+- a [derivative-based CFG parser](http://matt.might.net/articles/parsing-with-derivatives/) (a matcher based on Brzozowski's derivative is now implemented! generating parse forests is next)
 - assertions for unit tests a la [Hamcrest](http://code.google.com/p/hamcrest/wiki/TutorialObjectiveC)
 - captures (assignment to the enclosing scope) in patterns, regexps, and parsers
 - parsers for all of the above:
