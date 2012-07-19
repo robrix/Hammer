@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D48A8D8115A12EDE0069AC6F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48A8D8015A12EDE0069AC6F /* Cocoa.framework */; };
+		D48A8D9315A12EDE0069AC6F /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48A8D9215A12EDE0069AC6F /* SenTestingKit.framework */; };
+		D48A8D9415A12EDE0069AC6F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48A8D8015A12EDE0069AC6F /* Cocoa.framework */; };
+		D48A8D9715A12EDE0069AC6F /* libRXTraits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D48A8D7D15A12EDE0069AC6F /* libRXTraits.a */; };
+		D48A8D9D15A12EDE0069AC6F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D48A8D9B15A12EDE0069AC6F /* InfoPlist.strings */; };
+		D48A8DAA15A12F420069AC6F /* RXTrait.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8DA915A12F420069AC6F /* RXTrait.h */; };
+		D48A8DAD15A12F6F0069AC6F /* RXTraitDecorator.h in Headers */ = {isa = PBXBuildFile; fileRef = D48A8DAB15A12F6F0069AC6F /* RXTraitDecorator.h */; };
+		D48A8DAE15A12F6F0069AC6F /* RXTraitDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8DAC15A12F6F0069AC6F /* RXTraitDecorator.m */; };
+		D48A8DB015A132F20069AC6F /* RXTraitDecoratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A8DAF15A132F20069AC6F /* RXTraitDecoratorTests.m */; };
+		D499678815B65F2A00CB8F57 /* RXTrait.m in Sources */ = {isa = PBXBuildFile; fileRef = D499678715B65F2A00CB8F57 /* RXTrait.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D48A8D9515A12EDE0069AC6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D48A8D7415A12EDD0069AC6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D48A8D7C15A12EDE0069AC6F;
+			remoteInfo = RXTraits;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D48A8D7D15A12EDE0069AC6F /* libRXTraits.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXTraits.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D48A8D8015A12EDE0069AC6F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		D48A8D8315A12EDE0069AC6F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D48A8D8415A12EDE0069AC6F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D48A8D8515A12EDE0069AC6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D48A8D8815A12EDE0069AC6F /* RXTraits-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXTraits-Prefix.pch"; sourceTree = "<group>"; };
+		D48A8D9115A12EDE0069AC6F /* RXTraitsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RXTraitsTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D48A8D9215A12EDE0069AC6F /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		D48A8D9A15A12EDE0069AC6F /* RXTraitsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RXTraitsTests-Info.plist"; sourceTree = "<group>"; };
+		D48A8D9C15A12EDE0069AC6F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D48A8DA915A12F420069AC6F /* RXTrait.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXTrait.h; sourceTree = "<group>"; };
+		D48A8DAB15A12F6F0069AC6F /* RXTraitDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXTraitDecorator.h; sourceTree = "<group>"; };
+		D48A8DAC15A12F6F0069AC6F /* RXTraitDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXTraitDecorator.m; sourceTree = "<group>"; };
+		D48A8DAF15A132F20069AC6F /* RXTraitDecoratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXTraitDecoratorTests.m; sourceTree = "<group>"; };
+		D499678715B65F2A00CB8F57 /* RXTrait.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXTrait.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D48A8D7A15A12EDE0069AC6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D48A8D8115A12EDE0069AC6F /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D48A8D8D15A12EDE0069AC6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D48A8D9315A12EDE0069AC6F /* SenTestingKit.framework in Frameworks */,
+				D48A8D9415A12EDE0069AC6F /* Cocoa.framework in Frameworks */,
+				D48A8D9715A12EDE0069AC6F /* libRXTraits.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D48A8D7215A12EDD0069AC6F = {
+			isa = PBXGroup;
+			children = (
+				D48A8D8615A12EDE0069AC6F /* RXTraits */,
+				D48A8D9815A12EDE0069AC6F /* RXTraitsTests */,
+				D48A8D7F15A12EDE0069AC6F /* Frameworks */,
+				D48A8D7E15A12EDE0069AC6F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D48A8D7E15A12EDE0069AC6F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D48A8D7D15A12EDE0069AC6F /* libRXTraits.a */,
+				D48A8D9115A12EDE0069AC6F /* RXTraitsTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D48A8D7F15A12EDE0069AC6F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D48A8D8015A12EDE0069AC6F /* Cocoa.framework */,
+				D48A8D9215A12EDE0069AC6F /* SenTestingKit.framework */,
+				D48A8D8215A12EDE0069AC6F /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D48A8D8215A12EDE0069AC6F /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D48A8D8315A12EDE0069AC6F /* AppKit.framework */,
+				D48A8D8415A12EDE0069AC6F /* CoreData.framework */,
+				D48A8D8515A12EDE0069AC6F /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		D48A8D8615A12EDE0069AC6F /* RXTraits */ = {
+			isa = PBXGroup;
+			children = (
+				D48A8DA915A12F420069AC6F /* RXTrait.h */,
+				D499678715B65F2A00CB8F57 /* RXTrait.m */,
+				D48A8DAB15A12F6F0069AC6F /* RXTraitDecorator.h */,
+				D48A8DAC15A12F6F0069AC6F /* RXTraitDecorator.m */,
+				D48A8D8715A12EDE0069AC6F /* Supporting Files */,
+			);
+			path = RXTraits;
+			sourceTree = "<group>";
+		};
+		D48A8D8715A12EDE0069AC6F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D48A8D8815A12EDE0069AC6F /* RXTraits-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D48A8D9815A12EDE0069AC6F /* RXTraitsTests */ = {
+			isa = PBXGroup;
+			children = (
+				D48A8D9915A12EDE0069AC6F /* Supporting Files */,
+				D48A8DAF15A132F20069AC6F /* RXTraitDecoratorTests.m */,
+			);
+			path = RXTraitsTests;
+			sourceTree = "<group>";
+		};
+		D48A8D9915A12EDE0069AC6F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D48A8D9A15A12EDE0069AC6F /* RXTraitsTests-Info.plist */,
+				D48A8D9B15A12EDE0069AC6F /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D48A8D7B15A12EDE0069AC6F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D48A8DAA15A12F420069AC6F /* RXTrait.h in Headers */,
+				D48A8DAD15A12F6F0069AC6F /* RXTraitDecorator.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D48A8D7C15A12EDE0069AC6F /* RXTraits */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D48A8DA315A12EDE0069AC6F /* Build configuration list for PBXNativeTarget "RXTraits" */;
+			buildPhases = (
+				D48A8D7915A12EDE0069AC6F /* Sources */,
+				D48A8D7A15A12EDE0069AC6F /* Frameworks */,
+				D48A8D7B15A12EDE0069AC6F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RXTraits;
+			productName = RXTraits;
+			productReference = D48A8D7D15A12EDE0069AC6F /* libRXTraits.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D48A8D9015A12EDE0069AC6F /* RXTraitsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D48A8DA615A12EDE0069AC6F /* Build configuration list for PBXNativeTarget "RXTraitsTests" */;
+			buildPhases = (
+				D48A8D8C15A12EDE0069AC6F /* Sources */,
+				D48A8D8D15A12EDE0069AC6F /* Frameworks */,
+				D48A8D8E15A12EDE0069AC6F /* Resources */,
+				D48A8D8F15A12EDE0069AC6F /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D48A8D9615A12EDE0069AC6F /* PBXTargetDependency */,
+			);
+			name = RXTraitsTests;
+			productName = RXTraitsTests;
+			productReference = D48A8D9115A12EDE0069AC6F /* RXTraitsTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D48A8D7415A12EDD0069AC6F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = RX;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Monochrome Industries";
+			};
+			buildConfigurationList = D48A8D7715A12EDD0069AC6F /* Build configuration list for PBXProject "RXTraits" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D48A8D7215A12EDD0069AC6F;
+			productRefGroup = D48A8D7E15A12EDE0069AC6F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D48A8D7C15A12EDE0069AC6F /* RXTraits */,
+				D48A8D9015A12EDE0069AC6F /* RXTraitsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D48A8D8E15A12EDE0069AC6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D48A8D9D15A12EDE0069AC6F /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D48A8D8F15A12EDE0069AC6F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D48A8D7915A12EDE0069AC6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D48A8DAE15A12F6F0069AC6F /* RXTraitDecorator.m in Sources */,
+				D499678815B65F2A00CB8F57 /* RXTrait.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D48A8D8C15A12EDE0069AC6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D48A8DB015A132F20069AC6F /* RXTraitDecoratorTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D48A8D9615A12EDE0069AC6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D48A8D7C15A12EDE0069AC6F /* RXTraits */;
+			targetProxy = D48A8D9515A12EDE0069AC6F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D48A8D9B15A12EDE0069AC6F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D48A8D9C15A12EDE0069AC6F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D48A8DA115A12EDE0069AC6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D48A8DA215A12EDE0069AC6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D48A8DA415A12EDE0069AC6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RXTraits/RXTraits-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D48A8DA515A12EDE0069AC6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RXTraits/RXTraits-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D48A8DA715A12EDE0069AC6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RXTraits/RXTraits-Prefix.pch";
+				INFOPLIST_FILE = "RXTraitsTests/RXTraitsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D48A8DA815A12EDE0069AC6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RXTraits/RXTraits-Prefix.pch";
+				INFOPLIST_FILE = "RXTraitsTests/RXTraitsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D48A8D7715A12EDD0069AC6F /* Build configuration list for PBXProject "RXTraits" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D48A8DA115A12EDE0069AC6F /* Debug */,
+				D48A8DA215A12EDE0069AC6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D48A8DA315A12EDE0069AC6F /* Build configuration list for PBXNativeTarget "RXTraits" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D48A8DA415A12EDE0069AC6F /* Debug */,
+				D48A8DA515A12EDE0069AC6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D48A8DA615A12EDE0069AC6F /* Build configuration list for PBXNativeTarget "RXTraitsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D48A8DA715A12EDE0069AC6F /* Debug */,
+				D48A8DA815A12EDE0069AC6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D48A8D7415A12EDD0069AC6F /* Project object */;
+}

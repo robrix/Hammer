@@ -1,0 +1,30 @@
+#RXTraits
+
+Traits are a tool for leveraging composition and interface inheritance to build a more flexible result than can be achieved with implementation inheritance alone. RXTraits applies them to instances on a case by case basis using dynamic subclassing:
+
+	@protocol Herbivore
+	-(void)eatPlants;
+	@end
+	
+	@interface HerbivoreTrait : NSObject <RXTrait, Herbivore>
+	@end
+	@implementation HerbivoreTrait
+	
+	+(Protocol *)traitProtocol {
+		return @protocol(Herbivore);
+	}
+	
+	-(void)eatPlants {
+		// with gusto
+	}
+	
+	@end
+	
+	…
+	
+	Lion<Herbivore> *omnivorousLion = RXTraitApply([HerbivoreTrait class], [Lion new]);
+	[omnivorousLion eatPlants];
+
+Note that unlike [RXConcreteProtocol](https://github.com/robrix/RXConcreteProtocol), this doesn’t apply to the class as a whole; only the instances passed to `RXTraitApply` have the trait applied to them.
+
+NB: You probably can’t use super in your trait methods. This probably isn’t that big a deal.
