@@ -2,7 +2,6 @@
 //  Created by Rob Rix on 12-07-01.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-#import "HammerChangeCell.h"
 #import "HammerEpsilonPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerNullPattern.h"
@@ -48,27 +47,17 @@
 	if (!_hasMemoizedRecursiveAttributes) {
 		_hasMemoizedRecursiveAttributes = YES;
 		
-		HammerChangeCell *change = nil;
+		BOOL changed = NO;
 		do {
-			change = [HammerChangeCell new];
-			
-			[self updateRecursiveAttributes:change];
-		} while(change.changed);
-	}
-}
-
--(void)updateRecursiveAttributes:(HammerChangeCell *)change {
-	if (![change.visitedPatterns containsObject:self]) {
-		[change.visitedPatterns addObject:self];
-		
-		if ([_pattern respondsToSelector:@selector(updateRecursiveAttributes:)])
-			[(id<HammerDerivativePattern>)_pattern updateRecursiveAttributes:change];
-	}
-	
-#define HammerDidAttributeChange(x) [_pattern respondsToSelector:@selector(x)] && (_ ## x != (_ ## x = ((id<HammerDerivativePattern>)_pattern).x))
-	[change orWith:HammerDidAttributeChange(isNullable)];
-	[change orWith:HammerDidAttributeChange(isNull)];
+			changed = NO;
+#define HammerDidAttributeChange(x) ([_pattern respondsToSelector:@selector(x)] && (_ ## x != (_ ## x = ((id<HammerDerivativePattern>)_pattern).x)))
+			changed =
+				changed
+			||	HammerDidAttributeChange(isNullable)
+			||	HammerDidAttributeChange(isNull);
 #undef HammerDidAttributeChange
+		} while(changed);
+	}
 }
 
 

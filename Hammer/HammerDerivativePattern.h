@@ -15,8 +15,6 @@
 
 @property (nonatomic, readonly) NSString *prettyPrintedDescription;
 
--(void)updateRecursiveAttributes:(HammerChangeCell *)change;
-
 @end
 
 id<HammerDerivativePattern> HammerDerivativePattern(id<HammerPattern> pattern);
