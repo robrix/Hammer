@@ -6,7 +6,7 @@
 #import "HammerConcatenationPattern.h"
 #import "HammerEpsilonPattern.h"
 #import "HammerEqualsPattern.h"
-#import "HammerNullPattern.h"
+#import "HammerEmptyPattern.h"
 #import "HammerPatternDescriptionVisitor.h"
 #import "HammerRepetitionPattern.h"
 
@@ -18,7 +18,7 @@
 
 -(id)leaveObject:(id)pattern withVisitedChildren:(id)children {
 	NSString *description = nil;
-	if ([pattern isEqual:[HammerNullPattern pattern]])
+	if ([pattern isEqual:[HammerEmptyPattern pattern]])
 		description = @"∅";
 	else if ([pattern isEqual:[HammerEpsilonPattern pattern]])
 		description = @"ε";

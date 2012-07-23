@@ -3,7 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerEpsilonPattern.h"
-#import "HammerNullPattern.h"
+#import "HammerEmptyPattern.h"
 
 @implementation HammerEpsilonPattern
 
@@ -18,7 +18,7 @@
 
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
-	return [HammerNullPattern pattern];
+	return [HammerEmptyPattern pattern];
 }
 
 

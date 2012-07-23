@@ -4,7 +4,7 @@
 
 #import "HammerEpsilonPattern.h"
 #import "HammerBlockPattern.h"
-#import "HammerNullPattern.h"
+#import "HammerEmptyPattern.h"
 
 @implementation HammerBlockPattern {
 	HammerPatternBlock _block;
@@ -20,7 +20,7 @@
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return _block(object)?
 		[HammerEpsilonPattern pattern]
-	:	[HammerNullPattern pattern];
+	:	[HammerEmptyPattern pattern];
 }
 
 

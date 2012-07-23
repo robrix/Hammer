@@ -4,7 +4,7 @@
 
 #import "HammerEpsilonPattern.h"
 #import "HammerDerivativePattern.h"
-#import "HammerNullPattern.h"
+#import "HammerEmptyPattern.h"
 #import "HammerRepetitionPattern.h"
 
 @interface HammerDerivativePatternDecorator : NSObject <HammerDerivativePattern>

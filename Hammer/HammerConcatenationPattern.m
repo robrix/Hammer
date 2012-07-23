@@ -7,7 +7,7 @@
 #import "HammerConcatenationPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerList.h"
-#import "HammerNullPattern.h"
+#import "HammerEmptyPattern.h"
 
 @implementation HammerConcatenationPattern {
 	id<HammerDerivativePattern> _left;

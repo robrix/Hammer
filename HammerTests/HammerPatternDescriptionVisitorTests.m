@@ -8,7 +8,7 @@
 #import "HammerDerivativePattern.h"
 #import "HammerEpsilonPattern.h"
 #import "HammerEqualsPattern.h"
-#import "HammerNullPattern.h"
+#import "HammerEmptyPattern.h"
 #import "HammerPatternDescriptionVisitor.h"
 #import "HammerRepetitionPattern.h"
 
@@ -44,7 +44,7 @@
 }
 
 -(void)testDescribesNullWithItsSymbol {
-	STAssertEqualObjects([self visit:[HammerNullPattern pattern]], @"∅", @"Expected to match.");
+	STAssertEqualObjects([self visit:[HammerEmptyPattern pattern]], @"∅", @"Expected to match.");
 }
 
 -(void)testDescribesRepetitionSuffixedWithTheKleeneStar {

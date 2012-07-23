@@ -4,7 +4,7 @@
 
 #import "HammerEpsilonPattern.h"
 #import "HammerEqualsPattern.h"
-#import "HammerNullPattern.h"
+#import "HammerEmptyPattern.h"
 
 @implementation HammerEqualsPattern {
 	id _object;
@@ -30,7 +30,7 @@
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return [self match:object]?
 		[HammerEpsilonPattern pattern]
-	:	[HammerNullPattern pattern];
+	:	[HammerEmptyPattern pattern];
 }
 
 
