@@ -4,7 +4,7 @@
 
 #import "HammerAlternationPattern.h"
 #import "HammerDerivativePattern.h"
-#import "HammerEpsilonPattern.h"
+#import "HammerNullPattern.h"
 #import "HammerList.h"
 
 
@@ -20,7 +20,7 @@
 
 +(id<HammerPattern>)patternWithPatterns:(NSArray *)patterns {
 	HammerLazyPattern lazy = HammerArrayToList(patterns, 0, ^{
-		return (id)HammerDelayPattern([HammerEpsilonPattern pattern]);
+		return (id)HammerDelayPattern([HammerNullPattern pattern]);
 	}, ^(id (^pattern)()) {
 		return (id)pattern;
 	}, ^(id (^left)(), id (^right)()) {

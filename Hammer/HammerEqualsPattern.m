@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 12-06-25.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-#import "HammerEpsilonPattern.h"
+#import "HammerNullPattern.h"
 #import "HammerEqualsPattern.h"
 #import "HammerEmptyPattern.h"
 
@@ -29,7 +29,7 @@
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object {
 	return [self match:object]?
-		[HammerEpsilonPattern pattern]
+		[HammerNullPattern pattern]
 	:	[HammerEmptyPattern pattern];
 }
 

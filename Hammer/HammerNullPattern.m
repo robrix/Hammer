@@ -1,14 +1,14 @@
-//  HammerEpsilonPattern.m
+//  HammerNullPattern.m
 //  Created by Rob Rix on 12-06-27.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-#import "HammerEpsilonPattern.h"
+#import "HammerNullPattern.h"
 #import "HammerEmptyPattern.h"
 
-@implementation HammerEpsilonPattern
+@implementation HammerNullPattern
 
-+(HammerEpsilonPattern *)pattern {
-	static HammerEpsilonPattern *pattern = nil;
++(HammerNullPattern *)pattern {
+	static HammerNullPattern *pattern = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		pattern = [self new];

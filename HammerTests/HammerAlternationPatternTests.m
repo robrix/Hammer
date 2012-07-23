@@ -4,7 +4,7 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "HammerAlternationPattern.h"
-#import "HammerEpsilonPattern.h"
+#import "HammerNullPattern.h"
 #import "HammerEqualsPattern.h"
 
 @interface HammerAlternationPatternTests : SenTestCase

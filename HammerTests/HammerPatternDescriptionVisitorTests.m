@@ -6,7 +6,7 @@
 #import "HammerAlternationPattern.h"
 #import "HammerConcatenationPattern.h"
 #import "HammerDerivativePattern.h"
-#import "HammerEpsilonPattern.h"
+#import "HammerNullPattern.h"
 #import "HammerEqualsPattern.h"
 #import "HammerEmptyPattern.h"
 #import "HammerPatternDescriptionVisitor.h"
@@ -40,7 +40,7 @@
 }
 
 -(void)testDescribesEpsilonWithItsSymbol {
-	STAssertEqualObjects([self visit:[HammerEpsilonPattern pattern]], @"ε", @"Expected to match.");
+	STAssertEqualObjects([self visit:[HammerNullPattern pattern]], @"ε", @"Expected to match.");
 }
 
 -(void)testDescribesNullWithItsSymbol {

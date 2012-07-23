@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 12-07-01.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
-#import "HammerEpsilonPattern.h"
+#import "HammerNullPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerEmptyPattern.h"
 #import "HammerRepetitionPattern.h"

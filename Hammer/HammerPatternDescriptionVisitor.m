@@ -4,7 +4,7 @@
 
 #import "HammerAlternationPattern.h"
 #import "HammerConcatenationPattern.h"
-#import "HammerEpsilonPattern.h"
+#import "HammerNullPattern.h"
 #import "HammerEqualsPattern.h"
 #import "HammerEmptyPattern.h"
 #import "HammerPatternDescriptionVisitor.h"
@@ -20,7 +20,7 @@
 	NSString *description = nil;
 	if ([pattern isEqual:[HammerEmptyPattern pattern]])
 		description = @"∅";
-	else if ([pattern isEqual:[HammerEpsilonPattern pattern]])
+	else if ([pattern isEqual:[HammerNullPattern pattern]])
 		description = @"ε";
 	else if ([pattern isKindOfClass:[HammerEqualsPattern class]])
 		description = [NSString stringWithFormat:@"'%@'", [[pattern object] description]];

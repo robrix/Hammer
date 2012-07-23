@@ -3,7 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerAlternationPattern.h"
-#import "HammerEpsilonPattern.h"
+#import "HammerNullPattern.h"
 #import "HammerConcatenationPattern.h"
 #import "HammerDerivativePattern.h"
 #import "HammerList.h"
@@ -18,7 +18,7 @@
 
 +(id<HammerPattern>)patternWithPatterns:(NSArray *)patterns {
 	HammerLazyPattern lazy = HammerArrayToList(patterns, 0, ^{
-		return (id)HammerDelayPattern([HammerEpsilonPattern pattern]);
+		return (id)HammerDelayPattern([HammerNullPattern pattern]);
 	}, ^(id (^pattern)()) {
 		return (id)pattern;
 	}, ^(id (^left)(), id (^right)()) {
