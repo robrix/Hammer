@@ -16,7 +16,7 @@
 }
 
 
--(BOOL)isNull {
+-(BOOL)isEmpty {
 	return YES;
 }
 

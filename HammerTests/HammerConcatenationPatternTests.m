@@ -13,7 +13,7 @@
 @implementation HammerConcatenationPatternTests
 
 -(void)testNullaryListsBecomeEpsilon {
-	STAssertEqualObjects([HammerConcatenationPattern patternWithPatterns:[NSArray array]], [HammerEpsilonPattern pattern], @"Expected to match.");
+	STAssertEqualObjects([HammerConcatenationPattern patternWithPatterns:[NSArray array]], [HammerNullPattern pattern], @"Expected to match.");
 }
 
 -(void)testUnaryListsBecomeIdentity {

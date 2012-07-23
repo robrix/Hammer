@@ -47,11 +47,11 @@
 
 
 -(BOOL)isNullable {
-	return !self.isNull && (self.left.isNullable || self.right.isNullable);
+	return !self.isEmpty && (self.left.isNullable || self.right.isNullable);
 }
 
--(BOOL)isNull {
-	return self.left.isNull && self.right.isNull;
+-(BOOL)isEmpty {
+	return self.left.isEmpty && self.right.isEmpty;
 }
 
 

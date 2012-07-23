@@ -11,7 +11,7 @@
 
 @property (nonatomic, readonly, getter = isNullable) BOOL nullable;
 
-@property (nonatomic, readonly, getter = isNull) BOOL null;
+@property (nonatomic, readonly, getter = isEmpty) BOOL empty;
 
 @property (nonatomic, readonly) NSString *prettyPrintedDescription;
 

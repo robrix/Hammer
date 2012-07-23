@@ -20,7 +20,7 @@
 	NSMutableDictionary *_memoizedDerivationsByTerm;
 	BOOL _hasMemoizedRecursiveAttributes;
 	BOOL _isNullable;
-	BOOL _isNull;
+	BOOL _isEmpty;
 }
 
 +(id<HammerDerivativePattern>)derivativePatternWithPattern:(id<HammerPattern>)pattern {
@@ -54,7 +54,7 @@
 			changed =
 				changed
 			||	HammerDidAttributeChange(isNullable)
-			||	HammerDidAttributeChange(isNull);
+			||	HammerDidAttributeChange(isEmpty);
 #undef HammerDidAttributeChange
 		} while(changed);
 	}
@@ -66,9 +66,9 @@
 	return _isNullable;
 }
 
--(BOOL)isNull {
+-(BOOL)isEmpty {
 	[self memoizeRecursiveAttributes];
-	return _isNull;
+	return _isEmpty;
 }
 
 

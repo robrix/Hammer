@@ -18,7 +18,7 @@ BOOL HammerPatternMatchSequence(id<HammerPattern> _pattern, NSEnumerator *sequen
 }
 
 BOOL HammerPatternMatch(id<HammerPattern> pattern, id object) {
-	return !HammerDerivativePattern([pattern derivativeWithRespectTo:object]).isNull;
+	return !HammerDerivativePattern([pattern derivativeWithRespectTo:object]).isEmpty;
 }
 
 

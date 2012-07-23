@@ -48,8 +48,8 @@
 	return self.left.isNullable && self.right.isNullable;
 }
 
--(BOOL)isNull {
-	return self.left.isNull || self.right.isNull;
+-(BOOL)isEmpty {
+	return self.left.isEmpty || self.right.isEmpty;
 }
 
 

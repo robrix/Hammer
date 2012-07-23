@@ -30,8 +30,8 @@
 }
 
 
--(void)testNullaryListsBecomeEpsilon {
-	STAssertEqualObjects([HammerAlternationPattern patternWithPatterns:[NSArray array]], [HammerEpsilonPattern pattern], @"Expected to match.");
+-(void)testNullaryListsBecomeNullPattern {
+	STAssertEqualObjects([HammerAlternationPattern patternWithPatterns:[NSArray array]], [HammerNullPattern pattern], @"Expected to match.");
 }
 
 -(void)testUnaryListsBecomeIdentity {
