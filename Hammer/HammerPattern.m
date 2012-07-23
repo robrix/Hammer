@@ -11,7 +11,6 @@
 BOOL HammerPatternMatchSequence(id<HammerPattern> _pattern, NSEnumerator *sequence) {
 	id<HammerDerivativePattern> pattern = HammerDerivativePattern(_pattern);
 	id term = [sequence nextObject];
-	NSLog(@"%@", HammerPatternDescription(pattern));
 	return term?
 		HammerPatternMatchSequence([pattern derivativeWithRespectTo:term], sequence)
 	:	pattern.isNullable;
