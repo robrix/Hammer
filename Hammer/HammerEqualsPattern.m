@@ -49,9 +49,4 @@
 	return [NSString stringWithFormat:@"<%@: %lx %@>", self.class, (NSUInteger)self, _object];
 }
 
-
--(id)copyWithZone:(NSZone *)zone {
-	return self;
-}
-
 @end

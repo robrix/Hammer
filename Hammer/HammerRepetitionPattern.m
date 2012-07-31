@@ -56,9 +56,4 @@
 	return [self isEqualToRepetitionPattern:object];
 }
 
-
--(id)copyWithZone:(NSZone *)zone {
-	return self;
-}
-
 @end

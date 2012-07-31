@@ -4,7 +4,7 @@
 
 #import <Hammer/HammerVisitor.h>
 
-@protocol HammerPattern <NSObject, NSCopying>
+@protocol HammerPattern <NSObject>
 
 -(id<HammerPattern>)derivativeWithRespectTo:(id)object;
 

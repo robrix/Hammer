@@ -7,7 +7,7 @@
 
 @class HammerChangeCell;
 
-@protocol HammerDerivativePattern <HammerPattern, HammerVisitable>
+@protocol HammerDerivativePattern <HammerPattern, HammerVisitable, NSCopying>
 
 @property (nonatomic, readonly, getter = isNullable) BOOL nullable;
 

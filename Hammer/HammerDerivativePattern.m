@@ -95,6 +95,7 @@
 	&&	[self.pattern isEqual:[object pattern]];
 }
 
+
 -(id)copyWithZone:(NSZone *)zone {
 	return self;
 }

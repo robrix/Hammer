@@ -31,9 +31,4 @@
 	return [object isKindOfClass:self.class];
 }
 
-
--(id)copyWithZone:(NSZone *)zone {
-	return self;
-}
-
 @end

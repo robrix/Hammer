@@ -84,9 +84,4 @@
 	return [self isEqualToAlternationPattern:object];
 }
 
-
--(id)copyWithZone:(NSZone *)zone {
-	return self;
-}
-
 @end

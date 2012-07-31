@@ -23,9 +23,4 @@
 	:	[HammerEmptyPattern pattern];
 }
 
-
--(id)copyWithZone:(NSZone *)zone {
-	return self;
-}
-
 @end
