@@ -8,40 +8,40 @@
 #import "HammerNullReductionParser.h"
 
 @implementation HammerConcatenationParser {
-	HammerParser *_left;
-	HammerParser *_right;
-	HammerLazyParser _lazyLeft;
-	HammerLazyParser _lazyRight;
+	HammerParser *_first;
+	HammerParser *_second;
+	HammerLazyParser _lazyFirst;
+	HammerLazyParser _lazySecond;
 }
 
-+(instancetype)parserWithLeft:(HammerLazyParser)left right:(HammerLazyParser)right {
++(instancetype)parserWithFirst:(HammerLazyParser)first second:(HammerLazyParser)second {
 	HammerConcatenationParser *parser = [self new];
-	parser->_lazyLeft = left;
-	parser->_lazyRight = right;
+	parser->_lazyFirst = first;
+	parser->_lazySecond = second;
 	return parser;
 }
 
 
--(HammerParser *)left {
-	return HammerMemoizedValue(_left, HammerForce(_lazyLeft));
+-(HammerParser *)first {
+	return HammerMemoizedValue(_first, HammerForce(_lazyFirst));
 }
 
--(HammerParser *)right {
-	return HammerMemoizedValue(_right, HammerForce(_lazyRight));
+-(HammerParser *)second {
+	return HammerMemoizedValue(_second, HammerForce(_lazySecond));
 }
 
 
 -(HammerParser *)parseDerive:(id)term {
-	HammerLazyParser nulled = HammerDelay([HammerConcatenationParser parserWithLeft:HammerDelay([self.left parse:term]) right:_lazyRight]);
-	return self.left.canParseNull?
-		[HammerAlternationParser parserWithLeft:HammerDelay([HammerConcatenationParser parserWithLeft:HammerDelay([HammerNullReductionParser parserWithParseTrees:[self.left parseNull]]) right:HammerDelay([self.right parse:term])]) right:nulled]
+	HammerLazyParser nulled = HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([self.first parse:term]) second:_lazySecond]);
+	return self.first.canParseNull?
+		[HammerAlternationParser parserWithLeft:HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullReductionParser parserWithParseTrees:[self.first parseNull]]) second:HammerDelay([self.second parse:term])]) right:nulled]
 	:	nulled();
 }
 
 -(NSSet *)parseNullRecursive {
 	NSMutableSet *trees = [NSMutableSet set];
-	for(id l in [self.left parseNull]) {
-		for(id r in [self.right parseNull]) {
+	for(id l in [self.first parseNull]) {
+		for(id r in [self.second parseNull]) {
 			// this is a really horrible cons cell, don’t do this
 			[trees addObject:[NSArray arrayWithObjects:l, r, nil]];
 		}
@@ -51,7 +51,7 @@
 
 
 -(BOOL)canParseNullRecursive {
-	return self.left.canParseNull && self.right.canParseNull;
+	return self.first.canParseNull && self.second.canParseNull;
 }
 
 
@@ -59,12 +59,12 @@
 	NSMutableArray *childResults = nil;
 	if ([visitor visitObject:self]) {
 		childResults = [NSMutableArray new];
-		id left = [self.left acceptVisitor:visitor];
-		id right = [self.right acceptVisitor:visitor];
-		if (left)
-			[childResults addObject:left];
-		if (right)
-			[childResults addObject:right];
+		id first = [self.first acceptVisitor:visitor];
+		id second = [self.second acceptVisitor:visitor];
+		if (first)
+			[childResults addObject:first];
+		if (second)
+			[childResults addObject:second];
 	}
 	return [visitor leaveObject:self withVisitedChildren:childResults];
 }

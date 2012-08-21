@@ -24,7 +24,7 @@
 
 
 -(HammerParser *)parse:(id)term {
-	return [HammerConcatenationParser parserWithLeft:HammerDelay([self.pattern parse:term]) right:HammerDelay(self)];
+	return [HammerConcatenationParser parserWithFirst:HammerDelay([self.pattern parse:term]) second:HammerDelay(self)];
 }
 
 -(NSSet *)parseNull {

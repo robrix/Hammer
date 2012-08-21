@@ -6,6 +6,6 @@
 
 @interface HammerConcatenationParser : HammerParser
 
-+(instancetype)parserWithLeft:(HammerLazyParser)left right:(HammerLazyParser)right;
++(instancetype)parserWithFirst:(HammerLazyParser)first second:(HammerLazyParser)second;
 
 @end
