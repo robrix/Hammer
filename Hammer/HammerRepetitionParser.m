@@ -1,0 +1,48 @@
+//  HammerRepetitionParser.m
+//  Created by Rob Rix on 2012-08-04.
+//  Copyright (c) 2012 Monochrome Industries. All rights reserved.
+
+#import "HammerConcatenationParser.h"
+#import "HammerMemoization.h"
+#import "HammerRepetitionParser.h"
+
+@implementation HammerRepetitionParser {
+	HammerParser *_parser;
+	HammerLazyParser _lazyParser;
+}
+
++(instancetype)parserWithParser:(HammerLazyParser)parser {
+	HammerRepetitionParser *instance = [self new];
+	instance->_lazyParser = parser;
+	return instance;
+}
+
+
+-(HammerParser *)pattern {
+	return HammerMemoizedValue(_parser, HammerForce(_lazyParser));
+}
+
+
+-(HammerParser *)parse:(id)term {
+	return [HammerConcatenationParser parserWithLeft:HammerDelay([self.pattern parse:term]) right:HammerDelay(self)];
+}
+
+-(NSSet *)parseNull {
+	return [NSSet setWithObject:[NSNull null]];
+}
+
+
+-(BOOL)canParseNull {
+	return YES;
+}
+
+
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	id child = nil;
+	if ([visitor visitObject:self]) {
+		child = [self.pattern acceptVisitor:visitor];
+	}
+	return [visitor leaveObject:self withVisitedChildren:child];
+}
+
+@end

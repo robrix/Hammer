@@ -20,6 +20,18 @@ BOOL HammerPatternMatch(id<HammerPattern> pattern, id object) {
 	return !HammerDerivativePattern([pattern derivativeWithRespectTo:object]).isEmpty;
 }
 
+id HammerParseNull(id<HammerDerivativePattern> pattern) {
+	return nil;
+}
+
+id HammerParse(id<HammerPattern> _pattern, NSEnumerator *sequence) {
+	id<HammerDerivativePattern> pattern = HammerDerivativePattern(_pattern);
+	id term = [sequence nextObject];
+	return term?
+		HammerParse([pattern derivativeWithRespectTo:term], sequence)
+	:	HammerParseNull(pattern);
+}
+
 
 id HammerPatternVisitGraph(id<HammerPattern> pattern, id<HammerVisitor> visitor) {
 	HammerMemoizingVisitor *memoizingVisitor = [[HammerMemoizingVisitor alloc] initWithVisitor:visitor symbolizer:[HammerIdentitySymbolizer symbolizer]];
