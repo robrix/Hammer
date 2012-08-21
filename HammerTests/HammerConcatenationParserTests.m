@@ -14,10 +14,8 @@
 
 -(void)testParsesSequentially {
 	HammerConcatenationParser *parser = [HammerConcatenationParser parserWithLeft:HammerDelay([HammerTermParser parserWithTerm:@"a"]) right:HammerDelay([HammerTermParser parserWithTerm:@"b"])];
-	HammerParser *intermediate = [parser parse:@"a"];
-	STAssertEqualObjects([intermediate parseNull], [NSSet setWithObject:@"a"], @"Expected equal.");
-	HammerParser *final = [intermediate parse:@"b"];
-	STAssertEqualObjects([final parseNull], ([NSSet setWithObjects:@"a", @"b", nil]), @"Expected equal.");
+	NSSet *trees = [parser parseFull:@[@"a", @"b"]];
+	STAssertEqualObjects(trees, ([NSSet setWithObjects:@"a", @"b", nil]), @"Expected equal.");
 }
 
 @end

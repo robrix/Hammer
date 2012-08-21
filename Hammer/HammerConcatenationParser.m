@@ -31,7 +31,7 @@
 }
 
 
--(HammerParser *)parsePartial:(id)term {
+-(HammerParser *)parseDerive:(id)term {
 	HammerLazyParser nulled = HammerDelay([HammerConcatenationParser parserWithLeft:HammerDelay([self.left parse:term]) right:_lazyRight]);
 	return self.left.canParseNull?
 		[HammerAlternationParser parserWithLeft:HammerDelay([HammerConcatenationParser parserWithLeft:HammerDelay([HammerNullReductionParser parserWithParseTrees:[self.left parseNull]]) right:HammerDelay([self.right parse:term])]) right:nulled]

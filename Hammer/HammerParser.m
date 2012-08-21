@@ -25,7 +25,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 
--(HammerParser *)parsePartial:(id)term {
+-(HammerParser *)parseDerive:(id)term {
 	return [HammerEmptyParser parser];
 }
 
@@ -45,7 +45,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 -(HammerParser *)parse:(id)term {
-	return [_memoizedDerivativesByTerm objectForKey:term] ?: [self memoizeDerivative:[self parsePartial:term] forTerm:term];
+	return [_memoizedDerivativesByTerm objectForKey:term] ?: [self memoizeDerivative:[self parseDerive:term] forTerm:term];
 }
 
 -(NSSet *)parseNullRecursive {

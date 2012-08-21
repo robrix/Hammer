@@ -8,4 +8,6 @@
 
 +(instancetype)parserWithParseTrees:(NSSet *)trees;
 
+@property (readonly) NSSet *trees;
+
 @end

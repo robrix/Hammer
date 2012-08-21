@@ -29,7 +29,7 @@
 }
 
 
--(HammerParser *)parsePartial:(id)term {
+-(HammerParser *)parseDerive:(id)term {
 	return [HammerAlternationParser parserWithLeft:HammerDelay([self.left parse:term]) right:HammerDelay([self.right parse:term])];
 }
 

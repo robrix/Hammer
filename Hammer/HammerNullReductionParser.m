@@ -16,6 +16,9 @@
 }
 
 
+@synthesize trees = _trees;
+
+
 -(HammerParser *)parse:(id)object {
 	return [HammerEmptyParser parser];
 }

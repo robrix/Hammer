@@ -21,7 +21,7 @@
 
 @interface HammerParser () // intended for subclassing
 
--(HammerParser *)parsePartial:(id)term;
+-(HammerParser *)parseDerive:(id)term;
 -(NSSet *)parseNullRecursive;
 
 @property (nonatomic, readonly) BOOL canParseNullRecursive;
