@@ -5,6 +5,33 @@
 #import "HammerAlternationParser.h"
 #import "HammerMemoization.h"
 
+//typedef HammerParser *(^HammerParserDelay)();
+//typedef HammerParserDelay(^HammerParserConstructor)(HammerParserDelay delay);
+//
+//id U(id(^f)(id)) {
+//	return f(f);
+//}
+//
+//id Z(id(^f)(id(^)())) {
+//	return U(^(id x){
+//		return f(^(id v){
+//			return ((id(^)(id))U(x))(v);
+//		});
+//	});
+//}
+//
+//HammerParser *HammerConstructParser(HammerParserConstructor constructor) {
+//	HammerParserDelay delay = Z((id(^)())constructor);
+//	return delay();
+//}
+//
+//HammerAlternationParser *leftRecursiveAlternationWithRHS(HammerParser *rhs) {
+//	HammerParserDelay delay = Z(^(HammerParserDelay lhs){
+//		return (id)HammerDelay([HammerAlternationParser parserWithLeft:lhs right:HammerDelay(rhs)]);
+//	});
+//	return (HammerAlternationParser *)delay();
+//}
+
 @implementation HammerAlternationParser {
 	HammerParser *_left;
 	HammerParser *_right;
