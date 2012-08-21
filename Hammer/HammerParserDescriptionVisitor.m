@@ -6,6 +6,7 @@
 #import "HammerConcatenationParser.h"
 #import "HammerEmptyParser.h"
 #import "HammerNullParser.h"
+#import "HammerNullReductionParser.h"
 #import "HammerParserDescriptionVisitor.h"
 #import "HammerRepetitionParser.h"
 #import "HammerTermParser.h"
@@ -22,6 +23,8 @@
 		description = @"∅";
 	else if ([parser isEqual:[HammerNullParser parser]])
 		description = @"ε";
+	else if ([parser isKindOfClass:[HammerNullReductionParser class]])
+		description = [NSString stringWithFormat:@"ε↓{%@}", [[[parser trees] allObjects] componentsJoinedByString:@", "]];
 	else if ([parser isKindOfClass:[HammerTermParser class]])
 		description = [NSString stringWithFormat:@"'%@'", [[parser term] description]];
 	else if ([parser isKindOfClass:[HammerRepetitionParser class]])
