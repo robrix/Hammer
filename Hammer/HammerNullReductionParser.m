@@ -27,4 +27,9 @@
 	return _trees;
 }
 
+
+-(BOOL)canParseNull {
+	return YES;
+}
+
 @end
