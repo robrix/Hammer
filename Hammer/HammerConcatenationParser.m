@@ -4,6 +4,7 @@
 
 #import "HammerAlternationParser.h"
 #import "HammerConcatenationParser.h"
+#import "HammerEmptyParser.h"
 #import "HammerMemoization.h"
 #import "HammerNullReductionParser.h"
 
@@ -52,6 +53,14 @@
 
 -(BOOL)canParseNullRecursive {
 	return self.first.canParseNull && self.second.canParseNull;
+}
+
+
+-(HammerParser *)compactRecursive {
+	if ([self.first.compact isKindOfClass:[HammerEmptyParser class]] || [self.second.compact isKindOfClass:[HammerEmptyParser class]])
+		return [HammerEmptyParser parser];
+	else
+		return [HammerConcatenationParser parserWithFirst:HammerDelay(self.first.compact) second:HammerDelay(self.second.compact)];
 }
 
 

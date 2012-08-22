@@ -4,6 +4,7 @@
 
 #import "HammerEmptyParser.h"
 #import "HammerIdentitySymbolizer.h"
+#import "HammerMemoization.h"
 #import "HammerMemoizingVisitor.h"
 #import "HammerParser.h"
 #import "HammerParserDescriptionVisitor.h"
@@ -13,8 +14,9 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 @implementation HammerParser {
 	BOOL _memoizedCanParseNull;
 	BOOL _canParseNull;
-	BOOL _memoizedParseNull;
 	NSSet *_parseNull;
+	BOOL _memoizedCompact;
+	HammerParser *_compact;
 	NSMutableDictionary *_memoizedDerivativesByTerm;
 }
 
@@ -39,7 +41,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 	HammerParser *parser = self;
 	for (id term in sequence) {
 		NSLog(@"parsing %@ with %@", term, [parser prettyPrint]);
-		parser = [parser parse:term];
+		parser = [parser parse:term].compact;
 	}
 	return [parser parseNull];
 }
@@ -53,14 +55,10 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 -(NSSet *)parseNull {
-	if (!_memoizedParseNull) {
-		_memoizedParseNull = YES;
-		_parseNull = HammerKleeneFixedPoint(^(NSSet *previous) {
-			_parseNull = previous;
-			return [self parseNullRecursive];
-		}, [NSSet set]);
-	}
-	return _parseNull;
+	return HammerMemoizedValue(_parseNull, HammerKleeneFixedPoint(^(NSSet *previous) {
+		_parseNull = previous;
+		return [self parseNullRecursive];
+	}, [NSSet set]));
 }
 
 
@@ -96,8 +94,17 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 
--(HammerParser *)compact {
+-(HammerParser *)compactRecursive {
 	return self;
+}
+
+-(HammerParser *)compact {
+	if (!_memoizedCompact) {
+		_memoizedCompact = YES;
+		_compact = self;
+		_compact = self.compactRecursive;
+	}
+	return _compact;
 }
 
 

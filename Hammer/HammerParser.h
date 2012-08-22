@@ -26,6 +26,8 @@
 
 @property (nonatomic, readonly) BOOL canParseNullRecursive;
 
+-(HammerParser *)compactRecursive;
+
 @end
 
 typedef HammerParser *(^HammerLazyParser)();

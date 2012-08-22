@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerAlternationParser.h"
+#import "HammerEmptyParser.h"
 #import "HammerMemoization.h"
 
 //typedef HammerParser *(^HammerParserDelay)();
@@ -70,6 +71,16 @@
 
 -(BOOL)canParseNullRecursive {
 	return self.left.canParseNull || self.right.canParseNull;
+}
+
+
+-(HammerParser *)compactRecursive {
+	if ([self.left.compact isKindOfClass:[HammerEmptyParser class]])
+		return self.right.compact;
+	else if ([self.right.compact isKindOfClass:[HammerEmptyParser class]])
+		return self.left.compact;
+	else
+		return [HammerAlternationParser parserWithLeft:HammerDelay(self.left.compact) right:HammerDelay(self.right.compact)];
 }
 
 
