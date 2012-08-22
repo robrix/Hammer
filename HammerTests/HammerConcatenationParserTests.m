@@ -25,7 +25,7 @@
 	HammerParser *bracketed = [HammerConcatenationParser parserWithFirst:HammerDelay([HammerTermParser parserWithTerm:@"["]) second:HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay(branch) second:HammerDelay([HammerTermParser parserWithTerm:@"]"])])];
 	branch = [HammerAlternationParser parserWithLeft:HammerDelay(terminal) right:HammerDelay(bracketed)];
 	
-	STAssertEqualObjects(([branch parseFull:@[@"[", @"[", @"a", @"]", @"]"]]), ([NSSet setWithObject:@"a"]), @"Expected equal.");
+	STAssertEqualObjects(([branch parseFull:@[@"[", @"a", @"]"]]), ([NSSet setWithObject:[NSArray arrayWithObjects:@"[", [NSArray arrayWithObjects:@"a", @"]", nil], nil]]), @"Expected equal.");
 }
 
 @end
