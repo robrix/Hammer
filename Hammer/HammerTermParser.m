@@ -26,4 +26,13 @@
 	:	[HammerEmptyParser parser];
 }
 
+
+-(BOOL)isEqual:(id)object {
+	HammerTermParser *other = object;
+	return [super isEqual:other] || (
+		[other isKindOfClass:self.class]
+	&&	[other.term isEqual:self.term]
+	);
+}
+
 @end
