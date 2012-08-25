@@ -6,22 +6,21 @@ Hammer started its life as a recursive descent parser framework, but is currentl
 
 ##Today
 
-Hammer currently builds on this foundation of patterns to include a simple backtracking-free regexp matching algorithm based on the [derivative of regular expressions](http://matt.might.net/articles/implementation-of-regular-expression-matching-in-scheme-with-derivatives/).
-
-The phrasing of the system is such that it’s perfectly amenable to matching and parsing patterns over arbitrary objects, collections, etc., without restriction.
-
-And it’s fully extensible; add your own patterns with HammerBlockPattern or just write a class conforming to `HammerPattern` or `HammerDerivativePattern`.
+Hammer currently builds on this foundation of parsers to include a simple backtracking-free CFG matching algorithm based on [Brzozowski's derivative of regular expressions](http://matt.might.net/articles/implementation-of-regular-expression-matching-in-scheme-with-derivatives/).
 
 ##Tomorrow
 
 Future work includes:
 
-- a lexer
-- a [derivative-based CFG parser](http://matt.might.net/articles/parsing-with-derivatives/) (a matcher based on Brzozowski's derivative is now implemented! generating parse forests is next)
-- assertions for unit tests a la [Hamcrest](http://code.google.com/p/hamcrest/wiki/TutorialObjectiveC)
-- captures (assignment to the enclosing scope) in patterns, regexps, and parsers
+- a lexer producing tokens
+- infinite lazy lists for streaming characters into the lexer and tokens into parsers
+- generic abstract syntax tree nodes
+- assertions for unit tests to integrate with [Hamcrest](http://code.google.com/p/hamcrest/wiki/TutorialObjectiveC)
+- captures (assignment to the enclosing scope) in patterns, regexps, and parsers (via reduction parsers)
 - parsers for all of the above:
 	- writing regexps with the current matcher is a pain since there’s no concise parsed API for it
 	- there ought to be an EBNF-like grammar for CFGs, too
 	- pattern matching over KVC-compliant objects, collections, and capturing matched objects out of the term
 - optional JIT and static compilation using LLVM for faster matching
+- lookaround?
+- context-sensitive grammars?
