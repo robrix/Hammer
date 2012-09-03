@@ -18,13 +18,13 @@
 }
 
 
--(HammerParser *)pattern {
+-(HammerParser *)parser {
 	return HammerMemoizedValue(_parser, HammerForce(_lazyParser));
 }
 
 
 -(HammerParser *)parse:(id)term {
-	return [HammerConcatenationParser parserWithFirst:HammerDelay([self.pattern parse:term]) second:HammerDelay(self)];
+	return [HammerConcatenationParser parserWithFirst:HammerDelay([self.parser parse:term]) second:HammerDelay(self)];
 }
 
 -(NSSet *)parseNull {
@@ -40,7 +40,7 @@
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	id child = nil;
 	if ([visitor visitObject:self]) {
-		child = [self.pattern acceptVisitor:visitor];
+		child = [self.parser acceptVisitor:visitor];
 	}
 	return [visitor leaveObject:self withVisitedChildren:child];
 }
