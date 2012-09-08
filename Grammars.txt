@@ -1,0 +1,31 @@
+token -> :token
+
+symbol -> :symbol
+
+characterSet -> @characterSets/all
+
+doubleString -> '"' ('\\"' | ~'"')+ '"'
+singleString -> "'" ("\\'" | ~"'")+ "'"
+literal -> doubleString | singleString
+
+term -> token | symbol | literal | "(" term ")"
+
+repetition -> term ('*' | '+' | '?')?
+negation -> '~' repetition
+concatenation -> negation negation*
+alternation -> concatenation ('|' concatenation)*
+
+production -> symbol (:nl? '->' :nl?) alternation
+
+
+
+
+
+token -> ':' symbol
+symbol -> [[:alnum:]-/]+
+
+nl -> '\n'
+ws -> [ \t\r\n]+ { ignore }
+
+lineComment -> ';' [^\n]+ { ignore }
+blockComment -> '(*' (blockComment | ~'*)')* '*)' { ignore }
