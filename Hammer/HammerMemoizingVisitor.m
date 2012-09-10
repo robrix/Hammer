@@ -2,13 +2,17 @@
 //  Created by Rob Rix on 2012-07-07.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
+#import "HammerMemoization.h"
 #import "HammerMemoizingVisitor.h"
 
-@interface HammerMemoizedValue : NSObject
-@property (nonatomic, strong) id value;
-@property (nonatomic, getter = isVisiting) BOOL visiting;
+@interface HammerSymbolizedValue : NSObject
 
--(id)memoize:(id(^)())block symbol:(id(^)())symbol;
++(instancetype)valueWithObject:(id)object symbolizer:(id<HammerSymbolizer>)symbolizer;
+
+@property (nonatomic, readonly, getter = hasMemoized) BOOL memoized;
+
+-(void)visit;
+-(id)leaveWithMemoizer:(id(^)())block;
 
 @end
 
@@ -42,34 +46,32 @@
 	return [NSNumber numberWithUnsignedInteger:(NSUInteger)object];
 }
 
--(HammerMemoizedValue *)resultForVisitedObject:(id<HammerVisitable>)object {
+-(HammerSymbolizedValue *)resultForVisitedObject:(id<HammerVisitable>)object {
 	return [_resultsByVisitedObject objectForKey:[self keyForVisitableObject:object]];
 }
 
--(HammerMemoizedValue *)memoizePlaceholderValueForVisitedObject:(id<HammerVisitable>)object {
-	HammerMemoizedValue *value = [HammerMemoizedValue new];
+-(HammerSymbolizedValue *)memoizePlaceholderValueForVisitedObject:(id<HammerVisitable>)object {
+	HammerSymbolizedValue *value = [HammerSymbolizedValue valueWithObject:object symbolizer:_symbolizer];
 	[_resultsByVisitedObject setObject:value forKey:[self keyForVisitableObject:object]];
-	value.visiting = YES;
 	return value;
 }
 
 
 -(BOOL)visitObject:(id)object {
 	BOOL shouldRecurse = NO;
-	HammerMemoizedValue *memoizedValue = [self resultForVisitedObject:object];
+	HammerSymbolizedValue *memoizedValue = [self resultForVisitedObject:object];
 	if (!memoizedValue) {
 		memoizedValue = [self memoizePlaceholderValueForVisitedObject:object];
 		shouldRecurse = [_visitor visitObject:object];
 	}
+	[memoizedValue visit];
 	return shouldRecurse;
 }
 
 -(id)leaveObject:(id)object withVisitedChildren:(id)children {
-	HammerMemoizedValue *memoizedValue = [self resultForVisitedObject:object];
-	id result = [memoizedValue memoize:^{
+	HammerSymbolizedValue *memoizedValue = [self resultForVisitedObject:object];
+	id result = [memoizedValue leaveWithMemoizer:^{
 		return [_visitor leaveObject:object withVisitedChildren:children];
-	} symbol:^{
-		return [_symbolizer symbolForObject:object];
 	}];
 	return result == [self.class nullPlaceholder]?
 		nil
@@ -79,14 +81,36 @@
 @end
 
 
-@implementation HammerMemoizedValue
-@synthesize value = _value;
-@synthesize visiting = _visiting;
+@implementation HammerSymbolizedValue {
+	id _object;
+	id _symbol;
+	NSUInteger _visitCount;
+	id<HammerSymbolizer> _symbolizer;
+}
 
--(id)memoize:(id(^)())block symbol:(id(^)())placeholder {
-	return self.isVisiting?
-		self.value = block()
-	:	self.value ?: placeholder();
++(instancetype)valueWithObject:(id)object symbolizer:(id<HammerSymbolizer>)symbolizer {
+	HammerSymbolizedValue *value = [self new];
+	value->_object = object;
+	value->_symbolizer = symbolizer;
+	return value;
+}
+
+@synthesize memoized = _memoized;
+
+-(id)symbol {
+	return HammerMemoizedValue(_symbol, [_symbolizer symbolForObject:_object]);
+}
+
+
+-(void)visit {
+	_visitCount++;
+}
+
+-(id)leaveWithMemoizer:(id(^)())block {
+	_visitCount--;
+	return (_visitCount == 0)?
+		block()
+	:	[self symbol];
 }
 
 @end
