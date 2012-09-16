@@ -20,4 +20,9 @@
 	return YES;
 }
 
+
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return [algebra nullParser];
+}
+
 @end

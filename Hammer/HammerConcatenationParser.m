@@ -17,18 +17,18 @@
 
 +(instancetype)parserWithFirst:(HammerLazyParser)first second:(HammerLazyParser)second {
 	HammerConcatenationParser *parser = [self new];
-	parser->_lazyFirst = first;
-	parser->_lazySecond = second;
+	parser->_lazyFirst = HammerMemoizingLazyParser(&(parser->_first), first);
+	parser->_lazySecond = HammerMemoizingLazyParser(&(parser->_second), second);
 	return parser;
 }
 
 
 -(HammerParser *)first {
-	return HammerMemoizedValue(_first, HammerForce(_lazyFirst));
+	return _lazyFirst();
 }
 
 -(HammerParser *)second {
-	return HammerMemoizedValue(_second, HammerForce(_lazySecond));
+	return _lazySecond();
 }
 
 
@@ -64,18 +64,8 @@
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)visitor {
-	NSMutableArray *childResults = nil;
-	if ([visitor visitObject:self]) {
-		childResults = [NSMutableArray new];
-		id first = [self.first acceptVisitor:visitor];
-		id second = [self.second acceptVisitor:visitor];
-		if (first)
-			[childResults addObject:first];
-		if (second)
-			[childResults addObject:second];
-	}
-	return [visitor leaveObject:self withVisitedChildren:childResults];
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return [algebra concatenationParserWithFirst:_lazyFirst second:_lazySecond];
 }
 
 @end

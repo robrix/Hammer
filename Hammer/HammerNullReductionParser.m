@@ -32,4 +32,9 @@
 	return YES;
 }
 
+
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return [algebra nullReductionParserWithTrees:_trees];
+}
+
 @end

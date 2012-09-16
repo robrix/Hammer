@@ -3,7 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import <Hammer/HammerVisitor.h>
+#import <Hammer/HammerParserAlgebra.h>
 
 @interface HammerParser : NSObject <NSCopying, HammerVisitable>
 
@@ -17,6 +17,8 @@
 // algebraically reduced representation of self
 -(HammerParser *)compact;
 
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra;
+
 @end
 
 @interface HammerParser () // intended for subclassing
@@ -29,7 +31,3 @@
 -(HammerParser *)compactRecursive;
 
 @end
-
-typedef HammerParser *(^HammerLazyParser)();
-#define HammerDelay(p) ^{ return (p); }
-#define HammerForce(l) ((l)())

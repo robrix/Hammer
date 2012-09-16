@@ -12,8 +12,10 @@
 }
 
 +(instancetype)parserWithParser:(HammerLazyParser)parser function:(HammerReductionFunction)function {
+	NSParameterAssert(parser != nil);
+	NSParameterAssert(function != nil);
 	HammerReductionParser *reduction = [self new];
-	reduction->_lazyParser = parser;
+	reduction->_lazyParser = HammerMemoizingLazyParser(&reduction->_parser, parser);
 	reduction->_function = function;
 	return reduction;
 }
@@ -44,12 +46,8 @@
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)visitor {
-	id child = nil;
-	if ([visitor visitObject:self]) {
-		child = [self.parser acceptVisitor:visitor];
-	}
-	return [visitor leaveObject:self withVisitedChildren:child];
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return [algebra reductionParserWithParser:_lazyParser function:_function];
 }
 
 @end

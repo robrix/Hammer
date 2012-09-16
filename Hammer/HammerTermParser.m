@@ -35,4 +35,9 @@
 	);
 }
 
+
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return [algebra termParserWithTerm:_term];
+}
+
 @end

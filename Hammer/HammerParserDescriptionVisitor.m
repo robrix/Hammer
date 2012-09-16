@@ -13,27 +13,40 @@
 
 @implementation HammerParserDescriptionVisitor
 
--(BOOL)visitObject:(id)object {
-	return YES;
+-(id)visit:(HammerLazyVisitable)visitable {
+	return [HammerForce(visitable) acceptAlgebra:self];
 }
 
--(id)leaveObject:(id)parser withVisitedChildren:(id)children {
-	NSString *description = nil;
-	if ([parser isEqual:[HammerEmptyParser parser]])
-		description = @"∅";
-	else if ([parser isEqual:[HammerNullParser parser]])
-		description = @"ε";
-	else if ([parser isKindOfClass:[HammerNullReductionParser class]])
-		description = [NSString stringWithFormat:@"ε↓{%@}", [[[parser trees] allObjects] componentsJoinedByString:@", "]];
-	else if ([parser isKindOfClass:[HammerTermParser class]])
-		description = [NSString stringWithFormat:@"'%@'", [[parser term] description]];
-	else if ([parser isKindOfClass:[HammerRepetitionParser class]])
-		description = [children stringByAppendingString:@"*"];
-	else if ([parser isKindOfClass:[HammerAlternationParser class]])
-		description = children? [NSString stringWithFormat:@"{%@}", [children componentsJoinedByString:@" | "]] : nil;
-	else if ([parser isKindOfClass:[HammerConcatenationParser class]])
-		description = children? [NSString stringWithFormat:@"(%@)", [children componentsJoinedByString:@" "]] : nil;
-	return description ?: [parser description];
+
+-(id)emptyParser {
+	return @"∅";
+}
+
+-(id)nullParser {
+	return @"ε";
+}
+
+
+-(id)nullReductionParserWithTrees:(NSSet *)trees {
+	return [NSString stringWithFormat:@"ε↓{%@}", [trees.allObjects componentsJoinedByString:@", "]];
+}
+
+
+-(id)termParserWithTerm:(id)term {
+	return [NSString stringWithFormat:@"'%@'", term];
+}
+
+
+-(id)alternationParserWithLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
+	return [NSString stringWithFormat:@"{%@ | %@}", [self visit:left], [self visit:right]];
+}
+
+-(id)concatenationParserWithFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+	return [NSString stringWithFormat:@"(%@ %@)", [self visit:first], [self visit:second]];
+}
+
+-(id)reductionParserWithParser:(HammerLazyVisitable)parser function:(HammerReductionFunction)function {
+	return [NSString stringWithFormat:@"%@ → %@", [self visit:parser], @"ƒ"];
 }
 
 @end

@@ -40,7 +40,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 -(NSSet *)parseFull:(id<NSFastEnumeration>)sequence {
 	HammerParser *parser = self;
 	for (id term in sequence) {
-		NSLog(@"parsing %@ with %@", term, [parser prettyPrint]);
+//		NSLog(@"parsing %@ with %@", term, [parser prettyPrint]);
 		parser = [parser parse:term].compact;
 	}
 	return [parser parseNull];
@@ -83,15 +83,15 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 
--(id)acceptMemoizedVisitor:(id<HammerVisitor>)visitor {
+-(id)acceptMemoizedAlgebra:(id<HammerParserAlgebra>)visitor {
 	HammerMemoizingVisitor *memoizer = [[HammerMemoizingVisitor alloc] initWithVisitor:visitor symbolizer:[HammerIdentitySymbolizer symbolizer]];
-	return [self acceptVisitor:memoizer];
+	return [self acceptAlgebra:memoizer];
 }
 
 
--(NSString *)prettyPrint {
-	return [self acceptMemoizedVisitor:[HammerParserDescriptionVisitor new]];
-}
+//-(NSString *)prettyPrint {
+//	return [self acceptMemoizedAlgebra:[HammerParserDescriptionVisitor new]];
+//}
 
 
 -(HammerParser *)compactRecursive {
@@ -108,9 +108,8 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)visitor {
-	[visitor visitObject:self];
-	return [visitor leaveObject:self withVisitedChildren:nil];
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return nil;
 }
 
 @end

@@ -15,4 +15,9 @@
 	return parser;
 }
 
+
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return [algebra emptyParser];
+}
+
 @end

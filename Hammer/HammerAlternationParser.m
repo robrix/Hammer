@@ -6,33 +6,6 @@
 #import "HammerEmptyParser.h"
 #import "HammerMemoization.h"
 
-//typedef HammerParser *(^HammerParserDelay)();
-//typedef HammerParserDelay(^HammerParserConstructor)(HammerParserDelay delay);
-//
-//id U(id(^f)(id)) {
-//	return f(f);
-//}
-//
-//id Z(id(^f)(id(^)())) {
-//	return U(^(id x){
-//		return f(^(id v){
-//			return ((id(^)(id))U(x))(v);
-//		});
-//	});
-//}
-//
-//HammerParser *HammerConstructParser(HammerParserConstructor constructor) {
-//	HammerParserDelay delay = Z((id(^)())constructor);
-//	return delay();
-//}
-//
-//HammerAlternationParser *leftRecursiveAlternationWithRHS(HammerParser *rhs) {
-//	HammerParserDelay delay = Z(^(HammerParserDelay lhs){
-//		return (id)HammerDelay([HammerAlternationParser parserWithLeft:lhs right:HammerDelay(rhs)]);
-//	});
-//	return (HammerAlternationParser *)delay();
-//}
-
 @implementation HammerAlternationParser {
 	HammerParser *_left;
 	HammerParser *_right;
@@ -42,18 +15,18 @@
 
 +(instancetype)parserWithLeft:(HammerLazyParser)left right:(HammerLazyParser)right {
 	HammerAlternationParser *parser = [self new];
-	parser->_lazyLeft = left;
-	parser->_lazyRight = right;
+	parser->_lazyLeft = HammerMemoizingLazyParser(&parser->_left, left);
+	parser->_lazyRight = HammerMemoizingLazyParser(&parser->_right, right);
 	return parser;
 }
 
 
 -(HammerParser *)left {
-	return HammerMemoizedValue(_left, HammerForce(_lazyLeft));
+	return _lazyLeft();
 }
 
 -(HammerParser *)right {
-	return HammerMemoizedValue(_right, HammerForce(_lazyRight));
+	return _lazyRight();
 }
 
 
@@ -84,18 +57,8 @@
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)visitor {
-	NSMutableArray *childResults = nil;
-	if ([visitor visitObject:self]) {
-		childResults = [NSMutableArray new];
-		id left = [self.left acceptVisitor:visitor];
-		id right = [self.right acceptVisitor:visitor];
-		if (left)
-			[childResults addObject:left];
-		if (right)
-			[childResults addObject:right];
-	}
-	return [visitor leaveObject:self withVisitedChildren:childResults];
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return [algebra alternationParserWithLeft:_lazyLeft right:_lazyRight];
 }
 
 @end

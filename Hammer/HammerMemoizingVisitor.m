@@ -5,34 +5,19 @@
 #import "HammerMemoization.h"
 #import "HammerMemoizingVisitor.h"
 
-@interface HammerSymbolizedValue : NSObject
-
-+(instancetype)valueWithObject:(id)object symbolizer:(id<HammerSymbolizer>)symbolizer;
-
-@property (nonatomic, readonly, getter = hasMemoized) BOOL memoized;
-
--(void)visit;
--(id)leaveWithMemoizer:(id(^)())block;
-
+@interface HammerRedirectingVisitable : NSObject <HammerVisitable>
++(instancetype)visitableWithVisitable:(HammerLazyVisitable)visitable visitor:(id<HammerParserAlgebra>)visitor;
 @end
 
+
 @implementation HammerMemoizingVisitor {
-	id<HammerVisitor> _visitor;
+	id<HammerParserAlgebra> _visitor;
 	id<HammerSymbolizer> _symbolizer;
 	NSMutableDictionary *_resultsByVisitedObject;
 }
 
-+(id)nullPlaceholder {
-	static id placeholder = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		placeholder = [NSObject new];
-	});
-	return placeholder;
-}
 
-
--(instancetype)initWithVisitor:(id<HammerVisitor>)visitor symbolizer:(id<HammerSymbolizer>)symbolizer {
+-(instancetype)initWithVisitor:(id<HammerParserAlgebra>)visitor symbolizer:(id<HammerSymbolizer>)symbolizer {
 	if ((self = [super init])) {
 		_visitor = visitor;
 		_symbolizer = symbolizer;
@@ -42,75 +27,85 @@
 }
 
 
--(id<NSCopying>)keyForVisitableObject:(id<HammerVisitable>)object {
-	return [NSNumber numberWithUnsignedInteger:(NSUInteger)object];
-}
-
--(HammerSymbolizedValue *)resultForVisitedObject:(id<HammerVisitable>)object {
-	return [_resultsByVisitedObject objectForKey:[self keyForVisitableObject:object]];
-}
-
--(HammerSymbolizedValue *)memoizePlaceholderValueForVisitedObject:(id<HammerVisitable>)object {
-	HammerSymbolizedValue *value = [HammerSymbolizedValue valueWithObject:object symbolizer:_symbolizer];
-	[_resultsByVisitedObject setObject:value forKey:[self keyForVisitableObject:object]];
+-(id)valueForTuple:(id)tuple memoizing:(id(^)())block {
+	id value = [_resultsByVisitedObject objectForKey:tuple];
+	if (!value) {
+		id symbol = [_symbolizer symbolForObject:tuple];
+		[_resultsByVisitedObject setObject:symbol forKey:tuple];
+		
+		value = block();
+	}
 	return value;
 }
 
 
--(BOOL)visitObject:(id)object {
-	BOOL shouldRecurse = NO;
-	HammerSymbolizedValue *memoizedValue = [self resultForVisitedObject:object];
-	if (!memoizedValue) {
-		memoizedValue = [self memoizePlaceholderValueForVisitedObject:object];
-		shouldRecurse = [_visitor visitObject:object];
-	}
-	[memoizedValue visit];
-	return shouldRecurse;
+-(HammerLazyVisitable)redirectVisitable:(HammerLazyVisitable)visitable {
+	return HammerDelay([HammerRedirectingVisitable visitableWithVisitable:visitable visitor:self]);
 }
 
--(id)leaveObject:(id)object withVisitedChildren:(id)children {
-	HammerSymbolizedValue *memoizedValue = [self resultForVisitedObject:object];
-	id result = [memoizedValue leaveWithMemoizer:^{
-		return [_visitor leaveObject:object withVisitedChildren:children];
+
+-(id)emptyParser {
+	return [self valueForTuple:@[@"HammerEmptyParser"] memoizing:^id{
+		return [_visitor emptyParser];
 	}];
-	return result == [self.class nullPlaceholder]?
-		nil
-	:	result;
+}
+
+-(id)nullParser {
+	return [self valueForTuple:@[@"HammerNullParser"] memoizing:^id{
+		return [_visitor nullParser];
+	}];
+}
+
+
+-(id)nullReductionParserWithTrees:(NSSet *)trees {
+	return [self valueForTuple:@[@"HammerNullReductionParser", trees] memoizing:^id{
+		return [_visitor nullReductionParserWithTrees:trees];
+	}];
+}
+
+
+-(id)termParserWithTerm:(id)term {
+	return [self valueForTuple:@[@"HammerTermParser", term] memoizing:^id{
+		return [_visitor termParserWithTerm:term];
+	}];
+}
+
+
+-(id)alternationParserWithLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
+	return [self valueForTuple:@[@"HammerAlternationParser", left, right] memoizing:^id{
+		return [_visitor alternationParserWithLeft:[self redirectVisitable:left] right:[self redirectVisitable:right]];
+	}];
+}
+
+-(id)concatenationParserWithFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+	return [self valueForTuple:@[@"HammerConcatenationParser", first, second] memoizing:^id{
+		return [_visitor concatenationParserWithFirst:[self redirectVisitable:first] second:[self redirectVisitable:second]];
+	}];
+}
+
+-(id)reductionParserWithParser:(HammerLazyVisitable)parser function:(HammerReductionFunction)function {
+	return [self valueForTuple:@[@"HammerReductionParser", parser, function] memoizing:^id{
+		return [_visitor reductionParserWithParser:[self redirectVisitable:parser] function:function];
+	}];
 }
 
 @end
 
 
-@implementation HammerSymbolizedValue {
-	id _object;
-	id _symbol;
-	NSUInteger _visitCount;
-	id<HammerSymbolizer> _symbolizer;
+@implementation HammerRedirectingVisitable {
+	HammerLazyVisitable _visitable;
+	id<HammerParserAlgebra> _visitor;
 }
 
-+(instancetype)valueWithObject:(id)object symbolizer:(id<HammerSymbolizer>)symbolizer {
-	HammerSymbolizedValue *value = [self new];
-	value->_object = object;
-	value->_symbolizer = symbolizer;
-	return value;
++(instancetype)visitableWithVisitable:(HammerLazyVisitable)visitable visitor:(id<HammerParserAlgebra>)visitor {
+	HammerRedirectingVisitable *instance = [self new];
+	instance->_visitable = visitable;
+	instance->_visitor = visitor;
+	return instance;
 }
 
-@synthesize memoized = _memoized;
-
--(id)symbol {
-	return HammerMemoizedValue(_symbol, [_symbolizer symbolForObject:_object]);
-}
-
-
--(void)visit {
-	_visitCount++;
-}
-
--(id)leaveWithMemoizer:(id(^)())block {
-	_visitCount--;
-	return (_visitCount == 0)?
-		block()
-	:	[self symbol];
+-(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+	return [_visitable() acceptAlgebra:_visitor];
 }
 
 @end

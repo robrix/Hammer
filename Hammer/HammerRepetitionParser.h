@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import <Hammer/HammerParser.h>
+#import <Hammer/HammerLaziness.h>
 
 @interface HammerRepetitionParser : HammerParser
 
