@@ -33,6 +33,15 @@
 }
 
 
+-(BOOL)isEqual:(id)object {
+	HammerNullReductionParser *other = object;
+	return [super isEqual:other] || (
+		[other isKindOfClass:self.class]
+	&&	[other.trees isEqual:self.trees]
+	);
+}
+
+
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [visitor nullReductionParser:self];
 }
