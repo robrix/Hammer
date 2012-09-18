@@ -5,6 +5,8 @@
 #import "HammerAlternationParser.h"
 #import "HammerConcatenationParser.h"
 #import "HammerEmptyParser.h"
+#import "HammerIdentitySymbolizer.h"
+#import "HammerMemoizingVisitor.h"
 #import "HammerNullParser.h"
 #import "HammerNullReductionParser.h"
 #import "HammerParserCompactor.h"
@@ -26,7 +28,7 @@
 }
 
 +(HammerParser *)compact:(HammerParser *)parser {
-	return [parser acceptVisitor:[self compactor]];
+	return [parser acceptVisitor:[[HammerMemoizingVisitor alloc] initWithVisitor:[self compactor] symbolizer:[HammerIdentitySymbolizer symbolizer]]];
 }
 
 
