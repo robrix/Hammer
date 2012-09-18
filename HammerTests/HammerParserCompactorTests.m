@@ -16,9 +16,31 @@
 	STAssertEqualObjects([HammerParserCompactor compact:[HammerEmptyParser parser]], [HammerEmptyParser parser], @"Expected equals.");
 }
 
-
 -(void)testDoesNotCompactTheNullParser {
 	STAssertEqualObjects([HammerParserCompactor compact:[HammerNullParser parser]], [HammerNullParser parser], @"Expected equals.");
+}
+
+-(void)testDoesNotCompactNullReductionParsers {
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerNullReductionParser parserWithParseTrees:[NSSet set]]], [HammerNullReductionParser parserWithParseTrees:[NSSet set]], @"Expected equals.");
+}
+
+-(void)testDoesNotCompactTermParsers {
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerTermParser parserWithTerm:@"a"]], [HammerTermParser parserWithTerm:@"a"], @"Expected equals.");
+}
+
+
+-(void)testCompactsHalfEmptyAlternationsToTheirOtherHalf {
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerAlternationParser parserWithLeft:HammerDelay([HammerEmptyParser parser]) right:HammerDelay([HammerNullParser parser])]], [HammerNullParser parser], @"Expected equals.");
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerAlternationParser parserWithLeft:HammerDelay([HammerNullParser parser]) right:HammerDelay([HammerEmptyParser parser])]], [HammerNullParser parser], @"Expected equals.");
+}
+
+-(void)testCompactsHalfEmptyConcatenationsToEmpty {
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerConcatenationParser parserWithFirst:HammerDelay([HammerEmptyParser parser]) second:HammerDelay([HammerNullParser parser])]], [HammerEmptyParser parser], @"Expected equals.");
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullParser parser]) second:HammerDelay([HammerEmptyParser parser])]], [HammerEmptyParser parser], @"Expected equals.");
+}
+
+-(void)testCompactsEmptyReductionsToEmpty {
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerReductionParser parserWithParser:HammerDelay([HammerEmptyParser parser]) function:HammerIdentityReductionFunction]], [HammerEmptyParser parser], @"Expected equals.");
 }
 
 @end
