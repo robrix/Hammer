@@ -16,8 +16,8 @@
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra {
-	return [algebra emptyParser];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor emptyParser:self];
 }
 
 @end

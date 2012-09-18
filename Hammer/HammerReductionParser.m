@@ -46,8 +46,8 @@
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra {
-	return [algebra reductionParserWithParser:_lazyParser function:_function];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor reductionParser:self withParser:_lazyParser];
 }
 
 @end

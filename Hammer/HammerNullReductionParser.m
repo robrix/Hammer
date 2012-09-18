@@ -33,8 +33,8 @@
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra {
-	return [algebra nullReductionParserWithTrees:_trees];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor nullReductionParser:self];
 }
 
 @end

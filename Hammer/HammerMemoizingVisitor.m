@@ -4,6 +4,7 @@
 
 #import "HammerMemoization.h"
 #import "HammerMemoizingVisitor.h"
+#import <Hammer/Hammer.h>
 
 @interface HammerRedirectingVisitable : NSObject <HammerVisitable>
 +(instancetype)visitableWithVisitable:(HammerLazyVisitable)visitable visitor:(id<HammerVisitor>)visitor;
@@ -27,11 +28,16 @@
 }
 
 
--(id)valueForTuple:(id)tuple memoizing:(id(^)())block {
-	id value = [_resultsByVisitedObject objectForKey:tuple];
+-(id)keyForParser:(HammerParser *)parser {
+	return @((NSUInteger)(__bridge void *)parser);
+}
+
+-(id)valueForParser:(HammerParser *)parser memoizing:(id(^)())block {
+	id key = [self keyForParser:parser];
+	id value = [_resultsByVisitedObject objectForKey:key];
 	if (!value) {
-		id symbol = [_symbolizer symbolForObject:tuple];
-		[_resultsByVisitedObject setObject:symbol forKey:tuple];
+		id symbol = [_symbolizer symbolForObject:parser];
+		[_resultsByVisitedObject setObject:symbol forKey:key];
 		
 		value = block();
 	}
@@ -44,48 +50,48 @@
 }
 
 
--(id)emptyParser {
-	return [self valueForTuple:@[@"HammerEmptyParser"] memoizing:^id{
-		return [_visitor emptyParser];
+-(id)emptyParser:(HammerEmptyParser *)parser {
+	return [self valueForParser:parser memoizing:^id{
+		return [_visitor emptyParser:parser];
 	}];
 }
 
--(id)nullParser {
-	return [self valueForTuple:@[@"HammerNullParser"] memoizing:^id{
-		return [_visitor nullParser];
-	}];
-}
-
-
--(id)nullReductionParserWithTrees:(NSSet *)trees {
-	return [self valueForTuple:@[@"HammerNullReductionParser", trees] memoizing:^id{
-		return [_visitor nullReductionParserWithTrees:trees];
+-(id)nullParser:(HammerNullParser *)parser {
+	return [self valueForParser:parser memoizing:^id{
+		return [_visitor nullParser:parser];
 	}];
 }
 
 
--(id)termParserWithTerm:(id)term {
-	return [self valueForTuple:@[@"HammerTermParser", term] memoizing:^id{
-		return [_visitor termParserWithTerm:term];
+-(id)nullReductionParser:(HammerNullReductionParser *)parser {
+	return [self valueForParser:parser memoizing:^id{
+		return [_visitor nullReductionParser:parser];
 	}];
 }
 
 
--(id)alternationParserWithLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return [self valueForTuple:@[@"HammerAlternationParser", left, right] memoizing:^id{
-		return [_visitor alternationParserWithLeft:[self redirectVisitable:left] right:[self redirectVisitable:right]];
+-(id)termParser:(HammerTermParser *)parser {
+	return [self valueForParser:parser memoizing:^id{
+		return [_visitor termParser:parser];
 	}];
 }
 
--(id)concatenationParserWithFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return [self valueForTuple:@[@"HammerConcatenationParser", first, second] memoizing:^id{
-		return [_visitor concatenationParserWithFirst:[self redirectVisitable:first] second:[self redirectVisitable:second]];
+
+-(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
+	return [self valueForParser:parser memoizing:^id{
+		return [_visitor alternationParser:parser withLeft:[self redirectVisitable:left] right:[self redirectVisitable:right]];
 	}];
 }
 
--(id)reductionParserWithParser:(HammerLazyVisitable)parser function:(HammerReductionFunction)function {
-	return [self valueForTuple:@[@"HammerReductionParser", parser, function] memoizing:^id{
-		return [_visitor reductionParserWithParser:[self redirectVisitable:parser] function:function];
+-(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+	return [self valueForParser:parser memoizing:^id{
+		return [_visitor concatenationParser:parser withFirst:[self redirectVisitable:first] second:[self redirectVisitable:second]];
+	}];
+}
+
+-(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
+	return [self valueForParser:parser memoizing:^id{
+		return [_visitor reductionParser:parser withParser:[self redirectVisitable:child]];
 	}];
 }
 
@@ -104,7 +110,7 @@
 	return instance;
 }
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra {
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [_visitable() acceptVisitor:_visitor];
 }
 

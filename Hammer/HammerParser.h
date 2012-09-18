@@ -17,7 +17,7 @@
 // algebraically reduced representation of self
 -(HammerParser *)compact;
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra;
+-(id)acceptVisitor:(id<HammerVisitor>)visitor;
 
 @end
 

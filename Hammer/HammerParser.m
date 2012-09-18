@@ -108,7 +108,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra {
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return nil;
 }
 

@@ -57,8 +57,8 @@
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra {
-	return [algebra alternationParserWithLeft:_lazyLeft right:_lazyRight];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor alternationParser:self withLeft:_lazyLeft right:_lazyRight];
 }
 
 @end

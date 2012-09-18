@@ -36,8 +36,8 @@
 }
 
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra {
-	return [algebra termParserWithTerm:_term];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor termParser:self];
 }
 
 @end

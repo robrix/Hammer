@@ -2,30 +2,31 @@
 //  Created by Rob Rix on 2012-09-10.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
+#import <Foundation/Foundation.h>
 #import <Hammer/HammerLaziness.h>
-#import <Hammer/HammerReductionFunction.h>
 
+@class HammerEmptyParser, HammerNullParser, HammerNullReductionParser, HammerTermParser, HammerAlternationParser, HammerConcatenationParser, HammerReductionParser;
 @protocol HammerVisitable;
 
 typedef id<HammerVisitable> (^HammerLazyVisitable)();
 
 @protocol HammerVisitor <NSObject>
 
--(id)emptyParser;
--(id)nullParser;
+-(id)emptyParser:(HammerEmptyParser *)parser;
+-(id)nullParser:(HammerNullParser *)parser;
 
--(id)nullReductionParserWithTrees:(NSSet *)trees;
+-(id)nullReductionParser:(HammerNullReductionParser *)parser;
 
--(id)termParserWithTerm:(id)term;
+-(id)termParser:(HammerTermParser *)parser;
 
--(id)alternationParserWithLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right;
--(id)concatenationParserWithFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second;
--(id)reductionParserWithParser:(HammerLazyVisitable)parser function:(HammerReductionFunction)function;
+-(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right;
+-(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second;
+-(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child;
 
 @end
 
 @protocol HammerVisitable <NSObject>
 
--(id)acceptVisitor:(id<HammerVisitor>)algebra;
+-(id)acceptVisitor:(id<HammerVisitor>)visitor;
 
 @end
