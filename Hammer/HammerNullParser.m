@@ -21,7 +21,7 @@
 }
 
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+-(id)acceptVisitor:(id<HammerVisitor>)algebra {
 	return [algebra nullParser];
 }
 

@@ -1,4 +1,4 @@
-//  HammerAlgebra.h
+//  HammerVisitor.h
 //  Created by Rob Rix on 2012-09-10.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
@@ -9,7 +9,7 @@
 
 typedef id<HammerVisitable> (^HammerLazyVisitable)();
 
-@protocol HammerParserAlgebra <NSObject>
+@protocol HammerVisitor <NSObject>
 
 -(id)emptyParser;
 -(id)nullParser;
@@ -26,6 +26,6 @@ typedef id<HammerVisitable> (^HammerLazyVisitable)();
 
 @protocol HammerVisitable <NSObject>
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra;
+-(id)acceptVisitor:(id<HammerVisitor>)algebra;
 
 @end

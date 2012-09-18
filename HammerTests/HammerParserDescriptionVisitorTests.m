@@ -9,12 +9,12 @@
 #import "HammerParserDescriptionVisitor.h"
 
 @interface HammerParserDescriptionVisitorTests : SenTestCase
-@property (readonly) id<HammerParserAlgebra> prettyPrinter;
+@property (readonly) id<HammerVisitor> prettyPrinter;
 @end
 
 @implementation HammerParserDescriptionVisitorTests
 
--(id<HammerParserAlgebra>)prettyPrinter {
+-(id<HammerVisitor>)prettyPrinter {
 	return [[HammerMemoizingVisitor alloc] initWithVisitor:[HammerParserDescriptionVisitor new] symbolizer:[HammerIdentitySymbolizer new]];
 }
 

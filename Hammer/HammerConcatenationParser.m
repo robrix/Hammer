@@ -64,7 +64,7 @@
 }
 
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+-(id)acceptVisitor:(id<HammerVisitor>)algebra {
 	return [algebra concatenationParserWithFirst:_lazyFirst second:_lazySecond];
 }
 

@@ -7,7 +7,7 @@
 #import "HammerSymbolizer.h"
 #import "HammerConcatenationParser.h"
 
-@interface HammerMemoizingVisitorTests : SenTestCase <HammerParserAlgebra, HammerSymbolizer>
+@interface HammerMemoizingVisitorTests : SenTestCase <HammerVisitor, HammerSymbolizer>
 @end
 
 @implementation HammerMemoizingVisitorTests
@@ -20,7 +20,7 @@
 -(id)reductionParserWithParser:(HammerLazyVisitable)parser function:(HammerReductionFunction)function { return nil; }
 
 -(id)concatenationParserWithFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return @[[first() acceptAlgebra:self], [second() acceptAlgebra:self]];
+	return @[[first() acceptVisitor:self], [second() acceptVisitor:self]];
 }
 
 

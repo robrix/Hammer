@@ -57,7 +57,7 @@
 }
 
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+-(id)acceptVisitor:(id<HammerVisitor>)algebra {
 	return [algebra alternationParserWithLeft:_lazyLeft right:_lazyRight];
 }
 

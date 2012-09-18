@@ -7,7 +7,7 @@
 #import <Hammer/Hammer.h>
 
 @interface HammerParserCompactorTests : SenTestCase
-@property (readonly) id<HammerParserAlgebra> compactor;
+@property (readonly) id<HammerVisitor> compactor;
 @end
 
 @implementation HammerParserCompactorTests

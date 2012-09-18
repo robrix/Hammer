@@ -83,9 +83,9 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 
--(id)acceptMemoizedAlgebra:(id<HammerParserAlgebra>)visitor {
+-(id)acceptMemoizedAlgebra:(id<HammerVisitor>)visitor {
 	HammerMemoizingVisitor *memoizer = [[HammerMemoizingVisitor alloc] initWithVisitor:visitor symbolizer:[HammerIdentitySymbolizer symbolizer]];
-	return [self acceptAlgebra:memoizer];
+	return [self acceptVisitor:memoizer];
 }
 
 
@@ -108,7 +108,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+-(id)acceptVisitor:(id<HammerVisitor>)algebra {
 	return nil;
 }
 

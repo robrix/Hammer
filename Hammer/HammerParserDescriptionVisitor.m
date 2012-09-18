@@ -14,7 +14,7 @@
 @implementation HammerParserDescriptionVisitor
 
 -(id)visit:(HammerLazyVisitable)visitable {
-	return [HammerForce(visitable) acceptAlgebra:self];
+	return [HammerForce(visitable) acceptVisitor:self];
 }
 
 

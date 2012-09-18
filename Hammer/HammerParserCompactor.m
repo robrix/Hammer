@@ -11,7 +11,7 @@
 #import "HammerReductionParser.h"
 #import "HammerTermParser.h"
 
-@interface HammerParserCompactor () <HammerParserAlgebra>
+@interface HammerParserCompactor () <HammerVisitor>
 @end
 
 @implementation HammerParserCompactor
@@ -26,7 +26,7 @@
 }
 
 +(HammerParser *)compact:(HammerParser *)parser {
-	return [parser acceptAlgebra:[self compactor]];
+	return [parser acceptVisitor:[self compactor]];
 }
 
 
@@ -50,15 +50,15 @@
 
 
 -(id)alternationParserWithLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return [HammerAlternationParser parserWithLeft:[left() acceptAlgebra:self] right:[right() acceptAlgebra:self]];
+	return [HammerAlternationParser parserWithLeft:[left() acceptVisitor:self] right:[right() acceptVisitor:self]];
 }
 
 -(id)concatenationParserWithFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return [HammerConcatenationParser parserWithFirst:[first() acceptAlgebra:self] second:[second() acceptAlgebra:self]];
+	return [HammerConcatenationParser parserWithFirst:[first() acceptVisitor:self] second:[second() acceptVisitor:self]];
 }
 
 -(id)reductionParserWithParser:(HammerLazyVisitable)parser function:(HammerReductionFunction)function {
-	return [HammerReductionParser parserWithParser:[parser() acceptAlgebra:self] function:function];
+	return [HammerReductionParser parserWithParser:[parser() acceptVisitor:self] function:function];
 }
 
 @end

@@ -6,18 +6,18 @@
 #import "HammerMemoizingVisitor.h"
 
 @interface HammerRedirectingVisitable : NSObject <HammerVisitable>
-+(instancetype)visitableWithVisitable:(HammerLazyVisitable)visitable visitor:(id<HammerParserAlgebra>)visitor;
++(instancetype)visitableWithVisitable:(HammerLazyVisitable)visitable visitor:(id<HammerVisitor>)visitor;
 @end
 
 
 @implementation HammerMemoizingVisitor {
-	id<HammerParserAlgebra> _visitor;
+	id<HammerVisitor> _visitor;
 	id<HammerSymbolizer> _symbolizer;
 	NSMutableDictionary *_resultsByVisitedObject;
 }
 
 
--(instancetype)initWithVisitor:(id<HammerParserAlgebra>)visitor symbolizer:(id<HammerSymbolizer>)symbolizer {
+-(instancetype)initWithVisitor:(id<HammerVisitor>)visitor symbolizer:(id<HammerSymbolizer>)symbolizer {
 	if ((self = [super init])) {
 		_visitor = visitor;
 		_symbolizer = symbolizer;
@@ -94,18 +94,18 @@
 
 @implementation HammerRedirectingVisitable {
 	HammerLazyVisitable _visitable;
-	id<HammerParserAlgebra> _visitor;
+	id<HammerVisitor> _visitor;
 }
 
-+(instancetype)visitableWithVisitable:(HammerLazyVisitable)visitable visitor:(id<HammerParserAlgebra>)visitor {
++(instancetype)visitableWithVisitable:(HammerLazyVisitable)visitable visitor:(id<HammerVisitor>)visitor {
 	HammerRedirectingVisitable *instance = [self new];
 	instance->_visitable = visitable;
 	instance->_visitor = visitor;
 	return instance;
 }
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
-	return [_visitable() acceptAlgebra:_visitor];
+-(id)acceptVisitor:(id<HammerVisitor>)algebra {
+	return [_visitable() acceptVisitor:_visitor];
 }
 
 @end
