@@ -7,20 +7,20 @@
 #import "HammerSymbolizer.h"
 #import "HammerConcatenationParser.h"
 
-@interface HammerMemoizingVisitorTests : SenTestCase <HammerParserAlgebra, HammerSymbolizer>
+@interface HammerMemoizingVisitorTests : SenTestCase <HammerVisitor, HammerSymbolizer>
 @end
 
 @implementation HammerMemoizingVisitorTests
 
--(id)emptyParser { return nil; }
--(id)nullParser { return nil; }
--(id)nullReductionParserWithTrees:(NSSet *)trees { return nil; }
--(id)termParserWithTerm:(id)term { return nil; }
--(id)alternationParserWithLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right { return nil; }
--(id)reductionParserWithParser:(HammerLazyVisitable)parser function:(HammerReductionFunction)function { return nil; }
+-(id)emptyParser:(HammerEmptyParser *)parser { return nil; }
+-(id)nullParser:(HammerNullParser *)parser { return nil; }
+-(id)nullReductionParser:(HammerNullReductionParser *)parser { return nil; }
+-(id)termParser:(HammerTermParser *)parser { return nil; }
+-(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right { return nil; }
+-(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child { return nil; }
 
--(id)concatenationParserWithFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return @[[first() acceptAlgebra:self], [second() acceptAlgebra:self]];
+-(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+	return @[[first() acceptVisitor:self], [second() acceptVisitor:self]];
 }
 
 
@@ -31,7 +31,7 @@
 
 -(void)testSymbolizesRecursiveVisits {
 	__block HammerParser *parser = [HammerConcatenationParser parserWithFirst:HammerDelay(parser) second:HammerDelay(parser)];
-	STAssertEqualObjects([parser acceptAlgebra:[[HammerMemoizingVisitor alloc] initWithVisitor:self symbolizer:self]], (@[@"S", @"S"]), @"Expected equals.");
+	STAssertEqualObjects([parser acceptVisitor:[[HammerMemoizingVisitor alloc] initWithVisitor:self symbolizer:self]], (@[@"S", @"S"]), @"Expected equals.");
 }
 
 @end

@@ -3,7 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import <Hammer/HammerParserAlgebra.h>
+#import <Hammer/HammerVisitor.h>
 
 @interface HammerParser : NSObject <NSCopying, HammerVisitable>
 
@@ -17,7 +17,7 @@
 // algebraically reduced representation of self
 -(HammerParser *)compact;
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra;
+-(id)acceptVisitor:(id<HammerVisitor>)visitor;
 
 @end
 

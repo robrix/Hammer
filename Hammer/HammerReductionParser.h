@@ -6,7 +6,6 @@
 #import <Hammer/HammerParser.h>
 #import <Hammer/HammerReductionFunction.h>
 
-
 @interface HammerReductionParser : HammerParser
 
 +(instancetype)parserWithParser:(HammerLazyParser)parser function:(HammerReductionFunction)function;
