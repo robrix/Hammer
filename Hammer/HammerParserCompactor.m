@@ -32,35 +32,51 @@
 }
 
 
--(id)emptyParser:(HammerEmptyParser *)parser {
-	return parser;
-}
-
--(id)nullParser:(HammerNullParser *)parser {
-	return parser;
+-(HammerParser *)compact:(HammerLazyVisitable)child {
+	return [child() acceptVisitor:self];
 }
 
 
--(id)nullReductionParser:(HammerNullReductionParser *)parser {
+-(HammerEmptyParser *)emptyParser:(HammerEmptyParser *)parser {
 	return parser;
 }
 
-
--(id)termParser:(HammerTermParser *)parser {
+-(HammerNullParser *)nullParser:(HammerNullParser *)parser {
 	return parser;
 }
 
 
--(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return [HammerAlternationParser parserWithLeft:[left() acceptVisitor:self] right:[right() acceptVisitor:self]];
+-(HammerNullReductionParser *)nullReductionParser:(HammerNullReductionParser *)parser {
+	return parser;
 }
 
--(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return [HammerConcatenationParser parserWithFirst:[first() acceptVisitor:self] second:[second() acceptVisitor:self]];
+
+-(HammerTermParser *)termParser:(HammerTermParser *)parser {
+	return parser;
 }
 
--(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
-	return [HammerReductionParser parserWithParser:[child() acceptVisitor:self] function:parser.function];
+
+-(HammerParser *)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
+	if ([[self compact:left] isKindOfClass:[HammerEmptyParser class]])
+		return [self compact:right];
+	else if ([[self compact:right] isKindOfClass:[HammerEmptyParser class]])
+		return [self compact:left];
+	else
+		return [HammerAlternationParser parserWithLeft:HammerDelay([self compact:left]) right:HammerDelay([self compact:right])];
+}
+
+-(HammerParser *)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+	if ([[self compact:first] isKindOfClass:[HammerEmptyParser class]] || [[self compact:second] isKindOfClass:[HammerEmptyParser class]])
+		return [HammerEmptyParser parser];
+	else
+		return [HammerConcatenationParser parserWithFirst:HammerDelay([self compact:first]) second:HammerDelay([self compact:second])];
+}
+
+-(HammerParser *)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
+	if ([[self compact:child] isKindOfClass:[HammerEmptyParser class]])
+		return [HammerEmptyParser parser];
+	else
+		return [HammerReductionParser parserWithParser:HammerDelay([self compact:child]) function:parser.function];
 }
 
 @end
