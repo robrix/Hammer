@@ -29,8 +29,8 @@
 		D47F93041597C81A00B61C32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D47F93021597C81A00B61C32 /* InfoPlist.strings */; };
 		D48EF51115D20D7C0044C482 /* HammerTermParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48EF51015D20D7C0044C482 /* HammerTermParserTests.m */; };
 		D48FD46615DA164F0028FF5A /* HammerAlternationParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48FD46515DA164F0028FF5A /* HammerAlternationParserTests.m */; };
-		D4959F8615E1B33200DEABDA /* HammerParserDescriptionVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4959F8415E1B33200DEABDA /* HammerParserDescriptionVisitor.h */; };
-		D4959F8715E1B33200DEABDA /* HammerParserDescriptionVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = D4959F8515E1B33200DEABDA /* HammerParserDescriptionVisitor.m */; };
+		D4959F8615E1B33200DEABDA /* HammerParserFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4959F8415E1B33200DEABDA /* HammerParserFormatter.h */; };
+		D4959F8715E1B33200DEABDA /* HammerParserFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D4959F8515E1B33200DEABDA /* HammerParserFormatter.m */; };
 		D497E35315F42E3C006C34C3 /* HammerReductionParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D497E35115F42E3C006C34C3 /* HammerReductionParser.h */; };
 		D497E35415F42E3C006C34C3 /* HammerReductionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D497E35215F42E3C006C34C3 /* HammerReductionParser.m */; };
 		D497E35715F4312F006C34C3 /* HammerReductionParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D497E35615F4312F006C34C3 /* HammerReductionParserTests.m */; };
@@ -42,7 +42,7 @@
 		D4A125A3160672F6001C8983 /* HammerParserCompactor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A125A1160672F5001C8983 /* HammerParserCompactor.h */; };
 		D4A125A4160672F6001C8983 /* HammerParserCompactor.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A125A2160672F6001C8983 /* HammerParserCompactor.m */; };
 		D4A2EA491607E9F900C70906 /* HammerParserCompactorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A2EA481607E9F900C70906 /* HammerParserCompactorTests.m */; };
-		D4A48A6F16052586004E8AA0 /* HammerParserDescriptionVisitorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A48A6E16052586004E8AA0 /* HammerParserDescriptionVisitorTests.m */; };
+		D4A48A6F16052586004E8AA0 /* HammerParserFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A48A6E16052586004E8AA0 /* HammerParserFormatterTests.m */; };
 		D4A48A7116052DB4004E8AA0 /* HammerReductionFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A48A7016052DB4004E8AA0 /* HammerReductionFunction.m */; };
 		D4A48A7316056018004E8AA0 /* HammerMemoization.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A48A7216056018004E8AA0 /* HammerMemoization.m */; };
 		D4BA795415CDD7AC003D0C0B /* HammerRepetitionParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BA795215CDD7AC003D0C0B /* HammerRepetitionParser.h */; };
@@ -94,8 +94,8 @@
 		D47F93031597C81A00B61C32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D48EF51015D20D7C0044C482 /* HammerTermParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerTermParserTests.m; sourceTree = "<group>"; };
 		D48FD46515DA164F0028FF5A /* HammerAlternationParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerAlternationParserTests.m; sourceTree = "<group>"; usesTabs = 1; };
-		D4959F8415E1B33200DEABDA /* HammerParserDescriptionVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerParserDescriptionVisitor.h; sourceTree = "<group>"; };
-		D4959F8515E1B33200DEABDA /* HammerParserDescriptionVisitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerParserDescriptionVisitor.m; sourceTree = "<group>"; };
+		D4959F8415E1B33200DEABDA /* HammerParserFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerParserFormatter.h; sourceTree = "<group>"; };
+		D4959F8515E1B33200DEABDA /* HammerParserFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerParserFormatter.m; sourceTree = "<group>"; };
 		D497E35115F42E3C006C34C3 /* HammerReductionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerReductionParser.h; sourceTree = "<group>"; };
 		D497E35215F42E3C006C34C3 /* HammerReductionParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerReductionParser.m; sourceTree = "<group>"; };
 		D497E35615F4312F006C34C3 /* HammerReductionParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerReductionParserTests.m; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 		D4A125A1160672F5001C8983 /* HammerParserCompactor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerParserCompactor.h; sourceTree = "<group>"; };
 		D4A125A2160672F6001C8983 /* HammerParserCompactor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerParserCompactor.m; sourceTree = "<group>"; };
 		D4A2EA481607E9F900C70906 /* HammerParserCompactorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerParserCompactorTests.m; sourceTree = "<group>"; };
-		D4A48A6E16052586004E8AA0 /* HammerParserDescriptionVisitorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerParserDescriptionVisitorTests.m; sourceTree = "<group>"; };
+		D4A48A6E16052586004E8AA0 /* HammerParserFormatterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerParserFormatterTests.m; sourceTree = "<group>"; };
 		D4A48A7016052DB4004E8AA0 /* HammerReductionFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerReductionFunction.m; sourceTree = "<group>"; };
 		D4A48A7216056018004E8AA0 /* HammerMemoization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerMemoization.m; sourceTree = "<group>"; };
 		D4BA795215CDD7AC003D0C0B /* HammerRepetitionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerRepetitionParser.h; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 				D4C4AE7015E3110B00A6B4AE /* HammerConcatenationParserTests.m */,
 				D49C938B15ABB8CA00A02454 /* HammerMemoizingVisitorTests.m */,
 				D4A2EA481607E9F900C70906 /* HammerParserCompactorTests.m */,
-				D4A48A6E16052586004E8AA0 /* HammerParserDescriptionVisitorTests.m */,
+				D4A48A6E16052586004E8AA0 /* HammerParserFormatterTests.m */,
 				D497E35615F4312F006C34C3 /* HammerReductionParserTests.m */,
 				D48EF51015D20D7C0044C482 /* HammerTermParserTests.m */,
 				D47F93001597C81A00B61C32 /* Supporting Files */,
@@ -274,8 +274,8 @@
 				D4F73DFD15A90C42000A1830 /* HammerMemoizingVisitor.m */,
 				D4A125A1160672F5001C8983 /* HammerParserCompactor.h */,
 				D4A125A2160672F6001C8983 /* HammerParserCompactor.m */,
-				D4959F8415E1B33200DEABDA /* HammerParserDescriptionVisitor.h */,
-				D4959F8515E1B33200DEABDA /* HammerParserDescriptionVisitor.m */,
+				D4959F8415E1B33200DEABDA /* HammerParserFormatter.h */,
+				D4959F8515E1B33200DEABDA /* HammerParserFormatter.m */,
 				D49B622F15FDA72300D178C3 /* HammerVisitor.h */,
 			);
 			name = Operations;
@@ -301,7 +301,7 @@
 				D43C298115C472DB0079ED69 /* HammerMemoization.h in Headers */,
 				D43C298415C75F770079ED69 /* HammerConcatenationParser.h in Headers */,
 				D4BA795415CDD7AC003D0C0B /* HammerRepetitionParser.h in Headers */,
-				D4959F8615E1B33200DEABDA /* HammerParserDescriptionVisitor.h in Headers */,
+				D4959F8615E1B33200DEABDA /* HammerParserFormatter.h in Headers */,
 				D497E35315F42E3C006C34C3 /* HammerReductionParser.h in Headers */,
 				D49B623015FDA7A500D178C3 /* HammerVisitor.h in Headers */,
 				D4A125A3160672F6001C8983 /* HammerParserCompactor.h in Headers */,
@@ -418,7 +418,7 @@
 				D43C297F15C471C60079ED69 /* HammerAlternationParser.m in Sources */,
 				D43C298515C75F770079ED69 /* HammerConcatenationParser.m in Sources */,
 				D4BA795515CDD7AC003D0C0B /* HammerRepetitionParser.m in Sources */,
-				D4959F8715E1B33200DEABDA /* HammerParserDescriptionVisitor.m in Sources */,
+				D4959F8715E1B33200DEABDA /* HammerParserFormatter.m in Sources */,
 				D497E35415F42E3C006C34C3 /* HammerReductionParser.m in Sources */,
 				D4A48A7116052DB4004E8AA0 /* HammerReductionFunction.m in Sources */,
 				D4A48A7316056018004E8AA0 /* HammerMemoization.m in Sources */,
@@ -435,7 +435,7 @@
 				D48FD46615DA164F0028FF5A /* HammerAlternationParserTests.m in Sources */,
 				D4C4AE7115E3110B00A6B4AE /* HammerConcatenationParserTests.m in Sources */,
 				D497E35715F4312F006C34C3 /* HammerReductionParserTests.m in Sources */,
-				D4A48A6F16052586004E8AA0 /* HammerParserDescriptionVisitorTests.m in Sources */,
+				D4A48A6F16052586004E8AA0 /* HammerParserFormatterTests.m in Sources */,
 				D4A2EA491607E9F900C70906 /* HammerParserCompactorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

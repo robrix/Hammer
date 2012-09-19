@@ -1,4 +1,4 @@
-//  HammerParserDescriptionVisitor.m
+//  HammerParserFormatter.m
 //  Created by Rob Rix on 2012-08-19.
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
@@ -7,11 +7,11 @@
 #import "HammerEmptyParser.h"
 #import "HammerNullParser.h"
 #import "HammerNullReductionParser.h"
-#import "HammerParserDescriptionVisitor.h"
+#import "HammerParserFormatter.h"
 #import "HammerReductionParser.h"
 #import "HammerTermParser.h"
 
-@implementation HammerParserDescriptionVisitor
+@implementation HammerParserFormatter
 
 -(id)visit:(HammerLazyVisitable)visitable {
 	return [HammerForce(visitable) acceptVisitor:self];
