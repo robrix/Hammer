@@ -39,7 +39,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 -(NSSet *)parseFull:(id<NSFastEnumeration>)sequence {
 	HammerParser *parser = self;
 	for (id term in sequence) {
-//		NSLog(@"parsing %@ with %@", term, [parser acceptVisitor:[[HammerMemoizingVisitor alloc] initWithVisitor:[HammerParserFormatter new] symbolizer:[HammerIdentitySymbolizer symbolizer]]]);
+//		NSLog(@"parsing %@ with %@", term, [HammerParserFormatter format:parser]);
 		parser = [HammerParserCompactor compact:[parser parse:term]];
 	}
 	return [parser parseNull];

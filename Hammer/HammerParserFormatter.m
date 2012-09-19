@@ -5,48 +5,67 @@
 #import "HammerAlternationParser.h"
 #import "HammerConcatenationParser.h"
 #import "HammerEmptyParser.h"
+#import "HammerIdentitySymbolizer.h"
+#import "HammerMemoizingVisitor.h"
 #import "HammerNullParser.h"
 #import "HammerNullReductionParser.h"
 #import "HammerParserFormatter.h"
 #import "HammerReductionParser.h"
 #import "HammerTermParser.h"
 
+@interface HammerParserFormatter () <HammerVisitor>
+@end
+
 @implementation HammerParserFormatter
 
--(id)visit:(HammerLazyVisitable)visitable {
++(instancetype)formatter {
+	static HammerParserFormatter *formatter = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		formatter = [self new];
+	});
+	return formatter;
+}
+
++(NSString *)format:(HammerParser *)parser {
+	return [parser acceptVisitor:[[HammerMemoizingVisitor alloc] initWithVisitor:[self formatter] symbolizer:[HammerIdentitySymbolizer symbolizer]]];
+}
+
+
+-(NSString *)format:(HammerLazyVisitable)visitable {
 	return [HammerForce(visitable) acceptVisitor:self];
 }
 
 
--(id)emptyParser:(HammerEmptyParser *)parser {
+-(NSString *)emptyParser:(HammerEmptyParser *)parser {
 	return @"∅";
 }
 
--(id)nullParser:(HammerNullParser *)parser {
+-(NSString *)nullParser:(HammerNullParser *)parser {
 	return @"ε";
 }
 
 
--(id)nullReductionParser:(HammerNullReductionParser *)parser {
+-(NSString *)nullReductionParser:(HammerNullReductionParser *)parser {
 	return [NSString stringWithFormat:@"ε↓{%@}", [parser.trees.allObjects componentsJoinedByString:@", "]];
 }
 
 
--(id)termParser:(HammerTermParser *)parser {
+-(NSString *)termParser:(HammerTermParser *)parser {
 	return [NSString stringWithFormat:@"'%@'", parser.term];
 }
 
 
--(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return [NSString stringWithFormat:@"{%@ | %@}", [self visit:left], [self visit:right]];
+-(NSString *)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
+	return [NSString stringWithFormat:@"{%@ | %@}", [self format:left], [self format:right]];
 }
 
--(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return [NSString stringWithFormat:@"(%@ %@)", [self visit:first], [self visit:second]];
+-(NSString *)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+	return [NSString stringWithFormat:@"(%@ %@)", [self format:first], [self format:second]];
 }
 
--(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
-	return [NSString stringWithFormat:@"%@ → %@", [self visit:child], @"ƒ"];
+-(NSString *)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
+	return [NSString stringWithFormat:@"%@ → %@", [self format:child], @"ƒ"];
 }
 
 @end
