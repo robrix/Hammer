@@ -10,11 +10,6 @@
 
 @implementation HammerTermParserTests
 
--(void)testDoesNotCompact {
-	HammerTermParser *parser = [HammerTermParser parserWithTerm:@"a"];
-	STAssertEqualObjects([parser compact], parser, @"Expected equal.");
-}
-
 -(void)testParsesItsTerm {
 	STAssertEqualObjects([[[HammerTermParser parserWithTerm:@"a"] parse:@"a"] parseNull], [NSSet setWithObject:@"a"], @"Expected equal.");
 }

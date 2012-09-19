@@ -14,9 +14,6 @@
 // whether or not it can parse the null (empty) string
 @property (nonatomic, readonly) BOOL canParseNull;
 
-// algebraically reduced representation of self
--(HammerParser *)compact;
-
 -(id)acceptVisitor:(id<HammerVisitor>)visitor;
 
 @end
@@ -27,7 +24,5 @@
 -(NSSet *)parseNullRecursive;
 
 @property (nonatomic, readonly) BOOL canParseNullRecursive;
-
--(HammerParser *)compactRecursive;
 
 @end

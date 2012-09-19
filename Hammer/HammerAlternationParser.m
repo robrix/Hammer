@@ -47,16 +47,6 @@
 }
 
 
--(HammerParser *)compactRecursive {
-	if ([self.left.compact isKindOfClass:[HammerEmptyParser class]])
-		return self.right.compact;
-	else if ([self.right.compact isKindOfClass:[HammerEmptyParser class]])
-		return self.left.compact;
-	else
-		return [HammerAlternationParser parserWithLeft:HammerDelay(self.left.compact) right:HammerDelay(self.right.compact)];
-}
-
-
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [visitor alternationParser:self withLeft:_lazyLeft right:_lazyRight];
 }

@@ -56,14 +56,6 @@
 }
 
 
--(HammerParser *)compactRecursive {
-	if ([self.first.compact isKindOfClass:[HammerEmptyParser class]] || [self.second.compact isKindOfClass:[HammerEmptyParser class]])
-		return [HammerEmptyParser parser];
-	else
-		return [HammerConcatenationParser parserWithFirst:HammerDelay(self.first.compact) second:HammerDelay(self.second.compact)];
-}
-
-
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [visitor concatenationParser:self withFirst:_lazyFirst second:_lazySecond];
 }
