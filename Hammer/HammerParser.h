@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import <Hammer/HammerVisitor.h>
 
-@interface HammerParser : NSObject <NSCopying, HammerVisitable>
+@interface HammerParser : NSObject <NSCopying>
 
 -(NSSet *)parseFull:(id<NSFastEnumeration>)sequence;
 -(HammerParser *)parse:(id)term;
@@ -14,11 +14,9 @@
 // whether or not it can parse the null (empty) string
 @property (nonatomic, readonly) BOOL canParseNull;
 
--(id)acceptVisitor:(id<HammerVisitor>)visitor;
-
 @end
 
-@interface HammerParser () // intended for subclassing
+@interface HammerParser () <HammerVisitable> // intended for subclassing
 
 -(HammerParser *)parseDerive:(id)term;
 -(NSSet *)parseNullRecursive;
