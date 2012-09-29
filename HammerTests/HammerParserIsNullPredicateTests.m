@@ -30,7 +30,10 @@
 
 
 -(void)testAlternationParsersAreNullIfBothTheirChildrenAreNull {
-	
+	STAssertTrue([HammerParserIsNullPredicate isNull:[HammerAlternationParser parserWithLeft:HammerDelay([HammerNullParser parser]) right:HammerDelay([HammerNullParser parser])]], @"Expected true.");
+	STAssertFalse([HammerParserIsNullPredicate isNull:[HammerAlternationParser parserWithLeft:HammerDelay([HammerEmptyParser parser]) right:HammerDelay([HammerNullParser parser])]], @"Expected false.");
+	STAssertFalse([HammerParserIsNullPredicate isNull:[HammerAlternationParser parserWithLeft:HammerDelay([HammerNullParser parser]) right:HammerDelay([HammerEmptyParser parser])]], @"Expected false.");
+	STAssertFalse([HammerParserIsNullPredicate isNull:[HammerAlternationParser parserWithLeft:HammerDelay([HammerEmptyParser parser]) right:HammerDelay([HammerEmptyParser parser])]], @"Expected false.");
 }
 
 -(void)testConcatenationParsersAreNullIfBothTheirChildrenAreNull {
@@ -43,6 +46,15 @@
 -(void)testReductionParsersAreNullIfTheirChildrenAreNull {
 	STAssertTrue([HammerParserIsNullPredicate isNull:[HammerReductionParser parserWithParser:HammerDelay([HammerNullParser parser]) function:HammerIdentityReductionFunction]], @"Expected true.");
 	STAssertFalse([HammerParserIsNullPredicate isNull:[HammerReductionParser parserWithParser:HammerDelay([HammerEmptyParser parser]) function:HammerIdentityReductionFunction]], @"Expected false.");
+}
+
+
+-(void)testRecursiveConcatenationParsersAreNullIfEitherChildIsNull {
+	__block HammerParser *parser = [HammerConcatenationParser parserWithFirst:HammerDelay(parser) second:HammerDelay([HammerNullParser parser])];
+	STAssertTrue([HammerParserIsNullPredicate isNull:parser], @"Expected true.");
+	
+	parser = [HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullParser parser]) second:HammerDelay(parser)];
+	STAssertTrue([HammerParserIsNullPredicate isNull:parser], @"Expected true.");
 }
 
 @end

@@ -22,7 +22,7 @@
 }
 
 +(bool)isNull:(HammerParser *)parser {
-	return [[parser acceptVisitor:[[HammerLeastFixedPointVisitor alloc] initWithBottom:@NO visitor:[self predicate]]] boolValue];
+	return [[parser acceptVisitor:[[HammerLeastFixedPointVisitor alloc] initWithBottom:@YES visitor:[self predicate]]] boolValue];
 }
 
 -(bool)isNull:(HammerLazyVisitable)child {
