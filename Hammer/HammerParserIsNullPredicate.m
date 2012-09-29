@@ -3,7 +3,6 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import <Hammer/Hammer.h>
-#import "HammerIdentitySymbolizer.h"
 #import "HammerLeastFixedPointVisitor.h"
 #import "HammerParserIsNullPredicate.h"
 
