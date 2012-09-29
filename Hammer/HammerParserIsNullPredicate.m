@@ -4,7 +4,7 @@
 
 #import <Hammer/Hammer.h>
 #import "HammerIdentitySymbolizer.h"
-#import "HammerMemoizingVisitor.h"
+#import "HammerLeastFixedPointVisitor.h"
 #import "HammerParserIsNullPredicate.h"
 
 @interface HammerParserIsNullPredicate () <HammerVisitor>
@@ -22,7 +22,7 @@
 }
 
 +(bool)isNull:(HammerParser *)parser {
-	return [[parser acceptVisitor:[self predicate]] boolValue];
+	return [[parser acceptVisitor:[[HammerLeastFixedPointVisitor alloc] initWithBottom:@NO visitor:[self predicate]]] boolValue];
 }
 
 -(bool)isNull:(HammerLazyVisitable)child {
