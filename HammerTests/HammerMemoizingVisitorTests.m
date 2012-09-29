@@ -12,6 +12,12 @@
 
 @implementation HammerMemoizingVisitorTests
 
+-(void)testSymbolizesRecursiveVisits {
+	__block HammerParser *parser = [HammerConcatenationParser parserWithFirst:HammerDelay(parser) second:HammerDelay(parser)];
+	STAssertEqualObjects([parser acceptVisitor:[[HammerMemoizingVisitor alloc] initWithVisitor:self symbolizer:self]], (@[@"S", @"S"]), @"Expected equals.");
+}
+
+
 -(id)emptyParser:(HammerEmptyParser *)parser { return nil; }
 -(id)nullParser:(HammerNullParser *)parser { return nil; }
 -(id)nullReductionParser:(HammerNullReductionParser *)parser { return nil; }
@@ -26,12 +32,6 @@
 
 -(id)symbolForObject:(id)object {
 	return @"S";
-}
-
-
--(void)testSymbolizesRecursiveVisits {
-	__block HammerParser *parser = [HammerConcatenationParser parserWithFirst:HammerDelay(parser) second:HammerDelay(parser)];
-	STAssertEqualObjects([parser acceptVisitor:[[HammerMemoizingVisitor alloc] initWithVisitor:self symbolizer:self]], (@[@"S", @"S"]), @"Expected equals.");
 }
 
 @end
