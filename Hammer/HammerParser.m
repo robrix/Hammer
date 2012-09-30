@@ -20,7 +20,7 @@
 	NSMutableDictionary *_memoizedDerivativesByTerm;
 }
 
--(id)init {
+-(instancetype)init {
 	if ((self = [super init]))
 		_memoizedDerivativesByTerm = [NSMutableDictionary new];
 	return self;
@@ -67,7 +67,7 @@
 }
 
 
--(id)copyWithZone:(NSZone *)zone {
+-(instancetype)copyWithZone:(NSZone *)zone {
 	return self;
 }
 
