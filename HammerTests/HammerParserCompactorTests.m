@@ -20,8 +20,12 @@
 	STAssertEqualObjects([HammerParserCompactor compact:[HammerNullParser parser]], [HammerNullParser parser], @"Expected equals.");
 }
 
--(void)testDoesNotCompactNullReductionParsers {
-	STAssertEqualObjects([HammerParserCompactor compact:[HammerNullReductionParser parserWithParseTrees:[NSSet set]]], [HammerNullReductionParser parserWithParseTrees:[NSSet set]], @"Expected equals.");
+-(void)testCompactsNullReductionParsersWithoutParseTreesIntoNullParsers {
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerNullReductionParser parserWithParseTrees:[NSSet set]]], [HammerNullParser parser], @"Expected equals.");
+}
+
+-(void)testDoesNotCompactNullReductionParsersWithTrees {
+	STAssertEqualObjects([HammerParserCompactor compact:[HammerNullReductionParser parserWithParseTrees:[NSSet setWithObject:@"a"]]], [HammerNullReductionParser parserWithParseTrees:[NSSet setWithObject:@"a"]], @"Expected equals.");
 }
 
 -(void)testDoesNotCompactTermParsers {

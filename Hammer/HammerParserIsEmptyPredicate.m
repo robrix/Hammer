@@ -48,11 +48,11 @@
 
 
 -(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return @([self isEmpty:left] || [self isEmpty:right]);
+	return @([self isEmpty:left] && [self isEmpty:right]);
 }
 
 -(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return @([self isEmpty:first] && [self isEmpty:second]);
+	return @([self isEmpty:first] || [self isEmpty:second]);
 }
 
 -(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {

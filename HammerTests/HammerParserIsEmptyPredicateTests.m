@@ -29,17 +29,17 @@
 }
 
 
--(void)testAlternationParsersAreEmptyIfEitherChildIsEmpty {
+-(void)testAlternationParsersAreEmptyIfBothTheirChildrenAreEmpty {
 	STAssertFalse([HammerParserIsEmptyPredicate isEmpty:[HammerAlternationParser parserWithLeft:HammerDelay([HammerNullParser parser]) right:HammerDelay([HammerNullParser parser])]], @"Expected false.");
-	STAssertTrue([HammerParserIsEmptyPredicate isEmpty:[HammerAlternationParser parserWithLeft:HammerDelay([HammerEmptyParser parser]) right:HammerDelay([HammerNullParser parser])]], @"Expected true.");
-	STAssertTrue([HammerParserIsEmptyPredicate isEmpty:[HammerAlternationParser parserWithLeft:HammerDelay([HammerNullParser parser]) right:HammerDelay([HammerEmptyParser parser])]], @"Expected true.");
+	STAssertFalse([HammerParserIsEmptyPredicate isEmpty:[HammerAlternationParser parserWithLeft:HammerDelay([HammerEmptyParser parser]) right:HammerDelay([HammerNullParser parser])]], @"Expected false.");
+	STAssertFalse([HammerParserIsEmptyPredicate isEmpty:[HammerAlternationParser parserWithLeft:HammerDelay([HammerNullParser parser]) right:HammerDelay([HammerEmptyParser parser])]], @"Expected false.");
 	STAssertTrue([HammerParserIsEmptyPredicate isEmpty:[HammerAlternationParser parserWithLeft:HammerDelay([HammerEmptyParser parser]) right:HammerDelay([HammerEmptyParser parser])]], @"Expected true.");
 }
 
--(void)testConcatenationParsersAreEmptyIfBothTheirChildrenAreEmpty {
+-(void)testConcatenationParsersAreEmptyIfEitherChildIsEmpty {
 	STAssertFalse([HammerParserIsEmptyPredicate isEmpty:[HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullParser parser]) second:HammerDelay([HammerNullParser parser])]], @"Expected false.");
-	STAssertFalse([HammerParserIsEmptyPredicate isEmpty:[HammerConcatenationParser parserWithFirst:HammerDelay([HammerEmptyParser parser]) second:HammerDelay([HammerNullParser parser])]], @"Expected false.");
-	STAssertFalse([HammerParserIsEmptyPredicate isEmpty:[HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullParser parser]) second:HammerDelay([HammerEmptyParser parser])]], @"Expected false.");
+	STAssertTrue([HammerParserIsEmptyPredicate isEmpty:[HammerConcatenationParser parserWithFirst:HammerDelay([HammerEmptyParser parser]) second:HammerDelay([HammerNullParser parser])]], @"Expected true.");
+	STAssertTrue([HammerParserIsEmptyPredicate isEmpty:[HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullParser parser]) second:HammerDelay([HammerEmptyParser parser])]], @"Expected true.");
 	STAssertTrue([HammerParserIsEmptyPredicate isEmpty:[HammerConcatenationParser parserWithFirst:HammerDelay([HammerEmptyParser parser]) second:HammerDelay([HammerEmptyParser parser])]], @"Expected true.");
 }
 
