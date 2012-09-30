@@ -28,16 +28,16 @@
 }
 
 
--(id)keyForParser:(HammerParser *)parser {
+-(id<NSCopying>)keyForParser:(HammerParser *)parser {
 	return @((NSUInteger)(__bridge void *)parser);
 }
 
 -(id)valueForParser:(HammerParser *)parser memoizing:(id(^)())block {
-	id key = [self keyForParser:parser];
-	id value = [_resultsByVisitedObject objectForKey:key];
+	id<NSCopying> key = [self keyForParser:parser];
+	id value = _resultsByVisitedObject[key];
 	if (!value) {
 		id symbol = [_symbolizer symbolForObject:parser];
-		[_resultsByVisitedObject setObject:symbol forKey:key];
+		_resultsByVisitedObject[key] = symbol;
 		
 		value = block();
 	}
