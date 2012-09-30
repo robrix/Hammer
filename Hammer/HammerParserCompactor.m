@@ -46,8 +46,10 @@
 }
 
 
--(HammerNullReductionParser *)nullReductionParser:(HammerNullReductionParser *)parser {
-	return parser;
+-(HammerParser *)nullReductionParser:(HammerNullReductionParser *)parser {
+	return (parser.trees.count == 0)?
+		[HammerNullParser parser]
+	:	parser;
 }
 
 
