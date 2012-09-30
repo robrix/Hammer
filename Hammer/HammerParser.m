@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerEmptyParser.h"
+#import "HammerParserIsEmptyPredicate.h"
 #import "HammerParserIsNullablePredicate.h"
 #import "HammerParserIsNullPredicate.h"
 #import "HammerMemoization.h"
@@ -16,6 +17,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 @implementation HammerParser {
 	NSNumber *_isNullable;
 	NSNumber *_isNull;
+	NSNumber *_isEmpty;
 	NSSet *_parseNull;
 	NSMutableDictionary *_memoizedDerivativesByTerm;
 }
@@ -67,6 +69,10 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 
 -(bool)isNull {
 	return [HammerMemoizedValue(_isNull, @([HammerParserIsNullPredicate isNull:self])) boolValue];
+}
+
+-(bool)isEmpty {
+	return [HammerMemoizedValue(_isEmpty, @([HammerParserIsEmptyPredicate isEmpty:self])) boolValue];
 }
 
 
