@@ -34,13 +34,6 @@
 	return [HammerAlternationParser parserWithLeft:HammerDelay([self.left parse:term]) right:HammerDelay([self.right parse:term])];
 }
 
--(NSSet *)parseNullRecursive {
-	NSMutableSet *trees = [NSMutableSet new];
-	[trees unionSet:[self.left parseNull] ?: [NSSet set]];
-	[trees unionSet:[self.right parseNull] ?: [NSSet set]];
-	return trees;
-}
-
 
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [visitor alternationParser:self withLeft:_lazyLeft right:_lazyRight];

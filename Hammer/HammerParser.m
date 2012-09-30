@@ -6,13 +6,11 @@
 #import "HammerParserIsEmptyPredicate.h"
 #import "HammerParserIsNullablePredicate.h"
 #import "HammerParserIsNullPredicate.h"
+#import "HammerParserParseNullFunction.h"
 #import "HammerMemoization.h"
-#import "HammerMemoizingVisitor.h"
 #import "HammerParser.h"
 #import "HammerParserCompactor.h"
 #import "HammerParserFormatter.h"
-
-id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 
 @implementation HammerParser {
 	NSNumber *_isNullable;
@@ -51,15 +49,8 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 	return [_memoizedDerivativesByTerm objectForKey:term] ?: [self memoizeDerivative:[self parseDerive:term] forTerm:term];
 }
 
--(NSSet *)parseNullRecursive {
-	return [NSSet set];
-}
-
 -(NSSet *)parseNull {
-	return HammerMemoizedValue(_parseNull, HammerKleeneFixedPoint(^(NSSet *previous) {
-		_parseNull = previous;
-		return [self parseNullRecursive];
-	}, [NSSet set]));
+	return HammerMemoizedValue(_parseNull, [HammerParserParseNullFunction parseNull:self]);
 }
 
 
@@ -86,12 +77,3 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 @end
-
-
-id HammerKleeneFixedPoint(id(^f)(id previous), id bottom) {
-	BOOL changed = NO;
-	do {
-		changed = ![bottom isEqual:(bottom = f(bottom))];
-	} while(changed);
-	return bottom;
-}

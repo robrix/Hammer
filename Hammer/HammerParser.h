@@ -25,6 +25,5 @@
 @interface HammerParser () <HammerVisitable> // intended for subclassing
 
 -(HammerParser *)parseDerive:(id)term;
--(NSSet *)parseNullRecursive;
 
 @end
