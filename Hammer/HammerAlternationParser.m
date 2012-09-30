@@ -42,11 +42,6 @@
 }
 
 
--(BOOL)canParseNullRecursive {
-	return self.left.canParseNull || self.right.canParseNull;
-}
-
-
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [visitor alternationParser:self withLeft:_lazyLeft right:_lazyRight];
 }

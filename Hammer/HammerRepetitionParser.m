@@ -31,9 +31,4 @@
 	return [NSSet setWithObject:[NSNull null]];
 }
 
-
--(BOOL)canParseNull {
-	return YES;
-}
-
 @end
