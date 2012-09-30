@@ -39,17 +39,6 @@
 	:	nulled();
 }
 
--(NSSet *)parseNullRecursive {
-	NSMutableSet *trees = [NSMutableSet set];
-	for(id l in [self.first parseNull]) {
-		for(id r in [self.second parseNull]) {
-			// this is a really horrible cons cell, don’t do this
-			[trees addObject:[NSArray arrayWithObjects:l, r, nil]];
-		}
-	}
-	return trees;
-}
-
 
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [visitor concatenationParser:self withFirst:_lazyFirst second:_lazySecond];
