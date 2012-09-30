@@ -12,7 +12,7 @@
 -(NSSet *)parseNull;
 
 // whether or not it can parse the null (empty) string
-@property (nonatomic, readonly) BOOL canParseNull;
+@property (nonatomic, readonly, getter = isNullable) BOOL nullable;
 
 @end
 
@@ -21,6 +21,6 @@
 -(HammerParser *)parseDerive:(id)term;
 -(NSSet *)parseNullRecursive;
 
-@property (nonatomic, readonly) BOOL canParseNullRecursive;
+@property (nonatomic, readonly, getter = isNullableRecursive) BOOL nullableRecursive;
 
 @end

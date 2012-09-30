@@ -41,8 +41,8 @@
 }
 
 
--(BOOL)canParseNull {
-	return self.parser.canParseNull;
+-(BOOL)isNullable {
+	return self.parser.isNullable;
 }
 
 

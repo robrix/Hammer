@@ -42,8 +42,8 @@
 }
 
 
--(BOOL)canParseNullRecursive {
-	return self.left.canParseNull || self.right.canParseNull;
+-(BOOL)isNullableRecursive {
+	return self.left.isNullable || self.right.isNullable;
 }
 
 

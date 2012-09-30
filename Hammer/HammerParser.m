@@ -13,8 +13,8 @@
 id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 
 @implementation HammerParser {
-	BOOL _memoizedCanParseNull;
-	BOOL _canParseNull;
+	BOOL _memoizedIsNullable;
+	BOOL _isNullable;
 	NSSet *_parseNull;
 	NSMutableDictionary *_memoizedDerivativesByTerm;
 }
@@ -39,7 +39,6 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 -(NSSet *)parseFull:(id<NSFastEnumeration>)sequence {
 	HammerParser *parser = self;
 	for (id term in sequence) {
-//		NSLog(@"parsing %@ with %@", term, [HammerParserFormatter format:parser]);
 		parser = [HammerParserCompactor compact:[parser parse:term]];
 	}
 	return [parser parseNull];
@@ -61,19 +60,19 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 
--(BOOL)canParseNullRecursive {
+-(BOOL)isNullableRecursive {
 	return NO;
 }
 
--(BOOL)canParseNull {
-	if (!_memoizedCanParseNull) {
-		_memoizedCanParseNull = YES;
-		_canParseNull = [HammerKleeneFixedPoint(^(NSNumber *previous) {
-			_canParseNull = previous.boolValue;
-			return @([self canParseNullRecursive]);
+-(BOOL)isNullable {
+	if (!_memoizedIsNullable) {
+		_memoizedIsNullable = YES;
+		_isNullable = [HammerKleeneFixedPoint(^(NSNumber *previous) {
+			_isNullable = previous.boolValue;
+			return @(self.isNullableRecursive);
 		}, @(NO)) boolValue];
 	}
-	return _canParseNull;
+	return _isNullable;
 }
 
 

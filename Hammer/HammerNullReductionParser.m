@@ -28,7 +28,7 @@
 }
 
 
--(BOOL)canParseNull {
+-(BOOL)isNullable {
 	return YES;
 }
 

@@ -34,7 +34,7 @@
 
 -(HammerParser *)parseDerive:(id)term {
 	HammerLazyParser nulled = HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([self.first parse:term]) second:_lazySecond]);
-	return self.first.canParseNull?
+	return self.first.isNullable?
 		[HammerAlternationParser parserWithLeft:HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullReductionParser parserWithParseTrees:[self.first parseNull]]) second:HammerDelay([self.second parse:term])]) right:nulled]
 	:	nulled();
 }
@@ -51,8 +51,8 @@
 }
 
 
--(BOOL)canParseNullRecursive {
-	return self.first.canParseNull && self.second.canParseNull;
+-(BOOL)isNullableRecursive {
+	return self.first.isNullable && self.second.isNullable;
 }
 
 
