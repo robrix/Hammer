@@ -42,11 +42,6 @@
 }
 
 
--(BOOL)isNullableRecursive {
-	return self.left.isNullable || self.right.isNullable;
-}
-
-
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [visitor alternationParser:self withLeft:_lazyLeft right:_lazyRight];
 }

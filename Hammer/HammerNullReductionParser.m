@@ -28,11 +28,6 @@
 }
 
 
--(BOOL)isNullable {
-	return YES;
-}
-
-
 -(BOOL)isEqual:(id)object {
 	HammerNullReductionParser *other = object;
 	return [super isEqual:other] || (

@@ -31,9 +31,4 @@
 	return [NSSet setWithObject:[NSNull null]];
 }
 
-
--(BOOL)isNullable {
-	return YES;
-}
-
 @end

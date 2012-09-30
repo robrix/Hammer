@@ -51,11 +51,6 @@
 }
 
 
--(BOOL)isNullableRecursive {
-	return self.first.isNullable && self.second.isNullable;
-}
-
-
 -(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return [visitor concatenationParser:self withFirst:_lazyFirst second:_lazySecond];
 }
