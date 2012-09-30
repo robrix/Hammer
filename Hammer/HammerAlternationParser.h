@@ -9,4 +9,7 @@
 
 +(instancetype)parserWithLeft:(HammerLazyParser)left right:(HammerLazyParser)right;
 
+@property (nonatomic, readonly) HammerParser *left;
+@property (nonatomic, readonly) HammerParser *right;
+
 @end
