@@ -14,6 +14,9 @@
 // whether or not it can parse the null (empty) string
 @property (nonatomic, readonly, getter = isNullable) bool nullable;
 
+// whether or not the language this parser parses contains only the empty string
+@property (nonatomic, readonly, getter = isNull) bool null;
+
 @end
 
 @interface HammerParser () <HammerVisitable> // intended for subclassing
