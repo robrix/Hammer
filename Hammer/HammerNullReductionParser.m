@@ -23,10 +23,6 @@
 	return [HammerEmptyParser parser];
 }
 
--(NSSet *)parseNull {
-	return _trees;
-}
-
 
 -(BOOL)isEqual:(id)object {
 	HammerNullReductionParser *other = object;
