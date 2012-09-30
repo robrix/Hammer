@@ -57,23 +57,23 @@
 
 
 -(HammerParser *)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	if ([[self compact:left] isKindOfClass:[HammerEmptyParser class]])
+	if ([self compact:left].isEmpty)
 		return [self compact:right];
-	else if ([[self compact:right] isKindOfClass:[HammerEmptyParser class]])
+	else if ([self compact:right].isEmpty)
 		return [self compact:left];
 	else
 		return [HammerAlternationParser parserWithLeft:HammerDelay([self compact:left]) right:HammerDelay([self compact:right])];
 }
 
 -(HammerParser *)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	if ([[self compact:first] isKindOfClass:[HammerEmptyParser class]] || [[self compact:second] isKindOfClass:[HammerEmptyParser class]])
+	if ([self compact:first].isEmpty || [self compact:second].isEmpty)
 		return [HammerEmptyParser parser];
 	else
 		return [HammerConcatenationParser parserWithFirst:HammerDelay([self compact:first]) second:HammerDelay([self compact:second])];
 }
 
 -(HammerParser *)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
-	if ([[self compact:child] isKindOfClass:[HammerEmptyParser class]])
+	if ([self compact:child].isEmpty)
 		return [HammerEmptyParser parser];
 	else
 		return [HammerReductionParser parserWithParser:HammerDelay([self compact:child]) function:parser.function];
