@@ -24,46 +24,46 @@
 
 
 -(id)emptyParser:(HammerEmptyParser *)parser {
-	return [self cachedValueForParser:parser block:^id{
+	return [self cachedValueForParser:parser block:^{
 		return [self.visitor emptyParser:parser];
 	}];
 }
 
 -(id)nullParser:(HammerNullParser *)parser {
-	return [self cachedValueForParser:parser block:^id{
+	return [self cachedValueForParser:parser block:^{
 		return [self.visitor nullParser:parser];
 	}];
 }
 
 -(id)nullReductionParser:(HammerNullReductionParser *)parser {
-	return [self cachedValueForParser:parser block:^id{
+	return [self cachedValueForParser:parser block:^{
 		return [self.visitor nullReductionParser:parser];
 	}];
 }
 
 
 -(id)termParser:(HammerTermParser *)parser {
-	return [self cachedValueForParser:parser block:^id{
+	return [self cachedValueForParser:parser block:^{
 		return [self.visitor termParser:parser];
 	}];
 }
 
 
 -(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return [self cachedValueForParser:parser block:^id{
+	return [self cachedValueForParser:parser block:^{
 		return [self.visitor alternationParser:parser withLeft:[self redirectVisitable:left] right:[self redirectVisitable:right]];
 	}];
 }
 
 -(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return [self cachedValueForParser:parser block:^id{
+	return [self cachedValueForParser:parser block:^{
 		return [self.visitor concatenationParser:parser withFirst:[self redirectVisitable:first] second:[self redirectVisitable:second]];
 	}];
 }
 
 
 -(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
-	return [self cachedValueForParser:parser block:^id{
+	return [self cachedValueForParser:parser block:^{
 		return [self.visitor reductionParser:parser withParser:[self redirectVisitable:child]];
 	}];
 }

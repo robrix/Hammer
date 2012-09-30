@@ -51,46 +51,46 @@
 
 
 -(id)emptyParser:(HammerEmptyParser *)parser {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor emptyParser:parser];
 	}];
 }
 
 -(id)nullParser:(HammerNullParser *)parser {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor nullParser:parser];
 	}];
 }
 
 
 -(id)nullReductionParser:(HammerNullReductionParser *)parser {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor nullReductionParser:parser];
 	}];
 }
 
 
 -(id)termParser:(HammerTermParser *)parser {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor termParser:parser];
 	}];
 }
 
 
 -(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor alternationParser:parser withLeft:[self redirectVisitable:left] right:[self redirectVisitable:right]];
 	}];
 }
 
 -(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor concatenationParser:parser withFirst:[self redirectVisitable:first] second:[self redirectVisitable:second]];
 	}];
 }
 
 -(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor reductionParser:parser withParser:[self redirectVisitable:child]];
 	}];
 }
