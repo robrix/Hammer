@@ -28,16 +28,16 @@
 }
 
 
--(id)keyForParser:(HammerParser *)parser {
+-(id<NSCopying>)keyForParser:(HammerParser *)parser {
 	return @((NSUInteger)(__bridge void *)parser);
 }
 
 -(id)valueForParser:(HammerParser *)parser memoizing:(id(^)())block {
-	id key = [self keyForParser:parser];
-	id value = [_resultsByVisitedObject objectForKey:key];
+	id<NSCopying> key = [self keyForParser:parser];
+	id value = _resultsByVisitedObject[key];
 	if (!value) {
 		id symbol = [_symbolizer symbolForObject:parser];
-		[_resultsByVisitedObject setObject:symbol forKey:key];
+		_resultsByVisitedObject[key] = symbol;
 		
 		value = block();
 	}
@@ -51,46 +51,46 @@
 
 
 -(id)emptyParser:(HammerEmptyParser *)parser {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor emptyParser:parser];
 	}];
 }
 
 -(id)nullParser:(HammerNullParser *)parser {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor nullParser:parser];
 	}];
 }
 
 
 -(id)nullReductionParser:(HammerNullReductionParser *)parser {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor nullReductionParser:parser];
 	}];
 }
 
 
 -(id)termParser:(HammerTermParser *)parser {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor termParser:parser];
 	}];
 }
 
 
 -(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor alternationParser:parser withLeft:[self redirectVisitable:left] right:[self redirectVisitable:right]];
 	}];
 }
 
 -(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor concatenationParser:parser withFirst:[self redirectVisitable:first] second:[self redirectVisitable:second]];
 	}];
 }
 
 -(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
-	return [self valueForParser:parser memoizing:^id{
+	return [self valueForParser:parser memoizing:^{
 		return [_visitor reductionParser:parser withParser:[self redirectVisitable:child]];
 	}];
 }

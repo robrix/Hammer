@@ -20,7 +20,7 @@
 	NSMutableDictionary *_memoizedDerivativesByTerm;
 }
 
--(id)init {
+-(instancetype)init {
 	if ((self = [super init]))
 		_memoizedDerivativesByTerm = [NSMutableDictionary new];
 	return self;
@@ -32,7 +32,7 @@
 }
 
 -(HammerParser *)memoizeDerivative:(HammerParser *)value forTerm:(id)term {
-	[_memoizedDerivativesByTerm setObject:value forKey:term];
+	_memoizedDerivativesByTerm[term] = value;
 	return value;
 }
 
@@ -46,7 +46,7 @@
 }
 
 -(HammerParser *)parse:(id)term {
-	return [_memoizedDerivativesByTerm objectForKey:term] ?: [self memoizeDerivative:[self parseDerive:term] forTerm:term];
+	return _memoizedDerivativesByTerm[term] ?: [self memoizeDerivative:[self parseDerive:term] forTerm:term];
 }
 
 -(NSSet *)parseNull {
@@ -67,7 +67,7 @@
 }
 
 
--(id)copyWithZone:(NSZone *)zone {
+-(instancetype)copyWithZone:(NSZone *)zone {
 	return self;
 }
 

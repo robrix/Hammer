@@ -63,8 +63,6 @@
 		D4C6B2C71618017400D4FF2C /* HammerParserParseNullFunctionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C6B2C61618017400D4FF2C /* HammerParserParseNullFunctionTests.m */; };
 		D4C6B2CB1618033100D4FF2C /* HammerParserParseNullFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C6B2C91618033100D4FF2C /* HammerParserParseNullFunction.h */; };
 		D4C6B2CC1618033100D4FF2C /* HammerParserParseNullFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C6B2CA1618033100D4FF2C /* HammerParserParseNullFunction.m */; };
-		D4F73DF515A8DAA8000A1830 /* HammerList.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F73DF315A8DAA8000A1830 /* HammerList.h */; };
-		D4F73DF615A8DAA8000A1830 /* HammerList.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F73DF415A8DAA8000A1830 /* HammerList.m */; };
 		D4F73DFE15A90C42000A1830 /* HammerMemoizingVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F73DFC15A90C42000A1830 /* HammerMemoizingVisitor.h */; };
 		D4F73DFF15A90C42000A1830 /* HammerMemoizingVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F73DFD15A90C42000A1830 /* HammerMemoizingVisitor.m */; };
 /* End PBXBuildFile section */
@@ -144,8 +142,6 @@
 		D4C6B2C61618017400D4FF2C /* HammerParserParseNullFunctionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerParserParseNullFunctionTests.m; sourceTree = "<group>"; };
 		D4C6B2C91618033100D4FF2C /* HammerParserParseNullFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerParserParseNullFunction.h; sourceTree = "<group>"; };
 		D4C6B2CA1618033100D4FF2C /* HammerParserParseNullFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerParserParseNullFunction.m; sourceTree = "<group>"; };
-		D4F73DF315A8DAA8000A1830 /* HammerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerList.h; sourceTree = "<group>"; };
-		D4F73DF415A8DAA8000A1830 /* HammerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerList.m; sourceTree = "<group>"; };
 		D4F73DFC15A90C42000A1830 /* HammerMemoizingVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HammerMemoizingVisitor.h; sourceTree = "<group>"; };
 		D4F73DFD15A90C42000A1830 /* HammerMemoizingVisitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HammerMemoizingVisitor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -242,8 +238,6 @@
 				D4A2EA541607FD0B00C70906 /* Operations */,
 				D43C297715C46D880079ED69 /* Parsers */,
 				D49C938F15ABC85B00A02454 /* Symbolizers */,
-				D4F73DF315A8DAA8000A1830 /* HammerList.h */,
-				D4F73DF415A8DAA8000A1830 /* HammerList.m */,
 				D47F92EE1597C81A00B61C32 /* Supporting Files */,
 			);
 			path = Hammer;
@@ -333,7 +327,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4F73DF515A8DAA8000A1830 /* HammerList.h in Headers */,
 				D4F73DFE15A90C42000A1830 /* HammerMemoizingVisitor.h in Headers */,
 				D49C939115ABC86F00A02454 /* HammerSymbolizer.h in Headers */,
 				D49C939415ABC89200A02454 /* HammerIdentitySymbolizer.h in Headers */,
@@ -457,7 +450,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4F73DF615A8DAA8000A1830 /* HammerList.m in Sources */,
 				D4F73DFF15A90C42000A1830 /* HammerMemoizingVisitor.m in Sources */,
 				D49C939515ABC89200A02454 /* HammerIdentitySymbolizer.m in Sources */,
 				D43C296915C460A10079ED69 /* HammerNullReductionParser.m in Sources */,
