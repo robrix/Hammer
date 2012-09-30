@@ -85,34 +85,34 @@
 }
 
 
--(id)emptyParser:(HammerEmptyParser *)parser {
+-(NSNumber *)emptyParser:(HammerEmptyParser *)parser {
 	return @NO;
 }
 
--(id)nullParser:(HammerNullParser *)parser {
+-(NSNumber *)nullParser:(HammerNullParser *)parser {
 	return @NO;
 }
 
--(id)nullReductionParser:(HammerNullReductionParser *)parser {
+-(NSNumber *)nullReductionParser:(HammerNullReductionParser *)parser {
 	return @NO;
 }
 
 
--(id)termParser:(HammerTermParser *)parser {
+-(NSNumber *)termParser:(HammerTermParser *)parser {
 	return @YES;
 }
 
 
--(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
+-(NSNumber *)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
 	return @([[left() acceptVisitor:self] boolValue] || [[right() acceptVisitor:self] boolValue]);
 }
 
--(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+-(NSNumber *)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
 	return @([[first() acceptVisitor:self] boolValue] && [[second() acceptVisitor:self] boolValue]);
 }
 
 
--(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
+-(NSNumber *)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
 	return [child() acceptVisitor:self];
 }
 

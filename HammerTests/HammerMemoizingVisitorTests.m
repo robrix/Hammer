@@ -25,12 +25,12 @@
 -(id)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right { return nil; }
 -(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child { return nil; }
 
--(id)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+-(NSArray *)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
 	return @[[first() acceptVisitor:self], [second() acceptVisitor:self]];
 }
 
 
--(id)symbolForObject:(id)object {
+-(NSString *)symbolForObject:(id)object {
 	return @"S";
 }
 
