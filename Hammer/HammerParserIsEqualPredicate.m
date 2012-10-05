@@ -3,65 +3,58 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerParserIsEqualPredicate.h"
-#import "HammerLeastFixedPointVisitor.h"
+#import "HammerParserZipper.h"
 #import <Hammer/Hammer.h>
 
 @interface HammerParserIsEqualPredicate () <HammerVisitor>
-
-@property (nonatomic, readonly) HammerParser *parser1;
-@property (nonatomic, readonly) id parser2;
-
 @end
 
 @implementation HammerParserIsEqualPredicate
 
--(instancetype)initWithParser:(HammerParser *)parser1 parser:(HammerParser *)parser2 {
-	if ((self = [super init])) {
-		_parser1 = parser1;
-		_parser2 = parser2;
-	}
-	return self;
-}
-
-
 +(bool)isParser:(HammerParser *)parser1 equalToParser:(HammerParser *)parser2 {
-	return [[parser1 acceptVisitor:[[HammerLeastFixedPointVisitor alloc] initWithBottom:@NO visitor:[[self alloc] initWithParser:parser1 parser:parser2]]] boolValue];
+	return [[self new] isParser:parser1 equalToParser:parser2];
+}
+
+-(bool)isParser:(HammerParser *)parser1 equalToParser:(HammerParser *)parser2 {
+	__block bool isEqual = YES;
+	[HammerParserZipper zip:@[parser1, parser2] block:^(NSArray *parsers, bool *stop) {
+		id token1 = [[parsers objectAtIndex:0] acceptVisitor:self];
+		id token2 = [[parsers objectAtIndex:1] acceptVisitor:self];
+		if (!(isEqual = [token1 isEqual:token2]))
+			*stop = YES;
+	}];
+	return isEqual;
 }
 
 
--(NSNumber *)emptyParser:(HammerEmptyParser *)parser {
-	return @(parser == self.parser2);
+-(HammerEmptyParser *)emptyParser:(HammerEmptyParser *)parser {
+	return parser;
 }
 
--(NSNumber *)nullParser:(HammerNullParser *)parser {
-	return @(parser == self.parser2);
+-(HammerNullParser *)nullParser:(HammerNullParser *)parser {
+	return parser;
 }
 
--(NSNumber *)nullReductionParser:(HammerNullReductionParser *)parser {
-	HammerNullReductionParser *parser2 = self.parser2;
-	return @(
-		[parser2 isKindOfClass:[HammerNullReductionParser class]]
-	&&	[parser2.trees isEqual:parser.trees]
-	);
+-(HammerNullReductionParser *)nullReductionParser:(HammerNullReductionParser *)parser {
+	return parser;
 }
 
 
--(NSNumber *)termParser:(HammerTermParser *)parser {
-	HammerTermParser *parser2 = self.parser2;
-	return @(
-		[parser2 isKindOfClass:[HammerTermParser class]]
-	&&	[parser2.term isEqual:parser.term]
-	);
+-(HammerTermParser *)termParser:(HammerTermParser *)parser {
+	return parser;
 }
 
 
--(NSNumber *)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	HammerAlternationParser *parser2 = self.parser2;
-	return @NO;
-	return @(
-		[parser2 isKindOfClass:[HammerAlternationParser class]]
-//	&&	[parser2.left ]
-	);
+-(Class)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
+	return [parser class];
+}
+
+-(Class)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+	return [parser class];
+}
+
+-(id)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
+	return parser.function;
 }
 
 @end
