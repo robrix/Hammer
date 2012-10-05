@@ -9,4 +9,6 @@
 
 -(instancetype)initWithParser:(HammerParser *)parser;
 
+-(bool)hasVisitedParser:(HammerParser *)parser;
+
 @end

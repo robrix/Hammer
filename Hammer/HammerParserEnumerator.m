@@ -14,13 +14,20 @@
 
 @end
 
-@implementation HammerParserEnumerator
+@implementation HammerParserEnumerator {
+	NSMutableSet *_visitedParsers;
+}
 
--(instancetype)initWithParser:(HammerParser *)parser {
+-(instancetype)initWithParser:(HammerParser *)parser visitedParsers:(NSMutableSet *)visitedParsers {
 	if ((self = [super init])) {
+		_visitedParsers = visitedParsers;
 		self.parser = [parser acceptVisitor:self];
 	}
 	return self;
+}
+
+-(instancetype)initWithParser:(HammerParser *)parser {
+	return [self initWithParser:parser visitedParsers:[NSMutableSet new]];
 }
 
 
@@ -32,7 +39,7 @@
 
 
 -(HammerParserEnumerator *)branch:(HammerLazyVisitable)child {
-	return [[HammerParserEnumerator alloc] initWithParser:(HammerParser *)child()];
+	return [[HammerParserEnumerator alloc] initWithParser:(HammerParser *)child() visitedParsers:_visitedParsers];
 }
 
 
@@ -55,20 +62,42 @@
 
 
 -(HammerParser *)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	self.leftBranch = [self branch:left];
-	self.rightBranch = [self branch:right];
-	return parser;
+	return [self visitParser:parser block:^{
+		self.leftBranch = [self branch:left];
+		self.rightBranch = [self branch:right];
+	}];
 }
 
 -(HammerParser *)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	self.leftBranch = [self branch:first];
-	self.rightBranch = [self branch:second];
-	return parser;
+	return [self visitParser:parser block:^{
+		self.leftBranch = [self branch:first];
+		self.rightBranch = [self branch:second];
+	}];
 }
 
 -(HammerParser *)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
-	self.leftBranch = [self branch:child];
-	return parser;
+	return [self visitParser:parser block:^{
+		self.leftBranch = [self branch:child];
+	}];
+}
+
+
+-(id)tokenForParser:(HammerParser *)parser {
+	return [NSValue valueWithNonretainedObject:parser];
+}
+
+-(bool)hasVisitedParser:(HammerParser *)parser {
+	return [_visitedParsers containsObject:[self tokenForParser:parser]];
+}
+
+-(HammerParser *)visitParser:(HammerParser *)parser block:(void(^)())block {
+	if (![self hasVisitedParser:parser]) {
+		[_visitedParsers addObject:[self tokenForParser:parser]];
+		block();
+		return parser;
+	} else {
+		return nil;
+	}
 }
 
 @end

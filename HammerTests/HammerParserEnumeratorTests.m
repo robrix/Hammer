@@ -69,4 +69,22 @@
 	STAssertNil([enumerator nextObject], @"Expected nil.");
 }
 
+
+-(void)testRecordsNonTerminalParsersItHasVisited {
+	HammerParser *parser = [HammerReductionParser parserWithParser:HammerDelay([HammerTermParser parserWithTerm:@"a"]) function:HammerIdentityReductionFunction];
+	HammerParserEnumerator *enumerator = [[HammerParserEnumerator alloc] initWithParser:parser];
+	[enumerator nextObject];
+	
+	STAssertTrue([enumerator hasVisitedParser:parser], @"Expected true.");
+}
+
+
+-(void)testPrunesRecursiveBranches {
+	__block HammerParser *parser = [HammerConcatenationParser parserWithFirst:HammerDelay(parser) second:HammerDelay([HammerNullParser parser])];
+	HammerParserEnumerator *enumerator = [[HammerParserEnumerator alloc] initWithParser:parser];
+	STAssertEqualObjects([enumerator nextObject], parser, @"Expected equals.");
+	STAssertEqualObjects([enumerator nextObject], [HammerNullParser parser], @"Expected equals.");
+	STAssertNil([enumerator nextObject], @"Expected nil.");
+}
+
 @end
