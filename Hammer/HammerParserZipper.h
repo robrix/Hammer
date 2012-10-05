@@ -6,6 +6,8 @@
 
 @interface HammerParserZipper : NSObject
 
+// maps an array of parsers into a sequence of block calls, recursively
+
 +(void)zip:(NSArray *)parsers block:(void(^)(NSArray *parsers, bool *stop))block;
 
 @end

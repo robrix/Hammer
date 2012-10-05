@@ -21,13 +21,26 @@
 }
 
 
-//-(void)testZippingNonterminalParsersRecursesIntoTheirChildren {
-//	NSMutableArray *visited = [NSMutableArray new];
-//	HammerParser *reduction = [HammerReductionParser parserWithParser:HammerDelay([HammerNullParser parser]) function:HammerIdentityReductionFunction];
-//	[HammerParserZipper zip:@[reduction] block:^(NSArray *parsers, bool *stop) {
-//		[visited addObject:parsers.lastObject];
-//	}];
-//	STAssertEqualObjects(visited, (@[reduction, [HammerNullParser parser]]), @"Expected equals.");
-//}
+-(void)testZippingNonterminalParsersRecursesIntoTheirChildren {
+	NSMutableArray *visited = [NSMutableArray new];
+	HammerParser *reduction = [HammerReductionParser parserWithParser:HammerDelay([HammerNullParser parser]) function:HammerIdentityReductionFunction];
+	[HammerParserZipper zip:@[reduction] block:^(NSArray *parsers, bool *stop) {
+		[visited addObject:parsers.lastObject];
+	}];
+	STAssertEqualObjects(visited, (@[reduction, [HammerNullParser parser]]), @"Expected equals.");
+}
+
+
+-(void)testZippingTerminalAndNonterminalParsersRecursesToTheDepthOfTheMaximum {
+	HammerParser *nonterminal = [HammerReductionParser parserWithParser:HammerDelay([HammerNullParser parser]) function:HammerIdentityReductionFunction];
+	HammerParser *terminal = [HammerNullParser parser];
+	
+	NSMutableArray *tuples = [NSMutableArray new];
+	[HammerParserZipper zip:@[nonterminal, terminal] block:^(NSArray *parsers, bool *stop) {
+		[tuples addObject:parsers];
+	}];
+	
+	STAssertEqualObjects(tuples, (@[@[nonterminal, terminal], @[terminal, [NSNull null]]]), @"Expected equals.");
+}
 
 @end
