@@ -20,4 +20,9 @@
 	return [visitor emptyParser:self];
 }
 
+
+-(BOOL)isEqual:(id)object {
+	return [object isKindOfClass:self.class];
+}
+
 @end
