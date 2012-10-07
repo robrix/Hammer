@@ -52,4 +52,17 @@
 	return [HammerAlternationParser parserWithLeft:HammerDelay([self derive:left]) right:HammerDelay([self derive:right])];
 }
 
+-(HammerParser *)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
+	HammerParser *firstParser = ((HammerLazyParser)first)();
+	HammerLazyParser parsedFirst = HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([self derive:first]) second:(HammerLazyParser)second]);
+	HammerLazyParser nulledFirst = HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullReductionParser parserWithParseTrees:[firstParser parseNull]]) second:HammerDelay([self derive:second])]);
+	return firstParser.isNullable?
+		[HammerAlternationParser parserWithLeft:nulledFirst right:parsedFirst]
+	:	parsedFirst();
+}
+
+-(HammerParser *)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
+	return [HammerReductionParser parserWithParser:HammerDelay([self derive:child]) function:parser.function];
+}
+
 @end
