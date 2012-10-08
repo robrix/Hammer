@@ -23,8 +23,8 @@
 	return [parser acceptVisitor:[[self alloc] initWithTerm:term]];
 }
 
--(HammerParser *)derive:(HammerLazyVisitable)child {
-	return [child() acceptVisitor:self];
+-(HammerLazyParser)derive:(HammerLazyVisitable)child {
+	return HammerDelay([child() acceptVisitor:self]);
 }
 
 
@@ -49,20 +49,19 @@
 
 
 -(HammerParser *)alternationParser:(HammerAlternationParser *)parser withLeft:(HammerLazyVisitable)left right:(HammerLazyVisitable)right {
-	return [HammerAlternationParser parserWithLeft:HammerDelay([self derive:left]) right:HammerDelay([self derive:right])];
+	return [HammerAlternationParser parserWithLeft:[self derive:left] right:[self derive:right]];
 }
 
 -(HammerParser *)concatenationParser:(HammerConcatenationParser *)parser withFirst:(HammerLazyVisitable)first second:(HammerLazyVisitable)second {
-	HammerParser *firstParser = ((HammerLazyParser)first)();
-	HammerLazyParser parsedFirst = HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([self derive:first]) second:(HammerLazyParser)second]);
-	HammerLazyParser nulledFirst = HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullReductionParser parserWithParseTrees:[firstParser parseNull]]) second:HammerDelay([self derive:second])]);
-	return firstParser.isNullable?
+	HammerLazyParser parsedFirst = HammerDelay([HammerConcatenationParser parserWithFirst:[self derive:first] second:(HammerLazyParser)second]);
+	HammerLazyParser nulledFirst = HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullReductionParser parserWithParseTrees:[parser.first parseNull]]) second:[self derive:second]]);
+	return parser.first.isNullable?
 		[HammerAlternationParser parserWithLeft:nulledFirst right:parsedFirst]
 	:	parsedFirst();
 }
 
 -(HammerParser *)reductionParser:(HammerReductionParser *)parser withParser:(HammerLazyVisitable)child {
-	return [HammerReductionParser parserWithParser:HammerDelay([self derive:child]) function:parser.function];
+	return [HammerReductionParser parserWithParser:[self derive:child] function:parser.function];
 }
 
 @end
