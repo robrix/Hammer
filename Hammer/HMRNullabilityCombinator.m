@@ -25,7 +25,12 @@
 
 
 -(NSSet *)deforest {
-	return [self.parser deforest];
+	return self.parser.deforestation;
+}
+
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"δ(%@)", self.parser.description];
 }
 
 @end

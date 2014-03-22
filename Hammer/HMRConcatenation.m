@@ -2,7 +2,9 @@
 
 #import "HMRAlternation.h"
 #import "HMRConcatenation.h"
+#import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
+#import "HMRNull.h"
 #import "HMRNullabilityCombinator.h"
 
 @implementation HMRConcatenation
@@ -27,10 +29,10 @@
 	id<HMRCombinator> first = self.first;
 	id<HMRCombinator> second = self.second;
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		id<HMRCombinator>left = [class combinatorWithFirst:[first derivativeWithRespectToElement:element]
+		id<HMRCombinator>left = [class combinatorWithFirst:[first memoizedDerivativeWithRespectToElement:element]
 														   second:second];
 		id<HMRCombinator>right = [class combinatorWithFirst:[HMRNullabilityCombinator combinatorWithParser:first]
-															second:[second derivativeWithRespectToElement:element]];
+															second:[second memoizedDerivativeWithRespectToElement:element]];
 		return [HMRAlternation combinatorWithLeft:left right:right];
 	}];
 }
@@ -38,12 +40,31 @@
 
 -(NSSet *)deforest {
 	NSMutableSet *trees = [NSMutableSet new];
-	for (id eachFirst in [self.first deforest]) {
-		for (id eachSecond in [self.second deforest]) {
+	for (id eachFirst in self.first.deforestation) {
+		for (id eachSecond in self.second.deforestation) {
 			[trees addObject:@[ eachFirst, eachSecond ]];
 		}
 	}
 	return trees;
+}
+
+
+-(id<HMRCombinator>)compact {
+	return (self.first.compaction == [HMREmpty parser] || self.second.compaction == [HMREmpty parser])?
+		[HMREmpty parser]
+	:	[super compact];
+}
+
+l3_test(@selector(compaction)) {
+	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> empty = [HMREmpty parser];
+	l3_expect(HMRConcatenate(empty, anything).compaction).to.equal(empty);
+	l3_expect(HMRConcatenate(anything, empty).compaction).to.equal(empty);
+}
+
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"%@ %@", self.first.description, self.second.description];
 }
 
 @end

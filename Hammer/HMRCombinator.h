@@ -5,14 +5,16 @@
 @protocol HMRCombinator <NSObject, NSCopying>
 
 -(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element;
-
--(NSSet *)deforest;
-
-@optional
-
 -(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element;
 
--(NSSet *)memoizedDeforest;
+-(NSSet *)deforest;
+@property (readonly) NSSet *deforestation;
+
+-(id<HMRCombinator>)compact;
+@property (readonly) id<HMRCombinator> compaction;
+
+-(NSString *)describe;
+@property (readonly) NSString *description;
 
 @end
 

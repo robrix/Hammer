@@ -17,4 +17,9 @@
 	return [HMREmpty parser];
 }
 
+
+-(NSString *)describe {
+	return @"ε";
+}
+
 @end

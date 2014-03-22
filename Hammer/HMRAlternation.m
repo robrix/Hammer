@@ -1,7 +1,9 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
+#import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
+#import "HMRLiteralCombinator.h"
 
 @implementation HMRAlternation
 
@@ -25,14 +27,36 @@
 	id<HMRCombinator> left = self.left;
 	id<HMRCombinator> right = self.right;
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		return [class combinatorWithLeft:[left derivativeWithRespectToElement:element]
-							   right:[right derivativeWithRespectToElement:element]];
+		return [class combinatorWithLeft:[left memoizedDerivativeWithRespectToElement:element]
+							   right:[right memoizedDerivativeWithRespectToElement:element]];
 	}];
 }
 
 
 -(NSSet *)deforest {
-	return [[self.left deforest] setByAddingObjectsFromSet:[self.right deforest]];
+	return [self.left.deforestation setByAddingObjectsFromSet:self.right.deforestation];
+}
+
+
+-(id<HMRCombinator>)compact {
+	id<HMRCombinator> compacted = [super compact];
+	if (self.left.compaction == [HMREmpty parser])
+		compacted = self.right.compaction;
+	else if (self.right.compaction == [HMREmpty parser])
+		compacted = self.left.compaction;
+	return compacted;
+}
+
+l3_test(@selector(compaction)) {
+	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> empty = [HMREmpty parser];
+	l3_expect(HMRAlternate(empty, anything).compaction).to.equal(anything);
+	l3_expect(HMRAlternate(anything, empty).compaction).to.equal(anything);
+}
+
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"%@ | %@", self.left.description, self.right.description];
 }
 
 @end

@@ -2,6 +2,7 @@
 
 #import "HMRAlternation.h"
 #import "HMRConcatenation.h"
+#import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
 #import "HMRNullReduction.h"
 #import "HMRReduction.h"
@@ -27,7 +28,7 @@
 	id<HMRCombinator> parser = self.parser;
 	
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser derivativeWithRespectToElement:element]
+		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser memoizedDerivativeWithRespectToElement:element]
 																				 second:self];
 		HMRReduction *reduction = [HMRReduction combinatorWithParser:concatenation block:^(id x) {
 			return x; // ??
@@ -39,6 +40,22 @@
 
 -(NSSet *)deforest {
 	return [NSSet setWithObject:@[]];
+}
+
+
+-(id<HMRCombinator>)compact {
+	return self.parser.compaction == [HMREmpty parser]?
+		[HMRNullReduction combinatorWithElement:@[]]
+	:	[super compact];
+}
+
+l3_test(@selector(compaction)) {
+	l3_expect(HMRRepeat([HMREmpty parser])).to.equal([HMRNullReduction combinatorWithElement:@[]]);
+}
+
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"%@*", self.parser.description];
 }
 
 @end

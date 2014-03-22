@@ -26,12 +26,17 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return [self.parser derivativeWithRespectToElement:element];
+	return [self.parser memoizedDerivativeWithRespectToElement:element];
 }
 
 
 -(NSSet *)deforest {
-	return [self.parser deforest];
+	return self.parser.deforestation;
+}
+
+
+-(NSString *)describe {
+	return self.parser.description;
 }
 
 @end

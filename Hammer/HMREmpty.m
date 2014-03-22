@@ -16,4 +16,9 @@
 	return self;
 }
 
+
+-(NSString *)describe {
+	return @"∅";
+}
+
 @end
