@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EDA33FFD-F9D8-4686-83AB-28CE1AA879FA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Hammer</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F815614D-24D4-4D6A-B32A-34F1491F391A</key>
+		<string>ssh://github.com/robrix/Hammer.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Hammer.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F815614D-24D4-4D6A-B32A-34F1491F391A</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/robrix/Hammer.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F815614D-24D4-4D6A-B32A-34F1491F391A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F815614D-24D4-4D6A-B32A-34F1491F391A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Hammer</string>
+		</dict>
+	</array>
+</dict>
+</plist>
