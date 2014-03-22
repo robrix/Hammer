@@ -28,4 +28,13 @@
 	}];
 }
 
+
+-(NSSet *)deforest {
+	NSMutableSet *trees = [NSMutableSet new];
+	for (id each in [self.parser deforest]) {
+		[trees addObject:self.block(each)];
+	}
+	return trees;
+}
+
 @end

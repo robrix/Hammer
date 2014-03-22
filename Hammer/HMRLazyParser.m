@@ -29,4 +29,9 @@
 	return [self.parser derivativeWithRespectToElement:element];
 }
 
+
+-(NSSet *)deforest {
+	return [self.parser deforest];
+}
+
 @end

@@ -36,4 +36,9 @@
 	}];
 }
 
+
+-(NSSet *)deforest {
+	return [NSSet setWithObject:@[]];
+}
+
 @end
