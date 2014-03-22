@@ -26,6 +26,8 @@
 		D4ACA60F18DD389A00EBD899 /* HMRNullabilityParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA60D18DD389A00EBD899 /* HMRNullabilityParser.m */; };
 		D4ACA61218DD3A5800EBD899 /* HMRAlternationParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA61018DD3A5800EBD899 /* HMRAlternationParser.h */; };
 		D4ACA61318DD3A5800EBD899 /* HMRAlternationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61118DD3A5800EBD899 /* HMRAlternationParser.m */; };
+		D4ACA61718DD3CDB00EBD899 /* HMRReductionParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA61518DD3CDB00EBD899 /* HMRReductionParser.h */; };
+		D4ACA61818DD3CDB00EBD899 /* HMRReductionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61618DD3CDB00EBD899 /* HMRReductionParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		D4ACA60D18DD389A00EBD899 /* HMRNullabilityParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRNullabilityParser.m; sourceTree = "<group>"; };
 		D4ACA61018DD3A5800EBD899 /* HMRAlternationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRAlternationParser.h; sourceTree = "<group>"; };
 		D4ACA61118DD3A5800EBD899 /* HMRAlternationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRAlternationParser.m; sourceTree = "<group>"; };
+		D4ACA61518DD3CDB00EBD899 /* HMRReductionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRReductionParser.h; sourceTree = "<group>"; };
+		D4ACA61618DD3CDB00EBD899 /* HMRReductionParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRReductionParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +149,8 @@
 				D4ACA60918DD368400EBD899 /* HMRNullReductionParser.m */,
 				D4ACA5F718DD258E00EBD899 /* HMRNullParser.h */,
 				D4ACA5F818DD258E00EBD899 /* HMRNullParser.m */,
+				D4ACA61518DD3CDB00EBD899 /* HMRReductionParser.h */,
+				D4ACA61618DD3CDB00EBD899 /* HMRReductionParser.m */,
 			);
 			name = "Parser combinators";
 			sourceTree = "<group>";
@@ -161,6 +167,7 @@
 				D4ACA60A18DD368400EBD899 /* HMRNullReductionParser.h in Headers */,
 				D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */,
 				D4ACA5F518DD22F800EBD899 /* HMRParser.h in Headers */,
+				D4ACA61718DD3CDB00EBD899 /* HMRReductionParser.h in Headers */,
 				D4ACA5F918DD258E00EBD899 /* HMRNullParser.h in Headers */,
 				D4ACA60618DD359C00EBD899 /* HMRElementParser.h in Headers */,
 				D4ACA61218DD3A5800EBD899 /* HMRAlternationParser.h in Headers */,
@@ -254,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4ACA61818DD3CDB00EBD899 /* HMRReductionParser.m in Sources */,
 				D4ACA60318DD34C400EBD899 /* HMREmptyParser.m in Sources */,
 				D4ACA60B18DD368400EBD899 /* HMRNullReductionParser.m in Sources */,
 				D4ACA60F18DD389A00EBD899 /* HMRNullabilityParser.m in Sources */,
