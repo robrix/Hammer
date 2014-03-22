@@ -9,11 +9,8 @@
 /* Begin PBXBuildFile section */
 		D4ACA5C118DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */; };
 		D4ACA5C518DD188A00EBD899 /* Hammer.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5C418DD188A00EBD899 /* Hammer.m */; };
-		D4ACA5CC18DD188A00EBD899 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5CB18DD188A00EBD899 /* XCTest.framework */; };
-		D4ACA5D018DD188A00EBD899 /* Hammer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5B318DD188A00EBD899 /* Hammer.framework */; };
-		D4ACA5D618DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5D418DD188A00EBD899 /* InfoPlist.strings */; };
-		D4ACA5D818DD188A00EBD899 /* HammerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5D718DD188A00EBD899 /* HammerTests.m */; };
 		D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5C318DD188A00EBD899 /* Hammer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4ACA5F218DD19FE00EBD899 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,9 +33,7 @@
 		D4ACA5C418DD188A00EBD899 /* Hammer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hammer.m; sourceTree = "<group>"; };
 		D4ACA5CA18DD188A00EBD899 /* HammerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HammerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ACA5CB18DD188A00EBD899 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		D4ACA5D318DD188A00EBD899 /* HammerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HammerTests-Info.plist"; sourceTree = "<group>"; };
-		D4ACA5D518DD188A00EBD899 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D4ACA5D718DD188A00EBD899 /* HammerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HammerTests.m; sourceTree = "<group>"; };
+		D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lagrangian.framework; path = External/Lagrangian/build/Debug/Lagrangian.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,15 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D4ACA5C718DD188A00EBD899 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D4ACA5D018DD188A00EBD899 /* Hammer.framework in Frameworks */,
-				D4ACA5CC18DD188A00EBD899 /* XCTest.framework in Frameworks */,
+				D4ACA5F218DD19FE00EBD899 /* Lagrangian.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,7 +52,6 @@
 			isa = PBXGroup;
 			children = (
 				D4ACA5BC18DD188A00EBD899 /* Hammer */,
-				D4ACA5D118DD188A00EBD899 /* HammerTests */,
 				D4ACA5B518DD188A00EBD899 /* Frameworks */,
 				D4ACA5B418DD188A00EBD899 /* Products */,
 			);
@@ -83,6 +69,7 @@
 		D4ACA5B518DD188A00EBD899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */,
 				D4ACA5B918DD188A00EBD899 /* Foundation.framework */,
 				D4ACA5CB18DD188A00EBD899 /* XCTest.framework */,
 			);
@@ -105,24 +92,6 @@
 				D4ACA5BE18DD188A00EBD899 /* Hammer-Info.plist */,
 				D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */,
 				D4ACA5C218DD188A00EBD899 /* Hammer.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D4ACA5D118DD188A00EBD899 /* HammerTests */ = {
-			isa = PBXGroup;
-			children = (
-				D4ACA5D718DD188A00EBD899 /* HammerTests.m */,
-				D4ACA5D218DD188A00EBD899 /* Supporting Files */,
-			);
-			path = HammerTests;
-			sourceTree = "<group>";
-		};
-		D4ACA5D218DD188A00EBD899 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D4ACA5D318DD188A00EBD899 /* HammerTests-Info.plist */,
-				D4ACA5D418DD188A00EBD899 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -163,9 +132,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4ACA5DE18DD188A00EBD899 /* Build configuration list for PBXNativeTarget "HammerTests" */;
 			buildPhases = (
-				D4ACA5C618DD188A00EBD899 /* Sources */,
-				D4ACA5C718DD188A00EBD899 /* Frameworks */,
-				D4ACA5C818DD188A00EBD899 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -218,14 +184,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D4ACA5C818DD188A00EBD899 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D4ACA5D618DD188A00EBD899 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -234,14 +192,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4ACA5C518DD188A00EBD899 /* Hammer.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D4ACA5C618DD188A00EBD899 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D4ACA5D818DD188A00EBD899 /* HammerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,14 +210,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				D4ACA5C018DD188A00EBD899 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		D4ACA5D418DD188A00EBD899 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D4ACA5D518DD188A00EBD899 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -380,19 +322,9 @@
 		D4ACA5DF18DD188A00EBD899 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Hammer.framework/Versions/A/Hammer";
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "HammerTests/HammerTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian.framework/Resources/lagrangian";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -400,15 +332,9 @@
 		D4ACA5E018DD188A00EBD899 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Hammer.framework/Versions/A/Hammer";
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "HammerTests/HammerTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian.framework/Resources/lagrangian";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
