@@ -11,7 +11,13 @@
 	return [[self alloc] initWithParseForest:[NSSet setWithObject:element]];
 }
 
++(instancetype)combinatorWithParseForest:(NSSet *)parseForest {
+	return [[self alloc] initWithParseForest:parseForest];
+}
+
 -(instancetype)initWithParseForest:(NSSet *)parseForest {
+	NSParameterAssert(parseForest != nil);
+	
 	if ((self = [super init])) {
 		_parseForest = [parseForest copy];
 	}

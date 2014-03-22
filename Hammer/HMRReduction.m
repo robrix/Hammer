@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRLazyCombinator.h"
+#import "HMRNullReduction.h"
 #import "HMRReduction.h"
 
 @implementation HMRReduction
@@ -35,6 +36,21 @@
 		[trees addObject:self.block(each)];
 	}
 	return trees;
+}
+
+
+-(id<HMRCombinator>)compact {
+	id<HMRCombinator> compacted = [super compact];
+	if ([self.parser.compaction isKindOfClass:[HMRNullReduction class]])
+		compacted = [HMRNullReduction combinatorWithParseForest:[self memoizedDeforest]];
+	else if ([self.parser.compaction isKindOfClass:self.class]) {
+		HMRReductionBlock f = ((HMRReduction *)self.parser.compaction).block;
+		HMRReductionBlock g = self.block;
+		compacted = [HMRReduction combinatorWithParser:self.parser.compaction block:^(id<NSObject,NSCopying> x) {
+			return g(f(x));
+		}];
+	}
+	return compacted;
 }
 
 
