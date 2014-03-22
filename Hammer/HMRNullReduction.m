@@ -35,4 +35,13 @@
 	return [NSString stringWithFormat:@"ε ↓ %@", self.parseForest];
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRNullReduction *)object {
+	return
+		[object isKindOfClass:[HMRNullReduction class]]
+	&&	[object.parseForest isEqual:self.parseForest];
+}
+
 @end

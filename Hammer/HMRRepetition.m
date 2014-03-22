@@ -2,6 +2,7 @@
 
 #import "HMRAlternation.h"
 #import "HMRConcatenation.h"
+#import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
 #import "HMRNullReduction.h"
 #import "HMRReduction.h"
@@ -39,6 +40,17 @@
 
 -(NSSet *)deforest {
 	return [NSSet setWithObject:@[]];
+}
+
+
+-(id<HMRCombinator>)compact {
+	return self.parser.compaction == [HMREmpty parser]?
+		[HMRNullReduction combinatorWithElement:@[]]
+	:	[super compact];
+}
+
+l3_test(@selector(compaction)) {
+	l3_expect(HMRRepeat([HMREmpty parser])).to.equal([HMRNullReduction combinatorWithElement:@[]]);
 }
 
 
