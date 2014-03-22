@@ -42,3 +42,8 @@
 }
 
 @end
+
+
+id<HMRCombinator> HMRRepeat(id<HMRCombinator> parser) {
+	return [HMRRepetition combinatorWithParser:parser];
+}

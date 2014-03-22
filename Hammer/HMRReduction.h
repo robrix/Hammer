@@ -2,7 +2,7 @@
 
 #import "HMRParserCombinator.h"
 
-typedef id(^HMRReductionBlock)(id);
+typedef id<NSObject, NSCopying>(^HMRReductionBlock)(id<NSObject, NSCopying>);
 
 @interface HMRReduction : HMRParserCombinator
 

@@ -38,3 +38,8 @@
 }
 
 @end
+
+
+id<HMRCombinator> HMRReduce(id<HMRCombinator> parser, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
+	return [HMRReduction combinatorWithParser:parser block:block];
+}

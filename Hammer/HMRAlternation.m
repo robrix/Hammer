@@ -36,3 +36,8 @@
 }
 
 @end
+
+
+id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) {
+	return [HMRAlternation combinatorWithLeft:left right:right];
+}

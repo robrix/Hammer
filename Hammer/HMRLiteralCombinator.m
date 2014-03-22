@@ -27,3 +27,8 @@
 }
 
 @end
+
+
+id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> element) {
+	return [HMRLiteralCombinator combinatorWithElement:element];
+}

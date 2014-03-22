@@ -47,3 +47,8 @@
 }
 
 @end
+
+
+id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
+	return [HMRConcatenation combinatorWithFirst:first second:second];
+}

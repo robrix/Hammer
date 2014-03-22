@@ -15,13 +15,13 @@
 @end
 
 
-extern id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right);
-extern id<HMRCombinator> HMRConcatenate(id<HMRCombinator> left, id<HMRCombinator> right);
+id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right);
+id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second);
 
-extern id<HMRCombinator> HMRRepeat(id<HMRCombinator> parser);
+id<HMRCombinator> HMRRepeat(id<HMRCombinator> parser);
 
-extern id<HMRCombinator> HMRReduce(id<HMRCombinator> parser, id(^block)(id));
+id<HMRCombinator> HMRReduce(id<HMRCombinator> parser, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>));
 
-extern id<HMRCombinator> HMRLiteral(id element);
+id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> element);
 
-extern id<HMRCombinator> HMRDelay(id<HMRCombinator>(^block)());
+id<HMRCombinator> HMRDelay(id<HMRCombinator>(^block)());
