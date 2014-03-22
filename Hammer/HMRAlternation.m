@@ -34,7 +34,7 @@
 
 
 -(NSSet *)deforest {
-	return [[self.left deforest] setByAddingObjectsFromSet:[self.right deforest]];
+	return [self.left.deforestation setByAddingObjectsFromSet:self.right.deforestation];
 }
 
 

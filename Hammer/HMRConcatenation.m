@@ -40,8 +40,8 @@
 
 -(NSSet *)deforest {
 	NSMutableSet *trees = [NSMutableSet new];
-	for (id eachFirst in [self.first deforest]) {
-		for (id eachSecond in [self.second deforest]) {
+	for (id eachFirst in self.first.deforestation) {
+		for (id eachSecond in self.second.deforestation) {
 			[trees addObject:@[ eachFirst, eachSecond ]];
 		}
 	}

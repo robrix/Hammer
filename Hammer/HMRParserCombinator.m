@@ -7,7 +7,7 @@ NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collec
 	for (id each in collection) {
 		parser = [parser memoizedDerivativeWithRespectToElement:each];
 	}
-	return [parser deforest];
+	return parser.deforestation;
 }
 
 id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopying> element) {
@@ -47,7 +47,7 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 	return [NSSet set];
 }
 
--(NSSet *)memoizedDeforest {
+-(NSSet *)deforestation {
 	return _deforestation ?: (_deforestation = HMRLeastFixedPoint([NSSet set], ^(NSSet *forest) {
 		return _deforestation = [self deforest];
 	}));

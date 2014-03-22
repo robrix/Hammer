@@ -8,7 +8,7 @@
 -(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element;
 
 -(NSSet *)deforest;
--(NSSet *)memoizedDeforest;
+@property (readonly) NSSet *deforestation;
 
 -(id<HMRCombinator>)compact;
 @property (readonly) id<HMRCombinator> compaction;

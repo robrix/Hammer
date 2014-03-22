@@ -32,7 +32,7 @@
 
 -(NSSet *)deforest {
 	NSMutableSet *trees = [NSMutableSet new];
-	for (id each in [self.parser deforest]) {
+	for (id each in self.parser.deforestation) {
 		[trees addObject:self.block(each)];
 	}
 	return trees;
@@ -42,7 +42,7 @@
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> compacted = [super compact];
 	if ([self.parser.compaction isKindOfClass:[HMRNullReduction class]])
-		compacted = [HMRNullReduction combinatorWithParseForest:[self memoizedDeforest]];
+		compacted = [HMRNullReduction combinatorWithParseForest:self.deforestation];
 	else if ([self.parser.compaction isKindOfClass:self.class]) {
 		HMRReductionBlock f = ((HMRReduction *)self.parser.compaction).block;
 		HMRReductionBlock g = self.block;

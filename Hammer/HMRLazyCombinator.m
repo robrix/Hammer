@@ -31,7 +31,7 @@
 
 
 -(NSSet *)deforest {
-	return [self.parser deforest];
+	return self.parser.deforestation;
 }
 
 
