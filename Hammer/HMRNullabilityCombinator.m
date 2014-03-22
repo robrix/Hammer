@@ -28,4 +28,9 @@
 	return [self.parser deforest];
 }
 
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"δ(%@)", self.parser.description];
+}
+
 @end

@@ -11,6 +11,8 @@
 }
 
 -(instancetype)initWithElement:(id<NSObject, NSCopying>)element {
+	NSParameterAssert(element != nil);
+	
 	if ((self = [super init])) {
 		_element = element;
 	}
@@ -24,6 +26,20 @@
 	return [self.element isEqual:element]?
 		[HMRNullReduction combinatorWithElement:element]
 	:	[HMREmpty parser];
+}
+
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"'%@'", self.element];
+}
+
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRLiteralCombinator *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[object.element isEqual:self.element];
 }
 
 @end

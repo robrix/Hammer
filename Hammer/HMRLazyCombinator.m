@@ -34,6 +34,11 @@
 	return [self.parser deforest];
 }
 
+
+-(NSString *)describe {
+	return self.parser.description;
+}
+
 @end
 
 

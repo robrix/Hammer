@@ -21,6 +21,7 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_deforestation;
 	id<HMRCombinator> _compaction;
+	NSString *_description;
 }
 
 -(instancetype)init {
@@ -59,6 +60,15 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 
 -(id<HMRCombinator>)compaction {
 	return _compaction ?: (_compaction = [self compact]);
+}
+
+
+-(NSString *)describe {
+	return super.description;
+}
+
+-(NSString *)description {
+	return _description ?: (_description = [self describe]);
 }
 
 

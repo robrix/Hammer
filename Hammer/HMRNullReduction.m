@@ -30,4 +30,9 @@
 	return self.parseForest;
 }
 
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"ε ↓ %@", self.parseForest];
+}
+
 @end

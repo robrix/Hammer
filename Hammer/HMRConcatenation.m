@@ -56,8 +56,15 @@
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect([HMRConcatenation combinatorWithFirst:[HMREmpty parser] second:HMRLiteral(@0)].compaction).to.equal([HMREmpty parser]);
-	l3_expect([HMRConcatenation combinatorWithFirst:HMRLiteral(@0) second:[HMREmpty parser]].compaction).to.equal([HMREmpty parser]);
+	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> empty = [HMREmpty parser];
+	l3_expect(HMRConcatenate(empty, anything).compaction).to.equal(empty);
+	l3_expect(HMRConcatenate(anything, empty).compaction).to.equal(empty);
+}
+
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"%@ %@", self.first.description, self.second.description];
 }
 
 @end

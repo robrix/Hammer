@@ -37,6 +37,11 @@
 	return trees;
 }
 
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"%@ → 𝑓", self.parser.description];
+}
+
 @end
 
 

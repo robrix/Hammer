@@ -41,6 +41,11 @@
 	return [NSSet setWithObject:@[]];
 }
 
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"%@*", self.parser.description];
+}
+
 @end
 
 
