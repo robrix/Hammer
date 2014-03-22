@@ -2,7 +2,6 @@
 
 #import "HMRAlternationParser.h"
 #import "HMRLazyParser.h"
-#import "HMRParser+Protected.h"
 
 @implementation HMRAlternationParser
 

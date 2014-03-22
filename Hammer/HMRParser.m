@@ -1,28 +1,27 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRParser+Protected.h"
+#import "HMRParser.h"
 
-@implementation HMRParser
-
--(NSSet *)parseCollection:(id<NSFastEnumeration>)enumerator {
-	HMRParser *parser = self;
-	for (id each in enumerator) {
+NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collection) {
+	for (id each in collection) {
 		parser = [parser derivativeWithRespectToElement:each];
 	}
 	return [parser deforest];
 }
 
--(HMRParser *)parse:(id)element {
+id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id element) {
 	return element?
-		[self derivativeWithRespectToElement:element]
-	:	nil;
+		[parser derivativeWithRespectToElement:element]
+	:	nil; // ???
 }
 
+@implementation HMRParser
 
--(HMRParser *)derivativeWithRespectToElement:(id)element {
+#pragma mark HMRCombinator
+
+-(id<HMRCombinator>)derivativeWithRespectToElement:(id)element {
 	return nil;
 }
-
 
 -(NSSet *)deforest {
 	return [NSSet set];

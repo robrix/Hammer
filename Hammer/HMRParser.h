@@ -1,10 +1,9 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <Hammer/HMRCombinator.h>
 
-@interface HMRParser : NSObject <NSCopying>
+extern NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collection);
+extern id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id element);
 
--(NSSet *)parseCollection:(id<NSFastEnumeration>)enumerator;
--(HMRParser *)parse:(id)element;
-
+@interface HMRParser : NSObject <HMRCombinator>
 @end

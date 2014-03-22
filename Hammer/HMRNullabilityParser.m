@@ -2,7 +2,6 @@
 
 #import "HMREmptyParser.h"
 #import "HMRNullabilityParser.h"
-#import "HMRParser+Protected.h"
 
 @implementation HMRNullabilityParser
 

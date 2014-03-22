@@ -13,7 +13,6 @@
 		D4ACA5F518DD22F800EBD899 /* HMRParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5F318DD22F800EBD899 /* HMRParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4ACA5F918DD258E00EBD899 /* HMRNullParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5F718DD258E00EBD899 /* HMRNullParser.h */; };
 		D4ACA5FA18DD258E00EBD899 /* HMRNullParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5F818DD258E00EBD899 /* HMRNullParser.m */; };
-		D4ACA5FC18DD31E800EBD899 /* HMRParser+Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5FB18DD31E800EBD899 /* HMRParser+Protected.h */; };
 		D4ACA5FE18DD32CB00EBD899 /* HMROnce.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5FD18DD32CB00EBD899 /* HMROnce.h */; };
 		D4ACA5FF18DD33DC00EBD899 /* HMRParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5F418DD22F800EBD899 /* HMRParser.m */; };
 		D4ACA60218DD34C400EBD899 /* HMREmptyParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA60018DD34C400EBD899 /* HMREmptyParser.h */; };
@@ -34,7 +33,7 @@
 		D4ACA62018DD4CB300EBD899 /* HMRLazyParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61E18DD4CB300EBD899 /* HMRLazyParser.m */; };
 		D4ACA62318DD4F5200EBD899 /* HMRRepetitionParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62118DD4F5200EBD899 /* HMRRepetitionParser.h */; };
 		D4ACA62418DD4F5200EBD899 /* HMRRepetitionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA62218DD4F5200EBD899 /* HMRRepetitionParser.m */; };
-		D4ACA62718DD562400EBD899 /* HMRCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62518DD562400EBD899 /* HMRCombinator.h */; };
+		D4ACA62718DD562400EBD899 /* HMRCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62518DD562400EBD899 /* HMRCombinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +60,6 @@
 		D4ACA5F418DD22F800EBD899 /* HMRParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRParser.m; sourceTree = "<group>"; };
 		D4ACA5F718DD258E00EBD899 /* HMRNullParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRNullParser.h; sourceTree = "<group>"; };
 		D4ACA5F818DD258E00EBD899 /* HMRNullParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRNullParser.m; sourceTree = "<group>"; };
-		D4ACA5FB18DD31E800EBD899 /* HMRParser+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMRParser+Protected.h"; sourceTree = "<group>"; };
 		D4ACA5FD18DD32CB00EBD899 /* HMROnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMROnce.h; sourceTree = "<group>"; };
 		D4ACA60018DD34C400EBD899 /* HMREmptyParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMREmptyParser.h; sourceTree = "<group>"; };
 		D4ACA60118DD34C400EBD899 /* HMREmptyParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMREmptyParser.m; sourceTree = "<group>"; };
@@ -148,8 +146,8 @@
 		D4ACA61418DD3A5E00EBD899 /* Parser combinators */ = {
 			isa = PBXGroup;
 			children = (
+				D4ACA62518DD562400EBD899 /* HMRCombinator.h */,
 				D4ACA5F318DD22F800EBD899 /* HMRParser.h */,
-				D4ACA5FB18DD31E800EBD899 /* HMRParser+Protected.h */,
 				D4ACA5F418DD22F800EBD899 /* HMRParser.m */,
 				D4ACA61018DD3A5800EBD899 /* HMRAlternationParser.h */,
 				D4ACA61118DD3A5800EBD899 /* HMRAlternationParser.m */,
@@ -171,7 +169,6 @@
 				D4ACA61618DD3CDB00EBD899 /* HMRReductionParser.m */,
 				D4ACA62118DD4F5200EBD899 /* HMRRepetitionParser.h */,
 				D4ACA62218DD4F5200EBD899 /* HMRRepetitionParser.m */,
-				D4ACA62518DD562400EBD899 /* HMRCombinator.h */,
 			);
 			name = "Parser combinators";
 			sourceTree = "<group>";
@@ -185,7 +182,6 @@
 			files = (
 				D4ACA61F18DD4CB300EBD899 /* HMRLazyParser.h in Headers */,
 				D4ACA5FE18DD32CB00EBD899 /* HMROnce.h in Headers */,
-				D4ACA5FC18DD31E800EBD899 /* HMRParser+Protected.h in Headers */,
 				D4ACA60A18DD368400EBD899 /* HMRNullReductionParser.h in Headers */,
 				D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */,
 				D4ACA5F518DD22F800EBD899 /* HMRParser.h in Headers */,

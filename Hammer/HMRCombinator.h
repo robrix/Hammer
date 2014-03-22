@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol HMRCombinator <NSObject>
+@protocol HMRCombinator <NSObject, NSCopying>
 
 -(id<HMRCombinator>)derivativeWithRespectToElement:(id)element;
 

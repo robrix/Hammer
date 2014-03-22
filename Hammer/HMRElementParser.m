@@ -3,7 +3,6 @@
 #import "HMRElementParser.h"
 #import "HMREmptyParser.h"
 #import "HMRNullReductionParser.h"
-#import "HMRParser+Protected.h"
 
 @implementation HMRElementParser
 

@@ -2,7 +2,6 @@
 
 #import "HMREmptyParser.h"
 #import "HMROnce.h"
-#import "HMRParser+Protected.h"
 
 @implementation HMREmptyParser
 

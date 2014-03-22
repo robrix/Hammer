@@ -4,7 +4,6 @@
 #import "HMRConcatenationParser.h"
 #import "HMRLazyParser.h"
 #import "HMRNullabilityParser.h"
-#import "HMRParser+Protected.h"
 
 @implementation HMRConcatenationParser
 

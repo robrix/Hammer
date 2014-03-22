@@ -3,7 +3,6 @@
 #import "HMREmptyParser.h"
 #import "HMRNullParser.h"
 #import "HMROnce.h"
-#import "HMRParser+Protected.h"
 
 @implementation HMRNullParser
 
