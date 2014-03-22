@@ -2,6 +2,7 @@
 
 #import "HMRAlternationParser.h"
 #import "HMRConcatenationParser.h"
+#import "HMRLazyParser.h"
 #import "HMRNullabilityParser.h"
 #import "HMRParser+Protected.h"
 
@@ -23,7 +24,16 @@
 #pragma mark HMRParser
 
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
-	return [HMRAlternationParser parserWithLeft:[HMRConcatenationParser parserWithFirst:[self.first derivativeWithRespectToElement:element] second:self.second] right:[HMRConcatenationParser parserWithFirst:[HMRNullabilityParser parserWithParser:self.first] second:[self.second derivativeWithRespectToElement:element]]];
+	Class class = self.class;
+	HMRParser *first = self.first;
+	HMRParser *second = self.second;
+	return [HMRLazyParser parserWithBlock:^{
+		HMRParser *left = [class parserWithFirst:[first derivativeWithRespectToElement:element]
+														   second:second];
+		HMRParser *right = [class parserWithFirst:[HMRNullabilityParser parserWithParser:first]
+															second:[second derivativeWithRespectToElement:element]];
+		return [HMRAlternationParser parserWithLeft:left right:right];
+	}];
 }
 
 @end

@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRLazyParser.h"
 #import "HMRParser+Protected.h"
 #import "HMRReductionParser.h"
 
@@ -21,7 +22,11 @@
 #pragma mark HMRParser
 
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
-	return [HMRReductionParser parserWithParser:[self.parser derivativeWithRespectToElement:element] block:self.block];
+	HMRParser *parser = self.parser;
+	HMRReductionBlock block = self.block;
+	return [HMRLazyParser parserWithBlock:^{
+		return [HMRReductionParser parserWithParser:[parser derivativeWithRespectToElement:element] block:block];
+	}];
 }
 
 @end
