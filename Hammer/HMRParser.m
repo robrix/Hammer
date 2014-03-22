@@ -17,12 +17,28 @@
 }
 
 
--(HMRParser *)parse:(id)element {
-	return nil;
+-(NSSet *)parseCollection:(id<NSFastEnumeration>)enumerator {
+	HMRParser *parser = self;
+	for (id each in enumerator) {
+		parser = [parser derivativeWithRespectToElement:each];
+	}
+	return [parser parseNull];
 }
+
+-(HMRParser *)parse:(id)element {
+	return element?
+		[self derivativeWithRespectToElement:element]
+	:	nil;
+}
+
 
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
 	return nil;
+}
+
+
+-(NSSet *)parseNull {
+	return [NSSet set];
 }
 
 
