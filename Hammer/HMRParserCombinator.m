@@ -10,6 +10,19 @@ NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collec
 	return parser.deforestation;
 }
 
+l3_addTestSubjectTypeWithFunction(HMRParseCollection);
+l3_test(&HMRParseCollection) {
+	id element = @0;
+	id<HMRCombinator> literal = HMRLiteral(element);
+	l3_expect(HMRParseCollection(literal, @[element])).to.equal([NSSet setWithObject:element]);
+	l3_expect(HMRParseCollection(literal, @[])).to.equal([NSSet set]);
+	id anythingElse = @1;;
+	l3_expect(HMRParseCollection(literal, @[anythingElse])).to.equal([NSSet set]);
+	
+	l3_expect(HMRParseCollection(HMRConcatenate(literal, literal), @[element, element])).to.equal([NSSet setWithObject:@[element, element]]);
+}
+
+
 id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopying> element) {
 	return element?
 		[parser memoizedDerivativeWithRespectToElement:element]
