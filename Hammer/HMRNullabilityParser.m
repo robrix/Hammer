@@ -17,7 +17,7 @@
 }
 
 
-#pragma mark HMRParser
+#pragma mark HMRCombinator
 
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
 	return [HMREmptyParser parser];

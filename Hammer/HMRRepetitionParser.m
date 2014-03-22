@@ -21,7 +21,7 @@
 }
 
 
-#pragma mark HMRParser
+#pragma mark HMRCombinator
 
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
 	HMRParser *parser = self.parser;

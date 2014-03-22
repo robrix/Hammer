@@ -10,7 +10,7 @@
 }
 
 
-#pragma mark HammerParser
+#pragma mark HMRCombinator
 
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
 	return self;

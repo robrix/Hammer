@@ -20,7 +20,7 @@
 }
 
 
-#pragma mark HMRParser
+#pragma mark HMRCombinator
 
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
 	Class class = self.class;
