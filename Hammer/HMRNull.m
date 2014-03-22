@@ -13,7 +13,7 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id)element {
+-(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
 	return [HMREmpty parser];
 }
 

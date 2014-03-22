@@ -8,7 +8,7 @@ typedef id(^HMRReductionBlock)(id);
 
 +(instancetype)combinatorWithParser:(id<HMRCombinator>)parser block:(HMRReductionBlock)block;
 
-@property (readonly) id<HMRCombinator>parser;
+@property (readonly) id<HMRCombinator> parser;
 @property (readonly) HMRReductionBlock block;
 
 

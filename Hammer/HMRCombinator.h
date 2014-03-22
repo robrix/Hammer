@@ -4,7 +4,7 @@
 
 @protocol HMRCombinator <NSObject, NSCopying>
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id)element;
+-(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element;
 
 -(NSSet *)deforest;
 

@@ -9,7 +9,7 @@ typedef id<HMRCombinator>(^HMRLazyCombinatorBlock)();
 +(instancetype)combinatorWithBlock:(HMRLazyCombinatorBlock)block;
 
 @property (readonly) HMRLazyCombinatorBlock block;
-@property (readonly) id<HMRCombinator>parser;
+@property (readonly) id<HMRCombinator> parser;
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 +(instancetype)new UNAVAILABLE_ATTRIBUTE;

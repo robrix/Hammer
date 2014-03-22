@@ -6,11 +6,11 @@
 
 @implementation HMRLiteralCombinator
 
-+(instancetype)combinatorWithElement:(id)element {
++(instancetype)combinatorWithElement:(id<NSObject, NSCopying>)element {
 	return [[self alloc] initWithElement:element];
 }
 
--(instancetype)initWithElement:(id)element {
+-(instancetype)initWithElement:(id<NSObject, NSCopying>)element {
 	if ((self = [super init])) {
 		_element = element;
 	}
@@ -20,7 +20,7 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id)element {
+-(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
 	return [self.element isEqual:element]?
 		[HMRNullReduction combinatorWithElement:element]
 	:	[HMREmpty parser];

@@ -20,8 +20,8 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id)element {
-	id<HMRCombinator>parser = self.parser;
+-(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+	id<HMRCombinator> parser = self.parser;
 	HMRReductionBlock block = self.block;
 	return [HMRLazyCombinator combinatorWithBlock:^{
 		return [HMRReduction combinatorWithParser:[parser derivativeWithRespectToElement:element] block:block];
