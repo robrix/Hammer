@@ -24,7 +24,7 @@
 	id<HMRCombinator> parser = self.parser;
 	HMRReductionBlock block = self.block;
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		return [HMRReduction combinatorWithParser:[parser derivativeWithRespectToElement:element] block:block];
+		return [HMRReduction combinatorWithParser:[parser memoizedDerivativeWithRespectToElement:element] block:block];
 	}];
 }
 

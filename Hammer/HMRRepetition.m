@@ -27,7 +27,7 @@
 	id<HMRCombinator> parser = self.parser;
 	
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser derivativeWithRespectToElement:element]
+		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser memoizedDerivativeWithRespectToElement:element]
 																				 second:self];
 		HMRReduction *reduction = [HMRReduction combinatorWithParser:concatenation block:^(id x) {
 			return x; // ??

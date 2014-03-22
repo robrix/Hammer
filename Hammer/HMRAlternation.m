@@ -25,8 +25,8 @@
 	id<HMRCombinator> left = self.left;
 	id<HMRCombinator> right = self.right;
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		return [class combinatorWithLeft:[left derivativeWithRespectToElement:element]
-							   right:[right derivativeWithRespectToElement:element]];
+		return [class combinatorWithLeft:[left memoizedDerivativeWithRespectToElement:element]
+							   right:[right memoizedDerivativeWithRespectToElement:element]];
 	}];
 }
 

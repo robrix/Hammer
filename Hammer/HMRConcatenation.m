@@ -29,10 +29,10 @@
 	id<HMRCombinator> first = self.first;
 	id<HMRCombinator> second = self.second;
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		id<HMRCombinator>left = [class combinatorWithFirst:[first derivativeWithRespectToElement:element]
+		id<HMRCombinator>left = [class combinatorWithFirst:[first memoizedDerivativeWithRespectToElement:element]
 														   second:second];
 		id<HMRCombinator>right = [class combinatorWithFirst:[HMRNullabilityCombinator combinatorWithParser:first]
-															second:[second derivativeWithRespectToElement:element]];
+															second:[second memoizedDerivativeWithRespectToElement:element]];
 		return [HMRAlternation combinatorWithLeft:left right:right];
 	}];
 }
