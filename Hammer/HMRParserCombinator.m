@@ -20,6 +20,7 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 @implementation HMRParserCombinator {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_deforestation;
+	id<HMRCombinator> _compaction;
 }
 
 -(instancetype)init {
@@ -36,19 +37,28 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 	return nil;
 }
 
--(NSSet *)deforest {
-	return [NSSet set];
+-(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element]);
 }
 
 
--(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element]);
+-(NSSet *)deforest {
+	return [NSSet set];
 }
 
 -(NSSet *)memoizedDeforest {
 	return _deforestation ?: (_deforestation = HMRLeastFixedPoint([NSSet set], ^(NSSet *forest) {
 		return _deforestation = [self deforest];
 	}));
+}
+
+
+-(id<HMRCombinator>)compact {
+	return self;
+}
+
+-(id<HMRCombinator>)compaction {
+	return _compaction ?: (_compaction = [self compact]);
 }
 
 
