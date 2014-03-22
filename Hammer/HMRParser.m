@@ -4,19 +4,6 @@
 
 @implementation HMRParser
 
--(bool)isNullable {
-	return NO;
-}
-
--(bool)isNull {
-	return NO;
-}
-
--(bool)isEmpty {
-	return YES;
-}
-
-
 -(NSSet *)parseCollection:(id<NSFastEnumeration>)enumerator {
 	HMRParser *parser = self;
 	for (id each in enumerator) {

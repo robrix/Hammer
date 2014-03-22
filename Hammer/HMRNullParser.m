@@ -14,15 +14,6 @@
 
 #pragma mark HammerParser
 
--(bool)isNull {
-	return YES;
-}
-
--(bool)isNullable {
-	return YES;
-}
-
-
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
 	return [HMREmptyParser parser];
 }

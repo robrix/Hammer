@@ -13,11 +13,6 @@
 
 #pragma mark HammerParser
 
--(bool)isEmpty {
-	return YES;
-}
-
-
 -(HMRParser *)derivativeWithRespectToElement:(id)element {
 	return self;
 }
