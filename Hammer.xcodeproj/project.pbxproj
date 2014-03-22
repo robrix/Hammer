@@ -34,6 +34,8 @@
 		D4ACA62318DD4F5200EBD899 /* HMRRepetition.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62118DD4F5200EBD899 /* HMRRepetition.h */; };
 		D4ACA62418DD4F5200EBD899 /* HMRRepetition.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA62218DD4F5200EBD899 /* HMRRepetition.m */; };
 		D4ACA62718DD562400EBD899 /* HMRCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62518DD562400EBD899 /* HMRCombinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4ACA62B18DD6C4900EBD899 /* HMRLeastFixedPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62918DD6C4900EBD899 /* HMRLeastFixedPoint.h */; };
+		D4ACA62C18DD6C4900EBD899 /* HMRLeastFixedPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA62A18DD6C4900EBD899 /* HMRLeastFixedPoint.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +82,8 @@
 		D4ACA62118DD4F5200EBD899 /* HMRRepetition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRRepetition.h; sourceTree = "<group>"; };
 		D4ACA62218DD4F5200EBD899 /* HMRRepetition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRRepetition.m; sourceTree = "<group>"; };
 		D4ACA62518DD562400EBD899 /* HMRCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRCombinator.h; sourceTree = "<group>"; };
+		D4ACA62918DD6C4900EBD899 /* HMRLeastFixedPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRLeastFixedPoint.h; sourceTree = "<group>"; };
+		D4ACA62A18DD6C4900EBD899 /* HMRLeastFixedPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRLeastFixedPoint.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,8 @@
 				D4ACA5BE18DD188A00EBD899 /* Hammer-Info.plist */,
 				D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */,
 				D4ACA5C218DD188A00EBD899 /* Hammer.pch */,
+				D4ACA62918DD6C4900EBD899 /* HMRLeastFixedPoint.h */,
+				D4ACA62A18DD6C4900EBD899 /* HMRLeastFixedPoint.m */,
 				D4ACA5FD18DD32CB00EBD899 /* HMROnce.h */,
 			);
 			name = "Supporting Files";
@@ -181,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4ACA61F18DD4CB300EBD899 /* HMRLazyCombinator.h in Headers */,
+				D4ACA62B18DD6C4900EBD899 /* HMRLeastFixedPoint.h in Headers */,
 				D4ACA5FE18DD32CB00EBD899 /* HMROnce.h in Headers */,
 				D4ACA60A18DD368400EBD899 /* HMRNullReduction.h in Headers */,
 				D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */,
@@ -287,6 +294,7 @@
 				D4ACA62018DD4CB300EBD899 /* HMRLazyCombinator.m in Sources */,
 				D4ACA60B18DD368400EBD899 /* HMRNullReduction.m in Sources */,
 				D4ACA61C18DD492E00EBD899 /* HMRConcatenation.m in Sources */,
+				D4ACA62C18DD6C4900EBD899 /* HMRLeastFixedPoint.m in Sources */,
 				D4ACA60F18DD389A00EBD899 /* HMRNullabilityCombinator.m in Sources */,
 				D4ACA61318DD3A5800EBD899 /* HMRAlternation.m in Sources */,
 				D4ACA62418DD4F5200EBD899 /* HMRRepetition.m in Sources */,
