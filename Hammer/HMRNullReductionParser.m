@@ -25,4 +25,9 @@
 	return [HMREmptyParser parser];
 }
 
+
+-(NSSet *)deforest {
+	return self.parseForest;
+}
+
 @end

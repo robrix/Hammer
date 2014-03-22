@@ -35,4 +35,15 @@
 	}];
 }
 
+
+-(NSSet *)deforest {
+	NSMutableSet *trees = [NSMutableSet new];
+	for (id eachFirst in [self.first deforest]) {
+		for (id eachSecond in [self.second deforest]) {
+			[trees addObject:@[ eachFirst, eachSecond ]];
+		}
+	}
+	return trees;
+}
+
 @end

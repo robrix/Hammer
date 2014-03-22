@@ -30,4 +30,9 @@
 	}];
 }
 
+
+-(NSSet *)deforest {
+	return [[self.left deforest] setByAddingObjectsFromSet:[self.right deforest]];
+}
+
 @end
