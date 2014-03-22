@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRLeastFixedPoint.h"
 #import "HMRParserCombinator.h"
 
 NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collection) {
@@ -18,6 +19,7 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 
 @implementation HMRParserCombinator {
 	NSMutableDictionary *_derivativesByElements;
+	NSSet *_deforestation;
 }
 
 -(instancetype)init {
@@ -25,11 +27,6 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 		_derivativesByElements = [NSMutableDictionary new];
 	}
 	return self;
-}
-
-
--(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element]);
 }
 
 
@@ -41,6 +38,17 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 
 -(NSSet *)deforest {
 	return [NSSet set];
+}
+
+
+-(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element]);
+}
+
+-(NSSet *)memoizedDeforest {
+	return _deforestation ?: (_deforestation = HMRLeastFixedPoint([NSSet set], ^(NSSet *forest) {
+		return _deforestation = [self deforest];
+	}));
 }
 
 
