@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D4ACA5B718DD188A00EBD899 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5B618DD188A00EBD899 /* Cocoa.framework */; };
 		D4ACA5C118DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */; };
 		D4ACA5C518DD188A00EBD899 /* Hammer.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5C418DD188A00EBD899 /* Hammer.m */; };
 		D4ACA5CC18DD188A00EBD899 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5CB18DD188A00EBD899 /* XCTest.framework */; };
-		D4ACA5CD18DD188A00EBD899 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5B618DD188A00EBD899 /* Cocoa.framework */; };
 		D4ACA5D018DD188A00EBD899 /* Hammer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5B318DD188A00EBD899 /* Hammer.framework */; };
 		D4ACA5D618DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5D418DD188A00EBD899 /* InfoPlist.strings */; };
 		D4ACA5D818DD188A00EBD899 /* HammerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5D718DD188A00EBD899 /* HammerTests.m */; };
+		D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5C318DD188A00EBD899 /* Hammer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +28,10 @@
 
 /* Begin PBXFileReference section */
 		D4ACA5B318DD188A00EBD899 /* Hammer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hammer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D4ACA5B618DD188A00EBD899 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D4ACA5B918DD188A00EBD899 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D4ACA5BA18DD188A00EBD899 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		D4ACA5BB18DD188A00EBD899 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		D4ACA5BE18DD188A00EBD899 /* Hammer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Hammer-Info.plist"; sourceTree = "<group>"; };
 		D4ACA5C018DD188A00EBD899 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D4ACA5C218DD188A00EBD899 /* Hammer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hammer-Prefix.pch"; sourceTree = "<group>"; };
+		D4ACA5C218DD188A00EBD899 /* Hammer.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hammer.pch; sourceTree = "<group>"; };
 		D4ACA5C318DD188A00EBD899 /* Hammer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hammer.h; sourceTree = "<group>"; };
 		D4ACA5C418DD188A00EBD899 /* Hammer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hammer.m; sourceTree = "<group>"; };
 		D4ACA5CA18DD188A00EBD899 /* HammerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HammerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,7 +46,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4ACA5B718DD188A00EBD899 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +53,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4ACA5CD18DD188A00EBD899 /* Cocoa.framework in Frameworks */,
 				D4ACA5D018DD188A00EBD899 /* Hammer.framework in Frameworks */,
 				D4ACA5CC18DD188A00EBD899 /* XCTest.framework in Frameworks */,
 			);
@@ -89,21 +83,10 @@
 		D4ACA5B518DD188A00EBD899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D4ACA5B618DD188A00EBD899 /* Cocoa.framework */,
+				D4ACA5B918DD188A00EBD899 /* Foundation.framework */,
 				D4ACA5CB18DD188A00EBD899 /* XCTest.framework */,
-				D4ACA5B818DD188A00EBD899 /* Other Frameworks */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D4ACA5B818DD188A00EBD899 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D4ACA5B918DD188A00EBD899 /* Foundation.framework */,
-				D4ACA5BA18DD188A00EBD899 /* CoreData.framework */,
-				D4ACA5BB18DD188A00EBD899 /* AppKit.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		D4ACA5BC18DD188A00EBD899 /* Hammer */ = {
@@ -121,7 +104,7 @@
 			children = (
 				D4ACA5BE18DD188A00EBD899 /* Hammer-Info.plist */,
 				D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */,
-				D4ACA5C218DD188A00EBD899 /* Hammer-Prefix.pch */,
+				D4ACA5C218DD188A00EBD899 /* Hammer.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -151,6 +134,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +295,10 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Hammer/Hammer.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -350,6 +337,9 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Hammer/Hammer.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -368,8 +358,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
 				INFOPLIST_FILE = "Hammer/Hammer-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
@@ -383,8 +371,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
 				INFOPLIST_FILE = "Hammer/Hammer-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
@@ -400,8 +386,6 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -422,8 +406,6 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Hammer/Hammer-Prefix.pch";
 				INFOPLIST_FILE = "HammerTests/HammerTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -450,6 +432,7 @@
 				D4ACA5DD18DD188A00EBD899 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4ACA5DE18DD188A00EBD899 /* Build configuration list for PBXNativeTarget "HammerTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +441,7 @@
 				D4ACA5E018DD188A00EBD899 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
