@@ -32,6 +32,8 @@
 		D4ACA61C18DD492E00EBD899 /* HMRConcatenationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61A18DD492E00EBD899 /* HMRConcatenationParser.m */; };
 		D4ACA61F18DD4CB300EBD899 /* HMRLazyParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA61D18DD4CB300EBD899 /* HMRLazyParser.h */; };
 		D4ACA62018DD4CB300EBD899 /* HMRLazyParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61E18DD4CB300EBD899 /* HMRLazyParser.m */; };
+		D4ACA62318DD4F5200EBD899 /* HMRRepetitionParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62118DD4F5200EBD899 /* HMRRepetitionParser.h */; };
+		D4ACA62418DD4F5200EBD899 /* HMRRepetitionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA62218DD4F5200EBD899 /* HMRRepetitionParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,8 @@
 		D4ACA61A18DD492E00EBD899 /* HMRConcatenationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRConcatenationParser.m; sourceTree = "<group>"; };
 		D4ACA61D18DD4CB300EBD899 /* HMRLazyParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRLazyParser.h; sourceTree = "<group>"; };
 		D4ACA61E18DD4CB300EBD899 /* HMRLazyParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRLazyParser.m; sourceTree = "<group>"; };
+		D4ACA62118DD4F5200EBD899 /* HMRRepetitionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRRepetitionParser.h; sourceTree = "<group>"; };
+		D4ACA62218DD4F5200EBD899 /* HMRRepetitionParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRRepetitionParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +167,8 @@
 				D4ACA5F818DD258E00EBD899 /* HMRNullParser.m */,
 				D4ACA61518DD3CDB00EBD899 /* HMRReductionParser.h */,
 				D4ACA61618DD3CDB00EBD899 /* HMRReductionParser.m */,
+				D4ACA62118DD4F5200EBD899 /* HMRRepetitionParser.h */,
+				D4ACA62218DD4F5200EBD899 /* HMRRepetitionParser.m */,
 			);
 			name = "Parser combinators";
 			sourceTree = "<group>";
@@ -182,6 +188,7 @@
 				D4ACA5F518DD22F800EBD899 /* HMRParser.h in Headers */,
 				D4ACA61718DD3CDB00EBD899 /* HMRReductionParser.h in Headers */,
 				D4ACA5F918DD258E00EBD899 /* HMRNullParser.h in Headers */,
+				D4ACA62318DD4F5200EBD899 /* HMRRepetitionParser.h in Headers */,
 				D4ACA60618DD359C00EBD899 /* HMRElementParser.h in Headers */,
 				D4ACA61B18DD492E00EBD899 /* HMRConcatenationParser.h in Headers */,
 				D4ACA61218DD3A5800EBD899 /* HMRAlternationParser.h in Headers */,
@@ -282,6 +289,7 @@
 				D4ACA61C18DD492E00EBD899 /* HMRConcatenationParser.m in Sources */,
 				D4ACA60F18DD389A00EBD899 /* HMRNullabilityParser.m in Sources */,
 				D4ACA61318DD3A5800EBD899 /* HMRAlternationParser.m in Sources */,
+				D4ACA62418DD4F5200EBD899 /* HMRRepetitionParser.m in Sources */,
 				D4ACA5FF18DD33DC00EBD899 /* HMRParser.m in Sources */,
 				D4ACA5FA18DD258E00EBD899 /* HMRNullParser.m in Sources */,
 				D4ACA60718DD359C00EBD899 /* HMRElementParser.m in Sources */,
