@@ -5,5 +5,5 @@
 extern NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collection);
 extern id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id element);
 
-@interface HMRParser : NSObject <HMRCombinator>
+@interface HMRParserCombinator : NSObject <HMRCombinator>
 @end

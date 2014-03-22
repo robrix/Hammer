@@ -1,11 +1,11 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMREmptyParser.h"
-#import "HMRNullReductionParser.h"
+#import "HMREmpty.h"
+#import "HMRNullReduction.h"
 
-@implementation HMRNullReductionParser
+@implementation HMRNullReduction
 
-+(instancetype)parserWithElement:(id)element {
++(instancetype)combinatorWithElement:(id)element {
 	NSParameterAssert(element != nil);
 	
 	return [[self alloc] initWithParseForest:[NSSet setWithObject:element]];
@@ -21,8 +21,8 @@
 
 #pragma mark HMRCombinator
 
--(HMRParser *)derivativeWithRespectToElement:(id)element {
-	return [HMREmptyParser parser];
+-(id<HMRCombinator>)derivativeWithRespectToElement:(id)element {
+	return [HMREmpty parser];
 }
 
 

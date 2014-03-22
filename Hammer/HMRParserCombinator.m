@@ -1,6 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRParser.h"
+#import "HMRParserCombinator.h"
 
 NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collection) {
 	for (id each in collection) {
@@ -16,7 +16,7 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id element) {
 }
 
 
-@implementation HMRParser
+@implementation HMRParserCombinator
 
 #pragma mark HMRCombinator
 

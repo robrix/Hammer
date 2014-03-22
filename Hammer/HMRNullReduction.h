@@ -1,10 +1,10 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRParser.h"
+#import "HMRParserCombinator.h"
 
-@interface HMRNullReductionParser : HMRParser
+@interface HMRNullReduction : HMRParserCombinator
 
-+(instancetype)parserWithElement:(id)element;
++(instancetype)combinatorWithElement:(id)element;
 
 @property (readonly) NSSet *parseForest;
 

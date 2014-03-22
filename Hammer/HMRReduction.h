@@ -1,14 +1,14 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRParser.h"
+#import "HMRParserCombinator.h"
 
 typedef id(^HMRReductionBlock)(id);
 
-@interface HMRReductionParser : HMRParser
+@interface HMRReduction : HMRParserCombinator
 
-+(instancetype)parserWithParser:(HMRParser *)parser block:(HMRReductionBlock)block;
++(instancetype)combinatorWithParser:(id<HMRCombinator>)parser block:(HMRReductionBlock)block;
 
-@property (readonly) HMRParser *parser;
+@property (readonly) id<HMRCombinator>parser;
 @property (readonly) HMRReductionBlock block;
 
 
