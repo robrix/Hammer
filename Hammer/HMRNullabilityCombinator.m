@@ -24,8 +24,8 @@
 }
 
 
--(NSSet *)deforest {
-	return self.parser.deforestation;
+-(NSSet *)reduceParseForest {
+	return self.parser.parseForest;
 }
 
 

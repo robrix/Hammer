@@ -33,8 +33,8 @@
 }
 
 
--(NSSet *)deforest {
-	return [self.left.deforestation setByAddingObjectsFromSet:self.right.deforestation];
+-(NSSet *)reduceParseForest {
+	return [self.left.parseForest setByAddingObjectsFromSet:self.right.parseForest];
 }
 
 

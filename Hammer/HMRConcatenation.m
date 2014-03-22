@@ -38,10 +38,10 @@
 }
 
 
--(NSSet *)deforest {
+-(NSSet *)reduceParseForest {
 	NSMutableSet *trees = [NSMutableSet new];
-	for (id eachFirst in self.first.deforestation) {
-		for (id eachSecond in self.second.deforestation) {
+	for (id eachFirst in self.first.parseForest) {
+		for (id eachSecond in self.second.parseForest) {
 			[trees addObject:@[ eachFirst, eachSecond ]];
 		}
 	}

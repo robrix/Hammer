@@ -32,9 +32,11 @@
 }
 
 
--(NSSet *)deforest {
+-(NSSet *)reduceParseForest {
 	return self.parseForest;
 }
+
+@synthesize parseForest = _parseForest;
 
 
 -(NSString *)describe {

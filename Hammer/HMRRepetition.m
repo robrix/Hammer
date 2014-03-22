@@ -38,7 +38,7 @@
 }
 
 
--(NSSet *)deforest {
+-(NSSet *)reduceParseForest {
 	return [NSSet setWithObject:@[]];
 }
 

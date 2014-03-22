@@ -7,7 +7,7 @@ NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collec
 	for (id each in collection) {
 		parser = [parser memoizedDerivativeWithRespectToElement:each];
 	}
-	return parser.deforestation;
+	return parser.parseForest;
 }
 
 l3_addTestSubjectTypeWithFunction(HMRParseCollection);
@@ -32,7 +32,7 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 
 @implementation HMRParserCombinator {
 	NSMutableDictionary *_derivativesByElements;
-	NSSet *_deforestation;
+	NSSet *_parseForest;
 	id<HMRCombinator> _compaction;
 	NSString *_description;
 }
@@ -56,13 +56,13 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 }
 
 
--(NSSet *)deforest {
+-(NSSet *)reduceParseForest {
 	return [NSSet set];
 }
 
--(NSSet *)deforestation {
-	return _deforestation ?: (_deforestation = HMRLeastFixedPoint([NSSet set], ^(NSSet *forest) {
-		return _deforestation = [self deforest];
+-(NSSet *)parseForest {
+	return _parseForest ?: (_parseForest = HMRLeastFixedPoint([NSSet set], ^(NSSet *forest) {
+		return _parseForest = [self reduceParseForest];
 	}));
 }
 
