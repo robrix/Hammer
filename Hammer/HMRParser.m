@@ -9,7 +9,7 @@
 	for (id each in enumerator) {
 		parser = [parser derivativeWithRespectToElement:each];
 	}
-	return [parser parseNull];
+	return [parser deforest];
 }
 
 -(HMRParser *)parse:(id)element {
@@ -24,7 +24,7 @@
 }
 
 
--(NSSet *)parseNull {
+-(NSSet *)deforest {
 	return [NSSet set];
 }
 

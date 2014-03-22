@@ -6,6 +6,6 @@
 
 -(HMRParser *)derivativeWithRespectToElement:(id)element;
 
--(NSSet *)parseNull;
+-(NSSet *)deforest;
 
 @end
