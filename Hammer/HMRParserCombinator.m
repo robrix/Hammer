@@ -39,7 +39,7 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 }
 
 -(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element]);
+	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element].compaction);
 }
 
 
