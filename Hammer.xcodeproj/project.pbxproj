@@ -8,9 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		D4ACA5C118DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */; };
-		D4ACA5C518DD188A00EBD899 /* Hammer.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5C418DD188A00EBD899 /* Hammer.m */; };
 		D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5C318DD188A00EBD899 /* Hammer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4ACA5F218DD19FE00EBD899 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4ACA5F518DD22F800EBD899 /* HMRParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5F318DD22F800EBD899 /* HMRParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4ACA5F918DD258E00EBD899 /* HMRNullParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5F718DD258E00EBD899 /* HMRNullParser.h */; };
+		D4ACA5FA18DD258E00EBD899 /* HMRNullParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5F818DD258E00EBD899 /* HMRNullParser.m */; };
+		D4ACA5FC18DD31E800EBD899 /* HMRParser+Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5FB18DD31E800EBD899 /* HMRParser+Protected.h */; };
+		D4ACA5FE18DD32CB00EBD899 /* HMROnce.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5FD18DD32CB00EBD899 /* HMROnce.h */; };
+		D4ACA5FF18DD33DC00EBD899 /* HMRParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5F418DD22F800EBD899 /* HMRParser.m */; };
+		D4ACA60218DD34C400EBD899 /* HMREmptyParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA60018DD34C400EBD899 /* HMREmptyParser.h */; };
+		D4ACA60318DD34C400EBD899 /* HMREmptyParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA60118DD34C400EBD899 /* HMREmptyParser.m */; };
+		D4ACA60618DD359C00EBD899 /* HMRElementParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA60418DD359C00EBD899 /* HMRElementParser.h */; };
+		D4ACA60718DD359C00EBD899 /* HMRElementParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA60518DD359C00EBD899 /* HMRElementParser.m */; };
+		D4ACA60A18DD368400EBD899 /* HMRNullReductionParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA60818DD368400EBD899 /* HMRNullReductionParser.h */; };
+		D4ACA60B18DD368400EBD899 /* HMRNullReductionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA60918DD368400EBD899 /* HMRNullReductionParser.m */; };
+		D4ACA60E18DD389A00EBD899 /* HMRNullabilityParser.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA60C18DD389A00EBD899 /* HMRNullabilityParser.h */; };
+		D4ACA60F18DD389A00EBD899 /* HMRNullabilityParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA60D18DD389A00EBD899 /* HMRNullabilityParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,10 +43,23 @@
 		D4ACA5C018DD188A00EBD899 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D4ACA5C218DD188A00EBD899 /* Hammer.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hammer.pch; sourceTree = "<group>"; };
 		D4ACA5C318DD188A00EBD899 /* Hammer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hammer.h; sourceTree = "<group>"; };
-		D4ACA5C418DD188A00EBD899 /* Hammer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hammer.m; sourceTree = "<group>"; };
 		D4ACA5CA18DD188A00EBD899 /* HammerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HammerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ACA5CB18DD188A00EBD899 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lagrangian.framework; path = External/Lagrangian/build/Debug/Lagrangian.framework; sourceTree = "<group>"; };
+		D4ACA5F318DD22F800EBD899 /* HMRParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRParser.h; sourceTree = "<group>"; };
+		D4ACA5F418DD22F800EBD899 /* HMRParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRParser.m; sourceTree = "<group>"; };
+		D4ACA5F718DD258E00EBD899 /* HMRNullParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRNullParser.h; sourceTree = "<group>"; };
+		D4ACA5F818DD258E00EBD899 /* HMRNullParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRNullParser.m; sourceTree = "<group>"; };
+		D4ACA5FB18DD31E800EBD899 /* HMRParser+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HMRParser+Protected.h"; sourceTree = "<group>"; };
+		D4ACA5FD18DD32CB00EBD899 /* HMROnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMROnce.h; sourceTree = "<group>"; };
+		D4ACA60018DD34C400EBD899 /* HMREmptyParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMREmptyParser.h; sourceTree = "<group>"; };
+		D4ACA60118DD34C400EBD899 /* HMREmptyParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMREmptyParser.m; sourceTree = "<group>"; };
+		D4ACA60418DD359C00EBD899 /* HMRElementParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRElementParser.h; sourceTree = "<group>"; };
+		D4ACA60518DD359C00EBD899 /* HMRElementParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRElementParser.m; sourceTree = "<group>"; };
+		D4ACA60818DD368400EBD899 /* HMRNullReductionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRNullReductionParser.h; sourceTree = "<group>"; };
+		D4ACA60918DD368400EBD899 /* HMRNullReductionParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRNullReductionParser.m; sourceTree = "<group>"; };
+		D4ACA60C18DD389A00EBD899 /* HMRNullabilityParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRNullabilityParser.h; sourceTree = "<group>"; };
+		D4ACA60D18DD389A00EBD899 /* HMRNullabilityParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRNullabilityParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +106,19 @@
 			isa = PBXGroup;
 			children = (
 				D4ACA5C318DD188A00EBD899 /* Hammer.h */,
-				D4ACA5C418DD188A00EBD899 /* Hammer.m */,
+				D4ACA5F318DD22F800EBD899 /* HMRParser.h */,
+				D4ACA5FB18DD31E800EBD899 /* HMRParser+Protected.h */,
+				D4ACA5F418DD22F800EBD899 /* HMRParser.m */,
+				D4ACA60018DD34C400EBD899 /* HMREmptyParser.h */,
+				D4ACA60118DD34C400EBD899 /* HMREmptyParser.m */,
+				D4ACA5F718DD258E00EBD899 /* HMRNullParser.h */,
+				D4ACA5F818DD258E00EBD899 /* HMRNullParser.m */,
+				D4ACA60C18DD389A00EBD899 /* HMRNullabilityParser.h */,
+				D4ACA60D18DD389A00EBD899 /* HMRNullabilityParser.m */,
+				D4ACA60818DD368400EBD899 /* HMRNullReductionParser.h */,
+				D4ACA60918DD368400EBD899 /* HMRNullReductionParser.m */,
+				D4ACA60418DD359C00EBD899 /* HMRElementParser.h */,
+				D4ACA60518DD359C00EBD899 /* HMRElementParser.m */,
 				D4ACA5BD18DD188A00EBD899 /* Supporting Files */,
 			);
 			path = Hammer;
@@ -92,6 +130,7 @@
 				D4ACA5BE18DD188A00EBD899 /* Hammer-Info.plist */,
 				D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */,
 				D4ACA5C218DD188A00EBD899 /* Hammer.pch */,
+				D4ACA5FD18DD32CB00EBD899 /* HMROnce.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -103,7 +142,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4ACA5FE18DD32CB00EBD899 /* HMROnce.h in Headers */,
+				D4ACA5FC18DD31E800EBD899 /* HMRParser+Protected.h in Headers */,
+				D4ACA60A18DD368400EBD899 /* HMRNullReductionParser.h in Headers */,
 				D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */,
+				D4ACA5F518DD22F800EBD899 /* HMRParser.h in Headers */,
+				D4ACA5F918DD258E00EBD899 /* HMRNullParser.h in Headers */,
+				D4ACA60618DD359C00EBD899 /* HMRElementParser.h in Headers */,
+				D4ACA60E18DD389A00EBD899 /* HMRNullabilityParser.h in Headers */,
+				D4ACA60218DD34C400EBD899 /* HMREmptyParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +196,7 @@
 		D4ACA5AA18DD188A00EBD899 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = HMR;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Rob Rix";
 				TargetAttributes = {
@@ -191,7 +239,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4ACA5C518DD188A00EBD899 /* Hammer.m in Sources */,
+				D4ACA60318DD34C400EBD899 /* HMREmptyParser.m in Sources */,
+				D4ACA60B18DD368400EBD899 /* HMRNullReductionParser.m in Sources */,
+				D4ACA60F18DD389A00EBD899 /* HMRNullabilityParser.m in Sources */,
+				D4ACA5FF18DD33DC00EBD899 /* HMRParser.m in Sources */,
+				D4ACA5FA18DD258E00EBD899 /* HMRNullParser.m in Sources */,
+				D4ACA60718DD359C00EBD899 /* HMRElementParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
