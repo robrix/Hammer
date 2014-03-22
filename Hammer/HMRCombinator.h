@@ -8,6 +8,10 @@
 
 -(NSSet *)deforest;
 
+@optional
+
+-(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element;
+
 @end
 
 

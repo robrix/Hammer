@@ -4,21 +4,34 @@
 
 NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collection) {
 	for (id each in collection) {
-		parser = [parser derivativeWithRespectToElement:each];
+		parser = [parser memoizedDerivativeWithRespectToElement:each];
 	}
 	return [parser deforest];
 }
 
 id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopying> element) {
 	return element?
-		[parser derivativeWithRespectToElement:element]
+		[parser memoizedDerivativeWithRespectToElement:element]
 	:	nil; // ???
 }
 
 
 @implementation HMRParserCombinator {
-	NSDictionary *_derivativesByElements;
+	NSMutableDictionary *_derivativesByElements;
 }
+
+-(instancetype)init {
+	if ((self = [super init])) {
+		_derivativesByElements = [NSMutableDictionary new];
+	}
+	return self;
+}
+
+
+-(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element]);
+}
+
 
 #pragma mark HMRCombinator
 
