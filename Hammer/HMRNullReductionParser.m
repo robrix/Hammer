@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMREmptyParser.h"
 #import "HMRNullReductionParser.h"
 #import "HMRParser+Protected.h"
 
@@ -16,6 +17,13 @@
 		_parseForest = [parseForest copy];
 	}
 	return self;
+}
+
+
+#pragma mark HMRParser
+
+-(HMRParser *)derivativeWithRespectToElement:(id)element {
+	return [HMREmptyParser parser];
 }
 
 @end
