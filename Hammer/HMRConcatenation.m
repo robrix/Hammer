@@ -2,7 +2,9 @@
 
 #import "HMRAlternation.h"
 #import "HMRConcatenation.h"
+#import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
+#import "HMRNull.h"
 #import "HMRNullabilityCombinator.h"
 
 @implementation HMRConcatenation
@@ -44,6 +46,18 @@
 		}
 	}
 	return trees;
+}
+
+
+-(id<HMRCombinator>)compact {
+	return (self.first.compaction == [HMREmpty parser] || self.second.compaction == [HMREmpty parser])?
+		[HMREmpty parser]
+	:	[super compact];
+}
+
+l3_test(@selector(compaction)) {
+	l3_expect([HMRConcatenation combinatorWithFirst:[HMREmpty parser] second:HMRLiteral(@0)].compaction).to.equal([HMREmpty parser]);
+	l3_expect([HMRConcatenation combinatorWithFirst:HMRLiteral(@0) second:[HMREmpty parser]].compaction).to.equal([HMREmpty parser]);
 }
 
 @end
