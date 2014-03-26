@@ -29,3 +29,23 @@ ws -> [ \t\r\n]+ { ignore }
 
 lineComment -> ';' [^\n]+ { ignore }
 blockComment -> '(*' (blockComment | ~'*)')* '*)' { ignore }
+
+
+
+
+production -> symbol '->' alternation
+token-production -> token '->' alternation
+
+alternation -> concatenation ('|' concatenation)*
+
+
+
+:token -> ':' symbol
+:symbol -> [[:alnum:]/-]+
+
+:nl -> '\n'
+:ws -> [ \t]+ #ignore
+
+:line-comment -> ';' [^\n]+ #ignore
+:block-comment -> '(*' (:block-comment | ~'*)')* '*)' #ignore
+
