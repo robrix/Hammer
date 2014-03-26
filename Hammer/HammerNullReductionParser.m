@@ -26,10 +26,9 @@
 
 -(BOOL)isEqual:(id)object {
 	HammerNullReductionParser *other = object;
-	return [super isEqual:other] || (
+	return
 		[other isKindOfClass:self.class]
-	&&	[other.trees isEqual:self.trees]
-	);
+	&&	[other.trees isEqual:self.trees];
 }
 
 

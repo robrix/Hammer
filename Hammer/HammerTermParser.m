@@ -29,10 +29,9 @@
 
 -(BOOL)isEqual:(id)object {
 	HammerTermParser *other = object;
-	return [super isEqual:other] || (
+	return
 		[other isKindOfClass:self.class]
-	&&	[other.term isEqual:self.term]
-	);
+	&&	[other.term isEqual:self.term];
 }
 
 

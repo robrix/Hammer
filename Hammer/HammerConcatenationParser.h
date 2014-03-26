@@ -9,4 +9,7 @@
 
 +(instancetype)parserWithFirst:(HammerLazyParser)first second:(HammerLazyParser)second;
 
+@property (nonatomic, readonly) HammerParser *first;
+@property (nonatomic, readonly) HammerParser *second;
+
 @end
