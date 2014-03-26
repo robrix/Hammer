@@ -14,12 +14,22 @@ l3_addTestSubjectTypeWithFunction(HMRParseCollection);
 l3_test(&HMRParseCollection) {
 	id element = @0;
 	id<HMRCombinator> literal = HMRLiteral(element);
-	l3_expect(HMRParseCollection(literal, @[element])).to.equal([NSSet setWithObject:element]);
+	l3_expect(HMRParseCollection(literal, @[ element ])).to.equal([NSSet setWithObject:element]);
 	l3_expect(HMRParseCollection(literal, @[])).to.equal([NSSet set]);
-	id anythingElse = @1;;
-	l3_expect(HMRParseCollection(literal, @[anythingElse])).to.equal([NSSet set]);
+	id anythingElse = @1;
+	l3_expect(HMRParseCollection(literal, @[ anythingElse ])).to.equal([NSSet set]);
 	
-	l3_expect(HMRParseCollection(HMRConcatenate(literal, literal), @[element, element])).to.equal([NSSet setWithObject:@[element, element]]);
+	l3_expect(HMRParseCollection(HMRConcatenate(literal, literal), @[ element, element ])).to.equal([NSSet setWithObject:@[element, element]]);
+	
+	id terminal = @"x";
+	id nonterminalPrefix = @"+";
+	// S -> "+" S | "x"
+	__block id<HMRCombinator> nonterminal;
+	nonterminal = HMRAlternate(HMRConcatenate(HMRLiteral(nonterminalPrefix), HMRDelay(^{ return nonterminal; })), HMRLiteral(terminal));
+	l3_expect(HMRParseCollection(nonterminal, @[ terminal ])).to.equal([NSSet setWithObject:terminal]);
+	l3_expect(HMRParseCollection(nonterminal, @[ nonterminalPrefix, terminal ])).to.equal([NSSet setWithObject:@[ nonterminalPrefix, terminal ]]);
+	id nested = [NSSet setWithObject:@[ nonterminalPrefix, @[ nonterminalPrefix, terminal ] ]];
+	l3_expect(HMRParseCollection(nonterminal, @[ nonterminalPrefix, nonterminalPrefix, terminal ])).to.equal(nested);
 }
 
 
