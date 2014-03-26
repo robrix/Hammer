@@ -4,7 +4,6 @@
 
 @class HammerParser;
 
-typedef id (^HammerLazyValue)();
 typedef HammerParser *(^HammerLazyParser)();
 #define HammerDelay(p) ^{ return (p); }
 #define HammerForce(l) ((l)())

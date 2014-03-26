@@ -27,13 +27,4 @@
 	return [HammerConcatenationParser parserWithFirst:HammerDelay([self.parser parse:term]) second:HammerDelay(self)];
 }
 
--(NSSet *)parseNull {
-	return [NSSet setWithObject:[NSNull null]];
-}
-
-
--(BOOL)canParseNull {
-	return YES;
-}
-
 @end

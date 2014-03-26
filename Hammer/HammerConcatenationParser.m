@@ -34,38 +34,14 @@
 
 -(HammerParser *)parseDerive:(id)term {
 	HammerLazyParser nulled = HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([self.first parse:term]) second:_lazySecond]);
-	return self.first.canParseNull?
+	return self.first.isNullable?
 		[HammerAlternationParser parserWithLeft:HammerDelay([HammerConcatenationParser parserWithFirst:HammerDelay([HammerNullReductionParser parserWithParseTrees:[self.first parseNull]]) second:HammerDelay([self.second parse:term])]) right:nulled]
 	:	nulled();
 }
 
--(NSSet *)parseNullRecursive {
-	NSMutableSet *trees = [NSMutableSet set];
-	for(id l in [self.first parseNull]) {
-		for(id r in [self.second parseNull]) {
-			// this is a really horrible cons cell, don’t do this
-			[trees addObject:[NSArray arrayWithObjects:l, r, nil]];
-		}
-	}
-	return trees;
-}
 
-
--(BOOL)canParseNullRecursive {
-	return self.first.canParseNull && self.second.canParseNull;
-}
-
-
--(HammerParser *)compactRecursive {
-	if ([self.first.compact isKindOfClass:[HammerEmptyParser class]] || [self.second.compact isKindOfClass:[HammerEmptyParser class]])
-		return [HammerEmptyParser parser];
-	else
-		return [HammerConcatenationParser parserWithFirst:HammerDelay(self.first.compact) second:HammerDelay(self.second.compact)];
-}
-
-
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
-	return [algebra concatenationParserWithFirst:_lazyFirst second:_lazySecond];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor concatenationParser:self withFirst:_lazyFirst second:_lazySecond];
 }
 
 @end

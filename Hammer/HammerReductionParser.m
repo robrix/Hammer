@@ -30,24 +30,9 @@
 	return [self.class parserWithParser:HammerDelay([self.parser parse:term]) function:_function];
 }
 
--(NSSet *)parseNull {
-	NSMutableSet *trees = [NSMutableSet new];
-	for (id tree in self.parser.parseNull) {
-		id newTree = _function(tree);
-		if (newTree)
-			[trees addObject:newTree];
-	}
-	return trees;
-}
 
-
--(BOOL)canParseNull {
-	return self.parser.canParseNull;
-}
-
-
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
-	return [algebra reductionParserWithParser:_lazyParser function:_function];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor reductionParser:self withParser:_lazyParser];
 }
 
 @end

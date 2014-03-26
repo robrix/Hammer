@@ -16,13 +16,13 @@
 }
 
 
--(BOOL)canParseNull {
-	return YES;
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor nullParser:self];
 }
 
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
-	return [algebra nullParser];
+-(BOOL)isEqual:(id)object {
+	return [object isKindOfClass:self.class];
 }
 
 @end

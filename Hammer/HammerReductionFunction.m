@@ -4,4 +4,4 @@
 
 #import "HammerReductionFunction.h"
 
-HammerReductionFunction HammerIdentityReductionFunction = ^id (id x){ return x; };
+HammerReductionFunction HammerIdentityReductionFunction = ^(id x){ return x; };

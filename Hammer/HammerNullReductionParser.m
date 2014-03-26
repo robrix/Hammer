@@ -23,18 +23,17 @@
 	return [HammerEmptyParser parser];
 }
 
--(NSSet *)parseNull {
-	return _trees;
+
+-(BOOL)isEqual:(id)object {
+	HammerNullReductionParser *other = object;
+	return
+		[other isKindOfClass:self.class]
+	&&	[other.trees isEqual:self.trees];
 }
 
 
--(BOOL)canParseNull {
-	return YES;
-}
-
-
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
-	return [algebra nullReductionParserWithTrees:_trees];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor nullReductionParser:self];
 }
 
 @end

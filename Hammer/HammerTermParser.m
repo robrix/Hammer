@@ -29,15 +29,14 @@
 
 -(BOOL)isEqual:(id)object {
 	HammerTermParser *other = object;
-	return [super isEqual:other] || (
+	return
 		[other isKindOfClass:self.class]
-	&&	[other.term isEqual:self.term]
-	);
+	&&	[other.term isEqual:self.term];
 }
 
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
-	return [algebra termParserWithTerm:_term];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor termParser:self];
 }
 
 @end

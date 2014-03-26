@@ -3,24 +3,24 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "HammerEmptyParser.h"
-#import "HammerIdentitySymbolizer.h"
+#import "HammerParserIsEmptyPredicate.h"
+#import "HammerParserIsNullablePredicate.h"
+#import "HammerParserIsNullPredicate.h"
+#import "HammerParserParseNullFunction.h"
 #import "HammerMemoization.h"
-#import "HammerMemoizingVisitor.h"
 #import "HammerParser.h"
-#import "HammerParserDescriptionVisitor.h"
-
-id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
+#import "HammerParserCompactor.h"
+#import "HammerParserFormatter.h"
 
 @implementation HammerParser {
-	BOOL _memoizedCanParseNull;
-	BOOL _canParseNull;
+	NSNumber *_isNullable;
+	NSNumber *_isNull;
+	NSNumber *_isEmpty;
 	NSSet *_parseNull;
-	BOOL _memoizedCompact;
-	HammerParser *_compact;
 	NSMutableDictionary *_memoizedDerivativesByTerm;
 }
 
--(id)init {
+-(instancetype)init {
 	if ((self = [super init]))
 		_memoizedDerivativesByTerm = [NSMutableDictionary new];
 	return self;
@@ -32,7 +32,7 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 }
 
 -(HammerParser *)memoizeDerivative:(HammerParser *)value forTerm:(id)term {
-	[_memoizedDerivativesByTerm setObject:value forKey:term];
+	_memoizedDerivativesByTerm[term] = value;
 	return value;
 }
 
@@ -40,85 +40,40 @@ id HammerKleeneFixedPoint(id(^f)(id previous), id bottom);
 -(NSSet *)parseFull:(id<NSFastEnumeration>)sequence {
 	HammerParser *parser = self;
 	for (id term in sequence) {
-//		NSLog(@"parsing %@ with %@", term, [parser prettyPrint]);
-		parser = [parser parse:term].compact;
+		parser = [HammerParserCompactor compact:[parser parse:term]];
 	}
 	return [parser parseNull];
 }
 
 -(HammerParser *)parse:(id)term {
-	return [_memoizedDerivativesByTerm objectForKey:term] ?: [self memoizeDerivative:[self parseDerive:term] forTerm:term];
-}
-
--(NSSet *)parseNullRecursive {
-	return [NSSet set];
+	return _memoizedDerivativesByTerm[term] ?: [self memoizeDerivative:[self parseDerive:term] forTerm:term];
 }
 
 -(NSSet *)parseNull {
-	return HammerMemoizedValue(_parseNull, HammerKleeneFixedPoint(^(NSSet *previous) {
-		_parseNull = previous;
-		return [self parseNullRecursive];
-	}, [NSSet set]));
+	return HammerMemoizedValue(_parseNull, [HammerParserParseNullFunction parseNull:self]);
 }
 
 
--(BOOL)canParseNullRecursive {
-	return NO;
+-(bool)isNullable {
+	return [HammerMemoizedValue(_isNullable, @([HammerParserIsNullablePredicate isNullable:self])) boolValue];
 }
 
--(BOOL)canParseNull {
-	if (!_memoizedCanParseNull) {
-		_memoizedCanParseNull = YES;
-		_canParseNull = [HammerKleeneFixedPoint(^(NSNumber *previous) {
-			_canParseNull = previous.boolValue;
-			return @([self canParseNullRecursive]);
-		}, @(NO)) boolValue];
-	}
-	return _canParseNull;
+-(bool)isNull {
+	return [HammerMemoizedValue(_isNull, @([HammerParserIsNullPredicate isNull:self])) boolValue];
+}
+
+-(bool)isEmpty {
+	return [HammerMemoizedValue(_isEmpty, @([HammerParserIsEmptyPredicate isEmpty:self])) boolValue];
 }
 
 
--(id)copyWithZone:(NSZone *)zone {
+-(instancetype)copyWithZone:(NSZone *)zone {
 	return self;
 }
 
 
--(id)acceptMemoizedAlgebra:(id<HammerParserAlgebra>)visitor {
-	HammerMemoizingVisitor *memoizer = [[HammerMemoizingVisitor alloc] initWithVisitor:visitor symbolizer:[HammerIdentitySymbolizer symbolizer]];
-	return [self acceptAlgebra:memoizer];
-}
-
-
-//-(NSString *)prettyPrint {
-//	return [self acceptMemoizedAlgebra:[HammerParserDescriptionVisitor new]];
-//}
-
-
--(HammerParser *)compactRecursive {
-	return self;
-}
-
--(HammerParser *)compact {
-	if (!_memoizedCompact) {
-		_memoizedCompact = YES;
-		_compact = self;
-		_compact = self.compactRecursive;
-	}
-	return _compact;
-}
-
-
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
 	return nil;
 }
 
 @end
-
-
-id HammerKleeneFixedPoint(id(^f)(id previous), id bottom) {
-	BOOL changed = NO;
-	do {
-		changed = ![bottom isEqual:(bottom = f(bottom))];
-	} while(changed);
-	return bottom;
-}

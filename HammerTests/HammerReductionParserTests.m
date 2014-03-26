@@ -6,17 +6,13 @@
 #import "HammerReductionParser.h"
 #import "HammerTermParser.h"
 
-static HammerReductionFunction identity = ^(id x){
-	return x;
-};
-
 @interface HammerReductionParserTests : SenTestCase
 @end
 
 @implementation HammerReductionParserTests
 
 -(void)testParsesWhatItsChildParserParses {
-	HammerParser *reduction = [HammerReductionParser parserWithParser:HammerDelay([HammerTermParser parserWithTerm:@"a"]) function:identity];
+	HammerParser *reduction = [HammerReductionParser parserWithParser:HammerDelay([HammerTermParser parserWithTerm:@"a"]) function:HammerIdentityReductionFunction];
 	STAssertEqualObjects([reduction parseFull:@[@"a"]], [NSSet setWithObject:@"a"], @"Expected equal.");
 }
 

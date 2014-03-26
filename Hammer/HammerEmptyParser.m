@@ -16,8 +16,13 @@
 }
 
 
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
-	return [algebra emptyParser];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor emptyParser:self];
+}
+
+
+-(BOOL)isEqual:(id)object {
+	return [object isKindOfClass:self.class];
 }
 
 @end

@@ -40,7 +40,7 @@
 	__block HammerAlternationParser *either = nil;
 	either = [HammerAlternationParser parserWithLeft:HammerDelay(either) right:HammerDelay(terminal)];
 	
-	STAssertEqualObjects(([either parseFull:@[@"a"]]), ([NSSet setWithObjects:@"a", nil]), @"Expected equal.");
+	STAssertEqualObjects(([either parseFull:@[@"a"]]), [NSSet setWithObject:@"a"], @"Expected equal.");
 }
 
 @end

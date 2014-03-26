@@ -34,31 +34,9 @@
 	return [HammerAlternationParser parserWithLeft:HammerDelay([self.left parse:term]) right:HammerDelay([self.right parse:term])];
 }
 
--(NSSet *)parseNullRecursive {
-	NSMutableSet *trees = [NSMutableSet new];
-	[trees unionSet:[self.left parseNull] ?: [NSSet set]];
-	[trees unionSet:[self.right parseNull] ?: [NSSet set]];
-	return trees;
-}
 
-
--(BOOL)canParseNullRecursive {
-	return self.left.canParseNull || self.right.canParseNull;
-}
-
-
--(HammerParser *)compactRecursive {
-	if ([self.left.compact isKindOfClass:[HammerEmptyParser class]])
-		return self.right.compact;
-	else if ([self.right.compact isKindOfClass:[HammerEmptyParser class]])
-		return self.left.compact;
-	else
-		return [HammerAlternationParser parserWithLeft:HammerDelay(self.left.compact) right:HammerDelay(self.right.compact)];
-}
-
-
--(id)acceptAlgebra:(id<HammerParserAlgebra>)algebra {
-	return [algebra alternationParserWithLeft:_lazyLeft right:_lazyRight];
+-(id)acceptVisitor:(id<HammerVisitor>)visitor {
+	return [visitor alternationParser:self withLeft:_lazyLeft right:_lazyRight];
 }
 
 @end

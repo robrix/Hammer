@@ -17,7 +17,7 @@
 #import <Hammer/HammerAlternationParser.h>
 #import <Hammer/HammerReductionParser.h>
 
-#import <Hammer/HammerParserAlgebra.h>
+#import <Hammer/HammerVisitor.h>
 
 #import <Hammer/HammerLaziness.h>
 #import <Hammer/HammerMemoization.h>
