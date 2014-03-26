@@ -1,14 +1,14 @@
-#Hammer
+# Hammer
 
-###everything looks like a nail
+### everything looks like a nail
 
 Hammer started its life as a recursive descent parser framework, but is currently being reborn as a set of parsers usable for regexp matching, parsing, or general pattern matching.
 
-##Today
+## Today
 
 Hammer currently builds on this foundation of parsers to include [a simple backtracking-free CFG matching algorithm](http://matt.might.net/articles/parsing-with-derivatives/) based on [Brzozowski's derivative of regular expressions](http://matt.might.net/articles/implementation-of-regular-expression-matching-in-scheme-with-derivatives/).
 
-##Tomorrow
+## Tomorrow
 
 Future work includes:
 
