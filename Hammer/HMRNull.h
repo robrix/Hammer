@@ -1,8 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRParser.h"
+#import "HMRParserCombinator.h"
 
-@interface HMRNullParser : HMRParser
+@interface HMRNull : HMRParserCombinator
 
 +(instancetype)parser;
 
