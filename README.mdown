@@ -1,0 +1,7 @@
+# Hammer
+
+*everything looks like a nail*
+
+Hammer is a parser combinator framework for Cocoa & Cocoa Touch based on the [derivative of parser combinators](http://matt.might.net/articles/parsing-with-derivatives/), which is in turn a generalization of [Brzozowski's derivative of regular expressions](http://matt.might.net/articles/implementation-of-regular-expression-matching-in-scheme-with-derivatives/).
+
+It parses arbitrary CFGs, no matter whether they’re left-recursive, right-recursive, mutually-recursive, or ambiguous.
