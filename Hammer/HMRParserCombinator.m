@@ -3,10 +3,10 @@
 #import "HMRLeastFixedPoint.h"
 #import "HMRParserCombinator.h"
 
-NSSet *HMRParseCollection(id<HMRCombinator> parser, id<NSFastEnumeration> collection) {
-	for (id each in collection) {
-		parser = [parser memoizedDerivativeWithRespectToElement:each];
-	}
+NSSet *HMRParseCollection(id<HMRCombinator> parser, id<REDReducible> reducible) {
+	parser = [reducible red_reduce:parser usingBlock:^(id<HMRCombinator> parser, id each) {
+		return [parser memoizedDerivativeWithRespectToElement:each];
+	}];
 	return parser.parseForest;
 }
 

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D40D7B0E18E27C960065BB70 /* Reducers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D40D7B0D18E27C960065BB70 /* Reducers.framework */; };
+		D40D7B1418E27E070065BB70 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5CB18DD188A00EBD899 /* XCTest.framework */; };
+		D40D7B1A18E27E070065BB70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D40D7B1818E27E070065BB70 /* InfoPlist.strings */; };
+		D40D7B1C18E27E070065BB70 /* Hammer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = D40D7B1B18E27E070065BB70 /* Hammer_Tests.m */; };
+		D40D7B2318E27E1E0065BB70 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5CB18DD188A00EBD899 /* XCTest.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D40D7B2418E27F070065BB70 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */; };
+		D40D7B2618E28A660065BB70 /* Hammer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5B318DD188A00EBD899 /* Hammer.framework */; };
 		D4ACA5C118DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */; };
 		D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5C318DD188A00EBD899 /* Hammer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4ACA5F218DD19FE00EBD899 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -39,7 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D4ACA5CE18DD188A00EBD899 /* PBXContainerItemProxy */ = {
+		D40D7B1E18E27E070065BB70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4ACA5AA18DD188A00EBD899 /* Project object */;
 			proxyType = 1;
@@ -49,13 +56,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D40D7B0D18E27C960065BB70 /* Reducers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reducers.framework; path = External/Reducers/build/Debug/Reducers.framework; sourceTree = "<group>"; };
+		D40D7B1318E27E070065BB70 /* Hammer Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hammer Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D40D7B1718E27E070065BB70 /* Hammer Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Hammer Tests-Info.plist"; sourceTree = "<group>"; };
+		D40D7B1918E27E070065BB70 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D40D7B1B18E27E070065BB70 /* Hammer_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hammer_Tests.m; sourceTree = "<group>"; };
+		D40D7B1D18E27E070065BB70 /* Hammer Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hammer Tests-Prefix.pch"; sourceTree = "<group>"; };
 		D4ACA5B318DD188A00EBD899 /* Hammer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hammer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ACA5B918DD188A00EBD899 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D4ACA5BE18DD188A00EBD899 /* Hammer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Hammer-Info.plist"; sourceTree = "<group>"; };
 		D4ACA5C018DD188A00EBD899 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D4ACA5C218DD188A00EBD899 /* Hammer.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hammer.pch; sourceTree = "<group>"; };
 		D4ACA5C318DD188A00EBD899 /* Hammer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hammer.h; sourceTree = "<group>"; };
-		D4ACA5CA18DD188A00EBD899 /* HammerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HammerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ACA5CB18DD188A00EBD899 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lagrangian.framework; path = External/Lagrangian/build/Debug/Lagrangian.framework; sourceTree = "<group>"; };
 		D4ACA5F318DD22F800EBD899 /* HMRParserCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRParserCombinator.h; sourceTree = "<group>"; };
@@ -87,21 +99,53 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D40D7B1018E27E070065BB70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D40D7B1418E27E070065BB70 /* XCTest.framework in Frameworks */,
+				D40D7B2418E27F070065BB70 /* Lagrangian.framework in Frameworks */,
+				D40D7B2618E28A660065BB70 /* Hammer.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4ACA5AF18DD188A00EBD899 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D40D7B2318E27E1E0065BB70 /* XCTest.framework in Frameworks */,
 				D4ACA5F218DD19FE00EBD899 /* Lagrangian.framework in Frameworks */,
+				D40D7B0E18E27C960065BB70 /* Reducers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D40D7B1518E27E070065BB70 /* Hammer Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D40D7B1B18E27E070065BB70 /* Hammer_Tests.m */,
+				D40D7B1618E27E070065BB70 /* Supporting Files */,
+			);
+			path = "Hammer Tests";
+			sourceTree = "<group>";
+		};
+		D40D7B1618E27E070065BB70 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D40D7B1718E27E070065BB70 /* Hammer Tests-Info.plist */,
+				D40D7B1818E27E070065BB70 /* InfoPlist.strings */,
+				D40D7B1D18E27E070065BB70 /* Hammer Tests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		D4ACA5A918DD188A00EBD899 = {
 			isa = PBXGroup;
 			children = (
 				D4ACA5BC18DD188A00EBD899 /* Hammer */,
+				D40D7B1518E27E070065BB70 /* Hammer Tests */,
 				D4ACA5B518DD188A00EBD899 /* Frameworks */,
 				D4ACA5B418DD188A00EBD899 /* Products */,
 			);
@@ -111,7 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				D4ACA5B318DD188A00EBD899 /* Hammer.framework */,
-				D4ACA5CA18DD188A00EBD899 /* HammerTests.xctest */,
+				D40D7B1318E27E070065BB70 /* Hammer Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +163,7 @@
 		D4ACA5B518DD188A00EBD899 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D40D7B0D18E27C960065BB70 /* Reducers.framework */,
 				D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */,
 				D4ACA5B918DD188A00EBD899 /* Foundation.framework */,
 				D4ACA5CB18DD188A00EBD899 /* XCTest.framework */,
@@ -207,6 +252,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		D40D7B1218E27E070065BB70 /* Hammer Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D40D7B2018E27E070065BB70 /* Build configuration list for PBXNativeTarget "Hammer Tests" */;
+			buildPhases = (
+				D40D7B0F18E27E070065BB70 /* Sources */,
+				D40D7B1018E27E070065BB70 /* Frameworks */,
+				D40D7B1118E27E070065BB70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D40D7B1F18E27E070065BB70 /* PBXTargetDependency */,
+			);
+			name = "Hammer Tests";
+			productName = "Hammer Tests";
+			productReference = D40D7B1318E27E070065BB70 /* Hammer Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D4ACA5B218DD188A00EBD899 /* Hammer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4ACA5DB18DD188A00EBD899 /* Build configuration list for PBXNativeTarget "Hammer" */;
@@ -225,21 +288,6 @@
 			productReference = D4ACA5B318DD188A00EBD899 /* Hammer.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D4ACA5C918DD188A00EBD899 /* HammerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D4ACA5DE18DD188A00EBD899 /* Build configuration list for PBXNativeTarget "HammerTests" */;
-			buildPhases = (
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D4ACA5CF18DD188A00EBD899 /* PBXTargetDependency */,
-			);
-			name = HammerTests;
-			productName = HammerTests;
-			productReference = D4ACA5CA18DD188A00EBD899 /* HammerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -250,7 +298,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Rob Rix";
 				TargetAttributes = {
-					D4ACA5C918DD188A00EBD899 = {
+					D40D7B1218E27E070065BB70 = {
 						TestTargetID = D4ACA5B218DD188A00EBD899;
 					};
 				};
@@ -268,12 +316,20 @@
 			projectRoot = "";
 			targets = (
 				D4ACA5B218DD188A00EBD899 /* Hammer */,
-				D4ACA5C918DD188A00EBD899 /* HammerTests */,
+				D40D7B1218E27E070065BB70 /* Hammer Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D40D7B1118E27E070065BB70 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D40D7B1A18E27E070065BB70 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4ACA5B118DD188A00EBD899 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -285,6 +341,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D40D7B0F18E27E070065BB70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D40D7B1C18E27E070065BB70 /* Hammer_Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4ACA5AE18DD188A00EBD899 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -307,14 +371,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D4ACA5CF18DD188A00EBD899 /* PBXTargetDependency */ = {
+		D40D7B1F18E27E070065BB70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D4ACA5B218DD188A00EBD899 /* Hammer */;
-			targetProxy = D4ACA5CE18DD188A00EBD899 /* PBXContainerItemProxy */;
+			targetProxy = D40D7B1E18E27E070065BB70 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		D40D7B1818E27E070065BB70 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D40D7B1918E27E070065BB70 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -326,6 +398,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D40D7B2118E27E070065BB70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "Hammer Tests/Hammer Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		D40D7B2218E27E070065BB70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "Hammer Tests/Hammer Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		D4ACA5D918DD188A00EBD899 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -342,6 +436,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -383,6 +478,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -407,6 +503,10 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "Hammer/Hammer-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -419,6 +519,10 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "Hammer/Hammer-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -426,27 +530,18 @@
 			};
 			name = Release;
 		};
-		D4ACA5DF18DD188A00EBD899 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian.framework/Resources/lagrangian";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		D4ACA5E018DD188A00EBD899 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian.framework/Resources/lagrangian";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D40D7B2018E27E070065BB70 /* Build configuration list for PBXNativeTarget "Hammer Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D40D7B2118E27E070065BB70 /* Debug */,
+				D40D7B2218E27E070065BB70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D4ACA5AD18DD188A00EBD899 /* Build configuration list for PBXProject "Hammer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -461,15 +556,6 @@
 			buildConfigurations = (
 				D4ACA5DC18DD188A00EBD899 /* Debug */,
 				D4ACA5DD18DD188A00EBD899 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D4ACA5DE18DD188A00EBD899 /* Build configuration list for PBXNativeTarget "HammerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D4ACA5DF18DD188A00EBD899 /* Debug */,
-				D4ACA5E018DD188A00EBD899 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

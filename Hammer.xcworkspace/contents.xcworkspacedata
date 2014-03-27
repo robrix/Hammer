@@ -5,6 +5,9 @@
       location = "group:Hammer.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:External/Reducers/Reducers.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:External/Lagrangian/Lagrangian.xcodeproj">
    </FileRef>
 </Workspace>
