@@ -14,7 +14,7 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element {
-	return [HMREmpty parser];
+	return [HMREmpty empty];
 }
 
 

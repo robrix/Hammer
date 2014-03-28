@@ -50,14 +50,14 @@
 
 
 -(id<HMRCombinator>)compact {
-	return (self.first.compaction == [HMREmpty parser] || self.second.compaction == [HMREmpty parser])?
-		[HMREmpty parser]
+	return (self.first.compaction == [HMREmpty empty] || self.second.compaction == [HMREmpty empty])?
+		[HMREmpty empty]
 	:	[super compact];
 }
 
 l3_test(@selector(compaction)) {
 	id<HMRCombinator> anything = HMRLiteral(@0);
-	id<HMRCombinator> empty = [HMREmpty parser];
+	id<HMRCombinator> empty = [HMREmpty empty];
 	l3_expect(HMRConcatenate(empty, anything).compaction).to.equal(empty);
 	l3_expect(HMRConcatenate(anything, empty).compaction).to.equal(empty);
 }

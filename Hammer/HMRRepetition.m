@@ -44,13 +44,13 @@
 
 
 -(id<HMRCombinator>)compact {
-	return self.parser.compaction == [HMREmpty parser]?
+	return self.parser.compaction == [HMREmpty empty]?
 		[HMRNullReduction combinatorWithElement:@[]]
 	:	[super compact];
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat([HMREmpty parser]).compaction).to.equal([HMRNullReduction combinatorWithElement:@[]]);
+	l3_expect(HMRRepeat([HMREmpty empty]).compaction).to.equal([HMRNullReduction combinatorWithElement:@[]]);
 }
 
 

@@ -46,16 +46,16 @@ l3_test(@selector(derivative:)) {
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> compacted = [super compact];
-	if (self.left.compaction == [HMREmpty parser])
+	if (self.left.compaction == [HMREmpty empty])
 		compacted = self.right.compaction;
-	else if (self.right.compaction == [HMREmpty parser])
+	else if (self.right.compaction == [HMREmpty empty])
 		compacted = self.left.compaction;
 	return compacted;
 }
 
 l3_test(@selector(compaction)) {
 	id<HMRCombinator> anything = HMRLiteral(@0);
-	id<HMRCombinator> empty = [HMREmpty parser];
+	id<HMRCombinator> empty = [HMREmpty empty];
 	l3_expect(HMRAlternate(empty, anything).compaction).to.equal(anything);
 	l3_expect(HMRAlternate(anything, empty).compaction).to.equal(anything);
 }

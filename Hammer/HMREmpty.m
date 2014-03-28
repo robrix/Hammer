@@ -5,7 +5,7 @@
 
 @implementation HMREmpty
 
-+(instancetype)parser {
++(instancetype)empty {
 	return HMROnce((HMREmpty *)[(id)self new]);
 }
 

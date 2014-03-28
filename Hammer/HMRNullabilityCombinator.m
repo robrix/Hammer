@@ -20,7 +20,7 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id)element {
-	return [HMREmpty parser];
+	return [HMREmpty empty];
 }
 
 
