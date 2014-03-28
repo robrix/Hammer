@@ -5,7 +5,7 @@
 
 NSSet *HMRParseCollection(id<HMRCombinator> parser, id<REDReducible> reducible) {
 	parser = [reducible red_reduce:parser usingBlock:^(id<HMRCombinator> parser, id each) {
-		return [parser memoizedDerivativeWithRespectToElement:each];
+		return [parser derivative:each];
 	}];
 	return parser.parseForest;
 }
@@ -35,7 +35,7 @@ l3_test(&HMRParseCollection) {
 
 id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopying> element) {
 	return element?
-		[parser memoizedDerivativeWithRespectToElement:element]
+		[parser derivative:element]
 	:	nil; // ???
 }
 
@@ -57,12 +57,12 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element {
 	return nil;
 }
 
--(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element].compaction);
+-(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)element {
+	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self deriveWithRespectToObject:element].compaction);
 }
 
 

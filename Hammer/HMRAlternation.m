@@ -22,13 +22,13 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element {
 	Class class = self.class;
 	id<HMRCombinator> left = self.left;
 	id<HMRCombinator> right = self.right;
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		return [class combinatorWithLeft:[left memoizedDerivativeWithRespectToElement:element]
-							   right:[right memoizedDerivativeWithRespectToElement:element]];
+		return [class combinatorWithLeft:[left derivative:element]
+							   right:[right derivative:element]];
 	}];
 }
 

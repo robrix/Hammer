@@ -25,8 +25,8 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return [self.parser memoizedDerivativeWithRespectToElement:element];
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element {
+	return [self.parser derivative:element];
 }
 
 

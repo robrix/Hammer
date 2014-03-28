@@ -24,11 +24,11 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element {
 	id<HMRCombinator> parser = self.parser;
 	
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser memoizedDerivativeWithRespectToElement:element]
+		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser derivative:element]
 																				 second:self];
 		HMRReduction *reduction = [HMRReduction combinatorWithParser:concatenation block:^(id x) {
 			return x; // ??

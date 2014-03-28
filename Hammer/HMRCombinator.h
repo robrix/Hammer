@@ -4,8 +4,8 @@
 
 @protocol HMRCombinator <NSObject, NSCopying>
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element;
--(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element;
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element;
+-(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)element;
 
 -(NSSet *)reduceParseForest;
 @property (readonly) NSSet *parseForest;
