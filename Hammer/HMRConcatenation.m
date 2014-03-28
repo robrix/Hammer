@@ -46,9 +46,14 @@ l3_test(@selector(derivative:)) {
 
 -(NSSet *)reduceParseForest {
 	NSMutableSet *trees = [NSMutableSet new];
+	id(^cons)(id, id) = ^(id car, id cdr) {
+		return [cdr isEqual:@[]]?
+			@[ car ]
+		:	@[ car, cdr ];
+	};
 	for (id eachFirst in self.first.parseForest) {
 		for (id eachSecond in self.second.parseForest) {
-			[trees addObject:@[ eachFirst, eachSecond ]];
+			[trees addObject:cons(eachFirst, eachSecond)];
 		}
 	}
 	return trees;

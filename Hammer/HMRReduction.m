@@ -31,11 +31,9 @@
 
 
 -(NSSet *)reduceParseForest {
-	NSMutableSet *trees = [NSMutableSet new];
-	for (id each in self.parser.parseForest) {
-		[trees addObject:self.block(each)];
-	}
-	return trees;
+	return [[NSSet set] red_append:REDMap(self.parser.parseForest, ^(id tree) {
+		return self.block(tree);
+	})];
 }
 
 
@@ -46,7 +44,7 @@
 	else if ([self.parser.compaction isKindOfClass:self.class]) {
 		HMRReductionBlock f = ((HMRReduction *)self.parser.compaction).block;
 		HMRReductionBlock g = self.block;
-		compacted = [HMRReduction combinatorWithParser:self.parser.compaction block:^(id<NSObject,NSCopying> x) {
+		compacted = [self.class combinatorWithParser:self.parser.compaction block:^(id<NSObject,NSCopying> x) {
 			return g(f(x));
 		}];
 	}

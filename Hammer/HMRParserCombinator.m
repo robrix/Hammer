@@ -71,7 +71,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 -(NSSet *)parseForest {
-	return _parseForest ?: (_parseForest = HMRLeastFixedPoint([NSSet set], ^(NSSet *forest) {
+	return _parseForest ?: (_parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
 		return _parseForest = [self reduceParseForest];
 	}));
 }
