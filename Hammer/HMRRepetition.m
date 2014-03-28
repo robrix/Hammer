@@ -50,7 +50,7 @@
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat([HMREmpty parser])).to.equal([HMRNullReduction combinatorWithElement:@[]]);
+	l3_expect(HMRRepeat([HMREmpty parser]).compaction).to.equal([HMRNullReduction combinatorWithElement:@[]]);
 }
 
 
