@@ -26,19 +26,14 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> parser = self.parser;
 	
-	return HMRDelay(^{
-		HMRConcatenation *concatenation = HMRConcatenate([parser derivative:object], self);
-		HMRReduction *reduction = HMRReduce(concatenation, ^(id<NSObject,NSCopying> x) {
-			return x;
-		});
-		return HMRAlternate(reduction, HMRCaptureTree(@[]));
-	});
+	return HMRDelay(^{ return HMRConcatenate([parser derivative:object], self); });
 }
 
 l3_test(@selector(derivative:)) {
 	id each = @"a";
 	id<HMRCombinator> repetition = HMRRepeat(HMRLiteral(each));
 	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each ]]);
+	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, @[ each ] ]]);
 }
 
 
