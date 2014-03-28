@@ -6,7 +6,7 @@
 
 @implementation HMRNull
 
-+(instancetype)parser {
++(instancetype)null {
 	return HMROnce((HMRNull *)[(id)self new]);
 }
 

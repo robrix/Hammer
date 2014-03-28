@@ -33,7 +33,7 @@
 		HMRReduction *reduction = [HMRReduction combinatorWithParser:concatenation block:^(id x) {
 			return x; // ??
 		}];
-		return [HMRAlternation combinatorWithLeft:reduction right:[HMRNull parser]];
+		return [HMRAlternation combinatorWithLeft:reduction right:[HMRNull null]];
 	}];
 }
 
