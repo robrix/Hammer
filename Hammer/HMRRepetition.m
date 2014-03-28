@@ -4,6 +4,7 @@
 #import "HMRConcatenation.h"
 #import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
+#import "HMRNull.h"
 #import "HMRNullReduction.h"
 #import "HMRReduction.h"
 #import "HMRRepetition.h"
