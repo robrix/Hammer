@@ -4,7 +4,6 @@
 #import "HMRConcatenation.h"
 #import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
-#import "HMRNull.h"
 #import "HMRReduction.h"
 #import "HMRRepetition.h"
 
@@ -27,14 +26,19 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> parser = self.parser;
 	
-	return [HMRLazyCombinator combinatorWithBlock:^{
-		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser derivative:object]
-																				 second:self];
-		HMRReduction *reduction = [HMRReduction combinatorWithParser:concatenation block:^(id x) {
-			return x; // ??
-		}];
-		return [HMRAlternation combinatorWithLeft:reduction right:[HMRNull null]];
-	}];
+	return HMRDelay(^{
+		HMRConcatenation *concatenation = HMRConcatenate([parser derivative:object], self);
+		HMRReduction *reduction = HMRReduce(concatenation, ^(id<NSObject,NSCopying> x) {
+			return x;
+		});
+		return HMRAlternate(reduction, HMRCaptureTree(@[]));
+	});
+}
+
+l3_test(@selector(derivative:)) {
+	id each = @"a";
+	id<HMRCombinator> repetition = HMRRepeat(HMRLiteral(each));
+	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each ]]);
 }
 
 
