@@ -30,7 +30,7 @@
 		NSSet *forest = first.parseForest;
 		id<HMRCombinator> derivativeAfterFirst = [class combinatorWithFirst:[first derivative:object] second:second];
 		return forest.count?
-			HMRAlternate(derivativeAfterFirst, [class combinatorWithFirst:[HMRNullReduction combinatorWithParseForest:forest] second:[second derivative:object]])
+			HMRAlternate(derivativeAfterFirst, [class combinatorWithFirst:HMRCaptureForest(forest) second:[second derivative:object]])
 		:	derivativeAfterFirst;
 	});
 }

@@ -42,7 +42,7 @@
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> compacted = [super compact];
 	if ([self.parser.compaction isKindOfClass:[HMRNullReduction class]])
-		compacted = [HMRNullReduction combinatorWithParseForest:self.parseForest];
+		compacted = HMRCaptureForest(self.parseForest);
 	else if ([self.parser.compaction isKindOfClass:self.class]) {
 		HMRReductionBlock f = ((HMRReduction *)self.parser.compaction).block;
 		HMRReductionBlock g = self.block;

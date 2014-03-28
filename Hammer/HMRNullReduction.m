@@ -53,3 +53,14 @@
 }
 
 @end
+
+
+id<HMRCombinator> HMRCaptureTree(id object) {
+	NSCParameterAssert(object != nil);
+	
+	return HMRCaptureForest([NSSet setWithObject:object]);
+}
+
+id<HMRCombinator> HMRCaptureForest(NSSet *forest) {
+	return [HMRNullReduction combinatorWithParseForest:forest];
+}

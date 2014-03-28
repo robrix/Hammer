@@ -32,3 +32,6 @@ id<HMRCombinator> HMRReduce(id<HMRCombinator> parser, id<NSObject, NSCopying>(^b
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
 
 id<HMRCombinator> HMRDelay(id<HMRCombinator>(^block)());
+
+id<HMRCombinator> HMRCaptureTree(id object);
+id<HMRCombinator> HMRCaptureForest(NSSet *forest);
