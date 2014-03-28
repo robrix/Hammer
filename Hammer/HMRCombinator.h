@@ -16,9 +16,6 @@
 -(NSString *)describe;
 @property (readonly) NSString *description;
 
--(bool)nullability;
-@property (readonly, getter = isNullable) bool nullable;
-
 @end
 
 
