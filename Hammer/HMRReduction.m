@@ -31,11 +31,9 @@
 
 
 -(NSSet *)reduceParseForest {
-	NSMutableSet *trees = [NSMutableSet new];
-	for (id each in self.parser.parseForest) {
-		[trees addObject:self.block(each)];
-	}
-	return trees;
+	return [[NSSet set] red_append:REDMap(self.parser.parseForest, ^(id tree) {
+		return self.block(tree);
+	})];
 }
 
 
