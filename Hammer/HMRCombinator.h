@@ -4,8 +4,8 @@
 
 @protocol HMRCombinator <NSObject, NSCopying>
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element;
--(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)element;
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object;
+-(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object;
 
 -(NSSet *)reduceParseForest;
 @property (readonly) NSSet *parseForest;
@@ -26,6 +26,6 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> parser);
 
 id<HMRCombinator> HMRReduce(id<HMRCombinator> parser, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>));
 
-id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> element);
+id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
 
 id<HMRCombinator> HMRDelay(id<HMRCombinator>(^block)());

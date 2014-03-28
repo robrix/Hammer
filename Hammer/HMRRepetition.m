@@ -24,16 +24,16 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> parser = self.parser;
 	
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser derivative:element]
+		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser derivative:object]
 																				 second:self];
 		HMRReduction *reduction = [HMRReduction combinatorWithParser:concatenation block:^(id x) {
 			return x; // ??
 		}];
-		return [HMRAlternation combinatorWithLeft:reduction right:[HMRNullReduction combinatorWithElement:@[]]];
+		return [HMRAlternation combinatorWithLeft:reduction right:[HMRNull parser]];
 	}];
 }
 
@@ -45,12 +45,12 @@
 
 -(id<HMRCombinator>)compact {
 	return self.parser.compaction == [HMREmpty empty]?
-		[HMRNullReduction combinatorWithElement:@[]]
+		[HMRNullReduction combinatorWithObject:@[]]
 	:	[super compact];
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat([HMREmpty empty]).compaction).to.equal([HMRNullReduction combinatorWithElement:@[]]);
+	l3_expect(HMRRepeat([HMREmpty empty]).compaction).to.equal([HMRNullReduction combinatorWithObject:@[]]);
 }
 
 

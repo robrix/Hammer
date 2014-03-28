@@ -11,6 +11,7 @@ typedef id<HMRCombinator>(^HMRLazyCombinatorBlock)();
 @property (readonly) HMRLazyCombinatorBlock block;
 @property (readonly) id<HMRCombinator> parser;
 
+
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 +(instancetype)new UNAVAILABLE_ATTRIBUTE;
 

@@ -5,10 +5,10 @@
 
 @implementation HMRNullReduction
 
-+(instancetype)combinatorWithElement:(id<NSObject, NSCopying>)element {
-	NSParameterAssert(element != nil);
++(instancetype)combinatorWithObject:(id<NSObject, NSCopying>)object {
+	NSParameterAssert(object != nil);
 	
-	return [[self alloc] initWithParseForest:[NSSet setWithObject:element]];
+	return [[self alloc] initWithParseForest:[NSSet setWithObject:object]];
 }
 
 +(instancetype)combinatorWithParseForest:(NSSet *)parseForest {
@@ -27,7 +27,7 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	return [HMREmpty empty];
 }
 

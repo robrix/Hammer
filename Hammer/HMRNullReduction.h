@@ -4,7 +4,7 @@
 
 @interface HMRNullReduction : HMRParserCombinator
 
-+(instancetype)combinatorWithElement:(id<NSObject, NSCopying>)element;
++(instancetype)combinatorWithObject:(id<NSObject, NSCopying>)object;
 +(instancetype)combinatorWithParseForest:(NSSet *)parseForest;
 
 @property (readonly) NSSet *parseForest;
