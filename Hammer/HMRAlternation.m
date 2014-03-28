@@ -22,14 +22,20 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	Class class = self.class;
 	id<HMRCombinator> left = self.left;
 	id<HMRCombinator> right = self.right;
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		return [class combinatorWithLeft:[left memoizedDerivativeWithRespectToElement:element]
-							   right:[right memoizedDerivativeWithRespectToElement:element]];
+		return [class combinatorWithLeft:[left derivative:object]
+							   right:[right derivative:object]];
 	}];
+}
+
+l3_test(@selector(derivative:)) {
+	id<HMRCombinator> a = HMRLiteral(@"a"), b = HMRLiteral(@"b");
+	l3_expect([HMRAlternate(a, b) derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
+	l3_expect([HMRAlternate(a, a) derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
 }
 
 
@@ -40,16 +46,16 @@
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> compacted = [super compact];
-	if (self.left.compaction == [HMREmpty parser])
+	if (self.left.compaction == [HMREmpty empty])
 		compacted = self.right.compaction;
-	else if (self.right.compaction == [HMREmpty parser])
+	else if (self.right.compaction == [HMREmpty empty])
 		compacted = self.left.compaction;
 	return compacted;
 }
 
 l3_test(@selector(compaction)) {
 	id<HMRCombinator> anything = HMRLiteral(@0);
-	id<HMRCombinator> empty = [HMREmpty parser];
+	id<HMRCombinator> empty = [HMREmpty empty];
 	l3_expect(HMRAlternate(empty, anything).compaction).to.equal(anything);
 	l3_expect(HMRAlternate(anything, empty).compaction).to.equal(anything);
 }

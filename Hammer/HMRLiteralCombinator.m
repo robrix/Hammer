@@ -6,15 +6,15 @@
 
 @implementation HMRLiteralCombinator
 
-+(instancetype)combinatorWithElement:(id<NSObject, NSCopying>)element {
-	return [[self alloc] initWithElement:element];
++(instancetype)combinatorWithObject:(id<NSObject, NSCopying>)object {
+	return [[self alloc] initWithObject:object];
 }
 
--(instancetype)initWithElement:(id<NSObject, NSCopying>)element {
-	NSParameterAssert(element != nil);
+-(instancetype)initWithObject:(id<NSObject, NSCopying>)object {
+	NSParameterAssert(object != nil);
 	
 	if ((self = [super init])) {
-		_element = element;
+		_object = object;
 	}
 	return self;
 }
@@ -22,15 +22,15 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return [self.element isEqual:element]?
-		[HMRNullReduction combinatorWithElement:element]
-	:	[HMREmpty parser];
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
+	return [self.object isEqual:object]?
+		[HMRNullReduction combinatorWithObject:object]
+	:	[HMREmpty empty];
 }
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"'%@'", self.element];
+	return [NSString stringWithFormat:@"'%@'", self.object];
 }
 
 
@@ -39,12 +39,12 @@
 -(BOOL)isEqual:(HMRLiteralCombinator *)object {
 	return
 		[object isKindOfClass:self.class]
-	&&	[object.element isEqual:self.element];
+	&&	[object.object isEqual:self.object];
 }
 
 @end
 
 
-id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> element) {
-	return [HMRLiteralCombinator combinatorWithElement:element];
+id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object) {
+	return [HMRLiteralCombinator combinatorWithObject:object];
 }

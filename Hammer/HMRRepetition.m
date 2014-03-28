@@ -4,6 +4,7 @@
 #import "HMRConcatenation.h"
 #import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
+#import "HMRNull.h"
 #import "HMRNullReduction.h"
 #import "HMRReduction.h"
 #import "HMRRepetition.h"
@@ -24,16 +25,16 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> parser = self.parser;
 	
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser memoizedDerivativeWithRespectToElement:element]
+		HMRConcatenation *concatenation = [HMRConcatenation combinatorWithFirst:[parser derivative:object]
 																				 second:self];
 		HMRReduction *reduction = [HMRReduction combinatorWithParser:concatenation block:^(id x) {
 			return x; // ??
 		}];
-		return [HMRAlternation combinatorWithLeft:reduction right:[HMRNullReduction combinatorWithElement:@[]]];
+		return [HMRAlternation combinatorWithLeft:reduction right:[HMRNull null]];
 	}];
 }
 
@@ -44,13 +45,13 @@
 
 
 -(id<HMRCombinator>)compact {
-	return self.parser.compaction == [HMREmpty parser]?
-		[HMRNullReduction combinatorWithElement:@[]]
+	return self.parser.compaction == [HMREmpty empty]?
+		[HMRNullReduction combinatorWithObject:@[]]
 	:	[super compact];
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat([HMREmpty parser])).to.equal([HMRNullReduction combinatorWithElement:@[]]);
+	l3_expect(HMRRepeat([HMREmpty empty]).compaction).to.equal([HMRNullReduction combinatorWithObject:@[]]);
 }
 
 

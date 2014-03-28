@@ -5,14 +5,14 @@
 
 @implementation HMREmpty
 
-+(instancetype)parser {
++(instancetype)empty {
 	return HMROnce((HMREmpty *)[(id)self new]);
 }
 
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	return self;
 }
 

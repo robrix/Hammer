@@ -5,21 +5,21 @@
 
 NSSet *HMRParseCollection(id<HMRCombinator> parser, id<REDReducible> reducible) {
 	parser = [reducible red_reduce:parser usingBlock:^(id<HMRCombinator> parser, id each) {
-		return [parser memoizedDerivativeWithRespectToElement:each];
+		return [parser derivative:each];
 	}];
 	return parser.parseForest;
 }
 
 l3_addTestSubjectTypeWithFunction(HMRParseCollection);
 l3_test(&HMRParseCollection) {
-	id element = @0;
-	id<HMRCombinator> literal = HMRLiteral(element);
-	l3_expect(HMRParseCollection(literal, @[ element ])).to.equal([NSSet setWithObject:element]);
+	id object = @0;
+	id<HMRCombinator> literal = HMRLiteral(object);
+	l3_expect(HMRParseCollection(literal, @[ object ])).to.equal([NSSet setWithObject:object]);
 	l3_expect(HMRParseCollection(literal, @[])).to.equal([NSSet set]);
 	id anythingElse = @1;
 	l3_expect(HMRParseCollection(literal, @[ anythingElse ])).to.equal([NSSet set]);
 	
-	l3_expect(HMRParseCollection(HMRConcatenate(literal, literal), @[ element, element ])).to.equal([NSSet setWithObject:@[element, element]]);
+	l3_expect(HMRParseCollection(HMRConcatenate(literal, literal), @[ object, object ])).to.equal([NSSet setWithObject:@[object, object]]);
 	
 	id terminal = @"x";
 	id nonterminalPrefix = @"+";
@@ -33,9 +33,9 @@ l3_test(&HMRParseCollection) {
 }
 
 
-id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopying> element) {
-	return element?
-		[parser memoizedDerivativeWithRespectToElement:element]
+id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopying> object) {
+	return object?
+		[parser derivative:object]
 	:	nil; // ???
 }
 
@@ -57,12 +57,12 @@ id<HMRCombinator> HMRParseElement(id<HMRCombinator> parser, id<NSObject, NSCopyi
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	return nil;
 }
 
--(id<HMRCombinator>)memoizedDerivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return _derivativesByElements[element] ?: (_derivativesByElements[element] = [self derivativeWithRespectToElement:element].compaction);
+-(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
+	return _derivativesByElements[object] ?: (_derivativesByElements[object] = [self deriveWithRespectToObject:object].compaction);
 }
 
 

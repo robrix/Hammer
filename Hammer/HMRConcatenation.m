@@ -24,15 +24,15 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	Class class = self.class;
 	id<HMRCombinator> first = self.first;
 	id<HMRCombinator> second = self.second;
 	return [HMRLazyCombinator combinatorWithBlock:^{
-		id<HMRCombinator>left = [class combinatorWithFirst:[first memoizedDerivativeWithRespectToElement:element]
+		id<HMRCombinator>left = [class combinatorWithFirst:[first derivative:object]
 														   second:second];
 		id<HMRCombinator>right = [class combinatorWithFirst:[HMRNullabilityCombinator combinatorWithParser:first]
-															second:[second memoizedDerivativeWithRespectToElement:element]];
+															second:[second derivative:object]];
 		return [HMRAlternation combinatorWithLeft:left right:right];
 	}];
 }
@@ -50,14 +50,14 @@
 
 
 -(id<HMRCombinator>)compact {
-	return (self.first.compaction == [HMREmpty parser] || self.second.compaction == [HMREmpty parser])?
-		[HMREmpty parser]
+	return (self.first.compaction == [HMREmpty empty] || self.second.compaction == [HMREmpty empty])?
+		[HMREmpty empty]
 	:	[super compact];
 }
 
 l3_test(@selector(compaction)) {
 	id<HMRCombinator> anything = HMRLiteral(@0);
-	id<HMRCombinator> empty = [HMREmpty parser];
+	id<HMRCombinator> empty = [HMREmpty empty];
 	l3_expect(HMRConcatenate(empty, anything).compaction).to.equal(empty);
 	l3_expect(HMRConcatenate(anything, empty).compaction).to.equal(empty);
 }

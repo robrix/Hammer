@@ -4,9 +4,9 @@
 
 @interface HMRLiteralCombinator : HMRParserCombinator
 
-+(instancetype)combinatorWithElement:(id<NSObject, NSCopying>)element;
++(instancetype)combinatorWithObject:(id<NSObject, NSCopying>)object;
 
-@property (readonly) id<NSObject, NSCopying> element;
+@property (readonly) id<NSObject, NSCopying> object;
 
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;

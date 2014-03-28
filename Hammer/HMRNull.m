@@ -6,15 +6,15 @@
 
 @implementation HMRNull
 
-+(instancetype)parser {
++(instancetype)null {
 	return HMROnce((HMRNull *)[(id)self new]);
 }
 
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivativeWithRespectToElement:(id<NSObject, NSCopying>)element {
-	return [HMREmpty parser];
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
+	return [HMREmpty empty];
 }
 
 
