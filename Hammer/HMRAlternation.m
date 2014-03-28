@@ -32,6 +32,12 @@
 	}];
 }
 
+l3_test(@selector(derivative:)) {
+	id<HMRCombinator> a = HMRLiteral(@"a"), b = HMRLiteral(@"b");
+	l3_expect([HMRAlternate(a, b) derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
+	l3_expect([HMRAlternate(a, a) derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
+}
+
 
 -(NSSet *)reduceParseForest {
 	return [self.left.parseForest setByAddingObjectsFromSet:self.right.parseForest];
