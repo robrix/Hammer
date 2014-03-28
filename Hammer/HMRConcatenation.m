@@ -3,7 +3,6 @@
 #import "HMRAlternation.h"
 #import "HMRConcatenation.h"
 #import "HMREmpty.h"
-#import "HMRNullReduction.h"
 
 @implementation HMRConcatenation
 

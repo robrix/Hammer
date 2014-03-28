@@ -5,7 +5,6 @@
 #import "HMREmpty.h"
 #import "HMRLazyCombinator.h"
 #import "HMRNull.h"
-#import "HMRNullReduction.h"
 #import "HMRReduction.h"
 #import "HMRRepetition.h"
 
@@ -46,12 +45,12 @@
 
 -(id<HMRCombinator>)compact {
 	return self.parser.compaction == [HMREmpty empty]?
-		[HMRNullReduction combinatorWithObject:@[]]
+		HMRCaptureTree(@[])
 	:	[super compact];
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat([HMREmpty empty]).compaction).to.equal([HMRNullReduction combinatorWithObject:@[]]);
+	l3_expect(HMRRepeat([HMREmpty empty]).compaction).to.equal(HMRCaptureTree(@[]));
 }
 
 
