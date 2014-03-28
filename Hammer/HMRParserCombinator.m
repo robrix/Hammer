@@ -45,6 +45,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	NSSet *_parseForest;
 	id<HMRCombinator> _compaction;
 	NSString *_description;
+	NSNumber *_nullable;
 }
 
 -(instancetype)init {
@@ -92,6 +93,17 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 
 -(NSString *)description {
 	return _description ?: (_description = [self describe]);
+}
+
+
+-(bool)nullability {
+	return NO;
+}
+
+-(bool)isNullable {
+	return (_nullable ?: (_nullable = HMRLeastFixedPoint(@NO, ^(NSNumber *nullable) {
+		return _nullable = @([self nullability]);
+	}))).boolValue;
 }
 
 
