@@ -26,8 +26,6 @@
 		D4ACA60318DD34C400EBD899 /* HMREmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA60118DD34C400EBD899 /* HMREmpty.m */; };
 		D4ACA60618DD359C00EBD899 /* HMRLiteralCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA60418DD359C00EBD899 /* HMRLiteralCombinator.h */; };
 		D4ACA60718DD359C00EBD899 /* HMRLiteralCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA60518DD359C00EBD899 /* HMRLiteralCombinator.m */; };
-		D4ACA60E18DD389A00EBD899 /* HMRNullabilityCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA60C18DD389A00EBD899 /* HMRNullabilityCombinator.h */; };
-		D4ACA60F18DD389A00EBD899 /* HMRNullabilityCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA60D18DD389A00EBD899 /* HMRNullabilityCombinator.m */; };
 		D4ACA61218DD3A5800EBD899 /* HMRAlternation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA61018DD3A5800EBD899 /* HMRAlternation.h */; };
 		D4ACA61318DD3A5800EBD899 /* HMRAlternation.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61118DD3A5800EBD899 /* HMRAlternation.m */; };
 		D4ACA61718DD3CDB00EBD899 /* HMRReduction.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA61518DD3CDB00EBD899 /* HMRReduction.h */; };
@@ -77,8 +75,6 @@
 		D4ACA60118DD34C400EBD899 /* HMREmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMREmpty.m; sourceTree = "<group>"; };
 		D4ACA60418DD359C00EBD899 /* HMRLiteralCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRLiteralCombinator.h; sourceTree = "<group>"; };
 		D4ACA60518DD359C00EBD899 /* HMRLiteralCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRLiteralCombinator.m; sourceTree = "<group>"; };
-		D4ACA60C18DD389A00EBD899 /* HMRNullabilityCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRNullabilityCombinator.h; sourceTree = "<group>"; };
-		D4ACA60D18DD389A00EBD899 /* HMRNullabilityCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRNullabilityCombinator.m; sourceTree = "<group>"; };
 		D4ACA61018DD3A5800EBD899 /* HMRAlternation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRAlternation.h; sourceTree = "<group>"; };
 		D4ACA61118DD3A5800EBD899 /* HMRAlternation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRAlternation.m; sourceTree = "<group>"; };
 		D4ACA61518DD3CDB00EBD899 /* HMRReduction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRReduction.h; sourceTree = "<group>"; };
@@ -206,8 +202,6 @@
 				D4ACA60118DD34C400EBD899 /* HMREmpty.m */,
 				D4ACA61D18DD4CB300EBD899 /* HMRLazyCombinator.h */,
 				D4ACA61E18DD4CB300EBD899 /* HMRLazyCombinator.m */,
-				D4ACA60C18DD389A00EBD899 /* HMRNullabilityCombinator.h */,
-				D4ACA60D18DD389A00EBD899 /* HMRNullabilityCombinator.m */,
 				D4ACA5F718DD258E00EBD899 /* HMRNull.h */,
 				D4ACA5F818DD258E00EBD899 /* HMRNull.m */,
 				D4ACA61518DD3CDB00EBD899 /* HMRReduction.h */,
@@ -237,7 +231,6 @@
 				D4ACA62718DD562400EBD899 /* HMRCombinator.h in Headers */,
 				D4ACA61B18DD492E00EBD899 /* HMRConcatenation.h in Headers */,
 				D4ACA61218DD3A5800EBD899 /* HMRAlternation.h in Headers */,
-				D4ACA60E18DD389A00EBD899 /* HMRNullabilityCombinator.h in Headers */,
 				D4ACA60218DD34C400EBD899 /* HMREmpty.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,7 +344,6 @@
 				D4ACA62018DD4CB300EBD899 /* HMRLazyCombinator.m in Sources */,
 				D4ACA61C18DD492E00EBD899 /* HMRConcatenation.m in Sources */,
 				D4ACA62C18DD6C4900EBD899 /* HMRLeastFixedPoint.m in Sources */,
-				D4ACA60F18DD389A00EBD899 /* HMRNullabilityCombinator.m in Sources */,
 				D4ACA61318DD3A5800EBD899 /* HMRAlternation.m in Sources */,
 				D4ACA62418DD4F5200EBD899 /* HMRRepetition.m in Sources */,
 				D4ACA5FF18DD33DC00EBD899 /* HMRParserCombinator.m in Sources */,
