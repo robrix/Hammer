@@ -3,9 +3,7 @@
 #import "HMRAlternation.h"
 #import "HMRConcatenation.h"
 #import "HMREmpty.h"
-#import "HMRLazyCombinator.h"
-#import "HMRNull.h"
-#import "HMRNullabilityCombinator.h"
+#import "HMRNullReduction.h"
 
 @implementation HMRConcatenation
 
@@ -28,13 +26,22 @@
 	Class class = self.class;
 	id<HMRCombinator> first = self.first;
 	id<HMRCombinator> second = self.second;
-	return [HMRLazyCombinator combinatorWithBlock:^{
-		id<HMRCombinator>left = [class combinatorWithFirst:[first derivative:object]
-														   second:second];
-		id<HMRCombinator>right = [class combinatorWithFirst:[HMRNullabilityCombinator combinatorWithParser:first]
-															second:[second derivative:object]];
-		return [HMRAlternation combinatorWithLeft:left right:right];
-	}];
+	return HMRDelay(^{
+		NSSet *forest = first.parseForest;
+		id<HMRCombinator> derivativeAfterFirst = [class combinatorWithFirst:[first derivative:object] second:second];
+		return forest.count?
+			HMRAlternate(derivativeAfterFirst, [class combinatorWithFirst:[HMRNullReduction combinatorWithParseForest:forest] second:[second derivative:object]])
+		:	derivativeAfterFirst;
+	});
+}
+
+l3_test(@selector(derivative:)) {
+	id first = @"a";
+	id second = @"b";
+	id other = @"";
+	id<HMRCombinator> concatenation = HMRConcatenate(HMRLiteral(first), HMRLiteral(second));
+	l3_expect([[concatenation derivative:first] derivative:second].parseForest).to.equal([NSSet setWithObject:@[ first, second ]]);
+	l3_expect([[concatenation derivative:first] derivative:other].parseForest).to.equal([NSSet set]);
 }
 
 
