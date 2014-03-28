@@ -41,19 +41,23 @@ l3_test(@selector(derivative:)) {
 	id<HMRCombinator> concatenation = HMRConcatenate(HMRLiteral(first), HMRLiteral(second));
 	l3_expect([[concatenation derivative:first] derivative:second].parseForest).to.equal([NSSet setWithObject:@[ first, second ]]);
 	l3_expect([[concatenation derivative:first] derivative:other].parseForest).to.equal([NSSet set]);
+	
+	id third = @"c";
+	concatenation = HMRConcatenate(HMRLiteral(first), HMRConcatenate(HMRLiteral(second), HMRLiteral(third)));
+	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:@[ first, second, third ]]);
 }
 
 
 -(NSSet *)reduceParseForest {
 	NSMutableSet *trees = [NSMutableSet new];
-	id(^cons)(id, id) = ^(id car, id cdr) {
-		return [cdr isEqual:@[]]?
-			@[ car ]
+	id(^concat)(id, id) = ^(id car, id cdr) {
+		return [cdr isKindOfClass:[NSArray class]]?
+			[@[ car ] arrayByAddingObjectsFromArray:cdr]
 		:	@[ car, cdr ];
 	};
 	for (id eachFirst in self.first.parseForest) {
 		for (id eachSecond in self.second.parseForest) {
-			[trees addObject:cons(eachFirst, eachSecond)];
+			[trees addObject:concat(eachFirst, eachSecond)];
 		}
 	}
 	return trees;
