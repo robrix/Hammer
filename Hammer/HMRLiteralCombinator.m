@@ -2,7 +2,6 @@
 
 #import "HMRLiteralCombinator.h"
 #import "HMREmpty.h"
-#import "HMRNullReduction.h"
 
 @implementation HMRLiteralCombinator
 
@@ -24,7 +23,7 @@
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	return [self.object isEqual:object]?
-		[HMRNullReduction combinatorWithObject:object]
+		HMRCaptureTree(self.object)
 	:	[HMREmpty empty];
 }
 

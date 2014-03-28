@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRLazyCombinator.h"
-#import "HMRNullReduction.h"
+#import "HMRNull.h"
 #import "HMRReduction.h"
 
 @implementation HMRReduction
@@ -41,8 +41,8 @@
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> compacted = [super compact];
-	if ([self.parser.compaction isKindOfClass:[HMRNullReduction class]])
-		compacted = [HMRNullReduction combinatorWithParseForest:self.parseForest];
+	if ([self.parser.compaction isKindOfClass:[HMRNull class]])
+		compacted = HMRCaptureForest(self.parseForest);
 	else if ([self.parser.compaction isKindOfClass:self.class]) {
 		HMRReductionBlock f = ((HMRReduction *)self.parser.compaction).block;
 		HMRReductionBlock g = self.block;
