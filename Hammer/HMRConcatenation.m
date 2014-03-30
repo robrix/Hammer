@@ -71,6 +71,8 @@ id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> seco
 		concatenation = HMRNone();
 	} else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]]) {
 		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
+	} else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]]) {
+		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest]), ((HMRConcatenation *)second).second);
 	} else {
 		concatenation = [[HMRConcatenation alloc] initWithFirst:first second:second];
 	}
