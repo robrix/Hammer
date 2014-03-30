@@ -4,10 +4,6 @@
 
 @implementation HMRLazyCombinator
 
-+(instancetype)combinatorWithBlock:(HMRLazyCombinatorBlock)block {
-	return [[self alloc] initWithBlock:block];
-}
-
 -(instancetype)initWithBlock:(HMRLazyCombinatorBlock)block {
 	if ((self = [super init])) {
 		_block = [block copy];
@@ -16,32 +12,43 @@
 }
 
 
-@synthesize parser = _parser;
+@synthesize combinator = _combinator;
 
--(id<HMRCombinator>)parser {
-	return _parser ?: (_parser = self.block());
+-(id<HMRCombinator>)force {
+	_combinator = self.block();
+	_block = nil;
+	return _combinator;
+}
+
+-(id<HMRCombinator>)combinator {
+	return _combinator ?: [self force];
 }
 
 
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return [self.parser derivative:object];
+	return [self.combinator derivative:object];
 }
 
 
 -(NSSet *)reduceParseForest {
-	return self.parser.parseForest;
+	return self.combinator.parseForest;
+}
+
+
+-(id<HMRCombinator>)compact {
+	return _combinator ?: self;
 }
 
 
 -(NSString *)describe {
-	return self.parser.description;
+	return self.combinator.description;
 }
 
 @end
 
 
 id<HMRCombinator> HMRDelay(HMRLazyCombinatorBlock block) {
-	return [HMRLazyCombinator combinatorWithBlock:block];
+	return [[HMRLazyCombinator alloc] initWithBlock:block];
 }

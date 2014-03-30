@@ -5,10 +5,6 @@
 
 @implementation HMRLiteralCombinator
 
-+(instancetype)combinatorWithObject:(id<NSObject, NSCopying>)object {
-	return [[self alloc] initWithObject:object];
-}
-
 -(instancetype)initWithObject:(id<NSObject, NSCopying>)object {
 	NSParameterAssert(object != nil);
 	
@@ -24,7 +20,7 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	return [self.object isEqual:object]?
 		HMRCaptureTree(self.object)
-	:	[HMREmpty empty];
+	:	HMRNone();
 }
 
 
@@ -45,5 +41,5 @@
 
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object) {
-	return [HMRLiteralCombinator combinatorWithObject:object];
+	return [[HMRLiteralCombinator alloc] initWithObject:object];
 }

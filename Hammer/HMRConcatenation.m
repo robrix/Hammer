@@ -1,14 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRAlternation.h"
 #import "HMRConcatenation.h"
-#import "HMREmpty.h"
 
 @implementation HMRConcatenation
-
-+(instancetype)combinatorWithFirst:(id<HMRCombinator>)first second:(id<HMRCombinator>)second {
-	return [[self alloc] initWithFirst:first second:second];
-}
 
 -(instancetype)initWithFirst:(id<HMRCombinator>)first second:(id<HMRCombinator>)second {
 	if ((self = [super init])) {
@@ -22,14 +16,13 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	Class class = self.class;
 	id<HMRCombinator> first = self.first;
 	id<HMRCombinator> second = self.second;
 	return HMRDelay(^{
 		NSSet *forest = first.parseForest;
-		id<HMRCombinator> derivativeAfterFirst = [class combinatorWithFirst:[first derivative:object] second:second];
+		id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([first derivative:object], second);
 		return forest.count?
-			HMRAlternate(derivativeAfterFirst, [class combinatorWithFirst:HMRCaptureForest(forest) second:[second derivative:object]])
+			HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(forest), [second derivative:object]))
 		:	derivativeAfterFirst;
 	});
 }
@@ -60,20 +53,6 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(id<HMRCombinator>)compact {
-	return (self.first.compaction == [HMREmpty empty] || self.second.compaction == [HMREmpty empty])?
-		[HMREmpty empty]
-	:	[super compact];
-}
-
-l3_test(@selector(compaction)) {
-	id<HMRCombinator> anything = HMRLiteral(@0);
-	id<HMRCombinator> empty = [HMREmpty empty];
-	l3_expect(HMRConcatenate(empty, anything).compaction).to.equal(empty);
-	l3_expect(HMRConcatenate(anything, empty).compaction).to.equal(empty);
-}
-
-
 -(NSString *)describe {
 	return [NSString stringWithFormat:@"%@ %@", self.first.description, self.second.description];
 }
@@ -82,5 +61,15 @@ l3_test(@selector(compaction)) {
 
 
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
-	return [HMRConcatenation combinatorWithFirst:first second:second];
+	return (first == HMRNone() || second == HMRNone())?
+		HMRNone()
+	:	[[HMRConcatenation alloc] initWithFirst:first second:second];
+}
+
+l3_addTestSubjectTypeWithFunction(HMRConcatenate)
+l3_test(&HMRConcatenate) {
+	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> empty = HMRNone();
+	l3_expect(HMRConcatenate(empty, anything)).to.equal(empty);
+	l3_expect(HMRConcatenate(anything, empty)).to.equal(empty);
 }

@@ -6,10 +6,8 @@ typedef id<HMRCombinator>(^HMRLazyCombinatorBlock)();
 
 @interface HMRLazyCombinator : HMRParserCombinator
 
-+(instancetype)combinatorWithBlock:(HMRLazyCombinatorBlock)block;
-
 @property (readonly) HMRLazyCombinatorBlock block;
-@property (readonly) id<HMRCombinator> parser;
+@property (readonly) id<HMRCombinator> combinator;
 
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
