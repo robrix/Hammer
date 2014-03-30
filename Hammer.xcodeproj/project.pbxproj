@@ -12,7 +12,6 @@
 		D40D7B1C18E27E070065BB70 /* Hammer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = D40D7B1B18E27E070065BB70 /* Hammer_Tests.m */; };
 		D40D7B2318E27E1E0065BB70 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5CB18DD188A00EBD899 /* XCTest.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D40D7B2418E27F070065BB70 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */; };
-		D40D7B2618E28A660065BB70 /* Hammer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5B318DD188A00EBD899 /* Hammer.framework */; };
 		D4ACA5C118DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */; };
 		D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5C318DD188A00EBD899 /* Hammer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4ACA5F218DD19FE00EBD899 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -95,7 +94,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D40D7B2418E27F070065BB70 /* Lagrangian.framework in Frameworks */,
-				D40D7B2618E28A660065BB70 /* Hammer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +381,7 @@
 		D40D7B2118E27E070065BB70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Hammer.framework/Hammer";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "Hammer Tests/Hammer Tests-Info.plist";
@@ -394,6 +393,7 @@
 		D40D7B2218E27E070065BB70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Hammer.framework/Hammer";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_FRAMEWORKS_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "Hammer Tests/Hammer Tests-Info.plist";
