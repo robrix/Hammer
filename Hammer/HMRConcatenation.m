@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRConcatenation.h"
+#import "HMRNull.h"
 
 @implementation HMRConcatenation
 
@@ -68,6 +69,8 @@ id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> seco
 	id<HMRCombinator> concatenation;
 	if (first == HMRNone() || second == HMRNone()) {
 		concatenation = HMRNone();
+	} else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]]) {
+		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
 	} else {
 		concatenation = [[HMRConcatenation alloc] initWithFirst:first second:second];
 	}
