@@ -23,13 +23,11 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	Class class = self.class;
 	id<HMRCombinator> left = self.left;
 	id<HMRCombinator> right = self.right;
-	return [HMRLazyCombinator combinatorWithBlock:^{
-		return [class combinatorWithLeft:[left derivative:object]
-							   right:[right derivative:object]];
-	}];
+	return HMRDelay(^{
+		return HMRAlternate([left derivative:object], [right derivative:object]);
+	});
 }
 
 l3_test(@selector(derivative:)) {
