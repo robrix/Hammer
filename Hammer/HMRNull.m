@@ -6,17 +6,11 @@
 
 @interface HMRNull ()
 
-+(instancetype)nullWithForest:(NSSet *)forest;
-
 @property (readonly) NSSet *forest;
 
 @end
 
 @implementation HMRNull
-
-+(instancetype)nullWithForest:(NSSet *)forest {
-	return [[self alloc] initWithForest:forest];
-}
 
 -(instancetype)initWithForest:(NSSet *)forest {
 	NSParameterAssert(forest != nil);
@@ -65,5 +59,5 @@ id<HMRCombinator> HMRCaptureTree(id object) {
 }
 
 id<HMRCombinator> HMRCaptureForest(NSSet *forest) {
-	return [HMRNull nullWithForest:forest];
+	return [[HMRNull alloc] initWithForest:forest];
 }
