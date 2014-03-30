@@ -4,9 +4,6 @@
 
 @interface HMREmpty : HMRParserCombinator
 
-+(instancetype)empty;
-
-
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 +(instancetype)new UNAVAILABLE_ATTRIBUTE;
 

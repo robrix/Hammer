@@ -24,7 +24,7 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	return [self.object isEqual:object]?
 		HMRCaptureTree(self.object)
-	:	[HMREmpty empty];
+	:	HMRNone();
 }
 
 
