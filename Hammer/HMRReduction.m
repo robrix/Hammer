@@ -1,6 +1,5 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRLazyCombinator.h"
 #import "HMRNull.h"
 #import "HMRReduction.h"
 
@@ -24,9 +23,9 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> parser = self.parser;
 	HMRReductionBlock block = self.block;
-	return [HMRLazyCombinator combinatorWithBlock:^{
-		return [HMRReduction combinatorWithParser:[parser derivative:object] block:block];
-	}];
+	return HMRDelay(^{
+		return HMRReduce([parser derivative:object], block);
+	});
 }
 
 
@@ -37,21 +36,6 @@
 }
 
 
--(id<HMRCombinator>)compact {
-	id<HMRCombinator> compacted = [super compact];
-	if ([self.parser.compaction isKindOfClass:[HMRNull class]])
-		compacted = HMRCaptureForest(self.parseForest);
-	else if ([self.parser.compaction isKindOfClass:self.class]) {
-		HMRReductionBlock f = ((HMRReduction *)self.parser.compaction).block;
-		HMRReductionBlock g = self.block;
-		compacted = [self.class combinatorWithParser:self.parser.compaction block:^(id<NSObject,NSCopying> x) {
-			return g(f(x));
-		}];
-	}
-	return compacted;
-}
-
-
 -(NSString *)describe {
 	return [NSString stringWithFormat:@"%@ → 𝑓", self.parser.description];
 }
@@ -59,6 +43,14 @@
 @end
 
 
+HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSObject, NSCopying>(^g)(id<NSObject, NSCopying>)) {
+	HMRReductionBlock f = reduction.block;
+	return HMRReduce(reduction.parser, ^(id<NSObject, NSCopying> x) { return g(f(x)); });
+}
+
 id<HMRCombinator> HMRReduce(id<HMRCombinator> parser, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
-	return [HMRReduction combinatorWithParser:parser block:block];
+	parser = parser.compaction;
+	return [parser isKindOfClass:[HMRReduction class]]?
+		HMRComposeReduction(parser, block)
+	:	[HMRReduction combinatorWithParser:parser block:block];
 }
