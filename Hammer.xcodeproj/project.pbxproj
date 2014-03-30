@@ -55,7 +55,6 @@
 		D40D7B1718E27E070065BB70 /* Hammer Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Hammer Tests-Info.plist"; sourceTree = "<group>"; };
 		D40D7B1918E27E070065BB70 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D40D7B1B18E27E070065BB70 /* HammerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HammerTests.m; sourceTree = "<group>"; };
-		D40D7B1D18E27E070065BB70 /* Hammer Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hammer Tests-Prefix.pch"; sourceTree = "<group>"; };
 		D4ACA5B318DD188A00EBD899 /* Hammer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hammer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ACA5B918DD188A00EBD899 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D4ACA5BE18DD188A00EBD899 /* Hammer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Hammer-Info.plist"; sourceTree = "<group>"; };
@@ -124,7 +123,6 @@
 			children = (
 				D40D7B1718E27E070065BB70 /* Hammer Tests-Info.plist */,
 				D40D7B1818E27E070065BB70 /* InfoPlist.strings */,
-				D40D7B1D18E27E070065BB70 /* Hammer Tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
