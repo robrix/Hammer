@@ -4,10 +4,6 @@
 
 @implementation HMRAlternation
 
-+(instancetype)combinatorWithLeft:(id<HMRCombinator>)left right:(id<HMRCombinator>)right {
-	return [[self alloc] initWithLeft:left right:right];
-}
-
 -(instancetype)initWithLeft:(id<HMRCombinator>)left right:(id<HMRCombinator>)right {
 	if ((self = [super init])) {
 		_left = [left copyWithZone:NULL];
@@ -53,7 +49,7 @@ id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) 
 	else if (right == HMRNone())
 		alternation = left;
 	else
-		alternation = [HMRAlternation combinatorWithLeft:left right:right];
+		alternation = [[HMRAlternation alloc] initWithLeft:left right:right];
 	return alternation;
 }
 
