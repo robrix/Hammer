@@ -35,9 +35,16 @@
 
 
 -(NSString *)describe {
+	__block NSString *separator = @"";
+	NSString *forest = [self.forest red_reduce:[NSMutableString new] usingBlock:^(NSMutableString *into, id each) {
+		[into appendString:separator];
+		[into appendString:[each description]];
+		separator = @", ";
+		return into;
+	}];
 	return self.forest == nil?
 		@"ε"
-	:	[NSString stringWithFormat:@"ε↓{%@}", self.forest];
+	:	[NSString stringWithFormat:@"ε↓{%@}", forest];
 }
 
 
