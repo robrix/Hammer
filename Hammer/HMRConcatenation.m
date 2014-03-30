@@ -37,19 +37,23 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(NSSet *)reduceParseForest {
-	NSMutableSet *trees = [NSMutableSet new];
++(NSSet *)concatenateParseForestWithPrefix:(NSSet *)prefix suffix:(NSSet *)suffix {
+	NSMutableSet *forest = [NSMutableSet new];
 	id(^cons)(id, id) = ^(id car, id cdr) {
 		return [cdr isEqual:@[]]?
 			@[ car ]
 		:	@[ car, cdr ];
 	};
-	for (id eachFirst in self.first.parseForest) {
-		for (id eachSecond in self.second.parseForest) {
-			[trees addObject:cons(eachFirst, eachSecond)];
+	for (id x in prefix) {
+		for (id y in suffix) {
+			[forest addObject:cons(x, y)];
 		}
 	}
-	return trees;
+	return forest;
+}
+
+-(NSSet *)reduceParseForest {
+	return [self.class concatenateParseForestWithPrefix:self.first.parseForest suffix:self.second.parseForest];
 }
 
 
