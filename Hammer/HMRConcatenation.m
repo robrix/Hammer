@@ -61,9 +61,13 @@ l3_test(@selector(derivative:)) {
 
 
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
-	return (first == HMRNone() || second == HMRNone())?
-		HMRNone()
-	:	[[HMRConcatenation alloc] initWithFirst:first second:second];
+	id<HMRCombinator> concatenation;
+	if (first == HMRNone() || second == HMRNone()) {
+		concatenation = HMRNone();
+	} else {
+		concatenation = [[HMRConcatenation alloc] initWithFirst:first second:second];
+	}
+	return concatenation;
 }
 
 l3_addTestSubjectTypeWithFunction(HMRConcatenate)
