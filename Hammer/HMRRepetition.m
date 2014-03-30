@@ -1,21 +1,12 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRAlternation.h"
-#import "HMRConcatenation.h"
-#import "HMREmpty.h"
-#import "HMRLazyCombinator.h"
-#import "HMRReduction.h"
 #import "HMRRepetition.h"
 
 @implementation HMRRepetition
 
-+(instancetype)combinatorWithParser:(id<HMRCombinator>)parser {
-	return [[self alloc] initWithParser:parser];
-}
-
--(instancetype)initWithParser:(id<HMRCombinator>)parser {
+-(instancetype)initWithCombinator:(id<HMRCombinator>)combinator {
 	if ((self = [super init])) {
-		_parser = [parser copyWithZone:NULL];
+		_combinator = [combinator copyWithZone:NULL];
 	}
 	return self;
 }
@@ -24,9 +15,9 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	id<HMRCombinator> parser = self.parser;
+	id<HMRCombinator> combinator = self.combinator;
 	
-	return HMRConcatenate([parser derivative:object], self);
+	return HMRConcatenate([combinator derivative:object], self);
 }
 
 l3_test(@selector(derivative:)) {
@@ -36,9 +27,8 @@ l3_test(@selector(derivative:)) {
 	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, @[ each ] ]]);
 	
 	// S -> ("x" | S)*
-	__block id nonterminal;
 	id terminal = @"x";
-	nonterminal = HMRDelay(^{ return HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)); });
+	__block id nonterminal = HMRDelay(^{ return HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)); });
 	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:@[ terminal ]]);
 }
 
@@ -48,24 +38,20 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(id<HMRCombinator>)compact {
-	return self.parser.compaction == [HMREmpty empty]?
-		HMRCaptureTree(@[])
-	:	[super compact];
-}
-
-l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat([HMREmpty empty]).compaction).to.equal(HMRCaptureTree(@[]));
-}
-
-
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"%@*", self.parser.description];
+	return [NSString stringWithFormat:@"%@*", self.combinator.description];
 }
 
 @end
 
 
-id<HMRCombinator> HMRRepeat(id<HMRCombinator> parser) {
-	return [HMRRepetition combinatorWithParser:parser];
+id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
+	return combinator == HMRNone()?
+		HMRCaptureTree(@[])
+	:	[[HMRRepetition alloc] initWithCombinator:combinator];
+}
+
+l3_addTestSubjectTypeWithFunction(HMRRepeat)
+l3_test(&HMRRepeat) {
+	l3_expect(HMRRepeat(HMRNone())).to.equal(HMRCaptureTree(@[]));
 }

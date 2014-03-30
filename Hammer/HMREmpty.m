@@ -5,11 +5,6 @@
 
 @implementation HMREmpty
 
-+(instancetype)empty {
-	return HMROnce((HMREmpty *)[(id)self new]);
-}
-
-
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
@@ -22,3 +17,8 @@
 }
 
 @end
+
+
+id<HMRCombinator> HMRNone(void) {
+	return HMROnce((HMREmpty *)[[HMREmpty class] new]);
+}

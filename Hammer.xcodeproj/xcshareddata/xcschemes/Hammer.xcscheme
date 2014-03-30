@@ -32,16 +32,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D4ACA5C918DD188A00EBD899"
-               BuildableName = "HammerTests.xctest"
-               BlueprintName = "HammerTests"
-               ReferencedContainer = "container:Hammer.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "D40D7B1218E27E070065BB70"
                BuildableName = "Hammer Tests.xctest"
                BlueprintName = "Hammer Tests"

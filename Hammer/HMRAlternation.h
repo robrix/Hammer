@@ -4,8 +4,6 @@
 
 @interface HMRAlternation : HMRParserCombinator
 
-+(instancetype)combinatorWithLeft:(id<HMRCombinator>)left right:(id<HMRCombinator>)right;
-
 @property (readonly) id<HMRCombinator>left;
 @property (readonly) id<HMRCombinator>right;
 

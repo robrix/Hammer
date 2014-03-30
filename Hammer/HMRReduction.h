@@ -6,9 +6,7 @@ typedef id<NSObject, NSCopying>(^HMRReductionBlock)(id<NSObject, NSCopying>);
 
 @interface HMRReduction : HMRParserCombinator
 
-+(instancetype)combinatorWithParser:(id<HMRCombinator>)parser block:(HMRReductionBlock)block;
-
-@property (readonly) id<HMRCombinator> parser;
+@property (readonly) id<HMRCombinator> combinator;
 @property (readonly) HMRReductionBlock block;
 
 

@@ -4,8 +4,6 @@
 
 @interface HMRLiteralCombinator : HMRParserCombinator
 
-+(instancetype)combinatorWithObject:(id<NSObject, NSCopying>)object;
-
 @property (readonly) id<NSObject, NSCopying> object;
 
 

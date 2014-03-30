@@ -6,21 +6,11 @@
 
 @interface HMRNull ()
 
-+(instancetype)nullWithForest:(NSSet *)forest;
-
 @property (readonly) NSSet *forest;
 
 @end
 
 @implementation HMRNull
-
-+(instancetype)null {
-	return HMROnce((HMRNull *)[(id)self new]);
-}
-
-+(instancetype)nullWithForest:(NSSet *)forest {
-	return [[self alloc] initWithForest:forest];
-}
 
 -(instancetype)initWithForest:(NSSet *)forest {
 	NSParameterAssert(forest != nil);
@@ -35,7 +25,7 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return [HMREmpty empty];
+	return HMRNone();
 }
 
 
@@ -44,10 +34,51 @@
 }
 
 
+-(NSString *)escapeBackslashesInString:(NSString *)string {
+	return [string stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+}
+
+-(NSString *)escapeString:(NSString *)marker inString:(NSString *)string {
+	return [[self escapeBackslashesInString:string] stringByReplacingOccurrencesOfString:marker withString:[@"\\" stringByAppendingString:marker]];
+}
+
+-(NSString *)wrapString:(NSString *)string withString:(NSString *)wrapper {
+	return [[wrapper stringByAppendingString:string] stringByAppendingString:wrapper];
+}
+
+static NSString * const singleQuote = @"'";
+static NSString * const doubleQuote = @"\"";
+-(NSString *)quoteString:(NSString *)string {
+	if ([string rangeOfString:singleQuote].length == 0) {
+		string = [self wrapString:[self escapeBackslashesInString:string] withString:singleQuote];
+	} else if ([string rangeOfString:doubleQuote].length == 0) {
+		string = [self wrapString:[self escapeBackslashesInString:string] withString:doubleQuote];
+	} else {
+		string = [self wrapString:[self escapeString:singleQuote inString:string] withString:singleQuote];
+	}
+	return string;
+}
+
+
 -(NSString *)describe {
+	__block NSString *separator = @"";
+	NSString *forest = [REDMap(self.forest, ^(id each) {
+		return [self quoteString:[each description]];
+	}) red_reduce:[NSMutableString new] usingBlock:^(NSMutableString *into, id each) {
+		[into appendString:separator];
+		[into appendString:[each description]];
+		separator = @", ";
+		return into;
+	}];
 	return self.forest == nil?
 		@"ε"
-	:	[NSString stringWithFormat:@"ε ↓ %@", self.forest];
+	:	[NSString stringWithFormat:@"ε↓{%@}", forest];
+}
+
+l3_test(@selector(description)) {
+	l3_expect(HMRCaptureTree(singleQuote).description).to.equal(@"ε↓{\"'\"}");
+	l3_expect(HMRCaptureTree(doubleQuote).description).to.equal(@"ε↓{'\"'}");
+	l3_expect(HMRCaptureTree([singleQuote stringByAppendingString:doubleQuote]).description).to.equal(@"ε↓{'\\'\"'}");
 }
 
 
@@ -69,5 +100,5 @@ id<HMRCombinator> HMRCaptureTree(id object) {
 }
 
 id<HMRCombinator> HMRCaptureForest(NSSet *forest) {
-	return [HMRNull nullWithForest:forest];
+	return [[HMRNull alloc] initWithForest:forest];
 }
