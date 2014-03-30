@@ -32,3 +32,6 @@ id<HMRCombinator> HMRDelay(id<HMRCombinator>(^block)());
 
 id<HMRCombinator> HMRCaptureTree(id object);
 id<HMRCombinator> HMRCaptureForest(NSSet *forest);
+
+/// The empty parser, i.e. a combinator which cannot match anything.
+id<HMRCombinator> HMRNone(void);

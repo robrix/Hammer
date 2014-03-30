@@ -22,3 +22,8 @@
 }
 
 @end
+
+
+id<HMRCombinator> HMRNone(void) {
+	return [HMREmpty empty];
+}
