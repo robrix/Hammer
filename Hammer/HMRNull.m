@@ -37,7 +37,7 @@
 -(NSString *)describe {
 	return self.forest == nil?
 		@"ε"
-	:	[NSString stringWithFormat:@"ε ↓ %@", self.forest];
+	:	[NSString stringWithFormat:@"ε↓{%@}", self.forest];
 }
 
 
