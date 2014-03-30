@@ -51,12 +51,12 @@ l3_test(@selector(derivative:)) {
 
 
 id<HMRCombinator> HMRRepeat(id<HMRCombinator> parser) {
-	parser = parser.compaction;
 	return parser == HMRNone()?
 		HMRCaptureTree(@[])
 	:	[HMRRepetition combinatorWithParser:parser];
 }
 
-l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat(HMRNone()).compaction).to.equal(HMRCaptureTree(@[]));
+l3_addTestSubjectTypeWithFunction(HMRRepeat)
+l3_test(&HMRRepeat) {
+	l3_expect(HMRRepeat(HMRNone())).to.equal(HMRCaptureTree(@[]));
 }

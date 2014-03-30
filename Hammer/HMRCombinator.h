@@ -10,9 +10,6 @@
 -(NSSet *)reduceParseForest;
 @property (readonly) NSSet *parseForest;
 
--(id<HMRCombinator>)compact;
-@property (readonly) id<HMRCombinator> compaction;
-
 -(NSString *)describe;
 @property (readonly) NSString *description;
 

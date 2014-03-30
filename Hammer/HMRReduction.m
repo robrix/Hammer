@@ -49,7 +49,6 @@ HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSObject, NSCopyin
 }
 
 id<HMRCombinator> HMRReduce(id<HMRCombinator> parser, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
-	parser = parser.compaction;
 	return [parser isKindOfClass:[HMRReduction class]]?
 		HMRComposeReduction(parser, block)
 	:	[HMRReduction combinatorWithParser:parser block:block];

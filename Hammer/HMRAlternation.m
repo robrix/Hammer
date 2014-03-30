@@ -47,8 +47,6 @@ l3_test(@selector(derivative:)) {
 
 
 id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) {
-	left = left.compaction;
-	right = right.compaction;
 	id<HMRCombinator> alternation;
 	if (left == HMRNone())
 		alternation = right;
@@ -59,9 +57,10 @@ id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) 
 	return alternation;
 }
 
-l3_test(@selector(compaction)) {
+l3_addTestSubjectTypeWithFunction(HMRAlternate)
+l3_test(&HMRAlternate) {
 	id<HMRCombinator> anything = HMRLiteral(@0);
 	id<HMRCombinator> empty = HMRNone();
-	l3_expect(HMRAlternate(empty, anything).compaction).to.equal(anything);
-	l3_expect(HMRAlternate(anything, empty).compaction).to.equal(anything);
+	l3_expect(HMRAlternate(empty, anything)).to.equal(anything);
+	l3_expect(HMRAlternate(anything, empty)).to.equal(anything);
 }

@@ -65,17 +65,15 @@ l3_test(@selector(derivative:)) {
 
 
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
-	first = first.compaction;
-	second = second.compaction;
-	
 	return (first == HMRNone() || second == HMRNone())?
 		HMRNone()
 	:	[HMRConcatenation combinatorWithFirst:first second:second];
 }
 
-l3_test(@selector(compaction)) {
+l3_addTestSubjectTypeWithFunction(HMRConcatenate)
+l3_test(&HMRConcatenate) {
 	id<HMRCombinator> anything = HMRLiteral(@0);
 	id<HMRCombinator> empty = HMRNone();
-	l3_expect(HMRConcatenate(empty, anything).compaction).to.equal(empty);
-	l3_expect(HMRConcatenate(anything, empty).compaction).to.equal(empty);
+	l3_expect(HMRConcatenate(empty, anything)).to.equal(empty);
+	l3_expect(HMRConcatenate(anything, empty)).to.equal(empty);
 }
