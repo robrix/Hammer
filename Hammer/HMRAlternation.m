@@ -1,9 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
-#import "HMREmpty.h"
-#import "HMRLazyCombinator.h"
-#import "HMRLiteralCombinator.h"
 
 @implementation HMRAlternation
 
@@ -42,23 +39,6 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(id<HMRCombinator>)compact {
-	id<HMRCombinator> compacted = [super compact];
-	if (self.left.compaction == [HMREmpty empty])
-		compacted = self.right.compaction;
-	else if (self.right.compaction == [HMREmpty empty])
-		compacted = self.left.compaction;
-	return compacted;
-}
-
-l3_test(@selector(compaction)) {
-	id<HMRCombinator> anything = HMRLiteral(@0);
-	id<HMRCombinator> empty = [HMREmpty empty];
-	l3_expect(HMRAlternate(empty, anything).compaction).to.equal(anything);
-	l3_expect(HMRAlternate(anything, empty).compaction).to.equal(anything);
-}
-
-
 -(NSString *)describe {
 	return [NSString stringWithFormat:@"%@ | %@", self.left.description, self.right.description];
 }
@@ -67,5 +47,21 @@ l3_test(@selector(compaction)) {
 
 
 id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) {
-	return [HMRAlternation combinatorWithLeft:left right:right];
+	left = left.compaction;
+	right = right.compaction;
+	id<HMRCombinator> alternation;
+	if (left == HMRNone())
+		alternation = right;
+	else if (right == HMRNone())
+		alternation = left;
+	else
+		alternation = [HMRAlternation combinatorWithLeft:left right:right];
+	return alternation;
+}
+
+l3_test(@selector(compaction)) {
+	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> empty = HMRNone();
+	l3_expect(HMRAlternate(empty, anything).compaction).to.equal(anything);
+	l3_expect(HMRAlternate(anything, empty).compaction).to.equal(anything);
 }
