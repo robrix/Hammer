@@ -14,10 +14,6 @@
 
 @implementation HMRNull
 
-+(instancetype)null {
-	return HMROnce((HMRNull *)[(id)self new]);
-}
-
 +(instancetype)nullWithForest:(NSSet *)forest {
 	return [[self alloc] initWithForest:forest];
 }
