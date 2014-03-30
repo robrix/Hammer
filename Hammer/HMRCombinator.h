@@ -13,6 +13,11 @@
 -(NSString *)describe;
 @property (readonly) NSString *description;
 
+/// Produce a deeply compacted representation of the receiver.
+///
+/// In most cases this will simply return \c self, because compaction is initially applied in the constructors. However, lazy parsers or other proxies may wish to use this to return their inner combinator after they have been forced/resolved, where applying it too soon (e.g. in the constructor) could cause infinite recursion or otherwise negate the purpose of the combinator.
+-(id<HMRCombinator>)compact;
+
 @end
 
 

@@ -61,7 +61,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	return _derivativesByElements[object] ?: (_derivativesByElements[object] = [self deriveWithRespectToObject:object]);
+	return _derivativesByElements[object] ?: (_derivativesByElements[object] = [[self deriveWithRespectToObject:object] compact]);
 }
 
 
@@ -73,6 +73,11 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	return _parseForest ?: (_parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
 		return _parseForest = [self reduceParseForest];
 	}));
+}
+
+
+-(id<HMRCombinator>)compact {
+	return self;
 }
 
 

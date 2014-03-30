@@ -27,9 +27,8 @@ l3_test(@selector(derivative:)) {
 	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, @[ each ] ]]);
 	
 	// S -> ("x" | S)*
-	__block id nonterminal;
 	id terminal = @"x";
-	nonterminal = HMRDelay(^{ return HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)); });
+	__block id nonterminal = HMRDelay(^{ return HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)); });
 	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:@[ terminal ]]);
 }
 

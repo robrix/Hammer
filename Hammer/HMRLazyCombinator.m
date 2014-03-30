@@ -37,6 +37,11 @@
 }
 
 
+-(id<HMRCombinator>)compact {
+	return _combinator ?: self;
+}
+
+
 -(NSString *)describe {
 	return self.combinator.description;
 }
