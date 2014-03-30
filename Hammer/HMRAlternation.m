@@ -1,15 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
-#import "HMREmpty.h"
-#import "HMRLazyCombinator.h"
-#import "HMRLiteralCombinator.h"
 
 @implementation HMRAlternation
-
-+(instancetype)combinatorWithLeft:(id<HMRCombinator>)left right:(id<HMRCombinator>)right {
-	return [[self alloc] initWithLeft:left right:right];
-}
 
 -(instancetype)initWithLeft:(id<HMRCombinator>)left right:(id<HMRCombinator>)right {
 	if ((self = [super init])) {
@@ -23,13 +16,11 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	Class class = self.class;
 	id<HMRCombinator> left = self.left;
 	id<HMRCombinator> right = self.right;
-	return [HMRLazyCombinator combinatorWithBlock:^{
-		return [class combinatorWithLeft:[left derivative:object]
-							   right:[right derivative:object]];
-	}];
+	return HMRDelay(^{
+		return HMRAlternate([left derivative:object], [right derivative:object]);
+	});
 }
 
 l3_test(@selector(derivative:)) {
@@ -44,23 +35,6 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(id<HMRCombinator>)compact {
-	id<HMRCombinator> compacted = [super compact];
-	if (self.left.compaction == [HMREmpty empty])
-		compacted = self.right.compaction;
-	else if (self.right.compaction == [HMREmpty empty])
-		compacted = self.left.compaction;
-	return compacted;
-}
-
-l3_test(@selector(compaction)) {
-	id<HMRCombinator> anything = HMRLiteral(@0);
-	id<HMRCombinator> empty = [HMREmpty empty];
-	l3_expect(HMRAlternate(empty, anything).compaction).to.equal(anything);
-	l3_expect(HMRAlternate(anything, empty).compaction).to.equal(anything);
-}
-
-
 -(NSString *)describe {
 	return [NSString stringWithFormat:@"%@ | %@", self.left.description, self.right.description];
 }
@@ -69,5 +43,20 @@ l3_test(@selector(compaction)) {
 
 
 id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) {
-	return [HMRAlternation combinatorWithLeft:left right:right];
+	id<HMRCombinator> alternation;
+	if (left == HMRNone())
+		alternation = right;
+	else if (right == HMRNone())
+		alternation = left;
+	else
+		alternation = [[HMRAlternation alloc] initWithLeft:left right:right];
+	return alternation;
+}
+
+l3_addTestSubjectTypeWithFunction(HMRAlternate)
+l3_test(&HMRAlternate) {
+	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> empty = HMRNone();
+	l3_expect(HMRAlternate(empty, anything)).to.equal(anything);
+	l3_expect(HMRAlternate(anything, empty)).to.equal(anything);
 }

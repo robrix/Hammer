@@ -6,21 +6,11 @@
 
 @interface HMRNull ()
 
-+(instancetype)nullWithForest:(NSSet *)forest;
-
 @property (readonly) NSSet *forest;
 
 @end
 
 @implementation HMRNull
-
-+(instancetype)null {
-	return HMROnce((HMRNull *)[(id)self new]);
-}
-
-+(instancetype)nullWithForest:(NSSet *)forest {
-	return [[self alloc] initWithForest:forest];
-}
 
 -(instancetype)initWithForest:(NSSet *)forest {
 	NSParameterAssert(forest != nil);
@@ -35,7 +25,7 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return [HMREmpty empty];
+	return HMRNone();
 }
 
 
@@ -47,7 +37,7 @@
 -(NSString *)describe {
 	return self.forest == nil?
 		@"ε"
-	:	[NSString stringWithFormat:@"ε ↓ %@", self.forest];
+	:	[NSString stringWithFormat:@"ε↓{%@}", self.forest];
 }
 
 
@@ -69,5 +59,5 @@ id<HMRCombinator> HMRCaptureTree(id object) {
 }
 
 id<HMRCombinator> HMRCaptureForest(NSSet *forest) {
-	return [HMRNull nullWithForest:forest];
+	return [[HMRNull alloc] initWithForest:forest];
 }

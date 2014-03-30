@@ -16,6 +16,6 @@
  */
 l3_test("null reduction of partially parsed strings") {
 	id<HMRCombinator> alternatives = HMRAlternate(HMRConcatenate(HMRLiteral(@"f"), HMRConcatenate(HMRLiteral(@"o"), HMRConcatenate(HMRLiteral(@"o"), HMRLiteral(@"t")))), HMRConcatenate(HMRLiteral(@"f"), HMRConcatenate(HMRLiteral(@"o"), HMRConcatenate(HMRLiteral(@"o"), HMRLiteral(@"t")))));
-	id<HMRCombinator> derivative = [[[alternatives derivative:@"f"] derivative:@"o"] derivative:@"o"].compaction;
+	id<HMRCombinator> derivative = [[[alternatives derivative:@"f"] derivative:@"o"] derivative:@"o"];
 	l3_expect(derivative).to.equal(nil);
 }
