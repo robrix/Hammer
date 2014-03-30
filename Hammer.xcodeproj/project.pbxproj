@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D40D7B0E18E27C960065BB70 /* Reducers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D40D7B0D18E27C960065BB70 /* Reducers.framework */; };
-		D40D7B1418E27E070065BB70 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5CB18DD188A00EBD899 /* XCTest.framework */; };
 		D40D7B1A18E27E070065BB70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D40D7B1818E27E070065BB70 /* InfoPlist.strings */; };
 		D40D7B1C18E27E070065BB70 /* Hammer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = D40D7B1B18E27E070065BB70 /* Hammer_Tests.m */; };
 		D40D7B2318E27E1E0065BB70 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5CB18DD188A00EBD899 /* XCTest.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -95,7 +94,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D40D7B1418E27E070065BB70 /* XCTest.framework in Frameworks */,
 				D40D7B2418E27F070065BB70 /* Lagrangian.framework in Frameworks */,
 				D40D7B2618E28A660065BB70 /* Hammer.framework in Frameworks */,
 			);
