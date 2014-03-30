@@ -75,7 +75,7 @@ l3_test(@selector(compaction)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"%@ %@", self.first.description, self.second.description];
+	return [NSString stringWithFormat:@"(%@ ∘ %@)", self.first.description, self.second.description];
 }
 
 @end
