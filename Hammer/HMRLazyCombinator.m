@@ -18,8 +18,14 @@
 
 @synthesize parser = _parser;
 
+-(id<HMRCombinator>)force {
+	_parser = self.block();
+	_block = nil;
+	return _parser;
+}
+
 -(id<HMRCombinator>)parser {
-	return _parser ?: (_parser = self.block());
+	return _parser ?: [self force];
 }
 
 
