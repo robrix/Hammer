@@ -4,13 +4,9 @@
 
 @implementation HMRRepetition
 
-+(instancetype)combinatorWithParser:(id<HMRCombinator>)parser {
-	return [[self alloc] initWithParser:parser];
-}
-
--(instancetype)initWithParser:(id<HMRCombinator>)parser {
+-(instancetype)initWithCombinator:(id<HMRCombinator>)combinator {
 	if ((self = [super init])) {
-		_parser = [parser copyWithZone:NULL];
+		_combinator = [combinator copyWithZone:NULL];
 	}
 	return self;
 }
@@ -19,9 +15,9 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	id<HMRCombinator> parser = self.parser;
+	id<HMRCombinator> combinator = self.combinator;
 	
-	return HMRConcatenate([parser derivative:object], self);
+	return HMRConcatenate([combinator derivative:object], self);
 }
 
 l3_test(@selector(derivative:)) {
@@ -44,16 +40,16 @@ l3_test(@selector(derivative:)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"%@*", self.parser.description];
+	return [NSString stringWithFormat:@"%@*", self.combinator.description];
 }
 
 @end
 
 
-id<HMRCombinator> HMRRepeat(id<HMRCombinator> parser) {
-	return parser == HMRNone()?
+id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
+	return combinator == HMRNone()?
 		HMRCaptureTree(@[])
-	:	[HMRRepetition combinatorWithParser:parser];
+	:	[[HMRRepetition alloc] initWithCombinator:combinator];
 }
 
 l3_addTestSubjectTypeWithFunction(HMRRepeat)

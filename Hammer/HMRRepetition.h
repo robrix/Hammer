@@ -4,9 +4,7 @@
 
 @interface HMRRepetition : HMRParserCombinator
 
-+(instancetype)combinatorWithParser:(id<HMRCombinator>)parser;
-
-@property (readonly) id<HMRCombinator>parser;
+@property (readonly) id<HMRCombinator> combinator;
 
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
