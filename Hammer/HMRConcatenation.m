@@ -4,10 +4,6 @@
 
 @implementation HMRConcatenation
 
-+(instancetype)combinatorWithFirst:(id<HMRCombinator>)first second:(id<HMRCombinator>)second {
-	return [[self alloc] initWithFirst:first second:second];
-}
-
 -(instancetype)initWithFirst:(id<HMRCombinator>)first second:(id<HMRCombinator>)second {
 	if ((self = [super init])) {
 		_first = [first copyWithZone:NULL];
@@ -67,7 +63,7 @@ l3_test(@selector(derivative:)) {
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
 	return (first == HMRNone() || second == HMRNone())?
 		HMRNone()
-	:	[HMRConcatenation combinatorWithFirst:first second:second];
+	:	[[HMRConcatenation alloc] initWithFirst:first second:second];
 }
 
 l3_addTestSubjectTypeWithFunction(HMRConcatenate)

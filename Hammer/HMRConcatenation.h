@@ -4,8 +4,6 @@
 
 @interface HMRConcatenation : HMRParserCombinator
 
-+(instancetype)combinatorWithFirst:(id<HMRCombinator>)first second:(id<HMRCombinator>)second;
-
 @property (readonly) id<HMRCombinator>first;
 @property (readonly) id<HMRCombinator>second;
 
