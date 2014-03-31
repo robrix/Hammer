@@ -42,18 +42,16 @@ l3_test(@selector(derivative:)) {
 
 
 +(NSSet *)concatenateParseForestWithPrefix:(NSSet *)prefix suffix:(NSSet *)suffix {
-	NSMutableSet *forest = [NSMutableSet new];
 	id(^concat)(id, id) = ^(id car, id cdr) {
 		return [cdr isKindOfClass:[NSArray class]]?
 			[@[ car ] arrayByAddingObjectsFromArray:cdr]
 		:	@[ car, cdr ];
 	};
-	for (id x in prefix) {
-		for (id y in suffix) {
-			[forest addObject:concat(x, y)];
-		}
-	}
-	return forest;
+	return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
+		return REDMap(suffix, ^(id y) {
+			return concat(x, y);
+		});
+	})];
 }
 
 -(NSSet *)reduceParseForest {
