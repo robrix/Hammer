@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
+#import "HMRConcatenation.h"
 #import "HMRNull.h"
 
 @implementation HMRAlternation
@@ -61,6 +62,8 @@ id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) 
 		alternation = left;
 	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
 		alternation = left;
+	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first])
+		alternation = HMRConcatenate(((HMRConcatenation *)left).first, HMRAlternate(((HMRConcatenation *)left).second, ((HMRConcatenation *)right).second));
 	else
 		alternation = [[HMRAlternation alloc] initWithLeft:left right:right];
 	return alternation;
@@ -73,5 +76,10 @@ l3_test(&HMRAlternate) {
 	l3_expect(HMRAlternate(empty, anything)).to.equal(anything);
 	l3_expect(HMRAlternate(anything, empty)).to.equal(anything);
 	
-	l3_expect(HMRAlternate(HMRCaptureTree(@"a"), HMRCaptureTree(@"a"))).to.equal(HMRCaptureTree(@"a"));
+	id<HMRCombinator> nullParse = HMRCaptureTree(@"a");
+	id<HMRCombinator> same = HMRCaptureTree(@"a");
+	id<HMRCombinator> p = HMRLiteral(@"p");
+	id<HMRCombinator> q = HMRLiteral(@"q");
+	l3_expect(HMRAlternate(nullParse, same)).to.equal(same);
+	l3_expect(HMRAlternate(HMRConcatenate(nullParse, p), HMRConcatenate(same, q))).to.equal(HMRConcatenate(nullParse, HMRAlternate(p, q)));
 }
