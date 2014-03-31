@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
+#import "HMRNull.h"
 
 @implementation HMRAlternation
 
@@ -48,6 +49,8 @@ id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) 
 		alternation = right;
 	else if (right == HMRNone())
 		alternation = left;
+	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
+		alternation = left;
 	else
 		alternation = [[HMRAlternation alloc] initWithLeft:left right:right];
 	return alternation;
@@ -59,4 +62,6 @@ l3_test(&HMRAlternate) {
 	id<HMRCombinator> empty = HMRNone();
 	l3_expect(HMRAlternate(empty, anything)).to.equal(anything);
 	l3_expect(HMRAlternate(anything, empty)).to.equal(anything);
+	
+	l3_expect(HMRAlternate(HMRCaptureTree(@"a"), HMRCaptureTree(@"a"))).to.equal(HMRCaptureTree(@"a"));
 }
