@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRConcatenation.h"
+#import "HMRNull.h"
 
 @implementation HMRConcatenation
 
@@ -43,9 +44,9 @@ l3_test(@selector(derivative:)) {
 
 +(NSSet *)concatenateParseForestWithPrefix:(NSSet *)prefix suffix:(NSSet *)suffix {
 	id(^concat)(id, id) = ^(id left, id right) {
-		return [right isKindOfClass:[NSArray class]]?
-			[@[ left ] arrayByAddingObjectsFromArray:right]
-		:	@[ left, right ];
+		left = [left isKindOfClass:[NSArray class]]? left : @[ left ];
+		right = [right isKindOfClass:[NSArray class]]? right : @[ right ];
+		return [left arrayByAddingObjectsFromArray:right];
 	};
 	return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
 		return REDMap(suffix, ^(id y) {
@@ -67,9 +68,17 @@ l3_test(@selector(derivative:)) {
 
 
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
-	return (first == HMRNone() || second == HMRNone())?
-		HMRNone()
-	:	[[HMRConcatenation alloc] initWithFirst:first second:second];
+	id<HMRCombinator> concatenation;
+	if (first == HMRNone() || second == HMRNone()) {
+		concatenation = HMRNone();
+	} else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]]) {
+		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
+	} else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]]) {
+		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest]), ((HMRConcatenation *)second).second);
+	} else {
+		concatenation = [[HMRConcatenation alloc] initWithFirst:first second:second];
+	}
+	return concatenation;
 }
 
 l3_addTestSubjectTypeWithFunction(HMRConcatenate)
