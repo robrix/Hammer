@@ -35,22 +35,24 @@ l3_test(@selector(derivative:)) {
 	id<HMRCombinator> concatenation = HMRConcatenate(HMRLiteral(first), HMRLiteral(second));
 	l3_expect([[concatenation derivative:first] derivative:second].parseForest).to.equal([NSSet setWithObject:@[ first, second ]]);
 	l3_expect([[concatenation derivative:first] derivative:other].parseForest).to.equal([NSSet set]);
+	
+	id third = @"c";
+	concatenation = HMRConcatenate(HMRLiteral(first), HMRConcatenate(HMRLiteral(second), HMRLiteral(third)));
+	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:@[ first, second, third ]]);
 }
 
 
 +(NSSet *)concatenateParseForestWithPrefix:(NSSet *)prefix suffix:(NSSet *)suffix {
-	NSMutableSet *forest = [NSMutableSet new];
-	id(^cons)(id, id) = ^(id car, id cdr) {
-		return [cdr isEqual:@[]]?
-			@[ car ]
-		:	@[ car, cdr ];
+	id(^concat)(id, id) = ^(id left, id right) {
+		return [right isKindOfClass:[NSArray class]]?
+			[@[ left ] arrayByAddingObjectsFromArray:right]
+		:	@[ left, right ];
 	};
-	for (id x in prefix) {
-		for (id y in suffix) {
-			[forest addObject:cons(x, y)];
-		}
-	}
-	return forest;
+	return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
+		return REDMap(suffix, ^(id y) {
+			return concat(x, y);
+		});
+	})];
 }
 
 -(NSSet *)reduceParseForest {
