@@ -24,7 +24,8 @@ l3_test(@selector(derivative:)) {
 	id each = @"a";
 	id<HMRCombinator> repetition = HMRRepeat(HMRLiteral(each));
 	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each ]]);
-	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, @[ each ] ]]);
+	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, each ]]);
+	l3_expect([[[repetition derivative:each] derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, each, each ]]);
 	
 	// S -> ("x" | S)*
 	id terminal = @"x";

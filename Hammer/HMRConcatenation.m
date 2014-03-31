@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRConcatenation.h"
+#import "HMRNull.h"
 
 @implementation HMRConcatenation
 
@@ -34,22 +35,28 @@ l3_test(@selector(derivative:)) {
 	id<HMRCombinator> concatenation = HMRConcatenate(HMRLiteral(first), HMRLiteral(second));
 	l3_expect([[concatenation derivative:first] derivative:second].parseForest).to.equal([NSSet setWithObject:@[ first, second ]]);
 	l3_expect([[concatenation derivative:first] derivative:other].parseForest).to.equal([NSSet set]);
+	
+	id third = @"c";
+	concatenation = HMRConcatenate(HMRLiteral(first), HMRConcatenate(HMRLiteral(second), HMRLiteral(third)));
+	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:@[ first, second, third ]]);
 }
 
 
--(NSSet *)reduceParseForest {
-	NSMutableSet *trees = [NSMutableSet new];
-	id(^cons)(id, id) = ^(id car, id cdr) {
-		return [cdr isEqual:@[]]?
-			@[ car ]
-		:	@[ car, cdr ];
++(NSSet *)concatenateParseForestWithPrefix:(NSSet *)prefix suffix:(NSSet *)suffix {
+	id(^concat)(id, id) = ^(id left, id right) {
+		left = [left isKindOfClass:[NSArray class]]? left : @[ left ];
+		right = [right isKindOfClass:[NSArray class]]? right : @[ right ];
+		return [left arrayByAddingObjectsFromArray:right];
 	};
-	for (id eachFirst in self.first.parseForest) {
-		for (id eachSecond in self.second.parseForest) {
-			[trees addObject:cons(eachFirst, eachSecond)];
-		}
-	}
-	return trees;
+	return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
+		return REDMap(suffix, ^(id y) {
+			return concat(x, y);
+		});
+	})];
+}
+
+-(NSSet *)reduceParseForest {
+	return [self.class concatenateParseForestWithPrefix:self.first.parseForest suffix:self.second.parseForest];
 }
 
 
@@ -57,13 +64,31 @@ l3_test(@selector(derivative:)) {
 	return [NSString stringWithFormat:@"(%@ ∘ %@)", self.first.description, self.second.description];
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRConcatenation *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[object.first isEqual:self.first]
+	&&	[object.second isEqual:self.second];
+}
+
 @end
 
 
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
-	return (first == HMRNone() || second == HMRNone())?
-		HMRNone()
-	:	[[HMRConcatenation alloc] initWithFirst:first second:second];
+	id<HMRCombinator> concatenation;
+	if (first == HMRNone() || second == HMRNone()) {
+		concatenation = HMRNone();
+	} else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]]) {
+		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
+	} else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]]) {
+		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest]), ((HMRConcatenation *)second).second);
+	} else {
+		concatenation = [[HMRConcatenation alloc] initWithFirst:first second:second];
+	}
+	return concatenation;
 }
 
 l3_addTestSubjectTypeWithFunction(HMRConcatenate)
