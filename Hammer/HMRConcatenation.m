@@ -64,6 +64,16 @@ l3_test(@selector(derivative:)) {
 	return [NSString stringWithFormat:@"%@ %@", self.first.description, self.second.description];
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRConcatenation *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[object.first isEqual:self.first]
+	&&	[object.second isEqual:self.second];
+}
+
 @end
 
 

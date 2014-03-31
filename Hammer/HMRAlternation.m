@@ -40,6 +40,16 @@ l3_test(@selector(derivative:)) {
 	return [NSString stringWithFormat:@"%@ | %@", self.left.description, self.right.description];
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRAlternation *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[object.left isEqual:self.left]
+	&&	[object.right isEqual:self.right];
+}
+
 @end
 
 
