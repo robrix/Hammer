@@ -42,43 +42,54 @@
 	return [[self escapeBackslashesInString:string] stringByReplacingOccurrencesOfString:marker withString:[@"\\" stringByAppendingString:marker]];
 }
 
--(NSString *)wrapString:(NSString *)string withString:(NSString *)wrapper {
-	return [[wrapper stringByAppendingString:string] stringByAppendingString:wrapper];
+-(NSString *)wrapString:(NSString *)string withPrefix:(NSString *)prefix suffix:(NSString *)suffix {
+	return [[prefix stringByAppendingString:string] stringByAppendingString:suffix];
 }
 
 static NSString * const singleQuote = @"'";
 static NSString * const doubleQuote = @"\"";
 -(NSString *)quoteString:(NSString *)string {
 	if ([string rangeOfString:singleQuote].length == 0) {
-		string = [self wrapString:[self escapeBackslashesInString:string] withString:singleQuote];
+		string = [self wrapString:[self escapeBackslashesInString:string] withPrefix:singleQuote suffix:singleQuote];
 	} else if ([string rangeOfString:doubleQuote].length == 0) {
-		string = [self wrapString:[self escapeBackslashesInString:string] withString:doubleQuote];
+		string = [self wrapString:[self escapeBackslashesInString:string] withPrefix:doubleQuote suffix:doubleQuote];
 	} else {
-		string = [self wrapString:[self escapeString:singleQuote inString:string] withString:singleQuote];
+		string = [self wrapString:[self escapeString:singleQuote inString:string] withPrefix:singleQuote suffix:singleQuote];
 	}
 	return string;
 }
 
+-(NSString *)describeParseTree:(id)tree {
+	NSString *description;
+	if ([tree isKindOfClass:[NSArray class]])
+		description = [self wrapString:[self describeParseForest:tree] withPrefix:@"(" suffix:@")"];
+	else if ([tree isKindOfClass:[NSString class]])
+		description = [self quoteString:tree];
+	else
+		description = [tree description];
+	return description;
+}
+
+-(NSString *)describeParseForest:(id<REDReducible>)forest {
+	return [@"" red_append:REDJoin(REDMap(forest, ^(id each) {
+		return [self describeParseTree:each];
+	}), @", ")];
+}
+
 
 -(NSString *)describe {
-	__block NSString *separator = @"";
-	NSString *forest = [REDMap(self.forest, ^(id each) {
-		return [self quoteString:[each description]];
-	}) red_reduce:[NSMutableString new] usingBlock:^(NSMutableString *into, id each) {
-		[into appendString:separator];
-		[into appendString:[each description]];
-		separator = @", ";
-		return into;
-	}];
 	return self.forest == nil?
 		@"ε"
-	:	[NSString stringWithFormat:@"ε↓{%@}", forest];
+	:	[NSString stringWithFormat:@"ε↓{%@}", [self describeParseForest:self.forest]];
 }
 
 l3_test(@selector(description)) {
 	l3_expect(HMRCaptureTree(singleQuote).description).to.equal(@"ε↓{\"'\"}");
 	l3_expect(HMRCaptureTree(doubleQuote).description).to.equal(@"ε↓{'\"'}");
-	l3_expect(HMRCaptureTree([singleQuote stringByAppendingString:doubleQuote]).description).to.equal(@"ε↓{'\\'\"'}");
+	NSString *singleAndDoubleQuotes = [singleQuote stringByAppendingString:doubleQuote];
+	l3_expect(HMRCaptureTree(singleAndDoubleQuotes).description).to.equal(@"ε↓{'\\'\"'}");
+	
+	l3_expect(HMRCaptureTree(@[ singleQuote, doubleQuote, singleAndDoubleQuotes]).description).to.equal(@"ε↓{(\"'\", '\"', '\\'\"')}");
 }
 
 
