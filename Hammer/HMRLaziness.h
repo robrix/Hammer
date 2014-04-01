@@ -1,9 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
-@protocol HMRLaziness <NSObject>
-
-<##>
-
-@end
+#define HMRDelay(x) ^{ return x; }
+#define HMRForce(x) x()

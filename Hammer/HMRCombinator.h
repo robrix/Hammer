@@ -1,6 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <Hammer/HMRLaziness.h>
 
 @protocol HMRCombinator <NSObject, NSCopying>
 
@@ -10,27 +10,26 @@
 -(NSSet *)reduceParseForest;
 @property (readonly) NSSet *parseForest;
 
+/// Produce a deeply compacted representation of the receiver.
+-(id<HMRCombinator>)compact;
+@property (readonly) id<HMRCombinator> compaction;
+
 -(NSString *)describe;
 @property (readonly) NSString *description;
-
-/// Produce a deeply compacted representation of the receiver.
-///
-/// In most cases this will simply return \c self, because compaction is initially applied in the constructors. However, lazy parsers or other proxies may wish to use this to return their inner combinator after they have been forced/resolved, where applying it too soon (e.g. in the constructor) could cause infinite recursion or otherwise negate the purpose of the combinator.
--(id<HMRCombinator>)compact;
 
 @end
 
 
-id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right);
-id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second);
+typedef id<HMRCombinator> (^HMRLazyCombinator)();
 
-id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator);
+id<HMRCombinator> HMRAlternate(HMRLazyCombinator lazyLeft, HMRLazyCombinator lazyRight);
+id<HMRCombinator> HMRConcatenate(HMRLazyCombinator lazyFirst, HMRLazyCombinator lazySecond);
 
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>));
+id<HMRCombinator> HMRRepeat(HMRLazyCombinator lazyCombinator);
+
+id<HMRCombinator> HMRReduce(HMRLazyCombinator lazyCombinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>));
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
-
-id<HMRCombinator> HMRDelay(id<HMRCombinator>(^block)());
 
 id<HMRCombinator> HMRCaptureTree(id object);
 id<HMRCombinator> HMRCaptureForest(NSSet *forest);
