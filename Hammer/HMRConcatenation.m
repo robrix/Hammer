@@ -60,6 +60,29 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(id<HMRCombinator>)compact {
+	id<HMRCombinator> first = self.first.compaction;
+	id<HMRCombinator> second = self.second.compaction;
+	id<HMRCombinator> concatenation;
+	if (first == HMRNone() || second == HMRNone())
+		concatenation = HMRNone();
+	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
+		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
+	else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]])
+		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest]), ((HMRConcatenation *)second).second);
+	else
+		concatenation = HMRConcatenate(first, second);
+	return concatenation;
+}
+
+l3_test(@selector(compaction)) {
+	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> empty = HMRNone();
+	l3_expect(HMRConcatenate(empty, anything).compaction).to.equal(empty);
+	l3_expect(HMRConcatenate(anything, empty).compaction).to.equal(empty);
+}
+
+
 -(NSString *)describe {
 	return [NSString stringWithFormat:@"%@ %@", self.first.description, self.second.description];
 }
@@ -78,23 +101,5 @@ l3_test(@selector(derivative:)) {
 
 
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
-	id<HMRCombinator> concatenation;
-	if (first == HMRNone() || second == HMRNone()) {
-		concatenation = HMRNone();
-	} else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]]) {
-		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
-	} else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]]) {
-		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest]), ((HMRConcatenation *)second).second);
-	} else {
-		concatenation = [[HMRConcatenation alloc] initWithFirst:first second:second];
-	}
-	return concatenation;
-}
-
-l3_addTestSubjectTypeWithFunction(HMRConcatenate)
-l3_test(&HMRConcatenate) {
-	id<HMRCombinator> anything = HMRLiteral(@0);
-	id<HMRCombinator> empty = HMRNone();
-	l3_expect(HMRConcatenate(empty, anything)).to.equal(empty);
-	l3_expect(HMRConcatenate(anything, empty)).to.equal(empty);
+	return [[HMRConcatenation alloc] initWithFirst:first second:second];
 }

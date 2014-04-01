@@ -32,6 +32,19 @@
 }
 
 
+static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSObject, NSCopying>(^g)(id<NSObject, NSCopying>)) {
+	HMRReductionBlock f = reduction.block;
+	return HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); });
+}
+
+-(id<HMRCombinator>)compact {
+	id<HMRCombinator> combinator = self.combinator.compaction;
+	return [combinator isKindOfClass:[HMRReduction class]]?
+		HMRComposeReduction(combinator, self.block)
+	:	HMRReduce(combinator, self.block);
+}
+
+
 -(NSString *)describe {
 	return [NSString stringWithFormat:@"%@ → 𝑓", self.combinator.description];
 }
@@ -39,13 +52,6 @@
 @end
 
 
-HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSObject, NSCopying>(^g)(id<NSObject, NSCopying>)) {
-	HMRReductionBlock f = reduction.block;
-	return HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); });
-}
-
 id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
-	return [combinator isKindOfClass:[HMRReduction class]]?
-		HMRComposeReduction(combinator, block)
-	:	[[HMRReduction alloc] initWithCombinator:combinator block:block];
+	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
 }
