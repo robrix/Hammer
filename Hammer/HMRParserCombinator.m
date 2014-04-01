@@ -5,7 +5,7 @@
 
 NSSet *HMRParseCollection(id<HMRCombinator> parser, id<REDReducible> reducible) {
 	parser = [reducible red_reduce:parser usingBlock:^(id<HMRCombinator> parser, id each) {
-		return [parser derivative:each];
+		return [parser derivative:each].compaction;
 	}];
 	return parser.parseForest;
 }
@@ -19,13 +19,13 @@ l3_test(&HMRParseCollection) {
 	id anythingElse = @1;
 	l3_expect(HMRParseCollection(literal, @[ anythingElse ])).to.equal([NSSet set]);
 	
-	l3_expect(HMRParseCollection(HMRConcatenate(literal, literal), @[ object, object ])).to.equal([NSSet setWithObject:@[object, object]]);
+	l3_expect(HMRParseCollection(HMRConcatenate(HMRDelay(literal), HMRDelay(literal)), @[ object, object ])).to.equal([NSSet setWithObject:@[object, object]]);
 	
 	id terminal = @"x";
 	id nonterminalPrefix = @"+";
 	// S -> "+" S | "x"
 	__block id<HMRCombinator> nonterminal;
-	nonterminal = HMRReduce(HMRAlternate(HMRConcatenate(HMRLiteral(nonterminalPrefix), HMRDelay(^{ return nonterminal; })), HMRLiteral(terminal)), ^(id each) { return @[ each ]; });
+	nonterminal = HMRReduce(HMRDelay(HMRAlternate(HMRDelay(HMRConcatenate(HMRDelay(HMRLiteral(nonterminalPrefix)), HMRDelay(nonterminal))), HMRDelay(HMRLiteral(terminal)))), ^(id each) { return @[ each ]; });
 	l3_expect(HMRParseCollection(nonterminal, @[ terminal ])).to.equal([NSSet setWithObject:@[ terminal ]]);
 	l3_expect(HMRParseCollection(nonterminal, @[ nonterminalPrefix, terminal ])).to.equal([NSSet setWithObject:@[ @[ nonterminalPrefix, terminal ] ]]);
 	id nested = [NSSet setWithObject:@[ @[ nonterminalPrefix, @[ nonterminalPrefix, terminal ] ] ]];
@@ -62,7 +62,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	return _derivativesByElements[object] ?: (_derivativesByElements[object] = [self deriveWithRespectToObject:object].compaction);
+	return _derivativesByElements[object] ?: (_derivativesByElements[object] = [self deriveWithRespectToObject:object]);
 }
 
 

@@ -3,7 +3,10 @@
 #import "HMRNull.h"
 #import "HMRReduction.h"
 
-@implementation HMRReduction
+@implementation HMRReduction {
+	HMRLazyCombinator _lazyCombinator;
+	id<HMRCombinator> _combinator;
+}
 
 -(instancetype)initWithCombinator:(id<HMRCombinator>)combinator block:(HMRReductionBlock)block {
 	if ((self = [super init])) {
@@ -13,15 +16,30 @@
 	return self;
 }
 
+-(instancetype)initWithLazyCombinator:(HMRLazyCombinator)lazyCombinator block:(HMRReductionBlock)block {
+	if ((self = [super init])) {
+		_lazyCombinator = lazyCombinator;
+		_block = [block copy];
+	}
+	return self;
+}
+
+
+-(id<HMRCombinator>)combinator {
+	if (!_combinator) {
+		_combinator = HMRForce(_lazyCombinator);
+		_lazyCombinator = nil;
+	}
+	return _combinator;
+}
+
 
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> combinator = self.combinator;
 	HMRReductionBlock block = self.block;
-	return HMRDelay(^{
-		return HMRReduce([combinator derivative:object], block);
-	});
+	return HMRReduce(HMRDelay([combinator derivative:object]), block);
 }
 
 
@@ -34,14 +52,14 @@
 
 static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSObject, NSCopying>(^g)(id<NSObject, NSCopying>)) {
 	HMRReductionBlock f = reduction.block;
-	return HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); });
+	return HMRReduce(HMRDelay(reduction.combinator), ^(id<NSObject, NSCopying> x) { return g(f(x)); });
 }
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> combinator = self.combinator.compaction;
 	return [combinator isKindOfClass:[HMRReduction class]]?
 		HMRComposeReduction(combinator, self.block)
-	:	HMRReduce(combinator, self.block);
+	:	[[HMRReduction alloc] initWithCombinator:combinator block:self.block];
 }
 
 
@@ -52,6 +70,6 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSOb
 @end
 
 
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
-	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
+id<HMRCombinator> HMRReduce(HMRLazyCombinator lazyCombinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
+	return [[HMRReduction alloc] initWithLazyCombinator:lazyCombinator block:block];
 }
