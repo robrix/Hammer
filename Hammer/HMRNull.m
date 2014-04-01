@@ -65,6 +65,8 @@ static NSString * const doubleQuote = @"\"";
 		description = [self wrapString:[self describeParseForest:tree] withPrefix:@"(" suffix:@")"];
 	else if ([tree isKindOfClass:[NSString class]])
 		description = [self quoteString:tree];
+	else
+		description = [tree description];
 	return description;
 }
 
