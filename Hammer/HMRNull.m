@@ -87,7 +87,10 @@ static NSString * const doubleQuote = @"\"";
 l3_test(@selector(description)) {
 	l3_expect(HMRCaptureTree(singleQuote).description).to.equal(@"ε↓{\"'\"}");
 	l3_expect(HMRCaptureTree(doubleQuote).description).to.equal(@"ε↓{'\"'}");
-	l3_expect(HMRCaptureTree([singleQuote stringByAppendingString:doubleQuote]).description).to.equal(@"ε↓{'\\'\"'}");
+	NSString *singleAndDoubleQuotes = [singleQuote stringByAppendingString:doubleQuote];
+	l3_expect(HMRCaptureTree(singleAndDoubleQuotes).description).to.equal(@"ε↓{'\\'\"'}");
+	
+	l3_expect(HMRCaptureTree(@[ singleQuote, doubleQuote, singleAndDoubleQuotes]).description).to.equal(@"ε↓{(\"'\", '\"', '\\'\"')}");
 }
 
 
