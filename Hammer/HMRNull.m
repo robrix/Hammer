@@ -60,7 +60,12 @@ static NSString * const doubleQuote = @"\"";
 }
 
 -(NSString *)describeParseTree:(id)tree {
-	return [self quoteString:[tree description]];
+	NSString *description;
+	if ([tree isKindOfClass:[NSArray class]])
+		description = [tree description];
+	else if ([tree isKindOfClass:[NSString class]])
+		description = [self quoteString:tree];
+	return description;
 }
 
 
