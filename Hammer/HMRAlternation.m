@@ -102,7 +102,7 @@ l3_test(@selector(compaction)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"%@ | %@", self.left.description, self.right.description];
+	return [NSString stringWithFormat:@"(%@ | %@)", self.left.description, self.right.description];
 }
 
 
