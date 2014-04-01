@@ -42,19 +42,19 @@
 	return [[self escapeBackslashesInString:string] stringByReplacingOccurrencesOfString:marker withString:[@"\\" stringByAppendingString:marker]];
 }
 
--(NSString *)wrapString:(NSString *)string withString:(NSString *)wrapper {
-	return [[wrapper stringByAppendingString:string] stringByAppendingString:wrapper];
+-(NSString *)wrapString:(NSString *)string withPrefix:(NSString *)prefix suffix:(NSString *)suffix {
+	return [[prefix stringByAppendingString:string] stringByAppendingString:suffix];
 }
 
 static NSString * const singleQuote = @"'";
 static NSString * const doubleQuote = @"\"";
 -(NSString *)quoteString:(NSString *)string {
 	if ([string rangeOfString:singleQuote].length == 0) {
-		string = [self wrapString:[self escapeBackslashesInString:string] withString:singleQuote];
+		string = [self wrapString:[self escapeBackslashesInString:string] withPrefix:singleQuote suffix:singleQuote];
 	} else if ([string rangeOfString:doubleQuote].length == 0) {
-		string = [self wrapString:[self escapeBackslashesInString:string] withString:doubleQuote];
+		string = [self wrapString:[self escapeBackslashesInString:string] withPrefix:doubleQuote suffix:doubleQuote];
 	} else {
-		string = [self wrapString:[self escapeString:singleQuote inString:string] withString:singleQuote];
+		string = [self wrapString:[self escapeString:singleQuote inString:string] withPrefix:singleQuote suffix:singleQuote];
 	}
 	return string;
 }
