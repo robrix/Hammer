@@ -59,11 +59,15 @@ static NSString * const doubleQuote = @"\"";
 	return string;
 }
 
+-(NSString *)describeParseTree:(id)tree {
+	return [self quoteString:[tree description]];
+}
+
 
 -(NSString *)describe {
 	__block NSString *separator = @"";
 	NSString *forest = [REDMap(self.forest, ^(id each) {
-		return [self quoteString:[each description]];
+		return [self describeParseTree:each];
 	}) red_reduce:[NSMutableString new] usingBlock:^(NSMutableString *into, id each) {
 		[into appendString:separator];
 		[into appendString:[each description]];
