@@ -43,6 +43,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 @implementation HMRParserCombinator {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
+	id<HMRCombinator> _compaction;
 	NSString *_description;
 }
 
@@ -61,7 +62,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	return _derivativesByElements[object] ?: (_derivativesByElements[object] = [[self deriveWithRespectToObject:object] compact]);
+	return _derivativesByElements[object] ?: (_derivativesByElements[object] = [self deriveWithRespectToObject:object].compaction);
 }
 
 
@@ -78,6 +79,10 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 
 -(id<HMRCombinator>)compact {
 	return self;
+}
+
+-(id<HMRCombinator>)compaction {
+	return _compaction ?: (_compaction = [self compact]);
 }
 
 
