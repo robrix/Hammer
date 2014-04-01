@@ -15,9 +15,7 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	id<HMRCombinator> combinator = self.combinator;
-	
-	return HMRConcatenate([combinator derivative:object], self);
+	return HMRConcatenate([self.combinator derivative:object], self);
 }
 
 l3_test(@selector(derivative:)) {
@@ -38,6 +36,17 @@ l3_test(@selector(derivative:)) {
 	return [NSSet setWithObject:@[]];
 }
 
+-(id<HMRCombinator>)compact {
+	id<HMRCombinator> combinator = self.combinator.compaction;
+	return combinator == HMRNone()?
+		HMRCaptureTree(@[])
+	:	HMRRepeat(combinator);
+}
+
+l3_test(@selector(compaction)) {
+	l3_expect(HMRRepeat(HMRNone()).compaction).to.equal(HMRCaptureTree(@[]));
+}
+
 
 -(NSString *)describe {
 	return [NSString stringWithFormat:@"%@*", self.combinator.description];
@@ -47,12 +56,6 @@ l3_test(@selector(derivative:)) {
 
 
 id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
-	return combinator == HMRNone()?
-		HMRCaptureTree(@[])
-	:	[[HMRRepetition alloc] initWithCombinator:combinator];
+	return [[HMRRepetition alloc] initWithCombinator:combinator];
 }
 
-l3_addTestSubjectTypeWithFunction(HMRRepeat)
-l3_test(&HMRRepeat) {
-	l3_expect(HMRRepeat(HMRNone())).to.equal(HMRCaptureTree(@[]));
-}
