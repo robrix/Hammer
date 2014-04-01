@@ -68,8 +68,8 @@ l3_test(@selector(derivative:)) {
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> alternation;
-	id<HMRCombinator> left = self.left;
-	id<HMRCombinator> right = self.right;
+	id<HMRCombinator> left = self.left.compaction;
+	id<HMRCombinator> right = self.right.compaction;
 	if (left == HMRNone())
 		alternation = right;
 	else if (right == HMRNone())
