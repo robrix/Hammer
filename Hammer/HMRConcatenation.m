@@ -64,15 +64,14 @@ l3_test(@selector(derivative:)) {
 	id<HMRCombinator> first = self.first.compaction;
 	id<HMRCombinator> second = self.second.compaction;
 	id<HMRCombinator> concatenation;
-	if (first == HMRNone() || second == HMRNone()) {
+	if (first == HMRNone() || second == HMRNone())
 		concatenation = HMRNone();
-	} else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]]) {
+	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
 		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
-	} else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]]) {
+	else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]])
 		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest]), ((HMRConcatenation *)second).second);
-	} else {
+	else
 		concatenation = HMRConcatenate(first, second);
-	}
 	return concatenation;
 }
 
