@@ -82,7 +82,11 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 -(id<HMRCombinator>)compaction {
-	return _compaction ?: (_compaction = [self compact]);
+	if (!_compaction) {
+		_compaction = self;
+		_compaction = [self compact];
+	}
+	return _compaction;
 }
 
 
