@@ -31,8 +31,6 @@
 		D4ACA61818DD3CDB00EBD899 /* HMRReduction.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61618DD3CDB00EBD899 /* HMRReduction.m */; };
 		D4ACA61B18DD492E00EBD899 /* HMRConcatenation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA61918DD492E00EBD899 /* HMRConcatenation.h */; };
 		D4ACA61C18DD492E00EBD899 /* HMRConcatenation.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61A18DD492E00EBD899 /* HMRConcatenation.m */; };
-		D4ACA61F18DD4CB300EBD899 /* HMRLazyCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA61D18DD4CB300EBD899 /* HMRLazyCombinator.h */; };
-		D4ACA62018DD4CB300EBD899 /* HMRLazyCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA61E18DD4CB300EBD899 /* HMRLazyCombinator.m */; };
 		D4ACA62318DD4F5200EBD899 /* HMRRepetition.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62118DD4F5200EBD899 /* HMRRepetition.h */; };
 		D4ACA62418DD4F5200EBD899 /* HMRRepetition.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA62218DD4F5200EBD899 /* HMRRepetition.m */; };
 		D4ACA62718DD562400EBD899 /* HMRCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA62518DD562400EBD899 /* HMRCombinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -80,8 +78,6 @@
 		D4ACA61618DD3CDB00EBD899 /* HMRReduction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRReduction.m; sourceTree = "<group>"; };
 		D4ACA61918DD492E00EBD899 /* HMRConcatenation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRConcatenation.h; sourceTree = "<group>"; };
 		D4ACA61A18DD492E00EBD899 /* HMRConcatenation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRConcatenation.m; sourceTree = "<group>"; };
-		D4ACA61D18DD4CB300EBD899 /* HMRLazyCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRLazyCombinator.h; sourceTree = "<group>"; };
-		D4ACA61E18DD4CB300EBD899 /* HMRLazyCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRLazyCombinator.m; sourceTree = "<group>"; };
 		D4ACA62118DD4F5200EBD899 /* HMRRepetition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRRepetition.h; sourceTree = "<group>"; };
 		D4ACA62218DD4F5200EBD899 /* HMRRepetition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRRepetition.m; sourceTree = "<group>"; };
 		D4ACA62518DD562400EBD899 /* HMRCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRCombinator.h; sourceTree = "<group>"; };
@@ -197,8 +193,6 @@
 				D4ACA60518DD359C00EBD899 /* HMRLiteralCombinator.m */,
 				D4ACA60018DD34C400EBD899 /* HMREmpty.h */,
 				D4ACA60118DD34C400EBD899 /* HMREmpty.m */,
-				D4ACA61D18DD4CB300EBD899 /* HMRLazyCombinator.h */,
-				D4ACA61E18DD4CB300EBD899 /* HMRLazyCombinator.m */,
 				D4ACA5F718DD258E00EBD899 /* HMRNull.h */,
 				D4ACA5F818DD258E00EBD899 /* HMRNull.m */,
 				D4ACA61518DD3CDB00EBD899 /* HMRReduction.h */,
@@ -216,7 +210,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4ACA61F18DD4CB300EBD899 /* HMRLazyCombinator.h in Headers */,
 				D4ACA62B18DD6C4900EBD899 /* HMRLeastFixedPoint.h in Headers */,
 				D4ACA5FE18DD32CB00EBD899 /* HMROnce.h in Headers */,
 				D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */,
@@ -339,7 +332,6 @@
 			files = (
 				D4ACA61818DD3CDB00EBD899 /* HMRReduction.m in Sources */,
 				D4ACA60318DD34C400EBD899 /* HMREmpty.m in Sources */,
-				D4ACA62018DD4CB300EBD899 /* HMRLazyCombinator.m in Sources */,
 				D4ACA61C18DD492E00EBD899 /* HMRConcatenation.m in Sources */,
 				D4ACA62C18DD6C4900EBD899 /* HMRLeastFixedPoint.m in Sources */,
 				D4ACA61318DD3A5800EBD899 /* HMRAlternation.m in Sources */,

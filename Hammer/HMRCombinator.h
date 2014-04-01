@@ -1,6 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <Hammer/HMRLaziness.h>
 
 @protocol HMRCombinator <NSObject, NSCopying>
 
@@ -21,6 +21,8 @@
 @end
 
 
+typedef id<HMRCombinator> (^HMRLazyCombinator)();
+
 id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right);
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second);
 
@@ -29,8 +31,6 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator);
 id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>));
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
-
-id<HMRCombinator> HMRDelay(id<HMRCombinator>(^block)());
 
 id<HMRCombinator> HMRCaptureTree(id object);
 id<HMRCombinator> HMRCaptureForest(NSSet *forest);
