@@ -68,14 +68,17 @@ static NSString * const doubleQuote = @"\"";
 	return description;
 }
 
-
--(NSString *)describe {
-	NSString *forest = [@"" red_append:REDJoin(REDMap(self.forest, ^(id each) {
+-(NSString *)describeParseForest:(id<REDReducible>)forest {
+	return [@"" red_append:REDJoin(REDMap(forest, ^(id each) {
 		return [self describeParseTree:each];
 	}), @", ")];
+}
+
+
+-(NSString *)describe {
 	return self.forest == nil?
 		@"ε"
-	:	[NSString stringWithFormat:@"ε↓{%@}", forest];
+	:	[NSString stringWithFormat:@"ε↓{%@}", [self describeParseForest:self.forest]];
 }
 
 l3_test(@selector(description)) {
