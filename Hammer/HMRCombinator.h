@@ -22,12 +22,12 @@
 
 typedef id<HMRCombinator> (^HMRLazyCombinator)();
 
-id<HMRCombinator> HMRAlternate(HMRLazyCombinator lazyLeft, HMRLazyCombinator lazyRight);
-id<HMRCombinator> HMRConcatenate(HMRLazyCombinator lazyFirst, HMRLazyCombinator lazySecond);
+id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right);
+id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second);
 
-id<HMRCombinator> HMRRepeat(HMRLazyCombinator lazyCombinator);
+id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator);
 
-id<HMRCombinator> HMRReduce(HMRLazyCombinator lazyCombinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>));
+id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>));
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
 

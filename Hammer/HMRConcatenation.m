@@ -3,12 +3,7 @@
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
 
-@implementation HMRConcatenation {
-	HMRLazyCombinator _lazyFirst;
-	id<HMRCombinator> _first;
-	HMRLazyCombinator _lazySecond;
-	id<HMRCombinator> _second;
-}
+@implementation HMRConcatenation
 
 -(instancetype)initWithFirst:(id<HMRCombinator>)first second:(id<HMRCombinator>)second {
 	if ((self = [super init])) {
@@ -18,52 +13,31 @@
 	return self;
 }
 
--(instancetype)initWithLazyFirst:(HMRLazyCombinator)lazyFirst lazySecond:(HMRLazyCombinator)lazySecond {
-	if ((self = [super init])) {
-		_lazyFirst = [lazyFirst copy];
-		_lazySecond = [lazySecond copy];
-	}
-	return self;
-}
-
-
--(id<HMRCombinator>)first {
-	if (!_first) {
-		_first = HMRForce(_lazyFirst);
-		_lazyFirst = nil;
-	}
-	return _first;
-}
-
--(id<HMRCombinator>)second {
-	if (!_second) {
-		_second = HMRForce(_lazySecond);
-		_lazySecond = nil;
-	}
-	return _second;
-}
-
 
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	NSSet *forest = self.first.parseForest;
-	id<HMRCombinator> derivativeAfterFirst = HMRConcatenate(HMRDelay([self.first derivative:object]), HMRDelay(self.second));
-	return forest.count?
-		HMRAlternate(HMRDelay(derivativeAfterFirst), HMRDelay(HMRConcatenate(HMRDelay(HMRCaptureForest(forest)), HMRDelay([self.second derivative:object]))))
-	:	derivativeAfterFirst;
+	id<HMRCombinator> first = self.first;
+	id<HMRCombinator> second = self.second;
+	return HMRDelay(^{
+		NSSet *forest = first.parseForest;
+		id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([first derivative:object], second);
+		return forest.count?
+			HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(forest), [second derivative:object]))
+		:	derivativeAfterFirst;
+	});
 }
 
 l3_test(@selector(derivative:)) {
 	id first = @"a";
 	id second = @"b";
 	id other = @"";
-	id<HMRCombinator> concatenation = HMRConcatenate(HMRDelay(HMRLiteral(first)), HMRDelay(HMRLiteral(second)));
+	id<HMRCombinator> concatenation = HMRConcatenate(HMRLiteral(first), HMRLiteral(second));
 	l3_expect([[concatenation derivative:first] derivative:second].parseForest).to.equal([NSSet setWithObject:@[ first, second ]]);
 	l3_expect([[concatenation derivative:first] derivative:other].parseForest).to.equal([NSSet set]);
 	
 	id third = @"c";
-	concatenation = HMRConcatenate(HMRDelay(HMRLiteral(first)), HMRDelay(HMRConcatenate(HMRDelay(HMRLiteral(second)), HMRDelay(HMRLiteral(third)))));
+	concatenation = HMRConcatenate(HMRLiteral(first), HMRConcatenate(HMRLiteral(second), HMRLiteral(third)));
 	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:@[ first, second, third ]]);
 }
 
@@ -95,17 +69,17 @@ l3_test(@selector(derivative:)) {
 	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
 		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
 	else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]])
-		concatenation = HMRConcatenate(HMRDelay(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest])), HMRDelay(((HMRConcatenation *)second).second));
+		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest]), ((HMRConcatenation *)second).second);
 	else
-		concatenation = [[self.class alloc] initWithFirst:first second:second];
+		concatenation = HMRConcatenate(first, second);
 	return concatenation;
 }
 
 l3_test(@selector(compaction)) {
 	id<HMRCombinator> anything = HMRLiteral(@0);
 	id<HMRCombinator> empty = HMRNone();
-	l3_expect(HMRConcatenate(HMRDelay(empty), HMRDelay(anything)).compaction).to.equal(empty);
-	l3_expect(HMRConcatenate(HMRDelay(anything), HMRDelay(empty)).compaction).to.equal(empty);
+	l3_expect(HMRConcatenate(empty, anything).compaction).to.equal(empty);
+	l3_expect(HMRConcatenate(anything, empty).compaction).to.equal(empty);
 }
 
 
@@ -126,6 +100,6 @@ l3_test(@selector(compaction)) {
 @end
 
 
-id<HMRCombinator> HMRConcatenate(HMRLazyCombinator lazyFirst, HMRLazyCombinator lazySecond) {
-	return [[HMRConcatenation alloc] initWithLazyFirst:lazyFirst lazySecond:lazySecond];
+id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
+	return [[HMRConcatenation alloc] initWithFirst:first second:second];
 }

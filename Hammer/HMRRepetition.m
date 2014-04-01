@@ -2,10 +2,7 @@
 
 #import "HMRRepetition.h"
 
-@implementation HMRRepetition {
-	HMRLazyCombinator _lazyCombinator;
-	id<HMRCombinator> _combinator;
-}
+@implementation HMRRepetition
 
 -(instancetype)initWithCombinator:(id<HMRCombinator>)combinator {
 	if ((self = [super init])) {
@@ -14,39 +11,23 @@
 	return self;
 }
 
--(instancetype)initWithLazyCombinator:(HMRLazyCombinator)lazyCombinator {
-	if ((self = [super init])) {
-		_lazyCombinator = [lazyCombinator copy];
-	}
-	return self;
-}
-
-
--(id<HMRCombinator>)combinator {
-	if (!_combinator) {
-		_combinator = HMRForce(_lazyCombinator);
-		_lazyCombinator = nil;
-	}
-	return _combinator;
-}
-
 
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return HMRConcatenate(HMRDelay([self.combinator derivative:object]), HMRDelay(self));
+	return HMRConcatenate([self.combinator derivative:object], self);
 }
 
 l3_test(@selector(derivative:)) {
 	id each = @"a";
-	id<HMRCombinator> repetition = HMRRepeat(HMRDelay(HMRLiteral(each)));
+	id<HMRCombinator> repetition = HMRRepeat(HMRLiteral(each));
 	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each ]]);
 	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, each ]]);
 	l3_expect([[[repetition derivative:each] derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, each, each ]]);
 	
 	// S -> ("x" | S)*
 	id terminal = @"x";
-	__block HMRRepetition *nonterminal = HMRRepeat(HMRDelay(HMRAlternate(HMRDelay(HMRLiteral(terminal)), HMRDelay(nonterminal))));
+	__block id nonterminal = HMRDelay(^{ return HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)); });
 	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:@[ terminal ]]);
 }
 
@@ -59,11 +40,11 @@ l3_test(@selector(derivative:)) {
 	id<HMRCombinator> combinator = self.combinator.compaction;
 	return combinator == HMRNone()?
 		HMRCaptureTree(@[])
-	:	[[HMRRepetition alloc] initWithCombinator:combinator];
+	:	HMRRepeat(combinator);
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat(HMRDelay(HMRNone())).compaction).to.equal(HMRCaptureTree(@[]));
+	l3_expect(HMRRepeat(HMRNone()).compaction).to.equal(HMRCaptureTree(@[]));
 }
 
 
@@ -74,7 +55,7 @@ l3_test(@selector(compaction)) {
 @end
 
 
-id<HMRCombinator> HMRRepeat(HMRLazyCombinator lazyCombinator) {
-	return [[HMRRepetition alloc] initWithLazyCombinator:lazyCombinator];
+id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
+	return [[HMRRepetition alloc] initWithCombinator:combinator];
 }
 
