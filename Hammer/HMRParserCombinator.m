@@ -25,7 +25,7 @@ l3_test(&HMRParseCollection) {
 	id nonterminalPrefix = @"+";
 	// S -> "+" S | "x"
 	__block id<HMRCombinator> nonterminal;
-	nonterminal = HMRReduce(HMRAlternate(HMRConcatenate(HMRLiteral(nonterminalPrefix), HMRDelay(^{ return nonterminal; })), HMRLiteral(terminal)), ^(id each) { return @[ each ]; });
+	nonterminal = HMRReduce(HMRAlternate(HMRConcatenate(HMRLiteral(nonterminalPrefix), HMRDelay(nonterminal)), HMRLiteral(terminal)), ^(id each) { return @[ each ]; });
 	l3_expect(HMRParseCollection(nonterminal, @[ terminal ])).to.equal([NSSet setWithObject:@[ terminal ]]);
 	l3_expect(HMRParseCollection(nonterminal, @[ nonterminalPrefix, terminal ])).to.equal([NSSet setWithObject:@[ @[ nonterminalPrefix, terminal ] ]]);
 	id nested = [NSSet setWithObject:@[ @[ nonterminalPrefix, @[ nonterminalPrefix, terminal ] ] ]];

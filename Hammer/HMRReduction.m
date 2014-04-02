@@ -19,9 +19,7 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> combinator = self.combinator;
 	HMRReductionBlock block = self.block;
-	return HMRDelay(^{
-		return HMRReduce([combinator derivative:object], block);
-	});
+	return HMRReduce([combinator derivative:object], block);
 }
 
 

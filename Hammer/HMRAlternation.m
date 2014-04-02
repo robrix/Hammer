@@ -20,9 +20,7 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> left = self.left;
 	id<HMRCombinator> right = self.right;
-	return HMRDelay(^{
-		return HMRAlternate([left derivative:object], [right derivative:object]);
-	});
+	return HMRAlternate([left derivative:object], [right derivative:object]);
 }
 
 l3_test(@selector(derivative:)) {

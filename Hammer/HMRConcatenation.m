@@ -19,13 +19,11 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> first = self.first;
 	id<HMRCombinator> second = self.second;
-	return HMRDelay(^{
-		NSSet *forest = first.parseForest;
-		id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([first derivative:object], second);
-		return forest.count?
-			HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(forest), [second derivative:object]))
-		:	derivativeAfterFirst;
-	});
+	NSSet *forest = first.parseForest;
+	id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([first derivative:object], second);
+	return forest.count?
+		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(forest), [second derivative:object]))
+	:	derivativeAfterFirst;
 }
 
 l3_test(@selector(derivative:)) {
