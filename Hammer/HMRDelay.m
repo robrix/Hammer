@@ -20,10 +20,10 @@
 
 
 -(id)force {
-	if (!_forced) {
-		_forced = self;
-		_forced = _block();
-		_block = nil;
+	HMRDelayBlock block = _block;
+	_block = nil;
+	if (block) {
+		_forced = block();
 	}
 	return _forced;
 }
