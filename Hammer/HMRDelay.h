@@ -4,7 +4,7 @@
 
 typedef id (^HMRDelayBlock)(void);
 
-@interface HMRDelay : NSProxy
+@interface HMRDelay : NSProxy <NSCopying>
 
 +(id)delay:(HMRDelayBlock)block;
 

@@ -33,6 +33,13 @@
 }
 
 
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	return self;
+}
+
+
 #pragma mark NSObject
 
 -(id)forwardingTargetForSelector:(SEL)selector {
