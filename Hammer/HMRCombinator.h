@@ -1,6 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import <Hammer/HMRLaziness.h>
+#import <Hammer/HMRDelay.h>
 
 @protocol HMRCombinator <NSObject, NSCopying>
 
@@ -19,8 +19,6 @@
 
 @end
 
-
-typedef id<HMRCombinator> (^HMRLazyCombinator)();
 
 id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right);
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second);
