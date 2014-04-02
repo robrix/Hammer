@@ -64,7 +64,7 @@ l3_test(@selector(derivative:)) {
 	id<HMRCombinator> first = self.first.compaction;
 	id<HMRCombinator> second = self.second.compaction;
 	id<HMRCombinator> concatenation;
-	if (first == HMRNone() || second == HMRNone())
+	if ([first isEqual:HMRNone()] || [second isEqual:HMRNone()])
 		concatenation = HMRNone();
 	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
 		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);

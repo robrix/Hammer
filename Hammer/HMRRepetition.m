@@ -38,7 +38,7 @@ l3_test(@selector(derivative:)) {
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> combinator = self.combinator.compaction;
-	return combinator == HMRNone()?
+	return [combinator isEqual:HMRNone()]?
 		HMRCaptureTree(@[])
 	:	HMRRepeat(combinator);
 }

@@ -41,9 +41,9 @@ l3_test(@selector(derivative:)) {
 	id<HMRCombinator> alternation;
 	id<HMRCombinator> left = self.left.compaction;
 	id<HMRCombinator> right = self.right.compaction;
-	if (left == HMRNone())
+	if ([left isEqual:HMRNone()])
 		alternation = right;
-	else if (right == HMRNone())
+	else if ([right isEqual:HMRNone()])
 		alternation = left;
 	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
 		alternation = left;
