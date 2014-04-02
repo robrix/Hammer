@@ -20,16 +20,16 @@
 
 
 -(id)force {
-	id forced;
-	if (_block) {
-		forced = _block();
+	if (!_forced) {
+		_forced = self;
+		_forced = _block();
 		_block = nil;
 	}
-	return forced;
+	return _forced;
 }
 
 -(id)forced {
-	return _forced ?: (_forced = [self force]);
+	return _forced ?: [self force];
 }
 
 
