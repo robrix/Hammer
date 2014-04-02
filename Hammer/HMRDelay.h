@@ -13,4 +13,4 @@ typedef id (^HMRDelayBlock)(void);
 @end
 
 #define HMRDelay(x) \
-	[HMRDelay delay:^{ return (x); }]
+	((__typeof__(x))[HMRDelay delay:^{ return (x); }])
