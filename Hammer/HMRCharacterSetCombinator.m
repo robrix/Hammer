@@ -22,6 +22,12 @@
 	&&	[[string stringByTrimmingCharactersInSet:self.characterSet] isEqual:@""];
 }
 
+l3_test(@selector(evaluateWithObject:)) {
+	HMRCharacterSetCombinator *combinator = [[HMRCharacterSetCombinator alloc] initWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
+	l3_expect([combinator evaluateWithObject:@"a"]).to.equal(@YES);
+	l3_expect([combinator evaluateWithObject:@"1"]).to.equal(@YES);
+}
+
 
 #pragma mark HMRCombinator
 
