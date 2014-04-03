@@ -24,14 +24,23 @@ id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
 
+/// Constructs a character set combinator.
+///
+/// \param characterSet The character set to compare input against.
+/// \return A combinator which matches strings whose characters are all within \c characterSet.
+id<HMRCombinator> HMRCharacterSet(NSCharacterSet *characterSet);
+
+
 id<HMRCombinator> HMRCaptureTree(id object);
 id<HMRCombinator> HMRCaptureForest(NSSet *forest);
+
 
 /// A delayed combinator. Lazily evaluated.
 #define HMRDelay(x) \
 	((__typeof__(x))HMRLazyCombinator(^{ return (x); }))
 
 id<HMRCombinator> HMRLazyCombinator(id<HMRCombinator>(^)(void));
+
 
 /// The empty combinator, i.e. a combinator which cannot match anything.
 id<HMRCombinator> HMRNone(void);

@@ -17,4 +17,7 @@ extern id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, N
 
 -(NSString *)describe;
 
+
++(instancetype)new UNAVAILABLE_ATTRIBUTE;
+
 @end

@@ -15,14 +15,14 @@
 }
 
 
-#pragma mark HMRCombinator
+#pragma mark HMRPredicateCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return [self.object isEqual:object]?
-		HMRCaptureTree(self.object)
-	:	HMRNone();
+-(bool)evaluateWithObject:(id)object {
+	return [self.object isEqual:object];
 }
 
+
+#pragma mark HMRCombinator
 
 -(NSString *)describe {
 	return [NSString stringWithFormat:@"'%@'", self.object];
@@ -33,7 +33,7 @@
 
 -(BOOL)isEqual:(HMRLiteralCombinator *)object {
 	return
-		[object isKindOfClass:self.class]
+		[super isEqual:object]
 	&&	[object.object isEqual:self.object];
 }
 

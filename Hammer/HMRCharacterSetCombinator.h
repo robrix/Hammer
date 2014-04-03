@@ -2,9 +2,9 @@
 
 #import "HMRPredicateCombinator.h"
 
-@interface HMRLiteralCombinator : HMRPredicateCombinator
+@interface HMRCharacterSetCombinator : HMRPredicateCombinator
 
-@property (readonly) id<NSObject, NSCopying> object;
+@property (readonly) NSCharacterSet *characterSet;
 
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
