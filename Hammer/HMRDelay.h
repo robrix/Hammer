@@ -6,23 +6,11 @@ typedef id (^HMRDelayBlock)(void);
 
 @interface HMRDelay : NSProxy <NSCopying>
 
--(instancetype)initWithBlock:(HMRDelayBlock)block class:(Class)class;
+-(instancetype)initWithClass:(Class)class block:(HMRDelayBlock)block;
 
 @property (readonly) id forced;
 
 @end
 
-
-@interface HMRDelayCombinator : HMRDelay
-
--(instancetype)initWithBlock:(HMRDelayBlock)block;
--(instancetype)initWithBlock:(HMRDelayBlock)block class:(Class)class UNAVAILABLE_ATTRIBUTE;
-
-@end
-
-
-#define HMRDelay(x) \
-	((__typeof__(x))[[HMRDelayCombinator alloc] initWithBlock:^{ return (x); }])
-
 #define HMRDelaySpecific(c, x) \
-	((__typeof__(x))[[HMRDelay alloc] initWithBlock:^{ return (x); } class:(c)])
+	((__typeof__(x))[[HMRDelay alloc] initWithClass:(c) block:^{ return (x); }])

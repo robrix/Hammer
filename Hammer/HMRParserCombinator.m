@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRDelay.h"
 #import "HMRLeastFixedPoint.h"
 #import "HMRParserCombinator.h"
 

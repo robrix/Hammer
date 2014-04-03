@@ -1,23 +1,18 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRDelay.h"
-#import "HMRParserCombinator.h"
 
 @implementation HMRDelay {
+	Class _class;
 	HMRDelayBlock _block;
 	id _forced;
-	Class _class;
 }
 
-+(id)delay:(HMRDelayBlock)block class:(Class)class {
-	return [[self alloc] initWithBlock:block class:class];
-}
-
--(instancetype)initWithBlock:(HMRDelayBlock)block class:(Class)class {
+-(instancetype)initWithClass:(Class)class block:(HMRDelayBlock)block {
 	NSParameterAssert(block != nil);
 	
-	_block = [block copy];
 	_class = class;
+	_block = [block copy];
 	return self;
 }
 
@@ -82,40 +77,6 @@
 
 -(NSString *)description {
 	return [@"λ." stringByAppendingString:[self.forced description]];
-}
-
-@end
-
-
-@implementation HMRDelayCombinator
-
--(instancetype)initWithBlock:(HMRDelayBlock)block {
-	return [super initWithBlock:block class:[HMRParserCombinator class]];
-}
-
-
-#pragma mark HMRCombinator
-
--(NSSet *)parseForest {
-	return [self.forced parseForest];
-}
-
-l3_test(@selector(parseForest)) {
-	NSSet *forest = [NSSet setWithObject:@"a"];
-	id<HMRCombinator> capture = HMRCaptureForest(forest);
-	id<HMRCombinator> delayed = HMRDelay(capture);
-	l3_expect(HMRDelay(delayed.parseForest)).to.equal(forest);
-	l3_expect(forest).to.equal(delayed.parseForest);
-}
-
-
--(id<HMRCombinator>)compaction {
-	return [self.forced compaction];
-}
-
-
--(id<HMRCombinator>)derivative:(id)object {
-	return [self.forced derivative:object];
 }
 
 @end
