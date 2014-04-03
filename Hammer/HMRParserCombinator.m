@@ -55,7 +55,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 		_compaction = HMRDelay([weakSelf compact]);
 		
 		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
-			return _parseForest = [self reduceParseForest];
+			return _parseForest = [weakSelf reduceParseForest];
 		}));
 	}
 	return self;
@@ -79,12 +79,6 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 @synthesize parseForest = _parseForest;
-
-//-(NSSet *)parseForest {
-//	return _parseForest ?: (_parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
-//		return _parseForest = [self reduceParseForest];
-//	}));
-//}
 
 
 -(id<HMRCombinator>)compact {
