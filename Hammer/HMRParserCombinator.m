@@ -43,13 +43,19 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 @implementation HMRParserCombinator {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
-	id<HMRCombinator> _compaction;
 	NSString *_description;
 }
 
 -(instancetype)init {
 	if ((self = [super init])) {
 		_derivativesByElements = [NSMutableDictionary new];
+		
+		__weak HMRParserCombinator *weakSelf = self;
+		_compaction = HMRDelay([weakSelf compact]);
+		
+		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
+			return _parseForest = [self reduceParseForest];
+		}));
 	}
 	return self;
 }
@@ -62,7 +68,8 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	return _derivativesByElements[object] ?: (_derivativesByElements[object] = [self deriveWithRespectToObject:object].compaction);
+	__weak HMRParserCombinator *weakSelf = self;
+	return _derivativesByElements[object] ?: (_derivativesByElements[object] = HMRDelay(_derivativesByElements[object] = [weakSelf deriveWithRespectToObject:object].compaction));
 }
 
 
@@ -70,24 +77,20 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	return [NSSet set];
 }
 
--(NSSet *)parseForest {
-	return _parseForest ?: (_parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
-		return _parseForest = [self reduceParseForest];
-	}));
-}
+@synthesize parseForest = _parseForest;
+
+//-(NSSet *)parseForest {
+//	return _parseForest ?: (_parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
+//		return _parseForest = [self reduceParseForest];
+//	}));
+//}
 
 
 -(id<HMRCombinator>)compact {
 	return self;
 }
 
--(id<HMRCombinator>)compaction {
-	if (!_compaction) {
-		_compaction = self;
-		_compaction = [self compact];
-	}
-	return _compaction;
-}
+@synthesize compaction = _compaction;
 
 
 -(NSString *)describe {
