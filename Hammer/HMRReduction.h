@@ -11,6 +11,5 @@ typedef id<NSObject, NSCopying>(^HMRReductionBlock)(id<NSObject, NSCopying>);
 
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
-+(instancetype)new UNAVAILABLE_ATTRIBUTE;
 
 @end

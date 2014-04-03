@@ -5,6 +5,5 @@
 @interface HMRNull : HMRParserCombinator
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
-+(instancetype)new UNAVAILABLE_ATTRIBUTE;
 
 @end
