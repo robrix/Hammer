@@ -1,8 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRParserCombinator.h"
+#import "HMRPredicateCombinator.h"
 
-@interface HMRLiteralCombinator : HMRParserCombinator
+@interface HMRLiteralCombinator : HMRPredicateCombinator
 
 @property (readonly) id<NSObject, NSCopying> object;
 
