@@ -7,4 +7,14 @@ extern NSSet *HMRParseCollection(id<HMRCombinator> parser, id<REDReducible> redu
 extern id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopying> object);
 
 @interface HMRParserCombinator : NSObject <HMRCombinator>
+
+-(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object;
+
+-(NSSet *)reduceParseForest;
+
+/// Produce a deeply compacted representation of the receiver.
+-(id<HMRCombinator>)compact;
+
+-(NSString *)describe;
+
 @end
