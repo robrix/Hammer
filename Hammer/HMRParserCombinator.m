@@ -52,11 +52,12 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 		_derivativesByElements = [NSMutableDictionary new];
 		
 		__weak HMRParserCombinator *weakSelf = self;
-		_compaction = HMRDelay([weakSelf compact]);
 		
 		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
 			return _parseForest = [weakSelf reduceParseForest];
 		}));
+		
+		_compaction = HMRDelay([weakSelf compact]);
 	}
 	return self;
 }
