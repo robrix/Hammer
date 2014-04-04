@@ -3,11 +3,20 @@
 #import "HMRDelayCombinator.h"
 #import "HMRParserCombinator.h"
 
+@interface HMRDelayCombinator ()
+
+@property (readonly) id<HMRCombinator> forced;
+
+@end
+
 @implementation HMRDelayCombinator
 
 -(instancetype)initWithBlock:(HMRDelayBlock)block {
 	return [super initWithClass:[HMRParserCombinator class] block:block];
 }
+
+
+@dynamic forced;
 
 
 #pragma mark HMRCombinator
@@ -18,7 +27,7 @@
 
 
 -(NSSet *)parseForest {
-	return [self.forced parseForest];
+	return self.forced.parseForest;
 }
 
 l3_test(@selector(parseForest)) {
@@ -31,7 +40,7 @@ l3_test(@selector(parseForest)) {
 
 
 -(id<HMRCombinator>)compaction {
-	return [self.forced compaction];
+	return self.forced.compaction;
 }
 
 
