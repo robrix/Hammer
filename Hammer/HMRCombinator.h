@@ -6,6 +6,8 @@
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object;
 
+@property (readonly, getter = isNullable) bool nullable;
+
 @property (readonly) NSSet *parseForest;
 
 @property (readonly) id<HMRCombinator> compaction;

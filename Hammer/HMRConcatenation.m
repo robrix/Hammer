@@ -19,10 +19,9 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> first = self.first;
 	id<HMRCombinator> second = self.second;
-	NSSet *forest = first.parseForest;
 	id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([first derivative:object], second);
-	return forest.count?
-		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(forest), [second derivative:object]))
+	return first.nullable?
+		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(first.parseForest), [second derivative:object]))
 	:	derivativeAfterFirst;
 }
 
@@ -37,6 +36,11 @@ l3_test(@selector(derivative:)) {
 	id third = @"c";
 	concatenation = HMRConcatenate(HMRLiteral(first), HMRConcatenate(HMRLiteral(second), HMRLiteral(third)));
 	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:@[ first, second, third ]]);
+}
+
+
+-(bool)computeNullability {
+	return self.first.nullable && self.second.nullable;
 }
 
 
