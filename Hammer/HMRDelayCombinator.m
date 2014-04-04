@@ -26,6 +26,11 @@
 }
 
 
+-(bool)isNullable {
+	return self.forced.nullable;
+}
+
+
 -(NSSet *)parseForest {
 	return self.forced.parseForest;
 }

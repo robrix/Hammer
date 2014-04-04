@@ -40,6 +40,11 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(bool)computeNullability {
+	return self.first.nullable && self.second.nullable;
+}
+
+
 +(NSSet *)concatenateParseForestWithPrefix:(NSSet *)prefix suffix:(NSSet *)suffix {
 	id(^concat)(id, id) = ^(id left, id right) {
 		left = [left isKindOfClass:[NSArray class]]? left : @[ left ];
