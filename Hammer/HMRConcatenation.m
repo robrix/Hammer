@@ -19,10 +19,9 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> first = self.first;
 	id<HMRCombinator> second = self.second;
-	NSSet *forest = first.parseForest;
 	id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([first derivative:object], second);
-	return forest.count?
-		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(forest), [second derivative:object]))
+	return first.nullable?
+		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(first.parseForest), [second derivative:object]))
 	:	derivativeAfterFirst;
 }
 
