@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRLexer.h"
+#import <Reducers/REDReducer.h>
 
 /*
  depth-first problem solving
@@ -21,4 +22,35 @@ l3_test("null reduction of partially parsed strings") {
 	id<HMRCombinator> expected = HMRAlternate(HMRConcatenate(HMRCaptureTree(@"f"), HMRConcatenate(HMRCaptureTree(@"o"), HMRConcatenate(HMRCaptureTree(@"o"), HMRLiteral(@"t")))), HMRConcatenate(HMRCaptureTree(@"f"), HMRConcatenate(HMRCaptureTree(@"o"), HMRConcatenate(HMRCaptureTree(@"o"), HMRLiteral(@"d"))))).compaction;
 	
 	l3_expect(derivative).to.equal(expected);
+}
+
+
+id<REDReducible> HMRLexer(id<REDReducible> input) {
+	return [REDReducer reducerWithReducible:input transformer:^REDReducingBlock(REDReducingBlock reduce) {
+		id<HMRCombinator> wordSet = HMRCharacterSet([NSCharacterSet alphanumericCharacterSet]);
+		id<HMRCombinator> word = HMRReduce(HMRConcatenate(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
+			return x;
+		});
+		
+		id<HMRCombinator> whitespaceSet = HMRCharacterSet([NSCharacterSet whitespaceAndNewlineCharacterSet]);
+		id<HMRCombinator> whitespace = HMRConcatenate(whitespaceSet, HMRRepeat(whitespaceSet));
+		
+		id<HMRCombinator> start = HMRRepeat(HMRAlternate(word, whitespace));
+		
+		__block id<HMRCombinator> grammar = start;
+		
+		return ^(id into, id each) {
+			grammar = [grammar derivative:each];
+			return reduce(into, each);
+		};
+	}];
+}
+
+//#define autolet(symbol, value, ...) \
+//	((^(__typeof__(value) symbol) __VA_ARGS__)(value))
+
+l3_test("lexer grammar") {
+	[HMRLexer(@"ord") red_reduce:nil usingBlock:^(id into, id each) {
+		return into;
+	}];
 }
