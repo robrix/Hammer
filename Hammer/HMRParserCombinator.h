@@ -10,6 +10,8 @@ extern id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, N
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object;
 
+-(bool)computeNullability;
+
 -(NSSet *)reduceParseForest;
 
 /// Produce a deeply compacted representation of the receiver.
