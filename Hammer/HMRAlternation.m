@@ -30,6 +30,11 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(bool)computeNullability {
+	return self.left.nullable || self.right.nullable;
+}
+
+
 -(NSSet *)reduceParseForest {
 	return [self.left.parseForest setByAddingObjectsFromSet:self.right.parseForest];
 }

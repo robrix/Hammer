@@ -32,6 +32,11 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(bool)computeNullability {
+	return YES;
+}
+
+
 -(NSSet *)reduceParseForest {
 	return [NSSet setWithObject:@[]];
 }

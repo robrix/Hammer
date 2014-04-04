@@ -29,6 +29,11 @@
 }
 
 
+-(bool)computeNullability {
+	return YES;
+}
+
+
 -(NSSet *)reduceParseForest {
 	return self.forest;
 }
