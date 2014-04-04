@@ -2,6 +2,12 @@
 
 #import "HMRDelay.h"
 
+@interface NSObject (HMRDelay)
+
+-(id)forceRecursively;
+
+@end
+
 @implementation HMRDelay {
 	Class _class;
 	HMRDelayBlock _block;
@@ -31,6 +37,11 @@
 }
 
 
+-(id)forceRecursively {
+	return self.forced;
+}
+
+
 #pragma mark NSCopying
 
 -(instancetype)copyWithZone:(NSZone *)zone {
@@ -50,7 +61,7 @@
 
 
 -(id)forwardingTargetForSelector:(SEL)selector {
-	return self.forced;
+	return [self.forced forceRecursively];
 }
 
 -(NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
@@ -77,6 +88,15 @@
 
 -(NSString *)description {
 	return [@"λ." stringByAppendingString:[self.forced description]];
+}
+
+@end
+
+
+@implementation NSObject (HMRDelay)
+
+-(id)forceRecursively {
+	return self;
 }
 
 @end
