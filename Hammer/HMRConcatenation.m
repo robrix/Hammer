@@ -43,6 +43,15 @@ l3_test(@selector(derivative:)) {
 	return self.first.nullable && self.second.nullable;
 }
 
+l3_test(@selector(isNullable)) {
+	id<HMRCombinator> nonNullable = HMRLiteral(@"x");
+	id<HMRCombinator> nullable = HMRRepeat(nonNullable);
+	l3_expect(HMRConcatenate(nonNullable, nonNullable).nullable).to.equal(@NO);
+	l3_expect(HMRConcatenate(nonNullable, nullable).nullable).to.equal(@NO);
+	l3_expect(HMRConcatenate(nullable, nonNullable).nullable).to.equal(@NO);
+	l3_expect(HMRConcatenate(nullable, nullable).nullable).to.equal(@YES);
+}
+
 
 -(bool)computeCyclic {
 	return self.first.cyclic || self.second.cyclic;
