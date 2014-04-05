@@ -2,9 +2,9 @@
 
 #import "HMRDelay.h"
 #import "HMRLeastFixedPoint.h"
-#import "HMRParserCombinator.h"
+#import "HMRNonterminal.h"
 
-@implementation HMRParserCombinator {
+@implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
 	NSString *_description;
@@ -16,7 +16,7 @@
 	if ((self = [super init])) {
 		_derivativesByElements = [NSMutableDictionary new];
 		
-		__weak HMRParserCombinator *weakSelf = self;
+		__weak HMRNonterminal *weakSelf = self;
 		
 		_nullability = HMRDelaySpecific([NSNumber class], _nullability = HMRLeastFixedPoint(_nullability = @NO, ^(id _) {
 			return _nullability = @([weakSelf computeNullability]);
@@ -41,7 +41,7 @@
 }
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	__weak HMRParserCombinator *weakSelf = self;
+	__weak HMRNonterminal *weakSelf = self;
 	return _derivativesByElements[object] ?: (_derivativesByElements[object] = HMRDelay(_derivativesByElements[object] = [weakSelf deriveWithRespectToObject:object].compaction));
 }
 

@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRDelayCombinator.h"
-#import "HMRParserCombinator.h"
+#import "HMRNonterminal.h"
 
 @interface HMRDelayCombinator ()
 
@@ -12,7 +12,7 @@
 @implementation HMRDelayCombinator
 
 -(instancetype)initWithBlock:(HMRDelayBlock)block {
-	return [super initWithClass:[HMRParserCombinator class] block:block];
+	return [super initWithClass:[HMRNonterminal class] block:block];
 }
 
 

@@ -2,5 +2,5 @@
 
 #import <Hammer/HMRCombinator.h>
 
-@interface HMRTerminalCombinator : NSObject <HMRCombinator>
+@interface HMRTerminal : NSObject <HMRCombinator>
 @end

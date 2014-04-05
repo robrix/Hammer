@@ -1,8 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRTerminalCombinator.h"
+#import "HMRTerminal.h"
 
-@interface HMRNull : HMRTerminalCombinator
+@interface HMRNull : HMRTerminal
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 
