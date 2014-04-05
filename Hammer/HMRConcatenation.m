@@ -50,6 +50,14 @@ l3_test(@selector(isNullable)) {
 	l3_expect(HMRConcatenate(nonNullable, nullable).nullable).to.equal(@NO);
 	l3_expect(HMRConcatenate(nullable, nonNullable).nullable).to.equal(@NO);
 	l3_expect(HMRConcatenate(nullable, nullable).nullable).to.equal(@YES);
+	
+	__block id<HMRCombinator> cyclic;
+	l3_expect((cyclic = HMRConcatenate(HMRDelay(cyclic), nullable)).nullable).to.equal(@NO);
+	l3_expect((cyclic = HMRConcatenate(nullable, HMRDelay(cyclic))).nullable).to.equal(@NO);
+	l3_expect((cyclic = HMRConcatenate(HMRAlternate(nullable, HMRDelay(cyclic)), nullable)).nullable).to.equal(@YES);
+	l3_expect((cyclic = HMRConcatenate(nullable, HMRAlternate(nullable, HMRDelay(cyclic)))).nullable).to.equal(@YES);
+	l3_expect((cyclic = HMRConcatenate(HMRAlternate(nonNullable, HMRDelay(cyclic)), nullable)).nullable).to.equal(@NO);
+	l3_expect((cyclic = HMRConcatenate(nullable, HMRAlternate(nonNullable, HMRDelay(cyclic)))).nullable).to.equal(@NO);
 }
 
 
