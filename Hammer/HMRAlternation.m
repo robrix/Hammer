@@ -63,22 +63,27 @@ l3_test(@selector(isCyclic)) {
 
 
 -(id<HMRCombinator>)compact {
-	id<HMRCombinator> alternation;
+	id<HMRCombinator> compacted;
 	id<HMRCombinator> left = self.left.compaction;
 	id<HMRCombinator> right = self.right.compaction;
 	if ([left isEqual:HMRNone()])
-		alternation = right;
+		compacted = right;
 	else if ([right isEqual:HMRNone()])
-		alternation = left;
+		compacted = left;
 	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
-		alternation = left;
-	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first])
-		alternation = HMRConcatenate(((HMRConcatenation *)left).first, HMRAlternate(((HMRConcatenation *)left).second, ((HMRConcatenation *)right).second));
+		compacted = left;
+	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first]) {
+		__block id<HMRCombinator> alternation;
+		id<HMRCombinator> innerLeft = ((HMRConcatenation *)left).second;
+		id<HMRCombinator> innerRight = ((HMRConcatenation *)right).second;
+		alternation = HMRAlternate(innerLeft == self? HMRDelay(alternation) : innerLeft, innerRight == self? HMRDelay(alternation) : innerRight);
+		compacted = HMRConcatenate(((HMRConcatenation *)left).first, alternation);
+	}
 	else if (left == self.left && right == self.right)
-		alternation = self;
+		compacted = self;
 	else
-		alternation = HMRAlternate(left, right);
-	return alternation;
+		compacted = HMRAlternate(left, right);
+	return compacted;
 }
 
 l3_test(@selector(compaction)) {
