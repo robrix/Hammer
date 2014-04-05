@@ -19,7 +19,7 @@
 		D4ACA5C118DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */; };
 		D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5C318DD188A00EBD899 /* Hammer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4ACA5F218DD19FE00EBD899 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D4ACA5F518DD22F800EBD899 /* HMRParserCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5F318DD22F800EBD899 /* HMRParserCombinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4ACA5F518DD22F800EBD899 /* HMRParserCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5F318DD22F800EBD899 /* HMRParserCombinator.h */; };
 		D4ACA5F918DD258E00EBD899 /* HMRNull.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5F718DD258E00EBD899 /* HMRNull.h */; };
 		D4ACA5FA18DD258E00EBD899 /* HMRNull.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ACA5F818DD258E00EBD899 /* HMRNull.m */; };
 		D4ACA5FE18DD32CB00EBD899 /* HMROnce.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5FD18DD32CB00EBD899 /* HMROnce.h */; };
