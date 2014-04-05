@@ -65,7 +65,7 @@
 }
 
 -(bool)isCyclic {
-	return HMRMemoize(_cyclic, @YES, @([self computeCyclic])).boolValue;
+	return HMRFix(_cyclic, @YES, @([self computeCyclic])).boolValue;
 }
 
 
