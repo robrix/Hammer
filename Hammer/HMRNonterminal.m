@@ -89,7 +89,7 @@
 @synthesize name = _name;
 
 -(instancetype)withName:(NSString *)name {
-	_name = name;
+	if (!_name) _name = name;
 	return self;
 }
 
