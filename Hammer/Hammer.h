@@ -2,3 +2,4 @@
 
 #import <Hammer/HMRCombinator.h>
 #import <Hammer/HMRParserCombinator.h>
+#import <Hammer/HMRParsing.h>
