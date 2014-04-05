@@ -56,5 +56,8 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSOb
 
 
 id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
+	NSCParameterAssert(combinator != nil);
+	NSCParameterAssert(block != nil);
+	
 	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
 }

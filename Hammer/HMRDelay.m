@@ -27,7 +27,9 @@
 	HMRDelayBlock block = _block;
 	_block = nil;
 	if (block) {
+		_forcing = YES;
 		_forced = block();
+		_forcing = NO;
 	}
 	return _forced;
 }
@@ -78,7 +80,10 @@
 
 
 -(BOOL)isEqual:(id)object {
-	return [self.forced isEqual:object];
+	return
+		object == self
+	||	object == self.forced
+	||	[self.forced isEqual:object];
 }
 
 

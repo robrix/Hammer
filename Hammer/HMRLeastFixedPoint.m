@@ -6,7 +6,7 @@ id HMRLeastFixedPoint(id least, id(^block)(id)) {
 	bool changed = false;
 	do {
 		id next = block(least);
-		changed = ![least isEqual:next];
+		changed = !((least == next) || [least isEqual:next]);
 		least = next;
 	} while (changed);
 	return least;

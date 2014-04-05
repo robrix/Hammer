@@ -56,7 +56,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 			return _nullable = [self computeNullability]? @YES : @NO;
 		}));
 		
-		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
+		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *_) {
 			return _parseForest = [self reduceParseForest];
 		}));
 		

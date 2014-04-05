@@ -8,6 +8,7 @@ typedef id (^HMRDelayBlock)(void);
 
 -(instancetype)initWithClass:(Class)class block:(HMRDelayBlock)block;
 
+@property (readonly, getter = isForcing) bool forcing;
 @property (readonly) id forced;
 
 @end

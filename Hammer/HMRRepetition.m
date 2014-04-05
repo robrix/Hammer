@@ -62,6 +62,8 @@ l3_test(@selector(compaction)) {
 
 
 id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
+	NSCParameterAssert(combinator != nil);
+	
 	return [[HMRRepetition alloc] initWithCombinator:combinator];
 }
 
