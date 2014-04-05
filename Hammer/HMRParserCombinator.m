@@ -64,7 +64,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 		
 		_compaction = HMRDelay([weakSelf compact]);
 		
-		_description = HMRDelaySpecific([NSString class], [weakSelf describe]);
+		_description = HMRDelaySpecific([NSString class], [([[weakSelf name] stringByAppendingString:@": "] ?: @"") stringByAppendingString:[weakSelf describe]]);
 	}
 	return self;
 }
