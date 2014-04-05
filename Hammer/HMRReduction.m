@@ -49,7 +49,7 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSOb
 	id<HMRCombinator> combinator = self.combinator.compaction;
 	return [combinator isKindOfClass:[HMRReduction class]]?
 		HMRComposeReduction(combinator, self.block)
-	:	HMRReduce(combinator, self.block);
+	:	(combinator == self.combinator? self : HMRReduce(combinator, self.block));
 }
 
 
