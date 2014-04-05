@@ -1,8 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRParserCombinator.h"
+#import "HMRNonterminal.h"
 
-@interface HMRConcatenation : HMRParserCombinator
+@interface HMRConcatenation : HMRNonterminal
 
 @property (readonly) id<HMRCombinator>first;
 @property (readonly) id<HMRCombinator>second;
