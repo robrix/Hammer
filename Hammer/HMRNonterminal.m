@@ -21,10 +21,6 @@
 		
 		__weak HMRNonterminal *weakSelf = self;
 		
-		_nullability = HMRDelaySpecific([NSNumber class], _nullability = HMRLeastFixedPoint(_nullability = @NO, ^(id _) {
-			return _nullability = @([weakSelf computeNullability]);
-		}));
-		
 		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *_) {
 			return _parseForest = [weakSelf reduceParseForest];
 		}));
@@ -61,7 +57,9 @@
 }
 
 -(bool)isNullable {
-	return _nullability.boolValue;
+	return HMRMemoize(_nullability, @NO, HMRLeastFixedPoint(@NO, ^(id _) {
+		return _nullability = @([self computeNullability]);
+	})).boolValue;
 }
 
 
