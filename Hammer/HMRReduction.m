@@ -28,6 +28,11 @@
 }
 
 
+-(bool)computeCyclic {
+	return self.combinator.cyclic;
+}
+
+
 -(NSSet *)reduceParseForest {
 	return [[NSSet set] red_append:REDMap(self.combinator.parseForest, ^(id tree) {
 		return self.block(tree);
@@ -44,7 +49,7 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSOb
 	id<HMRCombinator> combinator = self.combinator.compaction;
 	return [combinator isKindOfClass:[HMRReduction class]]?
 		HMRComposeReduction(combinator, self.block)
-	:	HMRReduce(combinator, self.block);
+	:	(combinator == self.combinator? self : HMRReduce(combinator, self.block));
 }
 
 

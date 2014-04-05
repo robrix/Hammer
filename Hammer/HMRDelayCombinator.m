@@ -30,6 +30,10 @@
 	return self.forced.nullable;
 }
 
+-(bool)isCyclic {
+	return self.forced.cyclic;
+}
+
 
 -(NSSet *)parseForest {
 	return self.forced.parseForest;
@@ -50,6 +54,15 @@ l3_test(@selector(parseForest)) {
 
 
 @dynamic description;
+
+
+-(NSString *)name {
+	return self.forced.name;
+}
+
+-(instancetype)withName:(NSString *)name {
+	return [self.forced withName:name];
+}
 
 @end
 

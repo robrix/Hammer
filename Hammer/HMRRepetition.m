@@ -38,6 +38,11 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(bool)computeCyclic {
+	return self.combinator.cyclic;
+}
+
+
 -(NSSet *)reduceParseForest {
 	return [NSSet setWithObject:@[]];
 }
@@ -46,7 +51,7 @@ l3_test(@selector(derivative:)) {
 	id<HMRCombinator> combinator = self.combinator.compaction;
 	return [combinator isEqual:HMRNone()]?
 		HMRCaptureTree(@[])
-	:	HMRRepeat(combinator);
+	:	(combinator == self.combinator? self : HMRRepeat(combinator));
 }
 
 l3_test(@selector(compaction)) {

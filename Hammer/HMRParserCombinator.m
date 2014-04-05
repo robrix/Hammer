@@ -46,6 +46,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	NSSet *_parseForest;
 	NSString *_description;
 	NSNumber *_nullable;
+	NSNumber *_cyclic;
 }
 
 -(instancetype)init {
@@ -60,7 +61,9 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 			return _parseForest = [self reduceParseForest];
 		}));
 		
-		_compaction = HMRDelay([self compact]);
+		_compaction = HMRDelay(({ id<HMRCombinator> compacted = [self compact]; compacted == self? compacted : [compacted withName:[self.name stringByAppendingString:@"ʹ"]]; }));
+		
+		_description = HMRDelaySpecific([NSString class], [([[self name] stringByAppendingString:@": "] ?: @"") stringByAppendingString:[self describe]]);
 	}
 	return self;
 }
@@ -94,6 +97,24 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 
+-(bool)computeCyclic {
+	return NO;
+}
+
+-(bool)isCyclic {
+	if (_cyclic == nil) {
+		if (self.computingCyclic) {
+			_cyclic = @YES;
+		} else {
+			_computingCyclic = YES;
+			_cyclic = @([self computeCyclic]);
+			_computingCyclic = NO;
+		}
+	}
+	return _cyclic.boolValue;
+}
+
+
 -(id<HMRCombinator>)compact {
 	return self;
 }
@@ -105,8 +126,14 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	return super.description;
 }
 
--(NSString *)description {
-	return _description ?: (_description = [self describe]);
+@synthesize description = _description;
+
+
+@synthesize name = _name;
+
+-(instancetype)withName:(NSString *)name {
+	_name = name;
+	return self;
 }
 
 

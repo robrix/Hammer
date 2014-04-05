@@ -35,6 +35,28 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(bool)computeCyclic {
+	return self.left.cyclic || self.right.cyclic;
+}
+
+l3_test(@selector(isCyclic)) {
+	id<HMRCombinator> acyclic = HMRConcatenate(HMRNone(), HMRNone());
+	l3_expect(acyclic.cyclic).to.equal(@NO);
+	
+	__block id<HMRCombinator> leftRecursive;
+	leftRecursive = HMRAlternate(HMRDelay(leftRecursive), HMRNone());
+	l3_expect(leftRecursive.cyclic).to.equal(@YES);
+	
+	__block id<HMRCombinator> rightRecursive;
+	rightRecursive = HMRAlternate(HMRNone(), HMRDelay(rightRecursive));
+	l3_expect(rightRecursive.cyclic).to.equal(@YES);
+	
+	__block id<HMRCombinator> mutuallyRecursive;
+	mutuallyRecursive = HMRAlternate(HMRDelay(mutuallyRecursive), HMRDelay(mutuallyRecursive));
+	l3_expect(mutuallyRecursive.cyclic).to.equal(@YES);
+}
+
+
 -(NSSet *)reduceParseForest {
 	return [self.left.parseForest setByAddingObjectsFromSet:self.right.parseForest];
 }
@@ -52,6 +74,8 @@ l3_test(@selector(derivative:)) {
 		alternation = left;
 	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first])
 		alternation = HMRConcatenate(((HMRConcatenation *)left).first, HMRAlternate(((HMRConcatenation *)left).second, ((HMRConcatenation *)right).second));
+	else if (left == self.left && right == self.right)
+		alternation = self;
 	else
 		alternation = HMRAlternate(left, right);
 	return alternation;
