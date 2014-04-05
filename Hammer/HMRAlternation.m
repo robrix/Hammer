@@ -74,6 +74,8 @@ l3_test(@selector(isCyclic)) {
 		alternation = left;
 	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first])
 		alternation = HMRConcatenate(((HMRConcatenation *)left).first, HMRAlternate(((HMRConcatenation *)left).second, ((HMRConcatenation *)right).second));
+	else if (left == self.left && right == self.right)
+		alternation = self;
 	else
 		alternation = HMRAlternate(left, right);
 	return alternation;
