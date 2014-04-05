@@ -12,6 +12,9 @@ extern id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, N
 
 -(bool)computeNullability;
 
+@property (readonly, getter = isComputingCyclic) bool computingCyclic;
+-(bool)computeCyclic;
+
 -(NSSet *)reduceParseForest;
 
 /// Produce a deeply compacted representation of the receiver.
