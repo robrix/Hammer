@@ -36,6 +36,11 @@ l3_test(@selector(derivative:)) {
 	id third = @"c";
 	concatenation = HMRConcatenate(HMRLiteral(first), HMRConcatenate(HMRLiteral(second), HMRLiteral(third)));
 	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:@[ first, second, third ]]);
+	
+	__block id<HMRCombinator> cyclic = HMRConcatenate(HMRLiteral(first), HMRAlternate(HMRDelay(cyclic), HMRLiteral(second)));
+	l3_expect([[cyclic derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, second ]]));
+	l3_expect([[[cyclic derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, first, second ]]));
+	l3_expect([[[[cyclic derivative:first] derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, first, first, second ]]));
 }
 
 
