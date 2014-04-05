@@ -31,7 +31,7 @@ l3_test(@selector(evaluateWithObject:)) {
 
 #pragma mark HMRCombinator
 
--(NSString *)describe {
+-(NSString *)description {
 	return [NSString stringWithFormat:@"[%@]", self.characterSet];
 }
 
