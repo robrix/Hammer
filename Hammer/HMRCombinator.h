@@ -17,12 +17,12 @@
 @end
 
 
-id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right);
-id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second);
+id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) __attribute__((nonnull));
+id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) __attribute__((nonnull));
 
-id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator);
+id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) __attribute__((nonnull));
 
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>));
+id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) __attribute__((nonnull));
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
 
@@ -41,7 +41,7 @@ id<HMRCombinator> HMRCaptureForest(NSSet *forest);
 #define HMRDelay(x) \
 	((__typeof__(x))HMRLazyCombinator(^{ return (x); }))
 
-id<HMRCombinator> HMRLazyCombinator(id<HMRCombinator>(^)(void));
+id<HMRCombinator> HMRLazyCombinator(id<HMRCombinator>(^)(void)) __attribute__((nonnull));
 
 
 /// The empty combinator, i.e. a combinator which cannot match anything.
