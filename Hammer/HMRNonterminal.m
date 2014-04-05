@@ -24,10 +24,6 @@
 		
 		__weak HMRNonterminal *weakSelf = self;
 		
-		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *_) {
-			return _parseForest = [weakSelf reduceParseForest];
-		}));
-		
 		_compaction = HMRDelay(({ id<HMRCombinator> compacted = [weakSelf compact]; compacted == self? compacted : [compacted withName:[self.name stringByAppendingString:@"ʹ"]]; }));
 		
 		_description = HMRDelaySpecific([NSString class], [([[weakSelf name] stringByAppendingString:@": "] ?: @"") stringByAppendingString:[weakSelf describe]]);
@@ -52,7 +48,9 @@
 	return [NSSet set];
 }
 
-@synthesize parseForest = _parseForest;
+-(NSSet *)parseForest {
+	return HMRFix(_parseForest, [NSSet set], [self reduceParseForest]);
+}
 
 
 -(bool)computeNullability {
