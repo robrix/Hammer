@@ -63,6 +63,8 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 		}));
 		
 		_compaction = HMRDelay([weakSelf compact]);
+		
+		_description = HMRDelaySpecific([NSString class], [weakSelf describe]);
 	}
 	return self;
 }
@@ -107,9 +109,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	return super.description;
 }
 
--(NSString *)description {
-	return _description ?: (_description = [self describe]);
-}
+@synthesize description = _description;
 
 
 #pragma mark NSCopying
