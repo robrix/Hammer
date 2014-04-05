@@ -13,18 +13,15 @@
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
-	NSString *_description;
 	NSNumber *_nullability;
 	NSNumber *_cyclic;
+	__weak id<HMRCombinator> _compaction;
+	NSString *_description;
 }
 
 -(instancetype)init {
 	if ((self = [super init])) {
 		_derivativesByElements = [NSMutableDictionary new];
-		
-		__weak HMRNonterminal *weakSelf = self;
-		
-		_compaction = HMRDelay(({ id<HMRCombinator> compacted = [weakSelf compact]; compacted == self? compacted : [compacted withName:[self.name stringByAppendingString:@"ʹ"]]; }));
 	}
 	return self;
 }
@@ -73,7 +70,9 @@
 	return self;
 }
 
-@synthesize compaction = _compaction;
+-(id<HMRCombinator>)compaction {
+	return HMRMemoize(_compaction, self, [self compact]);
+}
 
 
 -(NSString *)describe {
