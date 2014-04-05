@@ -24,17 +24,17 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
+-(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
 	return HMRNone();
 }
 
 
--(bool)computeNullability {
+-(bool)isNullable {
 	return YES;
 }
 
 
--(NSSet *)reduceParseForest {
+-(NSSet *)parseForest {
 	return self.forest;
 }
 
@@ -82,7 +82,7 @@ static NSString * const doubleQuote = @"\"";
 }
 
 
--(NSString *)describe {
+-(NSString *)description {
 	return self.forest == nil?
 		@"ε"
 	:	[NSString stringWithFormat:@"ε↓{%@}", [self describeParseForest:self.forest]];

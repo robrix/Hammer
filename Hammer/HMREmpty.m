@@ -7,12 +7,7 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return self;
-}
-
-
--(NSString *)describe {
+-(NSString *)description {
 	return @"∅";
 }
 

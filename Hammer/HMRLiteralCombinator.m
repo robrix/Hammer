@@ -24,7 +24,7 @@
 
 #pragma mark HMRCombinator
 
--(NSString *)describe {
+-(NSString *)description {
 	return [NSString stringWithFormat:@"'%@'", self.object];
 }
 

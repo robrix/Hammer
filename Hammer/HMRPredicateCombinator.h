@@ -1,8 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import <Hammer/Hammer.h>
+#import "HMRTerminalCombinator.h"
 
-@interface HMRPredicateCombinator : HMRParserCombinator
+@interface HMRPredicateCombinator : HMRTerminalCombinator
 
 -(bool)evaluateWithObject:(id)object;
 
