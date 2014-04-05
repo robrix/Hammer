@@ -67,16 +67,7 @@
 }
 
 -(bool)isCyclic {
-	if (_cyclic == nil) {
-		if (self.computingCyclic) {
-			_cyclic = @YES;
-		} else {
-			_computingCyclic = YES;
-			_cyclic = @([self computeCyclic]);
-			_computingCyclic = NO;
-		}
-	}
-	return _cyclic.boolValue;
+	return (_cyclic ?: (_cyclic = @YES, _cyclic = @([self computeCyclic]))).boolValue;
 }
 
 
