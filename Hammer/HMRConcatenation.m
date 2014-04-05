@@ -103,5 +103,8 @@ l3_test(@selector(compaction)) {
 
 
 id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) {
+	NSCParameterAssert(first != nil);
+	NSCParameterAssert(second != nil);
+	
 	return [[HMRConcatenation alloc] initWithFirst:first second:second];
 }

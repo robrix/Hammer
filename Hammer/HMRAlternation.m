@@ -90,5 +90,8 @@ l3_test(@selector(compaction)) {
 
 
 id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) {
+	NSCParameterAssert(left != nil);
+	NSCParameterAssert(right != nil);
+	
 	return [[HMRAlternation alloc] initWithLeft:left right:right];
 }
