@@ -73,10 +73,10 @@ l3_test(@selector(isCyclic)) {
 	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
 		compacted = left;
 	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first]) {
-		__block id<HMRCombinator> alternation;
+		id<HMRCombinator> alternation;
 		id<HMRCombinator> innerLeft = ((HMRConcatenation *)left).second;
 		id<HMRCombinator> innerRight = ((HMRConcatenation *)right).second;
-		alternation = HMRAlternate(innerLeft == self? HMRDelay(alternation) : innerLeft, innerRight == self? HMRDelay(alternation) : innerRight);
+		alternation = HMRAlternate(innerLeft, innerRight);
 		compacted = HMRConcatenate(((HMRConcatenation *)left).first, alternation);
 	}
 	else if (left == self.left && right == self.right)
