@@ -86,7 +86,7 @@
 
 
 -(instancetype)self {
-	return self.forced;
+	return self.forced ?: self;
 }
 
 @end
