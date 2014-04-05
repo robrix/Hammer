@@ -112,6 +112,14 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 @synthesize description = _description;
 
 
+@synthesize name = _name;
+
+-(instancetype)withName:(NSString *)name {
+	_name = name;
+	return self;
+}
+
+
 #pragma mark NSCopying
 
 -(instancetype)copyWithZone:(NSZone *)zone {
