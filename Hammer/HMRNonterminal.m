@@ -7,6 +7,9 @@
 #define HMRMemoize(var, initial, recursive) \
 	((var) ?: ((var = (initial)), (var = (recursive))))
 
+#define HMRFix(var, initial, recursive) \
+	HMRMemoize((var), (initial), HMRLeastFixedPoint((initial), ^(id _) { return (var = (recursive)); }))
+
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
@@ -57,9 +60,7 @@
 }
 
 -(bool)isNullable {
-	return HMRMemoize(_nullability, @NO, HMRLeastFixedPoint(@NO, ^(id _) {
-		return _nullability = @([self computeNullability]);
-	})).boolValue;
+	return HMRFix(_nullability, @NO, @([self computeNullability])).boolValue;
 }
 
 
