@@ -62,7 +62,9 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 			return _parseForest = [weakSelf reduceParseForest];
 		}));
 		
-		_compaction = HMRDelay([weakSelf compact]);
+		_compaction = HMRDelay(({ id<HMRCombinator> compacted = [weakSelf compact]; compacted == self? compacted : [compacted withName:[self.name stringByAppendingString:@"ʹ"]]; }));
+		
+		_description = HMRDelaySpecific([NSString class], [([[weakSelf name] stringByAppendingString:@": "] ?: @"") stringByAppendingString:[weakSelf describe]]);
 	}
 	return self;
 }
@@ -107,8 +109,14 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	return super.description;
 }
 
--(NSString *)description {
-	return _description ?: (_description = [self describe]);
+@synthesize description = _description;
+
+
+@synthesize name = _name;
+
+-(instancetype)withName:(NSString *)name {
+	_name = name;
+	return self;
 }
 
 

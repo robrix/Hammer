@@ -14,6 +14,9 @@
 
 @property (readonly) NSString *description;
 
+@property (readonly) NSString *name;
+-(instancetype)withName:(NSString *)name;
+
 @end
 
 
