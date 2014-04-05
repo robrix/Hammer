@@ -2,12 +2,6 @@
 
 #import "HMRDelay.h"
 
-@interface NSObject (HMRDelay)
-
--(id)forceRecursively;
-
-@end
-
 @implementation HMRDelay {
 	Class _class;
 	HMRDelayBlock _block;
@@ -28,7 +22,7 @@
 	_block = nil;
 	if (block) {
 		_forcing = YES;
-		_forced = block();
+		_forced = [block() self];
 		_forcing = NO;
 	}
 	return _forced;
@@ -36,11 +30,6 @@
 
 -(id)forced {
 	return _forced ?: [self force];
-}
-
-
--(id)forceRecursively {
-	return self.forced;
 }
 
 
@@ -63,7 +52,7 @@
 
 
 -(id)forwardingTargetForSelector:(SEL)selector {
-	return [self.forced forceRecursively];
+	return [self.forced self];
 }
 
 -(NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
@@ -95,13 +84,9 @@
 	return [@"λ." stringByAppendingString:[self.forced description]];
 }
 
-@end
 
-
-@implementation NSObject (HMRDelay)
-
--(id)forceRecursively {
-	return self;
+-(instancetype)self {
+	return self.forced;
 }
 
 @end
