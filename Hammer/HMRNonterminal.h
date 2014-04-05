@@ -2,7 +2,7 @@
 
 #import <Hammer/HMRCombinator.h>
 
-@interface HMRParserCombinator : NSObject <HMRCombinator>
+@interface HMRNonterminal : NSObject <HMRCombinator>
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object;
 
