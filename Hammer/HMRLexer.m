@@ -46,9 +46,6 @@ id<REDReducible> HMRLexer(id<REDReducible> input) {
 	}];
 }
 
-//#define autolet(symbol, value, ...) \
-//	((^(__typeof__(value) symbol) __VA_ARGS__)(value))
-
 l3_test("lexer grammar") {
 	[HMRLexer(@"ord") red_reduce:nil usingBlock:^(id into, id each) {
 		return into;
