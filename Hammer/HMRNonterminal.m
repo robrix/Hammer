@@ -34,8 +34,7 @@
 }
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	__weak HMRNonterminal *weakSelf = self;
-	return _derivativesByElements[object] ?: (_derivativesByElements[object] = HMRDelay(_derivativesByElements[object] = [weakSelf deriveWithRespectToObject:object].compaction));
+	return HMRMemoize(_derivativesByElements[object], HMRNone(), [self deriveWithRespectToObject:object].compaction);
 }
 
 
@@ -71,7 +70,9 @@
 }
 
 -(id<HMRCombinator>)compaction {
-	return HMRMemoize(_compaction, self, [self compact]);
+	return
+		_compaction
+	?:	(_compaction = HMRDelay([[self compact] withName:self.name]));
 }
 
 
