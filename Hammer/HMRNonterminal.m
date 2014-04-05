@@ -25,12 +25,6 @@
 		__weak HMRNonterminal *weakSelf = self;
 		
 		_compaction = HMRDelay(({ id<HMRCombinator> compacted = [weakSelf compact]; compacted == self? compacted : [compacted withName:[self.name stringByAppendingString:@"ʹ"]]; }));
-		
-		_description = HMRDelaySpecific([NSString class], ({
-			_description = weakSelf.name ?: super.description;
-			NSString *description = [weakSelf describe];
-			weakSelf.name? [[weakSelf.name stringByAppendingString:@" -> "] stringByAppendingString:description] : description;
-		}));
 	}
 	return self;
 }
@@ -86,7 +80,12 @@
 	return super.description;
 }
 
-@synthesize description = _description;
+-(NSString *)description {
+	NSString *description = HMRMemoize(_description, self.name ?: super.description, [self describe]);
+	return self.name?
+		[[self.name stringByAppendingString:@" -> "] stringByAppendingString:description]
+	:	description;
+}
 
 
 @synthesize name = _name;
