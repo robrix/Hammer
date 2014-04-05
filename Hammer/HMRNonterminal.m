@@ -26,7 +26,11 @@
 		
 		_compaction = HMRDelay(({ id<HMRCombinator> compacted = [weakSelf compact]; compacted == self? compacted : [compacted withName:[self.name stringByAppendingString:@"ʹ"]]; }));
 		
-		_description = HMRDelaySpecific([NSString class], [([[weakSelf name] stringByAppendingString:@": "] ?: @"") stringByAppendingString:[weakSelf describe]]);
+		_description = HMRDelaySpecific([NSString class], ({
+			_description = weakSelf.name ?: super.description;
+			NSString *description = [weakSelf describe];
+			weakSelf.name? [[weakSelf.name stringByAppendingString:@" -> "] stringByAppendingString:description] : description;
+		}));
 	}
 	return self;
 }
