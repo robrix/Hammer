@@ -1,8 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRCombinator.h"
+#import "HMRTerminalCombinator.h"
 
-@interface HMREmpty : NSObject <HMRCombinator>
+@interface HMREmpty : HMRTerminalCombinator
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 
