@@ -25,29 +25,38 @@ l3_test("null reduction of partially parsed strings") {
 }
 
 
-id<REDReducible> HMRLexer(id<REDReducible> input) {
-	return [REDReducer reducerWithReducible:input transformer:^REDReducingBlock(REDReducingBlock reduce) {
-		id<HMRCombinator> wordSet = HMRCharacterSet([NSCharacterSet alphanumericCharacterSet]);
-		id<HMRCombinator> word = HMRReduce(HMRConcatenate(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
-			return x;
-		});
-		
-		id<HMRCombinator> whitespaceSet = HMRCharacterSet([NSCharacterSet whitespaceAndNewlineCharacterSet]);
-		id<HMRCombinator> whitespace = HMRConcatenate(whitespaceSet, HMRRepeat(whitespaceSet));
-		
-		id<HMRCombinator> start = HMRRepeat(HMRAlternate(word, whitespace));
-		
-		__block id<HMRCombinator> grammar = start;
-		
-		return ^(id into, id each) {
-			grammar = [grammar derivative:each];
-			return reduce(into, each);
-		};
-	}];
-}
+//id<REDReducible> HMRLexer(id<REDReducible> input) {
+//	return [REDReducer reducerWithReducible:input transformer:^REDReducingBlock(REDReducingBlock reduce) {
+//		return ^(id into, id each) {
+//			grammar = [grammar derivative:each];
+//			return reduce(into, each);
+//		};
+//	}];
+//}
 
 l3_test("lexer grammar") {
-	[HMRLexer(@"ord") red_reduce:nil usingBlock:^(id into, id each) {
-		return into;
-	}];
+	id<HMRCombinator> wordSet = HMRCharacterSet([NSCharacterSet alphanumericCharacterSet]);
+	id<HMRCombinator> word = HMRReduce(HMRConcatenate(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
+		return x;
+	});
+	
+	id<HMRCombinator> whitespaceSet = HMRCharacterSet([NSCharacterSet whitespaceAndNewlineCharacterSet]);
+	id<HMRCombinator> whitespace = HMRConcatenate(whitespaceSet, HMRRepeat(whitespaceSet));
+	
+	id<HMRCombinator> start = HMRRepeat(HMRAlternate(word, whitespace));
+	
+	__block id<HMRCombinator> grammar = start;
+	
+	
+	
+	NSSet *parseForest = [[@"word" red_reduce:grammar usingBlock:^id(id<HMRCombinator> into, id each) {
+		NSLog(@"%@", into);
+		return [into derivative:each];
+	}] parseForest];
+	
+	l3_expect(parseForest).to.equal(([NSSet setWithObject:@[ @"w", @"o", @"r", @"d" ]]));
+	
+//	[HMRLexer(@"ord") red_reduce:nil usingBlock:^(id into, id each) {
+//		return into;
+//	}];
 }
