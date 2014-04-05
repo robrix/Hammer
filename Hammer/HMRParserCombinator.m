@@ -45,24 +45,22 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
 	NSString *_description;
-	NSNumber *_nullability;
+	NSNumber *_nullable;
 }
 
 -(instancetype)init {
 	if ((self = [super init])) {
 		_derivativesByElements = [NSMutableDictionary new];
 		
-		__weak HMRParserCombinator *weakSelf = self;
-		
-		_nullability = HMRDelaySpecific([NSNumber class], _nullability = HMRLeastFixedPoint(_nullability = @NO, ^(id _) {
-			return _nullability = @([weakSelf computeNullability]);
+		_nullable = HMRDelaySpecific([NSNumber class], _nullable = HMRLeastFixedPoint(_nullable = @NO, ^(id _) {
+			return _nullable = [self computeNullability]? @YES : @NO;
 		}));
 		
 		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *forest) {
-			return _parseForest = [weakSelf reduceParseForest];
+			return _parseForest = [self reduceParseForest];
 		}));
 		
-		_compaction = HMRDelay([weakSelf compact]);
+		_compaction = HMRDelay([self compact]);
 	}
 	return self;
 }
@@ -92,7 +90,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 }
 
 -(bool)isNullable {
-	return _nullability.boolValue;
+	return _nullable.boolValue;
 }
 
 
