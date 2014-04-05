@@ -48,10 +48,10 @@ l3_test(@selector(derivative:)) {
 }
 
 -(id<HMRCombinator>)compact {
-	id<HMRCombinator> combinator = self.combinator.compaction;
+	id<HMRCombinator> combinator = [self.combinator.compaction self];
 	return [combinator isEqual:HMRNone()]?
 		HMRCaptureTree(@[])
-	:	(combinator == self.combinator? self : HMRRepeat(combinator));
+	:	(combinator == [self.combinator self]? self : HMRRepeat(combinator));
 }
 
 l3_test(@selector(compaction)) {
