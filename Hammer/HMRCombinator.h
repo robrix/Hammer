@@ -7,6 +7,7 @@
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object;
 
 @property (readonly, getter = isNullable) bool nullable;
+@property (readonly, getter = isCyclic) bool cyclic;
 
 @property (readonly) NSSet *parseForest;
 

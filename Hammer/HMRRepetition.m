@@ -37,6 +37,11 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(bool)computeCyclic {
+	return self.combinator.cyclic;
+}
+
+
 -(NSSet *)reduceParseForest {
 	return [NSSet setWithObject:@[]];
 }

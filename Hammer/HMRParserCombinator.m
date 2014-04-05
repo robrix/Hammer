@@ -46,6 +46,7 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 	NSSet *_parseForest;
 	NSString *_description;
 	NSNumber *_nullability;
+	NSNumber *_cyclic;
 }
 
 -(instancetype)init {
@@ -95,6 +96,24 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 
 -(bool)isNullable {
 	return _nullability.boolValue;
+}
+
+
+-(bool)computeCyclic {
+	return NO;
+}
+
+-(bool)isCyclic {
+	if (_cyclic == nil) {
+		if (self.computingCyclic) {
+			_cyclic = @YES;
+		} else {
+			_computingCyclic = YES;
+			_cyclic = @([self computeCyclic]);
+			_computingCyclic = NO;
+		}
+	}
+	return _cyclic.boolValue;
 }
 
 
