@@ -1,8 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRTerminalCombinator.h"
+#import "HMRTerminal.h"
 
-@implementation HMRTerminalCombinator
+@implementation HMRTerminal
 
 #pragma mark HMRCombinator
 
