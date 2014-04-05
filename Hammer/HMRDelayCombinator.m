@@ -45,7 +45,7 @@ l3_test(@selector(parseForest)) {
 
 
 -(id<HMRCombinator>)compaction {
-	return self.forced.compaction;
+	return self.forcing? self : self.forced.compaction;
 }
 
 
