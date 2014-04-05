@@ -27,7 +27,8 @@ l3_test(@selector(derivative:)) {
 	
 	// S -> ("x" | S)*
 	id terminal = @"x";
-	__block id nonterminal = HMRDelay(HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)));
+	__block id nonterminal = HMRDelay([HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)) withName:@"S"]);
+	
 	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:@[ terminal ]]);
 	l3_expect([[nonterminal derivative:terminal] derivative:terminal].parseForest).to.equal([NSSet setWithObject:@[ terminal, terminal ]]);
 }
