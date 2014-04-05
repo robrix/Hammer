@@ -68,7 +68,11 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 		}));
 		
 		
-		_description = HMRDelaySpecific([NSString class], [([[self name] stringByAppendingString:@": "] ?: @"") stringByAppendingString:[self describe]]);
+		_description = HMRDelaySpecific([NSString class], ({
+			_description = self.name ?: super.description;
+			NSString *description = [self describe];
+			self.name? [[self.name stringByAppendingString:@" -> "] stringByAppendingString:description] : description;
+		}));
 	}
 	return self;
 }
