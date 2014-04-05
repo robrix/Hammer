@@ -81,10 +81,9 @@
 }
 
 -(NSString *)description {
-	NSString *description = HMRMemoize(_description, self.name ?: super.description, [self describe]);
-	return self.name?
-		[[self.name stringByAppendingString:@" -> "] stringByAppendingString:description]
-	:	description;
+	return HMRMemoize(_description, self.name ?: super.description, self.name?
+			[[self.name stringByAppendingString:@" -> "] stringByAppendingString:[self describe]]
+		:	[self describe]);
 }
 
 
