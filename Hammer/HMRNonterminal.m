@@ -4,6 +4,9 @@
 #import "HMRLeastFixedPoint.h"
 #import "HMRNonterminal.h"
 
+#define HMRMemoize(var, initial, recursive) \
+	((var) ?: ((var = (initial)), (var = (recursive))))
+
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
@@ -67,7 +70,7 @@
 }
 
 -(bool)isCyclic {
-	return (_cyclic ?: (_cyclic = @YES, _cyclic = @([self computeCyclic]))).boolValue;
+	return HMRMemoize(_cyclic, @YES, @([self computeCyclic])).boolValue;
 }
 
 
