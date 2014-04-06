@@ -40,8 +40,8 @@
 	:	[self describe];
 }
 
--(NSSet *)prettyPrinted {
-	return self.name? [NSSet setWithObject:self.description] : [NSSet set];
+-(NSOrderedSet *)prettyPrinted {
+	return self.name? [NSOrderedSet orderedSetWithObject:self.description] : [NSOrderedSet orderedSet];
 }
 
 

@@ -16,7 +16,7 @@
 -(id<HMRCombinator>)compact;
 
 -(NSString *)describe;
--(NSSet *)prettyPrint;
+-(NSOrderedSet *)prettyPrint;
 
 +(instancetype)new UNAVAILABLE_ATTRIBUTE;
 

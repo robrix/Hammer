@@ -57,8 +57,10 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSOb
 	return [NSString stringWithFormat:@"%@ → 𝑓", self.combinator.name ?: self.combinator.description];
 }
 
--(NSSet *)prettyPrint {
-	return [[super prettyPrint] setByAddingObjectsFromSet:self.combinator.prettyPrinted];
+-(NSOrderedSet *)prettyPrint {
+	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
+	[prettyPrint unionOrderedSet:self.combinator.prettyPrinted];
+	return prettyPrint;
 }
 
 @end

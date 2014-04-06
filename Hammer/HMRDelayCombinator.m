@@ -55,7 +55,7 @@ l3_test(@selector(parseForest)) {
 
 @dynamic description;
 
--(NSSet *)prettyPrinted {
+-(NSOrderedSet *)prettyPrinted {
 	return self.forced.prettyPrinted;
 }
 
