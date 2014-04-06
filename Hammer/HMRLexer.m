@@ -52,7 +52,8 @@ l3_test("lexer grammar") {
 	
 	
 	NSSet *parseForest = [[@"word" red_reduce:grammar usingBlock:^id(id<HMRCombinator> into, id each) {
-		NSLog(@"%@", into);
+		printf("%s\n\n", into.description.UTF8String);
+		fflush(stdout);
 		return [into derivative:each];
 	}] parseForest];
 	
