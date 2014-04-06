@@ -17,7 +17,7 @@
 	NSNumber *_cyclic;
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
-	NSSet *_prettyPrinted;
+	NSOrderedSet *_prettyPrinted;
 }
 
 -(instancetype)init {
@@ -87,12 +87,12 @@
 		:	[self describe]);
 }
 
--(NSSet *)prettyPrint {
-	return self.name? [NSSet setWithObject:self.description] : [NSSet set];
+-(NSOrderedSet *)prettyPrint {
+	return self.name? [NSOrderedSet orderedSetWithObject:self.description] : [NSOrderedSet orderedSet];
 }
 
--(NSSet *)prettyPrinted {
-	return HMRFix(_prettyPrinted, [NSSet set], [self prettyPrint]);
+-(NSOrderedSet *)prettyPrinted {
+	return HMRFix(_prettyPrinted, [NSOrderedSet orderedSet], [self prettyPrint]);
 }
 
 
