@@ -101,8 +101,7 @@ l3_test(@selector(compaction)) {
 	
 	__block id<HMRCombinator> cyclic = [HMRAlternate(HMRNone(), HMRConcatenate(HMRNone(), HMRDelay(cyclic))) withName:@"S"];
 	l3_expect(cyclic.compaction).to.equal(HMRNone());
-	cyclic = [HMRAlternate(HMRNone(), HMRDelay(cyclic)) withName:@"S"];
-//	l3_expect(cyclic.compaction).to.equal(cyclic);
+	
 	cyclic = [HMRAlternate(HMRConcatenate(nullParse, p), HMRConcatenate(same, HMRDelay(cyclic))) withName:@"S"];
 	HMRConcatenation *cyclicCompaction = cyclic.compaction;
 	l3_expect([cyclicCompaction isKindOfClass:[HMRConcatenation class]]).to.equal(@YES);
