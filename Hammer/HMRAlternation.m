@@ -109,7 +109,7 @@ l3_test(@selector(compaction)) {
 	HMRAlternation *second = cyclicCompaction.second;
 	l3_expect([second isKindOfClass:[HMRAlternation class]]).to.equal(@YES);
 	l3_expect(second.left).to.equal(p);
-	l3_expect(second.right).to.equal(second);
+	l3_expect(second.right).to.equal(cyclicCompaction);
 }
 
 
