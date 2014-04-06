@@ -137,8 +137,11 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"(%@ ∘ %@)", self.first.name ?: self.first.description, self.second.name ?: self.second.description];
 }
 
--(NSSet *)prettyPrint {
-	return [[super prettyPrint] setByAddingObjectsFromSet:[self.first.prettyPrinted setByAddingObjectsFromSet:self.second.prettyPrinted]];
+-(NSOrderedSet *)prettyPrint {
+	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
+	[prettyPrint unionOrderedSet:self.first.prettyPrinted];
+	[prettyPrint unionOrderedSet:self.second.prettyPrinted];
+	return prettyPrint;
 }
 
 
