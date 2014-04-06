@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRCharacterSetCombinator.h"
+#import "HMROnce.h"
 
 @implementation HMRCharacterSetCombinator
 
@@ -51,6 +52,15 @@ static NSString * const HMRAlphanumericCharacterSetName = @"[:alnum:]";
 static NSString * const HMRAlphabeticCharacterSetName = @"[:alpha:]";
 static NSString * const HMRWhitespaceCharacterSetName = @"[:blank:]";
 static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
+
++(NSDictionary *)characterSetsByName {
+	return HMROnce(@{
+		HMRAlphanumericCharacterSetName: [NSCharacterSet alphanumericCharacterSet],
+		HMRAlphabeticCharacterSetName: [NSCharacterSet letterCharacterSet],
+		HMRWhitespaceCharacterSetName: [NSCharacterSet whitespaceCharacterSet],
+		HMRWhitespaceAndNewlineCharacterSetName: [NSCharacterSet whitespaceAndNewlineCharacterSet],
+	});
+}
 
 @end
 
