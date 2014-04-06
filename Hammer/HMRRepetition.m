@@ -63,6 +63,10 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"%@*", self.combinator.description];
 }
 
+-(NSSet *)prettyPrint {
+	return [[super prettyPrint] setByAddingObjectsFromSet:self.combinator.prettyPrinted];
+}
+
 @end
 
 

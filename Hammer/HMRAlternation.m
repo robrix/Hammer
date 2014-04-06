@@ -117,6 +117,10 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"(%@ | %@)", self.left.description, self.right.description];
 }
 
+-(NSSet *)prettyPrint {
+	return [[super prettyPrint] setByAddingObjectsFromSet:[self.left.prettyPrinted setByAddingObjectsFromSet:self.right.prettyPrinted]];
+}
+
 
 #pragma mark NSObject
 
