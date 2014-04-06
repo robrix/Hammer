@@ -40,6 +40,9 @@
 	:	[self describe];
 }
 
+-(NSSet *)prettyPrinted {
+	return self.name? [NSSet setWithObject:self.description] : [NSSet set];
+}
 
 
 @synthesize name = _name;
