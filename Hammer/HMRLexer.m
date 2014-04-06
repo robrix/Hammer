@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRLexer.h"
+#import "HMRParsing.h"
 #import <Reducers/REDReducer.h>
 
 /*
@@ -52,7 +53,7 @@ l3_test("lexer grammar") {
 	
 	
 	NSSet *parseForest = [[@"word" red_reduce:grammar usingBlock:^id(id<HMRCombinator> into, id each) {
-		printf("%s\n\n", into.description.UTF8String);
+		printf("%s\n\n", HMRPrettyPrint(into).UTF8String);
 		fflush(stdout);
 		return [into derivative:each];
 	}] parseForest];
