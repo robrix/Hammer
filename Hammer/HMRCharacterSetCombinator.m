@@ -3,6 +3,13 @@
 #import "HMRCharacterSetCombinator.h"
 #import "HMROnce.h"
 
+@interface HMRCharacterSetCombinator ()
+
++(NSDictionary *)namesByCharacterSet;
++(NSDictionary *)characterSetsByName;
+
+@end
+
 @implementation HMRCharacterSetCombinator
 
 -(instancetype)initWithCharacterSet:(NSCharacterSet *)characterSet {
@@ -60,6 +67,16 @@ static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 		HMRWhitespaceCharacterSetName: [NSCharacterSet whitespaceCharacterSet],
 		HMRWhitespaceAndNewlineCharacterSetName: [NSCharacterSet whitespaceAndNewlineCharacterSet],
 	});
+}
+
++(NSDictionary *)namesByCharacterSet {
+	return HMROnce([@{} red_append:REDMap(self.characterSetsByName, ^(NSString *key) {
+		return @[ self.characterSetsByName[key], key ];
+	})]);
+}
+
+l3_test(@selector(namesByCharacterSet)) {
+	l3_expect(HMRCharacterSetCombinator.namesByCharacterSet[HMRCharacterSetCombinator.characterSetsByName[HMRAlphabeticCharacterSetName]]).to.equal(HMRAlphabeticCharacterSetName);
 }
 
 @end
