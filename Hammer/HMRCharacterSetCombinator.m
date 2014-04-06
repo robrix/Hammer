@@ -44,6 +44,14 @@ l3_test(@selector(evaluateWithObject:)) {
 	&&	[object.characterSet isEqual:self.characterSet];
 }
 
+
+#pragma mark Named sets
+
+static NSString * const HMRAlphanumericCharacterSetName = @"[:alnum:]";
+static NSString * const HMRAlphabeticCharacterSetName = @"[:alpha:]";
+static NSString * const HMRWhitespaceCharacterSetName = @"[:blank:]";
+static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
+
 @end
 
 
