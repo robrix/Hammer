@@ -3,4 +3,7 @@
 #import <Hammer/HMRCombinator.h>
 
 @interface HMRTerminal : NSObject <HMRCombinator>
+
+-(NSString *)describe;
+
 @end

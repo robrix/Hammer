@@ -22,9 +22,9 @@
 }
 
 
-#pragma mark HMRCombinator
+#pragma mark HMRTerminal
 
--(NSString *)description {
+-(NSString *)describe {
 	return [NSString stringWithFormat:@"'%@'", self.object];
 }
 

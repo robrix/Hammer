@@ -30,7 +30,16 @@
 }
 
 
-@dynamic description;
+-(NSString *)describe {
+	return super.description;
+}
+
+-(NSString *)description {
+	return self.name?
+		[NSString stringWithFormat:@"%@ -> %@", self.name, [self describe]]
+	:	[self describe];
+}
+
 
 
 @synthesize name = _name;
