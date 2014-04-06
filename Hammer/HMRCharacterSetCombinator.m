@@ -40,7 +40,11 @@ l3_test(@selector(evaluateWithObject:)) {
 #pragma mark HMRCombinator
 
 -(NSString *)description {
-	return [NSString stringWithFormat:@"[%@]", self.characterSet];
+	return [NSString stringWithFormat:@"[%@]", self.class.namesByCharacterSet[self.characterSet] ?: self.characterSet];
+}
+
+l3_test(@selector(description)) {
+	l3_expect(HMRCharacterSet([NSCharacterSet alphanumericCharacterSet]).description).to.equal(@"[[:alnum:]]");
 }
 
 
