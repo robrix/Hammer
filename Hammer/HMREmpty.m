@@ -7,7 +7,7 @@
 
 #pragma mark HMRCombinator
 
--(NSString *)description {
+-(NSString *)describe {
 	return @"∅";
 }
 

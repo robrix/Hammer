@@ -14,6 +14,7 @@
 @property (readonly) id<HMRCombinator> compaction;
 
 @property (readonly) NSString *description;
+@property (readonly) NSSet *prettyPrinted;
 
 @property (readonly) NSString *name;
 -(instancetype)withName:(NSString *)name;

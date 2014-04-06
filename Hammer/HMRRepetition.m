@@ -62,7 +62,11 @@ l3_test(@selector(compaction)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"%@*", self.combinator.description];
+	return [NSString stringWithFormat:@"%@*", self.combinator.name ?: self.combinator.description];
+}
+
+-(NSSet *)prettyPrint {
+	return [[super prettyPrint] setByAddingObjectsFromSet:self.combinator.prettyPrinted];
 }
 
 @end
