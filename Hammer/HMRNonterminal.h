@@ -8,7 +8,6 @@
 
 -(bool)computeNullability;
 
-@property (readonly, getter = isComputingCyclic) bool computingCyclic;
 -(bool)computeCyclic;
 
 -(NSSet *)reduceParseForest;

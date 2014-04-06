@@ -36,11 +36,33 @@ l3_test(@selector(derivative:)) {
 	id third = @"c";
 	concatenation = HMRConcatenate(HMRLiteral(first), HMRConcatenate(HMRLiteral(second), HMRLiteral(third)));
 	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:@[ first, second, third ]]);
+	
+	__block id<HMRCombinator> cyclic = HMRConcatenate(HMRLiteral(first), HMRAlternate(HMRDelay(cyclic), HMRLiteral(second)));
+	l3_expect([[cyclic derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, second ]]));
+	l3_expect([[[cyclic derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, first, second ]]));
+	l3_expect([[[[cyclic derivative:first] derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, first, first, second ]]));
 }
 
 
 -(bool)computeNullability {
 	return self.first.nullable && self.second.nullable;
+}
+
+l3_test(@selector(isNullable)) {
+	id<HMRCombinator> nonNullable = HMRLiteral(@"x");
+	id<HMRCombinator> nullable = HMRRepeat(nonNullable);
+	l3_expect(HMRConcatenate(nonNullable, nonNullable).nullable).to.equal(@NO);
+	l3_expect(HMRConcatenate(nonNullable, nullable).nullable).to.equal(@NO);
+	l3_expect(HMRConcatenate(nullable, nonNullable).nullable).to.equal(@NO);
+	l3_expect(HMRConcatenate(nullable, nullable).nullable).to.equal(@YES);
+	
+	__block id<HMRCombinator> cyclic;
+	l3_expect((cyclic = HMRConcatenate(HMRDelay(cyclic), nullable)).nullable).to.equal(@NO);
+	l3_expect((cyclic = HMRConcatenate(nullable, HMRDelay(cyclic))).nullable).to.equal(@NO);
+	l3_expect((cyclic = HMRConcatenate(HMRAlternate(nullable, HMRDelay(cyclic)), nullable)).nullable).to.equal(@YES);
+	l3_expect((cyclic = HMRConcatenate(nullable, HMRAlternate(nullable, HMRDelay(cyclic)))).nullable).to.equal(@YES);
+	l3_expect((cyclic = HMRConcatenate(HMRAlternate(nonNullable, HMRDelay(cyclic)), nullable)).nullable).to.equal(@NO);
+	l3_expect((cyclic = HMRConcatenate(nullable, HMRAlternate(nonNullable, HMRDelay(cyclic)))).nullable).to.equal(@NO);
 }
 
 
@@ -87,13 +109,15 @@ l3_test(@selector(isCyclic)) {
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> first = self.first.compaction;
 	id<HMRCombinator> second = self.second.compaction;
-	id<HMRCombinator> concatenation;
+	__block id<HMRCombinator> concatenation;
 	if ([first isEqual:HMRNone()] || [second isEqual:HMRNone()])
 		concatenation = HMRNone();
 	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
 		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
-	else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]])
-		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:((HMRConcatenation *)second).first.parseForest]), ((HMRConcatenation *)second).second);
+	else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]]) {
+		HMRConcatenation *innerSecond = (HMRConcatenation *)second;
+		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:innerSecond.first.parseForest]), innerSecond.second == self? HMRDelay(concatenation) : innerSecond.second);
+	}
 	else if (first == self.first && second == self.second)
 		concatenation = self;
 	else

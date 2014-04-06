@@ -77,7 +77,7 @@
 
 
 -(NSString *)debugDescription {
-	return [NSString stringWithFormat:@"<HMRDelay %p> %@", self, self.description];
+	return [NSString stringWithFormat:@"<HMRDelay: %p> %@", self, self.description];
 }
 
 -(NSString *)description {

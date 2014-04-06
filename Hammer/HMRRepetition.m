@@ -48,6 +48,7 @@ l3_test(@selector(derivative:)) {
 	return [NSSet setWithObject:@[]];
 }
 
+
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> combinator = [self.combinator.compaction self];
 	return [combinator isEqual:HMRNone()]?
