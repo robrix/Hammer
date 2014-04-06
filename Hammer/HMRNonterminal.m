@@ -4,31 +4,24 @@
 #import "HMRLeastFixedPoint.h"
 #import "HMRNonterminal.h"
 
+#define HMRMemoize(var, initial, recursive) \
+	((var) ?: ((var = (initial)), (var = (recursive))))
+
+#define HMRFix(var, initial, recursive) \
+	HMRMemoize((var), (initial), HMRLeastFixedPoint((initial), ^(id _) { return (var = (recursive)); }))
+
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
-	NSString *_description;
 	NSNumber *_nullability;
 	NSNumber *_cyclic;
+	__weak id<HMRCombinator> _compaction;
+	NSString *_description;
 }
 
 -(instancetype)init {
 	if ((self = [super init])) {
 		_derivativesByElements = [NSMutableDictionary new];
-		
-		__weak HMRNonterminal *weakSelf = self;
-		
-		_nullability = HMRDelaySpecific([NSNumber class], _nullability = HMRLeastFixedPoint(_nullability = @NO, ^(id _) {
-			return _nullability = @([weakSelf computeNullability]);
-		}));
-		
-		_parseForest = HMRDelaySpecific([NSSet class], _parseForest = HMRLeastFixedPoint(_parseForest = [NSSet set], ^(NSSet *_) {
-			return _parseForest = [weakSelf reduceParseForest];
-		}));
-		
-		_compaction = HMRDelay(({ id<HMRCombinator> compacted = [weakSelf compact]; compacted == self? compacted : [compacted withName:[self.name stringByAppendingString:@"ʹ"]]; }));
-		
-		_description = HMRDelaySpecific([NSString class], [([[weakSelf name] stringByAppendingString:@": "] ?: @"") stringByAppendingString:[weakSelf describe]]);
 	}
 	return self;
 }
@@ -41,8 +34,7 @@
 }
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	__weak HMRNonterminal *weakSelf = self;
-	return _derivativesByElements[object] ?: (_derivativesByElements[object] = HMRDelay(_derivativesByElements[object] = [weakSelf deriveWithRespectToObject:object].compaction));
+	return HMRMemoize(_derivativesByElements[object], HMRNone(), [self deriveWithRespectToObject:object].compaction);
 }
 
 
@@ -50,7 +42,9 @@
 	return [NSSet set];
 }
 
-@synthesize parseForest = _parseForest;
+-(NSSet *)parseForest {
+	return HMRFix(_parseForest, [NSSet set], [self reduceParseForest]);
+}
 
 
 -(bool)computeNullability {
@@ -58,7 +52,7 @@
 }
 
 -(bool)isNullable {
-	return _nullability.boolValue;
+	return HMRFix(_nullability, @NO, @([self computeNullability])).boolValue;
 }
 
 
@@ -67,16 +61,7 @@
 }
 
 -(bool)isCyclic {
-	if (_cyclic == nil) {
-		if (self.computingCyclic) {
-			_cyclic = @YES;
-		} else {
-			_computingCyclic = YES;
-			_cyclic = @([self computeCyclic]);
-			_computingCyclic = NO;
-		}
-	}
-	return _cyclic.boolValue;
+	return HMRFix(_cyclic, @YES, @([self computeCyclic])).boolValue;
 }
 
 
@@ -84,20 +69,28 @@
 	return self;
 }
 
-@synthesize compaction = _compaction;
+-(id<HMRCombinator>)compaction {
+	return
+		_compaction
+	?:	(_compaction = HMRDelay([[self compact] withName:self.name]));
+}
 
 
 -(NSString *)describe {
 	return super.description;
 }
 
-@synthesize description = _description;
+-(NSString *)description {
+	return HMRMemoize(_description, self.name ?: super.description, self.name?
+			[[self.name stringByAppendingString:@" -> "] stringByAppendingString:[self describe]]
+		:	[self describe]);
+}
 
 
 @synthesize name = _name;
 
 -(instancetype)withName:(NSString *)name {
-	_name = name;
+	if (!_name) _name = name;
 	return self;
 }
 
