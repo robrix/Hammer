@@ -37,3 +37,11 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 		[parser derivative:object]
 	:	nil; // ???
 }
+
+
+NSString *HMRPrettyPrint(id<HMRCombinator> grammar) {
+	NSArray *sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES selector:@selector(caseInsensitiveCompare:)] ];
+	return [@"" red_append:REDMap([grammar.prettyPrinted sortedArrayUsingDescriptors:sortDescriptors], ^(NSString *line) {
+		return [line stringByAppendingString:@"\n"];
+	})];
+}
