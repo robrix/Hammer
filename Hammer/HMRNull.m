@@ -82,7 +82,7 @@ static NSString * const doubleQuote = @"\"";
 }
 
 
--(NSString *)description {
+-(NSString *)describe {
 	return self.forest == nil?
 		@"ε"
 	:	[NSString stringWithFormat:@"ε↓{%@}", [self describeParseForest:self.forest]];

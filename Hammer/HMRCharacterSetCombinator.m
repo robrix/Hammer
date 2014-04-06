@@ -37,9 +37,9 @@ l3_test(@selector(evaluateWithObject:)) {
 }
 
 
-#pragma mark HMRCombinator
+#pragma mark HMRTerminal
 
--(NSString *)description {
+-(NSString *)describe {
 	return [NSString stringWithFormat:@"[%@]", self.class.namesByCharacterSet[self.characterSet] ?: self.characterSet];
 }
 

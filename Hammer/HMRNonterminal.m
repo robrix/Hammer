@@ -17,6 +17,7 @@
 	NSNumber *_cyclic;
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
+	NSSet *_prettyPrinted;
 }
 
 -(instancetype)init {
@@ -84,6 +85,14 @@
 	return HMRMemoize(_description, self.name ?: super.description, self.name?
 			[[self.name stringByAppendingString:@" -> "] stringByAppendingString:[self describe]]
 		:	[self describe]);
+}
+
+-(NSSet *)prettyPrint {
+	return self.name? [NSSet setWithObject:self.description] : [NSSet set];
+}
+
+-(NSSet *)prettyPrinted {
+	return HMRFix(_prettyPrinted, [NSSet set], [self prettyPrint]);
 }
 
 

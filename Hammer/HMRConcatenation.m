@@ -134,7 +134,11 @@ l3_test(@selector(compaction)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"(%@ ∘ %@)", self.first.description, self.second.description];
+	return [NSString stringWithFormat:@"(%@ ∘ %@)", self.first.name ?: self.first.description, self.second.name ?: self.second.description];
+}
+
+-(NSSet *)prettyPrint {
+	return [[super prettyPrint] setByAddingObjectsFromSet:[self.first.prettyPrinted setByAddingObjectsFromSet:self.second.prettyPrinted]];
 }
 
 
