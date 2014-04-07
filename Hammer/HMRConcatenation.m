@@ -17,11 +17,9 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	id<HMRCombinator> first = self.first;
-	id<HMRCombinator> second = self.second;
-	id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([first derivative:object], second);
-	return first.nullable?
-		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(first.parseForest), [second derivative:object]))
+	id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([self.first derivative:object], self.second);
+	return self.first.nullable?
+		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(self.first.parseForest), [self.second derivative:object]))
 	:	derivativeAfterFirst;
 }
 
