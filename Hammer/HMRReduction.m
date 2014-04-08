@@ -35,9 +35,7 @@
 
 
 -(NSSet *)reduceParseForest {
-	return [[NSSet set] red_append:REDMap(self.combinator.parseForest, ^(id tree) {
-		return self.block(tree);
-	})];
+	return [[NSSet set] red_append:REDMap(self.combinator.parseForest, self.block)];
 }
 
 
