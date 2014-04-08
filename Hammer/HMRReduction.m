@@ -46,9 +46,21 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSOb
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> combinator = self.combinator.compaction;
-	return [combinator isKindOfClass:[HMRReduction class]]?
-		HMRComposeReduction(combinator, self.block)
-	:	(combinator == self.combinator? self : HMRReduce(combinator, self.block));
+	id<HMRCombinator> compacted;
+	if ([combinator isKindOfClass:[HMRReduction class]])
+		compacted = HMRComposeReduction(combinator, self.block);
+	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
+		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
+		HMRReductionBlock block = self.block;
+		compacted = HMRReduce(concatenation.second, ^(id<NSObject,NSCopying> each) {
+			return [[@[] red_append:REDFlattenMap(concatenation.first.parseForest, REDIdentityMapBlock)] red_append:(NSArray *)([each isKindOfClass:[NSArray class]]? block(each) : @[ block(each) ])];
+		});
+	}
+	else if (combinator == self.combinator)
+		compacted = self;
+	else
+		compacted = HMRReduce(combinator, self.block);
+	return compacted;
 }
 
 l3_test(@selector(compaction)) {
