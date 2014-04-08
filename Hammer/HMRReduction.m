@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRConcatenation.h"
 #import "HMRNull.h"
 #import "HMRReduction.h"
 
@@ -48,6 +49,12 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSOb
 	return [combinator isKindOfClass:[HMRReduction class]]?
 		HMRComposeReduction(combinator, self.block)
 	:	(combinator == self.combinator? self : HMRReduce(combinator, self.block));
+}
+
+l3_test(@selector(compaction)) {
+	HMRReduction *reduction = HMRReduce(HMRConcatenate(HMRCaptureTree(@"x"), HMRLiteral(@"x")), REDIdentityMapBlock);
+	id<HMRCombinator> expected = HMRLiteral(@"x");
+	l3_expect(((HMRConcatenation *)reduction.combinator.compaction).second).to.equal(expected);
 }
 
 
