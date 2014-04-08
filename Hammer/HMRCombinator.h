@@ -1,6 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <Reducers/REDMap.h>
 
 @protocol HMRCombinator <NSObject, NSCopying>
 
@@ -27,7 +27,7 @@ id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> seco
 
 id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) __attribute__((nonnull));
 
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) __attribute__((nonnull));
+id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, REDMapBlock block) __attribute__((nonnull));
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
 

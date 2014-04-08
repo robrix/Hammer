@@ -2,10 +2,11 @@
 
 #import "HMRNull.h"
 #import "HMRReduction.h"
+#import <Reducers/REDReducer.h>
 
 @implementation HMRReduction
 
--(instancetype)initWithCombinator:(id<HMRCombinator>)combinator block:(HMRReductionBlock)block {
+-(instancetype)initWithCombinator:(id<HMRCombinator>)combinator block:(REDMapBlock)block {
 	if ((self = [super init])) {
 		_combinator = [combinator copyWithZone:NULL];
 		_block = [block copy];
@@ -18,7 +19,7 @@
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> combinator = self.combinator;
-	HMRReductionBlock block = self.block;
+	REDMapBlock block = self.block;
 	return HMRReduce([combinator derivative:object], block);
 }
 
@@ -40,8 +41,8 @@
 }
 
 
-static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSObject, NSCopying>(^g)(id<NSObject, NSCopying>)) {
-	HMRReductionBlock f = reduction.block;
+static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, REDMapBlock g) {
+	REDMapBlock f = reduction.block;
 	return HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); });
 }
 
@@ -66,7 +67,7 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSOb
 @end
 
 
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
+id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, REDMapBlock block) {
 	NSCParameterAssert(combinator != nil);
 	NSCParameterAssert(block != nil);
 	
