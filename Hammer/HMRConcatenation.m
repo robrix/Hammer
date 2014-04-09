@@ -110,10 +110,6 @@ l3_test(@selector(isCyclic)) {
 		concatenation = HMRNone();
 	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
 		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
-	else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)second).first isKindOfClass:[HMRNull class]]) {
-		HMRConcatenation *innerSecond = (HMRConcatenation *)second;
-		concatenation = HMRConcatenate(HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:innerSecond.first.parseForest]), innerSecond.second == self? HMRDelay(concatenation) : innerSecond.second);
-	}
 	else if (first == self.first && second == self.second)
 		concatenation = self;
 	else
