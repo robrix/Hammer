@@ -73,8 +73,6 @@ l3_test(@selector(compaction)) {
 			return [each stringByAppendingString:each];
 		})];
 	});
-	id<HMRCombinator> expected = HMRLiteral(@"b");
-	l3_expect(((HMRConcatenation *)reduction.combinator.compaction).second).to.equal(expected);
 	l3_expect([reduction derivative:@"b"].parseForest).to.equal([NSSet setWithObject:HMRList(@"aa", @"bb", nil)]);
 	
 	reduction = HMRReduce(HMRConcatenate(HMRLiteral(@"a"), HMRConcatenate(HMRLiteral(@"b"), HMRLiteral(@"c"))), REDIdentityMapBlock);

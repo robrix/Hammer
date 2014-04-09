@@ -108,6 +108,18 @@ l3_test(@selector(isCyclic)) {
 	__block id<HMRCombinator> concatenation;
 	if ([first isEqual:HMRNone()] || [second isEqual:HMRNone()])
 		concatenation = HMRNone();
+	else if ([first isKindOfClass:[HMRNull class]]) {
+		NSSet *parseForest = first.parseForest;
+		concatenation = HMRReduce(second, ^(id<NSObject,NSCopying> each) {
+			return HMRCons(parseForest.anyObject, each);
+		});
+	}
+	else if ([second isKindOfClass:[HMRNull class]]) {
+		NSSet *parseForest = second.parseForest;
+		concatenation = HMRReduce(first, ^(id<NSObject,NSCopying> each) {
+			return HMRCons(each, parseForest.anyObject);
+		});
+	}
 	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
 		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
 	else if (first == self.first && second == self.second)
