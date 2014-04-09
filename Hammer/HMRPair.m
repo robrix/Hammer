@@ -88,7 +88,9 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 
 
 HMRPair *HMRCons(id first, id rest) {
-	return [[HMRPair alloc] initWithFirst:first rest:rest];
+	return (first == nil && rest == nil)?
+		[HMRPair null]
+	:	[[HMRPair alloc] initWithFirst:first rest:rest];
 }
 
 HMRPair *(^HMRPairVariadics)(va_list) = ^(va_list args) {
