@@ -71,8 +71,8 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 -(BOOL)isEqual:(HMRPair *)pair {
 	return
 		[pair isKindOfClass:self.class]
-	&&	((pair.first == self.first) || [pair.first isEqual:self.first])
-	&&	((pair.rest == self.rest) || [pair.rest isEqual:self.rest]);
+	&&	((self.first == pair.first) || [self.first isEqual:pair.first])
+	&&	((self.rest == pair.rest) || [self.rest isEqual:pair.rest]);
 }
 
 @end
