@@ -2,6 +2,7 @@
 
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
+#import "HMRPair.h"
 
 @implementation HMRConcatenation
 
@@ -30,17 +31,17 @@ l3_test(@selector(derivative:)) {
 	id second = @"b";
 	id other = @"";
 	id<HMRCombinator> concatenation = HMRConcatenate(HMRLiteral(first), HMRLiteral(second));
-	l3_expect([[concatenation derivative:first] derivative:second].parseForest).to.equal([NSSet setWithObject:@[ first, second ]]);
+	l3_expect([[concatenation derivative:first] derivative:second].parseForest).to.equal([NSSet setWithObject:HMRCons(first, second)]);
 	l3_expect([[concatenation derivative:first] derivative:other].parseForest).to.equal([NSSet set]);
 	
 	id third = @"c";
 	concatenation = HMRConcatenate(HMRLiteral(first), HMRConcatenate(HMRLiteral(second), HMRLiteral(third)));
-	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:@[ first, second, third ]]);
+	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:HMRCons(first, HMRCons(second, third))]);
 	
 	__block id<HMRCombinator> cyclic = HMRConcatenate(HMRLiteral(first), HMRAlternate(HMRDelay(cyclic), HMRLiteral(second)));
-	l3_expect([[cyclic derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, second ]]));
-	l3_expect([[[cyclic derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, first, second ]]));
-	l3_expect([[[[cyclic derivative:first] derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:@[ first, first, first, second ]]));
+	l3_expect([[cyclic derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:HMRCons(first, second)]));
+	l3_expect([[[cyclic derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:HMRCons(first, HMRCons(first, second))]));
+	l3_expect([[[[cyclic derivative:first] derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:HMRCons(first, HMRCons(first, HMRCons(first, second)))]));
 }
 
 
@@ -89,14 +90,9 @@ l3_test(@selector(isCyclic)) {
 
 
 +(NSSet *)concatenateParseForestWithPrefix:(NSSet *)prefix suffix:(NSSet *)suffix {
-	id(^concat)(id, id) = ^(id left, id right) {
-		left = [left isKindOfClass:[NSArray class]]? left : @[ left ];
-		right = [right isKindOfClass:[NSArray class]]? right : @[ right ];
-		return [left arrayByAddingObjectsFromArray:right];
-	};
 	return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
 		return REDMap(suffix, ^(id y) {
-			return concat(x, y);
+			return HMRCons(x, y);
 		});
 	})];
 }

@@ -1,6 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRConcatenation.h"
 #import "HMRNull.h"
+#import "HMRPair.h"
 #import "HMRReduction.h"
 
 @implementation HMRReduction
@@ -34,22 +36,49 @@
 
 
 -(NSSet *)reduceParseForest {
-	return [[NSSet set] red_append:REDMap(self.combinator.parseForest, ^(id tree) {
+	return [[NSSet set] red_append:REDMap(self.combinator.parseForest, ^(id<NSObject,NSCopying> tree) {
 		return self.block(tree);
 	})];
 }
 
 
-static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, id<NSObject, NSCopying>(^g)(id<NSObject, NSCopying>)) {
+static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g) {
 	HMRReductionBlock f = reduction.block;
 	return HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); });
 }
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> combinator = self.combinator.compaction;
-	return [combinator isKindOfClass:[HMRReduction class]]?
-		HMRComposeReduction(combinator, self.block)
-	:	(combinator == self.combinator? self : HMRReduce(combinator, self.block));
+	id<HMRCombinator> compacted;
+	if ([combinator isKindOfClass:[HMRReduction class]])
+		compacted = HMRComposeReduction(combinator, self.block);
+	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
+		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
+		HMRNull *first = concatenation.first;
+		HMRReductionBlock block = self.block;
+		compacted = HMRReduce(concatenation.second, ^(id<NSObject,NSCopying> each) {
+			return block(HMRCons(first.parseForest.anyObject, each));
+		});
+	}
+	else if (combinator == self.combinator)
+		compacted = self;
+	else
+		compacted = HMRReduce(combinator, self.block);
+	return compacted;
+}
+
+l3_test(@selector(compaction)) {
+	HMRReduction *reduction = HMRReduce(HMRConcatenate(HMRCaptureTree(@"a"), HMRLiteral(@"b")), ^(HMRPair *each) {
+		return [[HMRPair null] red_append:REDMap(each, ^(NSString *each){
+			return [each stringByAppendingString:each];
+		})];
+	});
+	id<HMRCombinator> expected = HMRLiteral(@"b");
+	l3_expect(((HMRConcatenation *)reduction.combinator.compaction).second).to.equal(expected);
+	l3_expect([reduction derivative:@"b"].parseForest).to.equal([NSSet setWithObject:HMRList(@"aa", @"bb", nil)]);
+	
+	reduction = HMRReduce(HMRConcatenate(HMRLiteral(@"a"), HMRConcatenate(HMRLiteral(@"b"), HMRLiteral(@"c"))), REDIdentityMapBlock);
+	l3_expect([[[reduction derivative:@"a"] derivative:@"b"] derivative:@"c"].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", HMRCons(@"b", @"c"))]);
 }
 
 
