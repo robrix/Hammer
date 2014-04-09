@@ -35,10 +35,14 @@
 }
 
 
--(NSSet *)reduceParseForest {
-	return [[NSSet set] red_append:REDMap(self.combinator.parseForest, ^(id<NSObject,NSCopying> tree) {
+-(NSSet *)reduceParseForest:(NSSet *)forest {
+	return [[NSSet set] red_append:REDMap(forest, ^(id<NSObject,NSCopying> tree) {
 		return self.block(tree);
 	})];
+}
+
+-(NSSet *)reduceParseForest {
+	return [self reduceParseForest:self.combinator.parseForest];
 }
 
 
@@ -60,6 +64,8 @@ static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRRedu
 			return block(HMRCons(first.parseForest.anyObject, each));
 		});
 	}
+	else if ([combinator isKindOfClass:[HMRNull class]])
+		compacted = HMRCaptureForest([self reduceParseForest:combinator.parseForest]);
 	else if (combinator == self.combinator)
 		compacted = self;
 	else
