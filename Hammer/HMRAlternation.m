@@ -3,6 +3,7 @@
 #import "HMRAlternation.h"
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
+#import "HMRPair.h"
 
 @implementation HMRAlternation
 
@@ -95,21 +96,14 @@ l3_test(@selector(compaction)) {
 	id<HMRCombinator> nullParse = HMRCaptureTree(@"a");
 	id<HMRCombinator> same = HMRCaptureTree(@"a");
 	id<HMRCombinator> p = HMRLiteral(@"p");
-	id<HMRCombinator> q = HMRLiteral(@"q");
 	l3_expect(HMRAlternate(nullParse, same).compaction).to.equal(same);
-	l3_expect(HMRAlternate(HMRConcatenate(nullParse, p), HMRConcatenate(same, q)).compaction).to.equal(HMRConcatenate(nullParse, HMRAlternate(p, q)));
 	
 	__block id<HMRCombinator> cyclic = [HMRAlternate(HMRNone(), HMRConcatenate(HMRNone(), HMRDelay(cyclic))) withName:@"S"];
 	l3_expect(cyclic.compaction).to.equal(HMRNone());
 	
 	cyclic = [HMRAlternate(HMRConcatenate(nullParse, p), HMRConcatenate(same, HMRDelay(cyclic))) withName:@"S"];
-	HMRConcatenation *cyclicCompaction = cyclic.compaction;
-	l3_expect([cyclicCompaction isKindOfClass:[HMRConcatenation class]]).to.equal(@YES);
-	l3_expect(cyclicCompaction.first).to.equal(nullParse);
-	HMRAlternation *second = cyclicCompaction.second;
-	l3_expect([second isKindOfClass:[HMRAlternation class]]).to.equal(@YES);
-	l3_expect(second.left).to.equal(p);
-	l3_expect(second.right).to.equal(cyclicCompaction);
+	id<HMRCombinator> derivative = [cyclic.compaction derivative:@"p"];
+	l3_expect(derivative.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"p")]);
 }
 
 
