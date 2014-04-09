@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRPair.h"
 #import "HMRRepetition.h"
 
 @implementation HMRRepetition
@@ -21,16 +22,16 @@
 l3_test(@selector(derivative:)) {
 	id each = @"a";
 	id<HMRCombinator> repetition = HMRRepeat(HMRLiteral(each));
-	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each ]]);
-	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, each ]]);
-	l3_expect([[[repetition derivative:each] derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:@[ each, each, each ]]);
+	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, nil)]);
+	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, nil)]);
+	l3_expect([[[repetition derivative:each] derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, each, nil)]);
 	
 	// S -> ("x" | S)*
 	id terminal = @"x";
 	__block id nonterminal = HMRDelay([HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)) withName:@"S"]);
 	
-	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:@[ terminal ]]);
-	l3_expect([[nonterminal derivative:terminal] derivative:terminal].parseForest).to.equal([NSSet setWithObject:@[ terminal, terminal ]]);
+	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
+	l3_expect([[nonterminal derivative:terminal] derivative:terminal].parseForest).to.equal([NSSet setWithObject:HMRList(terminal, terminal, nil)]);
 }
 
 
@@ -45,19 +46,19 @@ l3_test(@selector(derivative:)) {
 
 
 -(NSSet *)reduceParseForest {
-	return [NSSet setWithObject:@[]];
+	return [NSSet setWithObject:[HMRPair null]];
 }
 
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> combinator = [self.combinator.compaction self];
 	return [combinator isEqual:HMRNone()]?
-		HMRCaptureTree(@[])
-	:	(combinator == [self.combinator self]? self : HMRRepeat(combinator));
+		HMRCaptureTree([HMRPair null])
+	:	(combinator == self.combinator? self : HMRRepeat(combinator));
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat(HMRNone()).compaction).to.equal(HMRCaptureTree(@[]));
+	l3_expect(HMRRepeat(HMRNone()).compaction).to.equal(HMRCaptureTree([HMRPair null]));
 }
 
 

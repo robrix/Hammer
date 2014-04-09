@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRLexer.h"
+#import "HMRPair.h"
 #import "HMRParsing.h"
 #import <Reducers/REDReducer.h>
 
@@ -58,8 +59,8 @@ l3_test("lexer grammar") {
 		return [into derivative:each];
 	}] parseForest];
 	
-	l3_expect(parseForest).to.equal(([NSSet setWithObject:@[ @"w", @"o", @"r", @"d" ]]));
-	l3_expect(reductions).to.equal((@[ @[ @"w", @"o", @"r", @"d" ] ]));
+	l3_expect(parseForest).to.equal([NSSet setWithObject:HMRList(@"w", @"o", @"r", @"d", nil)]);
+	l3_expect(reductions).to.equal(@[ @[ @"w", @"o", @"r", @"d" ] ]);
 	
 //	[HMRLexer(@"ord") red_reduce:nil usingBlock:^(id into, id each) {
 //		return into;
