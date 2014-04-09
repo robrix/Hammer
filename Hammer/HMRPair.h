@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HMRPair : NSObject <NSCopying>
+@interface HMRPair : NSObject <NSCopying, REDReducible>
 
 @property (readonly) id first;
 @property (readonly) id rest;

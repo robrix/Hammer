@@ -24,6 +24,20 @@
 }
 
 
+#pragma mark REDReducible
+
+-(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return self.isNil?
+		initial
+	:	[self.rest red_reduce:block(initial, self.first) usingBlock:block];
+}
+
+l3_test(@selector(red_reduce:usingBlock:)) {
+	HMRPair *list = HMRList(@5, @1, @3, nil);
+	l3_expect([@[] red_append:list]).to.equal(@[@5, @1, @3]);
+}
+
+
 #pragma mark NSCopying
 
 -(instancetype)copyWithZone:(NSZone *)zone {
