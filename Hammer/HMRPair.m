@@ -29,6 +29,22 @@
 }
 
 
+#pragma mark REDAppendable
+
+-(instancetype)red_append:(id<REDReducible>)from {
+	REDReducingBlock reverse = ^(HMRPair *(^into)(HMRPair *), id each) {
+		return [^(HMRPair *x) { return into(HMRCons(each, x)); } copy];
+	};
+	HMRPair *(^terminate)(HMRPair *) = [from red_reduce:[self red_reduce:REDIdentityMapBlock usingBlock:reverse] usingBlock:reverse];
+	return terminate(self.class.null);
+}
+
+l3_test(@selector(red_append:)) {
+	HMRPair *appended = [HMRList(@1, @2, @3, nil) red_append:@[@4, @5]];
+	l3_expect(appended).to.equal(HMRList(@1, @2, @3, @4, @5, nil));
+}
+
+
 #pragma mark REDReducible
 
 -(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {

@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HMRPair : NSObject <NSCopying, REDReducible>
+@interface HMRPair : NSObject <NSCopying, REDReducible, REDAppendable>
 
 +(instancetype)null;
 
