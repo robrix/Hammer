@@ -75,6 +75,10 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 	&&	((self.rest == pair.rest) || [self.rest isEqual:pair.rest]);
 }
 
+-(NSUInteger)hash {
+	return 0x3ff6a09e667f3bcdllu ^ [self.first hash] ^ [self.rest hash];
+}
+
 @end
 
 
