@@ -4,10 +4,16 @@
 
 id HMRLeastFixedPoint(id least, id(^block)(id)) {
 	bool changed = false;
+#if DEBUG
+	NSUInteger iteration = 0;
+#endif
 	do {
 		id next = block(least);
 		changed = !((least == next) || [least isEqual:next]);
 		least = next;
+#if DEBUG
+		++iteration;
+#endif
 	} while (changed);
 	return least;
 }
