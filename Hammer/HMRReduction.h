@@ -2,7 +2,7 @@
 
 #import "HMRNonterminal.h"
 
-typedef id<NSObject, NSCopying>(^HMRReductionBlock)(id<NSObject, NSCopying>);
+typedef id<NSObject, NSCopying>(^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 @interface HMRReduction : HMRNonterminal
 
