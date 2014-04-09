@@ -1,8 +1,13 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMROnce.h"
 #import "HMRPair.h"
 
 @implementation HMRPair
+
++(instancetype)null {
+	return HMROnce([[self alloc] initWithFirst:nil rest:nil]);
+}
 
 -(instancetype)initWithFirst:(id)first rest:(id)rest {
 	if ((self = [super init])) {

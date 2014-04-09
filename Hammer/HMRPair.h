@@ -4,6 +4,8 @@
 
 @interface HMRPair : NSObject <NSCopying, REDReducible>
 
++(instancetype)null;
+
 @property (readonly) id first;
 @property (readonly) id rest;
 
