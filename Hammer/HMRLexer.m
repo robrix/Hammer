@@ -40,14 +40,16 @@ l3_test("lexer grammar") {
 	NSMutableArray *reductions = [NSMutableArray new];
 	id<HMRCombinator> wordSet = HMRCharacterSet([NSCharacterSet alphanumericCharacterSet]);
 	id<HMRCombinator> word = [HMRReduce(HMRConcatenate(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
-		[reductions addObject:x];
-		return x;
+		id reduced = [@"" red_append:(id)x];
+		[reductions addObject:reduced];
+		return reduced;
 	}) withName:@"word"];
 	
 	id<HMRCombinator> whitespaceSet = HMRCharacterSet([NSCharacterSet whitespaceAndNewlineCharacterSet]);
 	id<HMRCombinator> whitespace = [HMRConcatenate(whitespaceSet, HMRRepeat(whitespaceSet)) withName:@"whitespace"];
 	
-	id<HMRCombinator> start = [HMRRepeat(HMRAlternate(word, whitespace)) withName:@"start"];
+	__block id<HMRCombinator> start = [HMRConcatenate(HMRAlternate(word, whitespace), HMRAlternate(HMRCaptureTree([HMRPair null]), HMRDelay(start))) withName:@"start"];
+	start = [HMRAlternate(word, whitespace) withName:@"start"];
 	
 	__block id<HMRCombinator> grammar = start;
 	
@@ -59,8 +61,8 @@ l3_test("lexer grammar") {
 		return [into derivative:each];
 	}] parseForest];
 	
-	l3_expect(parseForest).to.equal([NSSet setWithObject:HMRList(@"w", @"o", @"r", @"d", nil)]);
-	l3_expect(reductions).to.equal(@[ @[ @"w", @"o", @"r", @"d" ] ]);
+	l3_expect(parseForest).to.equal([NSSet setWithObject:@"word"]);
+	l3_expect(reductions).to.equal(@[ @"word" ]);
 	
 //	[HMRLexer(@"ord") red_reduce:nil usingBlock:^(id into, id each) {
 //		return into;
