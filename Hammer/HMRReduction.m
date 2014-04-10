@@ -69,9 +69,9 @@ l3_test(&HMRComposeReduction) {
 		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
 		HMRNull *first = concatenation.first;
 		HMRReductionBlock block = self.block;
-		compacted = HMRReduce(concatenation.second, ^(id<NSObject,NSCopying> each) {
+		compacted = [(HMRReduction *)HMRReduce(concatenation.second, ^(id<NSObject,NSCopying> each) {
 			return block(HMRCons(first.parseForest.anyObject, each));
-		});
+		}) withFunctionDescription:[self.functionDescription stringByAppendingString:[NSString stringWithFormat:@"(%@ :)", first]]];
 	}
 	else if ([combinator isKindOfClass:[HMRNull class]])
 		compacted = HMRCaptureForest([self reduceParseForest:combinator.parseForest]);
