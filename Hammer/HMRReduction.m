@@ -50,7 +50,14 @@
 
 static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g) {
 	HMRReductionBlock f = reduction.block;
-	return HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); });
+	return [(HMRReduction *)HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); }) withFunctionDescription:[@"𝑔∘" stringByAppendingString:reduction.functionDescription]];
+}
+
+l3_addTestSubjectTypeWithFunction(HMRComposeReduction)
+l3_test(&HMRComposeReduction) {
+	NSString *a = @"a";
+	HMRReductionBlock f = REDIdentityMapBlock;
+	l3_expect(HMRComposeReduction(HMRReduce(HMRLiteral(a), f), f).description).to.equal(@"'a' → 𝑔∘𝑓");
 }
 
 -(id<HMRCombinator>)compact {
