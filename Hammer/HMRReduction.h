@@ -7,7 +7,10 @@ typedef id<NSObject, NSCopying>(^HMRReductionBlock)(id<NSObject, NSCopying> each
 @interface HMRReduction : HMRNonterminal
 
 @property (readonly) id<HMRCombinator> combinator;
+@property (readonly) NSString *functionDescription;
 @property (readonly) HMRReductionBlock block;
+
+-(instancetype)withFunctionDescription:(NSString *)functionDescription;
 
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
