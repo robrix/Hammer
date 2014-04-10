@@ -1,14 +1,10 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRDelay.h"
-#import "HMRLeastFixedPoint.h"
 #import "HMRNonterminal.h"
 
 #define HMRMemoize(var, initial, recursive) \
 	((var) ?: ((var = (initial)), (var = (recursive))))
-
-#define HMRFix(var, initial, recursive) \
-	HMRMemoize((var), (initial), HMRLeastFixedPoint((initial), ^(id _) { return (var = (recursive)); }))
 
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
@@ -44,7 +40,7 @@
 }
 
 -(NSSet *)parseForest {
-	return HMRFix(_parseForest, [NSSet set], [self reduceParseForest]);
+	return HMRMemoize(_parseForest, [NSSet set], [self reduceParseForest]);
 }
 
 
@@ -53,7 +49,7 @@
 }
 
 -(bool)isNullable {
-	return HMRFix(_nullable, @NO, @([self computeNullability])).boolValue;
+	return HMRMemoize(_nullable, @NO, @([self computeNullability])).boolValue;
 }
 
 
@@ -62,7 +58,7 @@
 }
 
 -(bool)isCyclic {
-	return HMRFix(_cyclic, @YES, @([self computeCyclic])).boolValue;
+	return HMRMemoize(_cyclic, @YES, @([self computeCyclic])).boolValue;
 }
 
 
@@ -92,7 +88,7 @@
 }
 
 -(NSOrderedSet *)prettyPrinted {
-	return HMRFix(_prettyPrinted, [NSOrderedSet orderedSet], [self prettyPrint]);
+	return HMRMemoize(_prettyPrinted, [NSOrderedSet orderedSet], [self prettyPrint]);
 }
 
 
