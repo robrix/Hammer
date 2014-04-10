@@ -48,23 +48,23 @@
 }
 
 
-static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g) {
+static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g, NSString *functionDescription) {
 	HMRReductionBlock f = reduction.block;
-	return [(HMRReduction *)HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); }) withFunctionDescription:[@"𝑔∘" stringByAppendingString:reduction.functionDescription]];
+	return [(HMRReduction *)HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); }) withFunctionDescription:[NSString stringWithFormat:@"%@∘%@", functionDescription ?: @"𝑔", reduction.functionDescription]];
 }
 
 l3_addTestSubjectTypeWithFunction(HMRComposeReduction)
 l3_test(&HMRComposeReduction) {
 	NSString *a = @"a";
 	HMRReductionBlock f = REDIdentityMapBlock;
-	l3_expect(HMRComposeReduction(HMRReduce(HMRLiteral(a), f), f).description).to.equal(@"'a' → 𝑔∘𝑓");
+	l3_expect(HMRComposeReduction(HMRReduce(HMRLiteral(a), f), f, nil).description).to.equal(@"'a' → 𝑔∘𝑓");
 }
 
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> combinator = self.combinator.compaction;
 	id<HMRCombinator> compacted;
 	if ([combinator isKindOfClass:[HMRReduction class]])
-		compacted = HMRComposeReduction(combinator, self.block);
+		compacted = HMRComposeReduction(combinator, self.block, self.functionDescription);
 	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
 		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
 		HMRNull *first = concatenation.first;
