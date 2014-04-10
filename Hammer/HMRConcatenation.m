@@ -3,6 +3,7 @@
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
+#import "HMRReduction.h"
 
 @implementation HMRConcatenation
 
@@ -110,15 +111,15 @@ l3_test(@selector(isCyclic)) {
 		concatenation = HMRNone();
 	else if ([first isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = first.parseForest;
-		concatenation = HMRReduce(second, ^(id<NSObject,NSCopying> each) {
+		concatenation = [(HMRReduction *)HMRReduce(second, ^(id<NSObject,NSCopying> each) {
 			return HMRCons(parseForest.anyObject, each);
-		});
+		}) withFunctionDescription:[NSString stringWithFormat:@"(%@ :)", first]];
 	}
 	else if ([second isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = second.parseForest;
-		concatenation = HMRReduce(first, ^(id<NSObject,NSCopying> each) {
+		concatenation = [(HMRReduction *)HMRReduce(first, ^(id<NSObject,NSCopying> each) {
 			return HMRCons(each, parseForest.anyObject);
-		});
+		}) withFunctionDescription:[NSString stringWithFormat:@"(: %@)", second]];
 	}
 	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
 		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
@@ -138,7 +139,7 @@ l3_test(@selector(compaction)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"(%@ ∘ %@)", self.first.name ?: self.first.description, self.second.name ?: self.second.description];
+	return [NSString stringWithFormat:@"(%@ × %@)", self.first.name ?: self.first.description, self.second.name ?: self.second.description];
 }
 
 -(NSOrderedSet *)prettyPrint {
