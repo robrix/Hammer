@@ -10,6 +10,8 @@ typedef id<NSObject, NSCopying>(^HMRReductionBlock)(id<NSObject, NSCopying> each
 @property (readonly) NSString *functionDescription;
 @property (readonly) HMRReductionBlock block;
 
+-(instancetype)withFunctionDescription:(NSString *)functionDescription;
+
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 
