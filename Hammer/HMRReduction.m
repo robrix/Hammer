@@ -87,13 +87,18 @@ l3_test(@selector(compaction)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"%@ → 𝑓", self.combinator.name ?: self.combinator.description];
+	return [NSString stringWithFormat:@"%@ → %@", self.combinator.name ?: self.combinator.description, self.functionDescription];
 }
 
 -(NSOrderedSet *)prettyPrint {
 	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
 	[prettyPrint unionOrderedSet:self.combinator.prettyPrinted];
 	return prettyPrint;
+}
+
+
+-(NSString *)functionDescription {
+	return @"𝑓";
 }
 
 @end
