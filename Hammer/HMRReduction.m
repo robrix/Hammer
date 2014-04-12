@@ -76,7 +76,7 @@ l3_test(&HMRComposeReduction) {
 	else if (combinator == self.combinator)
 		compacted = self;
 	else
-		compacted = HMRReduce(combinator, self.block);
+		compacted = [(HMRReduction *)HMRReduce(combinator, self.block) withFunctionDescription:self.functionDescription];
 	return compacted;
 }
 
