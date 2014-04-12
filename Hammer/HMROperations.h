@@ -9,3 +9,7 @@
 /// \param combinator  The combinator to calculate the size of.
 /// \return            An unsigned integer representing the size of \c combinator.
 NSUInteger HMRCombinatorSize(id<HMRCombinator> combinator);
+
+
+/// Pretty-prints a grammar starting with \c combinator.
+NSString *HMRPrettyPrint(id<HMRCombinator> combinator);
