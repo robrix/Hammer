@@ -144,7 +144,7 @@ l3_test(@selector(compaction)) {
 
 
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
-	return [super reduce:[self.second red_reduce:[self.first red_reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
+	return [self.second red_reduce:[self.first red_reduce:[super reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
 }
 
 l3_test(@selector(red_reduce:usingBlock:)) {
