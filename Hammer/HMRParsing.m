@@ -38,10 +38,3 @@ id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopyin
 		[parser derivative:object]
 	:	nil; // ???
 }
-
-
-NSString *HMRPrettyPrint(id<HMRCombinator> grammar) {
-	return [@"" red_append:REDMap(grammar.prettyPrinted, ^(NSString *line) {
-		return [line stringByAppendingString:@"\n"];
-	})];
-}

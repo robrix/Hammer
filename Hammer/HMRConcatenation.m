@@ -142,11 +142,22 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"(%@ × %@)", self.first.name ?: self.first.description, self.second.name ?: self.second.description];
 }
 
--(NSOrderedSet *)prettyPrint {
-	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
-	[prettyPrint unionOrderedSet:self.first.prettyPrinted];
-	[prettyPrint unionOrderedSet:self.second.prettyPrinted];
-	return prettyPrint;
+
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [self.second red_reduce:[self.first red_reduce:[super reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
+}
+
+l3_test(@selector(red_reduce:usingBlock:)) {
+	NSNumber *(^count)(NSNumber *, id<HMRCombinator>) = ^(NSNumber *into, id<HMRCombinator> each) {
+		return @(into.integerValue + 1);
+	};
+	NSNumber *size = [HMRConcatenate(HMRLiteral(@"x"), HMRLiteral(@"y")) red_reduce:@0 usingBlock:count];
+	l3_expect(size).to.equal(@3);
+	__block id<HMRCombinator> cyclic;
+	cyclic = HMRConcatenate(HMRLiteral(@"x"), HMRDelay(cyclic));
+	
+	size = [cyclic red_reduce:@0 usingBlock:count];
+	l3_expect(size).to.equal(@2);
 }
 
 

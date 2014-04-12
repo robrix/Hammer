@@ -68,7 +68,7 @@ l3_test(&HMRComposeReduction) {
 		compacted = HMRComposeReduction(combinator, self.block, self.functionDescription);
 	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
 		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
-		HMRNull *first = concatenation.first;
+		HMRNull *first = (HMRNull *)concatenation.first;
 		HMRReductionBlock block = self.block;
 		compacted = [(HMRReduction *)HMRReduce(concatenation.second, ^(id<NSObject,NSCopying> each) {
 			return block(HMRCons(first.parseForest.anyObject, each));
@@ -101,10 +101,9 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"%@ → %@", self.combinator.name ?: self.combinator.description, self.functionDescription ?: @"𝑓"];
 }
 
--(NSOrderedSet *)prettyPrint {
-	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
-	[prettyPrint unionOrderedSet:self.combinator.prettyPrinted];
-	return prettyPrint;
+
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [self.combinator red_reduce:[super reduce:initial usingBlock:block] usingBlock:block];
 }
 
 
