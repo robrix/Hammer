@@ -64,12 +64,6 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"%@*", self.combinator.name ?: self.combinator.description];
 }
 
--(NSOrderedSet *)prettyPrint {
-	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
-	[prettyPrint unionOrderedSet:self.combinator.prettyPrinted];
-	return prettyPrint;
-}
-
 
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [super reduce:[self.combinator red_reduce:initial usingBlock:block] usingBlock:block];

@@ -142,13 +142,6 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"(%@ × %@)", self.first.name ?: self.first.description, self.second.name ?: self.second.description];
 }
 
--(NSOrderedSet *)prettyPrint {
-	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
-	[prettyPrint unionOrderedSet:self.first.prettyPrinted];
-	[prettyPrint unionOrderedSet:self.second.prettyPrinted];
-	return prettyPrint;
-}
-
 
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [super reduce:[self.second red_reduce:[self.first red_reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];

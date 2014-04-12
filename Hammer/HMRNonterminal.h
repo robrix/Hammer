@@ -18,7 +18,6 @@
 -(id<HMRCombinator>)compact;
 
 -(NSString *)describe;
--(NSOrderedSet *)prettyPrint;
 
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block;
 

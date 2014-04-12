@@ -13,7 +13,6 @@
 	NSNumber *_cyclic;
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
-	NSOrderedSet *_prettyPrinted;
 	bool _reducing;
 }
 
@@ -82,14 +81,6 @@
 	return HMRMemoize(_description, self.name ?: super.description, self.name?
 			[[self.name stringByAppendingString:@" -> "] stringByAppendingString:[self describe]]
 		:	[self describe]);
-}
-
--(NSOrderedSet *)prettyPrint {
-	return self.name? [NSOrderedSet orderedSetWithObject:self.description] : [NSOrderedSet orderedSet];
-}
-
--(NSOrderedSet *)prettyPrinted {
-	return HMRMemoize(_prettyPrinted, [NSOrderedSet orderedSet], [self prettyPrint]);
 }
 
 

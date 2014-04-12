@@ -40,10 +40,6 @@
 	:	[self describe];
 }
 
--(NSOrderedSet *)prettyPrinted {
-	return self.name? [NSOrderedSet orderedSetWithObject:self.description] : [NSOrderedSet orderedSet];
-}
-
 
 @synthesize name = _name;
 
