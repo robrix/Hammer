@@ -16,3 +16,13 @@ l3_test(&HMRCombinatorSize) {
 	cyclic = HMRAlternate(HMRAlternate(cycle, cycle), HMRAlternate(cycle, cycle));
 	l3_expect(HMRCombinatorSize(cyclic)).to.equal(@3);
 }
+
+
+NSString *HMRPrettyPrint(id<HMRCombinator> combinator) {
+	return [@"" red_append:REDMap([combinator red_reduce:[NSMutableOrderedSet orderedSet] usingBlock:^(NSMutableOrderedSet *into, id<HMRCombinator> each) {
+		if (each.name != nil) [into addObject:each.description];
+		return into;
+	}], ^(NSString *line) {
+		return [line stringByAppendingString:@"\n"];
+	})];
+}
