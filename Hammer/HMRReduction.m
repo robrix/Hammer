@@ -44,7 +44,8 @@
 
 static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g, NSString *functionDescription) {
 	HMRReductionBlock f = reduction.block;
-	return [(HMRReduction *)HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); }) withFunctionDescription:[NSString stringWithFormat:@"%@∘%@", functionDescription ?: @"𝑔", reduction.functionDescription ?: @"𝑓"]];
+	NSString *description = [NSString stringWithFormat:@"%@∘%@", functionDescription ?: @"𝑔", reduction.functionDescription ?: @"𝑓"];
+	return [(HMRReduction *)HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); }) withFunctionDescription:description];
 }
 
 l3_addTestSubjectTypeWithFunction(HMRComposeReduction)
