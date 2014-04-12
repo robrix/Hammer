@@ -18,7 +18,9 @@
 #pragma mark HMRPredicateCombinator
 
 -(bool)evaluateWithObject:(id)object {
-	return [self.object isEqual:object];
+	return
+		self.object == object
+	||	[self.object isEqual:object];
 }
 
 
