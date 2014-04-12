@@ -119,6 +119,11 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [super reduce:[self.right red_reduce:[self.left red_reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRAlternation *)object {
