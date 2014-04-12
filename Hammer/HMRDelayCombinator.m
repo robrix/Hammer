@@ -64,8 +64,8 @@ l3_test(@selector(parseForest)) {
 	return self.forced.name;
 }
 
--(instancetype)withName:(NSString *)name {
-	return [self.forced withName:name];
+-(id<HMRCombinator>)withName:(NSString *)name {
+	return (id)[self.forced withName:name];
 }
 
 
