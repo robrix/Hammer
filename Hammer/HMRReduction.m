@@ -108,6 +108,11 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [super reduce:[self.combinator red_reduce:initial usingBlock:block] usingBlock:block];
+}
+
+
 -(instancetype)withFunctionDescription:(NSString *)functionDescription {
 	_functionDescription = functionDescription;
 	return self;
