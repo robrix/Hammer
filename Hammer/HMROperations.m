@@ -26,3 +26,12 @@ NSString *HMRPrettyPrint(id<HMRCombinator> combinator) {
 		return [line stringByAppendingString:@"\n"];
 	})];
 }
+
+l3_addTestSubjectTypeWithFunction(HMRPrettyPrint)
+l3_test(&HMRPrettyPrint) {
+	id<HMRCombinator> terminal1 = [HMRLiteral(@"x") withName:@"x"];
+	id<HMRCombinator> terminal2 = [HMRLiteral(@"y") withName:@"y"];
+	__block id<HMRCombinator> nonterminal = [HMRConcatenate(terminal1, HMRAlternate(terminal2, HMRDelay(nonterminal))) withName:@"S"];
+	NSString *expected = [NSString stringWithFormat:@"%@\n%@\n%@\n", nonterminal.description, terminal1.description, terminal2.description];
+	l3_expect(HMRPrettyPrint(nonterminal)).to.equal(expected);
+}
