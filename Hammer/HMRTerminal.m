@@ -53,6 +53,21 @@
 }
 
 
+#pragma mark REDReducible
+
+-(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return block(initial, self);
+}
+
+l3_test(@selector(red_reduce:usingBlock:)) {
+	HMRTerminal *terminal = (HMRTerminal *)HMRLiteral(@"x");
+	NSNumber *count = [terminal red_reduce:@0 usingBlock:^(NSNumber *into, HMRTerminal *each) {
+		return @(into.integerValue + 1);
+	}];
+	l3_expect(count).to.equal(@1);
+}
+
+
 #pragma mark NSCopying
 
 -(instancetype)copyWithZone:(NSZone *)zone {
