@@ -38,9 +38,7 @@
 
 
 -(NSSet *)reduceParseForest:(NSSet *)forest {
-	return [[NSSet set] red_append:REDMap(forest, ^(id<NSObject,NSCopying> tree) {
-		return self.block(tree);
-	})];
+	return [[NSSet set] red_append:REDMap(forest, self.block)];
 }
 
 -(NSSet *)reduceParseForest {
