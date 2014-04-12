@@ -11,8 +11,6 @@
 	if ((self = [super init])) {
 		_combinator = [combinator copyWithZone:NULL];
 		_block = [block copy];
-		
-		_functionDescription = @"𝑓";
 	}
 	return self;
 }
@@ -20,8 +18,8 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return HMRReduce([self.combinator derivative:object], self.block);
+-(HMRReduction *)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
+	return [(HMRReduction *)HMRReduce([self.combinator derivative:object], self.block) withFunctionDescription:self.functionDescription];
 }
 
 
@@ -36,9 +34,7 @@
 
 
 -(NSSet *)reduceParseForest:(NSSet *)forest {
-	return [[NSSet set] red_append:REDMap(forest, ^(id<NSObject,NSCopying> tree) {
-		return self.block(tree);
-	})];
+	return [[NSSet set] red_append:REDMap(forest, self.block)];
 }
 
 -(NSSet *)reduceParseForest {
@@ -48,7 +44,12 @@
 
 static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g, NSString *functionDescription) {
 	HMRReductionBlock f = reduction.block;
-	return [(HMRReduction *)HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) { return g(f(x)); }) withFunctionDescription:[NSString stringWithFormat:@"%@∘%@", functionDescription ?: @"𝑔", reduction.functionDescription]];
+	NSString *description = [NSString stringWithFormat:@"%@∘%@", functionDescription ?: @"𝑔", reduction.functionDescription ?: @"𝑓"];
+	return [(HMRReduction *)HMRReduce(reduction.combinator, ^(id<NSObject, NSCopying> x) {
+		id y = f(x);
+		id z = g(y);
+		return z;
+	}) withFunctionDescription:description];
 }
 
 l3_addTestSubjectTypeWithFunction(HMRComposeReduction)
@@ -61,7 +62,9 @@ l3_test(&HMRComposeReduction) {
 -(id<HMRCombinator>)compact {
 	id<HMRCombinator> combinator = self.combinator.compaction;
 	id<HMRCombinator> compacted;
-	if ([combinator isKindOfClass:[HMRReduction class]])
+	if ([combinator isEqual:HMRNone()])
+		compacted = HMRNone();
+	else if ([combinator isKindOfClass:[HMRReduction class]])
 		compacted = HMRComposeReduction(combinator, self.block, self.functionDescription);
 	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
 		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
@@ -76,7 +79,7 @@ l3_test(&HMRComposeReduction) {
 	else if (combinator == self.combinator)
 		compacted = self;
 	else
-		compacted = HMRReduce(combinator, self.block);
+		compacted = [(HMRReduction *)HMRReduce(combinator, self.block) withFunctionDescription:self.functionDescription];
 	return compacted;
 }
 
@@ -95,7 +98,7 @@ l3_test(@selector(compaction)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"%@ → %@", self.combinator.name ?: self.combinator.description, self.functionDescription];
+	return [NSString stringWithFormat:@"%@ → %@", self.combinator.name ?: self.combinator.description, self.functionDescription ?: @"𝑓"];
 }
 
 -(NSOrderedSet *)prettyPrint {
