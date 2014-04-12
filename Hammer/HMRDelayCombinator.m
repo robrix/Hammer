@@ -68,6 +68,13 @@ l3_test(@selector(parseForest)) {
 	return [self.forced withName:name];
 }
 
+
+#pragma mark REDReducible
+
+-(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [(id<REDReducible>)self.forced red_reduce:initial usingBlock:block];
+}
+
 @end
 
 
