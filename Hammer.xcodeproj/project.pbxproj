@@ -47,6 +47,8 @@
 		D4C87CEA18ED3AC300567D57 /* HMRPredicateCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C87CE818ED3AC300567D57 /* HMRPredicateCombinator.m */; };
 		D4C87CED18ED3D5F00567D57 /* HMRCharacterSetCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C87CEB18ED3D5F00567D57 /* HMRCharacterSetCombinator.h */; };
 		D4C87CEE18ED3D5F00567D57 /* HMRCharacterSetCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C87CEC18ED3D5F00567D57 /* HMRCharacterSetCombinator.m */; };
+		D4E0192318F9BE3000442926 /* HMROperations.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0192118F9BE3000442926 /* HMROperations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4E0192418F9BE3000442926 /* HMROperations.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0192218F9BE3000442926 /* HMROperations.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +107,8 @@
 		D4C87CE818ED3AC300567D57 /* HMRPredicateCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRPredicateCombinator.m; sourceTree = "<group>"; };
 		D4C87CEB18ED3D5F00567D57 /* HMRCharacterSetCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRCharacterSetCombinator.h; sourceTree = "<group>"; };
 		D4C87CEC18ED3D5F00567D57 /* HMRCharacterSetCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRCharacterSetCombinator.m; sourceTree = "<group>"; };
+		D4E0192118F9BE3000442926 /* HMROperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMROperations.h; sourceTree = "<group>"; };
+		D4E0192218F9BE3000442926 /* HMROperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMROperations.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				D4ACA5C318DD188A00EBD899 /* Hammer.h */,
+				D4E0192118F9BE3000442926 /* HMROperations.h */,
+				D4E0192218F9BE3000442926 /* HMROperations.m */,
 				D499A49418F067D4004DF7E3 /* HMRParsing.h */,
 				D499A49518F067D4004DF7E3 /* HMRParsing.m */,
 				D4ACA61418DD3A5E00EBD899 /* Parser combinators */,
@@ -279,6 +285,7 @@
 				D499A49618F067D4004DF7E3 /* HMRParsing.h in Headers */,
 				D4ACA60618DD359C00EBD899 /* HMRLiteralCombinator.h in Headers */,
 				D4ACA62718DD562400EBD899 /* HMRCombinator.h in Headers */,
+				D4E0192318F9BE3000442926 /* HMROperations.h in Headers */,
 				D4ACA61B18DD492E00EBD899 /* HMRConcatenation.h in Headers */,
 				D4ACA61218DD3A5800EBD899 /* HMRAlternation.h in Headers */,
 				D4C87CE118ED356E00567D57 /* HMRDelayCombinator.h in Headers */,
@@ -397,6 +404,7 @@
 				D4ACA61C18DD492E00EBD899 /* HMRConcatenation.m in Sources */,
 				D4ACA61318DD3A5800EBD899 /* HMRAlternation.m in Sources */,
 				D499A49318EFEDF1004DF7E3 /* HMRTerminal.m in Sources */,
+				D4E0192418F9BE3000442926 /* HMROperations.m in Sources */,
 				D4C87CD618EB79E400567D57 /* HMRDelay.m in Sources */,
 				D499A5FF18F4D848004DF7E3 /* HMRPair.m in Sources */,
 				D499A49718F067D4004DF7E3 /* HMRParsing.m in Sources */,
