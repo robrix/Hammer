@@ -150,6 +150,24 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [super reduce:[self.second red_reduce:[self.first red_reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
+}
+
+l3_test(@selector(red_reduce:usingBlock:)) {
+	NSNumber *(^count)(NSNumber *, id<HMRCombinator>) = ^(NSNumber *into, id<HMRCombinator> each) {
+		return @(into.integerValue + 1);
+	};
+	NSNumber *size = [HMRConcatenate(HMRLiteral(@"x"), HMRLiteral(@"y")) red_reduce:@0 usingBlock:count];
+	l3_expect(size).to.equal(@3);
+	__block id<HMRCombinator> cyclic;
+	cyclic = HMRConcatenate(HMRLiteral(@"x"), HMRDelay(cyclic));
+	
+	size = [cyclic red_reduce:@0 usingBlock:count];
+	l3_expect(size).to.equal(@2);
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRConcatenation *)object {
