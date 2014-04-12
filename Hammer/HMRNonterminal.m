@@ -14,6 +14,7 @@
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
 	NSOrderedSet *_prettyPrinted;
+	bool _reducing;
 }
 
 -(instancetype)init {
@@ -97,6 +98,23 @@
 -(instancetype)withName:(NSString *)name {
 	if (!_name) _name = name;
 	return self;
+}
+
+
+#pragma mark REDReducible
+
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return block(initial, self);
+}
+
+-(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	id reduced = initial;
+	if (!_reducing) {
+		_reducing = YES;
+		reduced = [self reduce:reduced usingBlock:block];
+		_reducing = NO;
+	}
+	return reduced;
 }
 
 

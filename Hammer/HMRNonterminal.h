@@ -4,6 +4,8 @@
 
 @interface HMRNonterminal : NSObject <HMRCombinator>
 
+#pragma mark Subclass responsibilities
+
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object;
 
 -(bool)computeNullability;
@@ -17,6 +19,11 @@
 
 -(NSString *)describe;
 -(NSOrderedSet *)prettyPrint;
+
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block;
+
+
+#pragma mark Unavailable
 
 +(instancetype)new UNAVAILABLE_ATTRIBUTE;
 
