@@ -18,10 +18,8 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	id<HMRCombinator> combinator = self.combinator;
-	HMRReductionBlock block = self.block;
-	return HMRReduce([combinator derivative:object], block);
+-(HMRReduction *)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
+	return [(HMRReduction *)HMRReduce([self.combinator derivative:object], self.block) withFunctionDescription:self.functionDescription];
 }
 
 
