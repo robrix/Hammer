@@ -9,7 +9,7 @@
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
-	NSNumber *_nullability;
+	NSNumber *_nullable;
 	NSNumber *_cyclic;
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
@@ -49,7 +49,7 @@
 }
 
 -(bool)isNullable {
-	return HMRMemoize(_nullability, @NO, @([self computeNullability])).boolValue;
+	return HMRMemoize(_nullable, @NO, @([self computeNullability])).boolValue;
 }
 
 
