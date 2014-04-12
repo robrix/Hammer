@@ -2,6 +2,7 @@
 
 #import "HMRDelayCombinator.h"
 #import "HMRNonterminal.h"
+#import "HMRReduction.h"
 
 @interface HMRDelayCombinator ()
 
@@ -11,8 +12,12 @@
 
 @implementation HMRDelayCombinator
 
++(Class)delayedClass {
+	return [HMRNonterminal class];
+}
+
 -(instancetype)initWithBlock:(HMRDelayBlock)block {
-	return [super initWithClass:[HMRNonterminal class] block:block];
+	return [super initWithClass:self.class.delayedClass block:block];
 }
 
 
@@ -50,6 +55,11 @@ l3_test(@selector(parseForest)) {
 
 -(id<HMRCombinator>)compaction {
 	return self.forcing? self : self.forced.compaction;
+}
+
+
+-(NSString *)functionDescription {
+	return ((HMRReduction *)self.forced).functionDescription;
 }
 
 

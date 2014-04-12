@@ -2,6 +2,7 @@
 
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
+#import "HMRNullDelay.h"
 #import "HMRPair.h"
 #import "HMRReduction.h"
 
@@ -19,9 +20,11 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([self.first derivative:object], self.second);
-	return self.first.nullable?
-		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRCaptureForest(self.first.parseForest), [self.second derivative:object]))
+	id<HMRCombinator> first = self.first;
+	id<HMRCombinator> second = self.second;
+	id<HMRCombinator> derivativeAfterFirst = HMRConcatenate([first derivative:object], second);
+	return first.nullable?
+		HMRAlternate(derivativeAfterFirst, HMRConcatenate(HMRDelayNull(HMRCaptureForest(first.parseForest)), [second derivative:object]))
 	:	derivativeAfterFirst;
 }
 
