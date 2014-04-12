@@ -1,8 +1,9 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import <Reducers/REDReducible.h>
 
-@protocol HMRCombinator <NSObject, NSCopying>
+@protocol HMRCombinator <NSObject, NSCopying, REDReducible>
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object;
 
