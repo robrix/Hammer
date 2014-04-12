@@ -11,8 +11,6 @@
 	if ((self = [super init])) {
 		_combinator = [combinator copyWithZone:NULL];
 		_block = [block copy];
-		
-		_functionDescription = @"𝑓";
 	}
 	return self;
 }
@@ -95,7 +93,7 @@ l3_test(@selector(compaction)) {
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"%@ → %@", self.combinator.name ?: self.combinator.description, self.functionDescription];
+	return [NSString stringWithFormat:@"%@ → %@", self.combinator.name ?: self.combinator.description, self.functionDescription ?: @"𝑓"];
 }
 
 -(NSOrderedSet *)prettyPrint {
