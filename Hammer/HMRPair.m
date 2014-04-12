@@ -85,7 +85,9 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 }
 
 -(NSString *)description {
-	return [NSString stringWithFormat:@"(%@)", self.recursiveDescription];
+	return self.isNil?
+		@"()"
+	:	[NSString stringWithFormat:@"(%@)", self.recursiveDescription];
 }
 
 
