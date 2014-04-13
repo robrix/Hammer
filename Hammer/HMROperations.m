@@ -44,6 +44,15 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 			[HMRCase case:HMRConcatenationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(HMRCombinatorIsCyclic(first) || HMRCombinatorIsCyclic(second));
 			}],
+			[HMRCase case:HMRAlternationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
+				return @(HMRCombinatorIsCyclic(left) || HMRCombinatorIsCyclic(right));
+			}],
+			[HMRCase case:HMRReductionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
+				return @(HMRCombinatorIsCyclic(combinator));
+			}],
+			[HMRCase case:HMRRepetitionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
+				return @(HMRCombinatorIsCyclic(combinator));
+			}],
 			[HMRCase case:REDTruePredicateBlock then:^{ return @NO; }],
 		]];
 	}];
