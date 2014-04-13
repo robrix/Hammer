@@ -38,31 +38,28 @@ l3_test(&HMRPrettyPrint) {
 }
 
 
-static bool HMRMemoizedCombinatorIsCyclic(id<HMRCombinator> combinator, NSMutableDictionary *cache) {
-	if (cache[combinator]) return [cache[combinator] boolValue];
-	
-	cache[combinator] = @YES;
-	
-	NSNumber *isCyclic = HMRMatch(combinator, @[
-		[HMRCase case:HMRConcatenationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
-			return @(HMRMemoizedCombinatorIsCyclic(first, cache) || HMRMemoizedCombinatorIsCyclic(second, cache));
-		}],
-		[HMRCase case:HMRAlternationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
-			return @(HMRMemoizedCombinatorIsCyclic(left, cache) || HMRMemoizedCombinatorIsCyclic(right, cache));
-		}],
-		[HMRCase case:HMRReductionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
-			return @(HMRMemoizedCombinatorIsCyclic(combinator, cache));
-		}],
-		[HMRCase case:HMRRepetitionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
-			return @(HMRMemoizedCombinatorIsCyclic(combinator, cache));
-		}],
-		[HMRCase case:REDTruePredicateBlock then:^{ return @NO; }],
-	]);
-	return isCyclic.boolValue;
-}
-
 bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
-	return HMRMemoizedCombinatorIsCyclic(combinator, [NSMutableDictionary new]);
+	NSMutableDictionary *cache = [NSMutableDictionary new];
+	bool (^__weak __block recur)(id<HMRCombinator>);
+	bool (^computeCyclic)(id<HMRCombinator>) = ^bool (id<HMRCombinator> combinator) {
+		return [cache[combinator] ?: (cache[combinator] = @YES, cache[combinator] = HMRMatch(combinator, @[
+			[HMRCase case:HMRConcatenationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
+				return @(recur(first) || recur(second));
+			}],
+			[HMRCase case:HMRAlternationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
+				return @(recur(left) || recur(right));
+			}],
+			[HMRCase case:HMRReductionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
+				return @(recur(combinator));
+			}],
+			[HMRCase case:HMRRepetitionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
+				return @(recur(combinator));
+			}],
+			[HMRCase case:REDTruePredicateBlock then:^{ return @NO; }],
+		])) boolValue];
+	};
+	recur = computeCyclic;
+	return computeCyclic(combinator);
 }
 
 l3_addTestSubjectTypeWithFunction(HMRCombinatorIsCyclic)
