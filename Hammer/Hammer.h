@@ -3,3 +3,4 @@
 #import <Hammer/HMRCombinator.h>
 #import <Hammer/HMROperations.h>
 #import <Hammer/HMRParsing.h>
+#import <Hammer/HMRPredicate.h>
