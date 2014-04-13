@@ -17,6 +17,8 @@
 		D42ED40718FA65FE005BEC10 /* Obstruct.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42ED40618FA65FE005BEC10 /* Obstruct.framework */; };
 		D42ED40918FB12C3005BEC10 /* HMRMemoization.h in Headers */ = {isa = PBXBuildFile; fileRef = D42ED40818FB12C3005BEC10 /* HMRMemoization.h */; };
 		D42ED40D18FB1AC2005BEC10 /* HMRPredicate.h in Headers */ = {isa = PBXBuildFile; fileRef = D42ED40C18FB1AC2005BEC10 /* HMRPredicate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D42ED41018FB25A3005BEC10 /* HMRAnyCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D42ED40E18FB25A3005BEC10 /* HMRAnyCombinator.h */; };
+		D42ED41118FB25A3005BEC10 /* HMRAnyCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D42ED40F18FB25A3005BEC10 /* HMRAnyCombinator.m */; };
 		D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */; };
 		D499A49318EFEDF1004DF7E3 /* HMRTerminal.m in Sources */ = {isa = PBXBuildFile; fileRef = D499A49118EFEDF1004DF7E3 /* HMRTerminal.m */; };
 		D499A49618F067D4004DF7E3 /* HMRParsing.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49418F067D4004DF7E3 /* HMRParsing.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -77,6 +79,8 @@
 		D42ED40618FA65FE005BEC10 /* Obstruct.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Obstruct.framework; path = External/Obstruct/build/Debug/Obstruct.framework; sourceTree = "<group>"; };
 		D42ED40818FB12C3005BEC10 /* HMRMemoization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRMemoization.h; sourceTree = "<group>"; };
 		D42ED40C18FB1AC2005BEC10 /* HMRPredicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRPredicate.h; sourceTree = "<group>"; };
+		D42ED40E18FB25A3005BEC10 /* HMRAnyCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRAnyCombinator.h; sourceTree = "<group>"; };
+		D42ED40F18FB25A3005BEC10 /* HMRAnyCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRAnyCombinator.m; sourceTree = "<group>"; };
 		D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRTerminal.h; sourceTree = "<group>"; };
 		D499A49118EFEDF1004DF7E3 /* HMRTerminal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRTerminal.m; sourceTree = "<group>"; };
 		D499A49418F067D4004DF7E3 /* HMRParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRParsing.h; sourceTree = "<group>"; };
@@ -262,6 +266,8 @@
 				D4ACA60118DD34C400EBD899 /* HMREmpty.m */,
 				D4ACA5F718DD258E00EBD899 /* HMRNull.h */,
 				D4ACA5F818DD258E00EBD899 /* HMRNull.m */,
+				D42ED40E18FB25A3005BEC10 /* HMRAnyCombinator.h */,
+				D42ED40F18FB25A3005BEC10 /* HMRAnyCombinator.m */,
 				D4C87CEF18ED3D6C00567D57 /* Predicates */,
 			);
 			name = Terminals;
@@ -309,6 +315,7 @@
 				D4C87CE118ED356E00567D57 /* HMRDelayCombinator.h in Headers */,
 				D4ACA60218DD34C400EBD899 /* HMREmpty.h in Headers */,
 				D4C87CED18ED3D5F00567D57 /* HMRCharacterSetCombinator.h in Headers */,
+				D42ED41018FB25A3005BEC10 /* HMRAnyCombinator.h in Headers */,
 				D42ED40918FB12C3005BEC10 /* HMRMemoization.h in Headers */,
 				D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */,
 			);
@@ -418,6 +425,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D42ED41118FB25A3005BEC10 /* HMRAnyCombinator.m in Sources */,
 				D4ACA61818DD3CDB00EBD899 /* HMRReduction.m in Sources */,
 				D4ACA60318DD34C400EBD899 /* HMREmpty.m in Sources */,
 				D4ACA61C18DD492E00EBD899 /* HMRConcatenation.m in Sources */,
