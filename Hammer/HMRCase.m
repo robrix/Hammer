@@ -9,26 +9,6 @@
 	id (^_block)();
 }
 
-+(id)match:(id)object withCases:(NSArray *)cases {
-	id result;
-	
-	for (HMRCase *each in cases) {
-		result = [each evaluateWithObject:object];
-		
-		if (result != nil) break;
-	}
-	
-	return result;
-}
-
-l3_test(@selector(match:withCases:)) {
-	id object = [NSObject new];
-	l3_expect([HMRCase match:object withCases:@[ [HMRCase case:REDTruePredicateBlock then:^{ return @YES; }] ]]).to.equal(@YES);
-	l3_expect([HMRCase match:object withCases:@[ [HMRCase case:HMRBind then:REDIdentityMapBlock] ]]).to.equal(object);
-	l3_expect([HMRCase match:HMRConcatenate(HMRLiteral(@"x"), HMRLiteral(@"y")) withCases:@[ [HMRCase case:HMRConcatenationPredicate(nil, HMRBind) then:REDIdentityMapBlock] ]]).to.equal(HMRLiteral(@"y"));
-}
-
-
 +(instancetype)case:(REDPredicateBlock)predicate then:(id(^)())block {
 	return [[self alloc] initWithPredicate:predicate thenBlock:block];
 }

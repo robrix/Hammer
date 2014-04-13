@@ -4,8 +4,6 @@
 
 @interface HMRCase : NSObject
 
-+(id)match:(id)object withCases:(NSArray *)cases;
-
 +(instancetype)case:(REDPredicateBlock)predicate then:(id(^)())block;
 
 -(id)evaluateWithObject:(id)object;
