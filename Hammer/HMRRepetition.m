@@ -55,6 +55,13 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(NSUInteger)computeHash {
+	return
+		[super computeHash]
+	^	self.combinator.hash;
+}
+
+
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [self.combinator red_reduce:[super reduce:initial usingBlock:block] usingBlock:block];
 }
