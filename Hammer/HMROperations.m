@@ -38,29 +38,38 @@ l3_test(&HMRPrettyPrint) {
 }
 
 
+static bool HMRMemoizedCombinatorIsCyclic(id<HMRCombinator> combinator, NSMutableDictionary *cache) {
+	if (cache[combinator]) return [cache[combinator] boolValue];
+	
+	cache[combinator] = @YES;
+	
+	NSNumber *isCyclic = [(id)combinator hmr_matchPredicates:@[
+		[HMRCase case:HMRConcatenationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
+			return @(HMRMemoizedCombinatorIsCyclic(first, cache) || HMRMemoizedCombinatorIsCyclic(second, cache));
+		}],
+		[HMRCase case:HMRAlternationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
+			return @(HMRMemoizedCombinatorIsCyclic(left, cache) || HMRMemoizedCombinatorIsCyclic(right, cache));
+		}],
+		[HMRCase case:HMRReductionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
+			return @(HMRMemoizedCombinatorIsCyclic(combinator, cache));
+		}],
+		[HMRCase case:HMRRepetitionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
+			return @(HMRMemoizedCombinatorIsCyclic(combinator, cache));
+		}],
+		[HMRCase case:REDTruePredicateBlock then:^{ return @NO; }],
+	]];
+	return isCyclic.boolValue;
+}
+
 bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
-	NSNumber *cyclic = [combinator red_reduce:@YES usingBlock:^(NSNumber *into, id<HMRCombinator> each) {
-		return [HMRCase match:each withCases:@[
-			[HMRCase case:HMRConcatenationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
-				return @(HMRCombinatorIsCyclic(first) || HMRCombinatorIsCyclic(second));
-			}],
-			[HMRCase case:HMRAlternationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
-				return @(HMRCombinatorIsCyclic(left) || HMRCombinatorIsCyclic(right));
-			}],
-			[HMRCase case:HMRReductionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
-				return @(HMRCombinatorIsCyclic(combinator));
-			}],
-			[HMRCase case:HMRRepetitionPredicate(HMRBind) then:^(id<HMRCombinator> combinator) {
-				return @(HMRCombinatorIsCyclic(combinator));
-			}],
-			[HMRCase case:REDTruePredicateBlock then:^{ return @NO; }],
-		]];
-	}];
-	return cyclic.boolValue;
+	return HMRMemoizedCombinatorIsCyclic(combinator, [NSMutableDictionary new]);
 }
 
 l3_addTestSubjectTypeWithFunction(HMRCombinatorIsCyclic)
 l3_test(&HMRCombinatorIsCyclic) {
 	l3_expect(HMRCombinatorIsCyclic(HMRConcatenate(HMRLiteral(@"x"), HMRLiteral(@"y")))).to.equal(@NO);
 	l3_expect(HMRCombinatorIsCyclic(HMRLiteral(@"x"))).to.equal(@NO);
+	
+	__block id<HMRCombinator> cyclic = HMRConcatenate(HMRLiteral(@"x"), HMRDelay(cyclic));
+	l3_expect(HMRCombinatorIsCyclic(cyclic)).to.equal(@YES);
 }
