@@ -5,7 +5,6 @@
 
 @interface HMRCase : NSObject <HMRCase>
 
-+(instancetype)case:(REDPredicateBlock)predicate then:(id (^)())block;
 +(instancetype)caseWithPredicate:(id<HMRPredicate>)predicate block:(id (^)())block;
 
 -(id)evaluateWithObject:(id)object;
