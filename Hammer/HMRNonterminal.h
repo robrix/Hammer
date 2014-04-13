@@ -15,6 +15,8 @@
 
 -(NSString *)describe;
 
+-(NSUInteger)computeHash;
+
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block;
 
 

@@ -17,6 +17,8 @@
 @property (readonly) NSString *name;
 -(instancetype)withName:(NSString *)name;
 
+@property (readonly) NSUInteger hash;
+
 @end
 
 

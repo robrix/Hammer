@@ -85,6 +85,14 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(NSUInteger)computeHash {
+	return
+		[super computeHash]
+	^	self.left.hash
+	^	self.right.hash;
+}
+
+
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [self.right red_reduce:[self.left red_reduce:[super reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
 }

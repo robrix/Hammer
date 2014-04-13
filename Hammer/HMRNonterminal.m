@@ -11,6 +11,7 @@
 	NSNumber *_nullable;
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
+	NSNumber *_hash;
 	bool _reducing;
 }
 
@@ -69,6 +70,15 @@
 -(instancetype)withName:(NSString *)name {
 	if (!_name) _name = [name copy];
 	return self;
+}
+
+
+-(NSUInteger)computeHash {
+	return self.class.description.hash;
+}
+
+-(NSUInteger)hash {
+	return HMRMemoize(_hash, @0, @([self computeHash])).unsignedIntegerValue;
 }
 
 

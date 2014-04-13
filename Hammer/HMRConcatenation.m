@@ -100,6 +100,14 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(NSUInteger)computeHash {
+	return
+		[super computeHash]
+	^	self.first.hash
+	^	self.second.hash;
+}
+
+
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [self.second red_reduce:[self.first red_reduce:[super reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
 }

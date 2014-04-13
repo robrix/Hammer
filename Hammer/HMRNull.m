@@ -101,6 +101,12 @@ l3_test(@selector(description)) {
 	&&	[self.forest isEqual:object.forest];
 }
 
+-(NSUInteger)hash {
+	return
+		@"HMRNull".hash
+	^	self.forest.hash;
+}
+
 @end
 
 

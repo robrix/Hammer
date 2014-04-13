@@ -46,6 +46,9 @@
 }
 
 
+@dynamic hash;
+
+
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
