@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRCase.h"
 #import "HMRDelay.h"
 #import "HMRMemoization.h"
 #import "HMRNonterminal.h"
@@ -87,6 +88,17 @@
 -(instancetype)withName:(NSString *)name {
 	if (!_name) _name = name;
 	return self;
+}
+
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return NO;
+}
+
+-(id<HMRCase>)then:(id (^)())block {
+	return [HMRCase caseWithPredicate:self block:block];
 }
 
 

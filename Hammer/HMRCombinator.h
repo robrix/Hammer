@@ -2,8 +2,9 @@
 
 #import <Foundation/Foundation.h>
 #import <Reducers/REDReducible.h>
+#import <Hammer/HMRPredicate.h>
 
-@protocol HMRCombinator <NSObject, NSCopying, REDReducible>
+@protocol HMRCombinator <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object;
 

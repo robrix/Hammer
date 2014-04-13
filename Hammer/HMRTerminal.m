@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRCase.h"
 #import "HMRTerminal.h"
 
 @implementation HMRTerminal
@@ -46,6 +47,17 @@
 -(instancetype)withName:(NSString *)name {
 	_name = name;
 	return self;
+}
+
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return NO;
+}
+
+-(id<HMRCase>)then:(id (^)())block {
+	return [HMRCase caseWithPredicate:self block:block];
 }
 
 
