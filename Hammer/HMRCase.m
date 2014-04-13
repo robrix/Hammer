@@ -54,7 +54,7 @@ static _Thread_local CFMutableArrayRef variables;
 	id result;
 	
 	if (_predicate(object)) {
-		result = obstruct_apply_array(_block, bindings);
+		result = obstr_block_apply_array(_block, bindings);
 	}
 	
 	variables = previous;
