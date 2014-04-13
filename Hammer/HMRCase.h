@@ -7,6 +7,8 @@
 
 +(instancetype)caseWithPredicate:(id<HMRPredicate>)predicate block:(id (^)())block;
 
++(NSMutableArray *)bindings;
+
 -(id)evaluateWithObject:(id)object;
 
 @end

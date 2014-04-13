@@ -27,18 +27,25 @@
 
 
 static _Thread_local CFMutableArrayRef HMRBindings;
++(NSMutableArray *)bindings {
+	return (__bridge NSMutableArray *)HMRBindings;
+}
+
++(void)setBindings:(NSMutableArray *)bindings {
+	HMRBindings = (CFMutableArrayRef)CFBridgingRetain(bindings);
+}
 
 -(id)evaluateWithObject:(id)object {
-	CFMutableArrayRef previous = HMRBindings;
-	HMRBindings = (CFMutableArrayRef)CFBridgingRetain([NSMutableArray new]);
+	NSMutableArray *previous = self.class.bindings;
+	self.class.bindings = [NSMutableArray new];
 	
 	id result;
 	
 	if ([_predicate matchObject:object]) {
-		result = obstr_block_apply_array(_block, (__bridge NSMutableArray *)HMRBindings);
+		result = obstr_block_apply_array(_block, self.class.bindings);
 	}
 	
-	HMRBindings = previous;
+	self.class.bindings = previous;
 	
 	return result;
 }
