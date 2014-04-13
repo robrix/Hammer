@@ -22,6 +22,35 @@
 @end
 
 
+/// Matches literals.
+REDPredicateBlock HMRLiteralPredicate(REDPredicateBlock object);
+
+/// Matches character sets.
+REDPredicateBlock HMRCharacterSetPredicate(REDPredicateBlock characterSet);
+
+/// Matches alternations.
+REDPredicateBlock HMRAlternationPredicate(REDPredicateBlock left, REDPredicateBlock right);
+
+/// Matches concatenations.
+REDPredicateBlock HMRConcatenationPredicate(REDPredicateBlock first, REDPredicateBlock second);
+
+/// Matches repetitions.
+REDPredicateBlock HMRRepetitionPredicate(REDPredicateBlock combinator);
+
+/// Matches reductions.
+REDPredicateBlock HMRReductionPredicate(REDPredicateBlock combinator);
+
+/// Matches null parses.
+REDPredicateBlock HMRCapturePredicate(REDPredicateBlock forest);
+
+/// Matches the empty parser.
+extern REDPredicateBlock const HMREmptyPredicate;
+
+
+/// Binds the evaluated object.
+extern REDPredicateBlock const HMRBind;
+
+
 /// The type of a reduction combinator’s block, which maps parse trees.
 typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
