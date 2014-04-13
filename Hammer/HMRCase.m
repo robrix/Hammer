@@ -24,20 +24,19 @@
 }
 
 
-static _Thread_local CFMutableArrayRef variables;
+static _Thread_local CFMutableArrayRef HMRBindings;
 
 -(id)evaluateWithObject:(id)object {
-	CFMutableArrayRef previous = variables;
-	NSMutableArray *bindings = [NSMutableArray new];
-	variables = (__bridge CFMutableArrayRef)bindings;
+	CFMutableArrayRef previous = HMRBindings;
+	HMRBindings = (CFMutableArrayRef)CFBridgingRetain([NSMutableArray new]);
 	
 	id result;
 	
 	if (_predicate(object)) {
-		result = obstr_block_apply_array(_block, bindings);
+		result = obstr_block_apply_array(_block, (__bridge NSMutableArray *)HMRBindings);
 	}
 	
-	variables = previous;
+	HMRBindings = previous;
 	
 	return result;
 }
@@ -63,7 +62,7 @@ l3_test(&HMRMatch) {
 
 
 REDPredicateBlock const HMRBind = ^bool (id object) {
-	NSMutableArray *bindings = (__bridge NSMutableArray *)variables;
+	NSMutableArray *bindings = (__bridge NSMutableArray *)HMRBindings;
 	[bindings addObject:object];
 	return YES;
 };
