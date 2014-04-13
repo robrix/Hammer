@@ -15,6 +15,7 @@
 		D42ED3B818FA1480005BEC10 /* HMRCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D42ED3B618FA1480005BEC10 /* HMRCase.h */; };
 		D42ED3B918FA1480005BEC10 /* HMRCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D42ED3B718FA1480005BEC10 /* HMRCase.m */; };
 		D42ED40718FA65FE005BEC10 /* Obstruct.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42ED40618FA65FE005BEC10 /* Obstruct.framework */; };
+		D42ED40918FB12C3005BEC10 /* HMRMemoization.h in Headers */ = {isa = PBXBuildFile; fileRef = D42ED40818FB12C3005BEC10 /* HMRMemoization.h */; };
 		D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */; };
 		D499A49318EFEDF1004DF7E3 /* HMRTerminal.m in Sources */ = {isa = PBXBuildFile; fileRef = D499A49118EFEDF1004DF7E3 /* HMRTerminal.m */; };
 		D499A49618F067D4004DF7E3 /* HMRParsing.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49418F067D4004DF7E3 /* HMRParsing.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -73,6 +74,7 @@
 		D42ED3B618FA1480005BEC10 /* HMRCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRCase.h; sourceTree = "<group>"; };
 		D42ED3B718FA1480005BEC10 /* HMRCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRCase.m; sourceTree = "<group>"; };
 		D42ED40618FA65FE005BEC10 /* Obstruct.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Obstruct.framework; path = External/Obstruct/build/Debug/Obstruct.framework; sourceTree = "<group>"; };
+		D42ED40818FB12C3005BEC10 /* HMRMemoization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRMemoization.h; sourceTree = "<group>"; };
 		D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRTerminal.h; sourceTree = "<group>"; };
 		D499A49118EFEDF1004DF7E3 /* HMRTerminal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRTerminal.m; sourceTree = "<group>"; };
 		D499A49418F067D4004DF7E3 /* HMRParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRParsing.h; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */,
 				D4ACA5C218DD188A00EBD899 /* Hammer.pch */,
 				D4ACA5FD18DD32CB00EBD899 /* HMROnce.h */,
+				D42ED40818FB12C3005BEC10 /* HMRMemoization.h */,
 				D4C87CD318EB79E400567D57 /* HMRDelay.h */,
 				D4C87CD418EB79E400567D57 /* HMRDelay.m */,
 				D499A5FC18F4D848004DF7E3 /* HMRPair.h */,
@@ -302,6 +305,7 @@
 				D4C87CE118ED356E00567D57 /* HMRDelayCombinator.h in Headers */,
 				D4ACA60218DD34C400EBD899 /* HMREmpty.h in Headers */,
 				D4C87CED18ED3D5F00567D57 /* HMRCharacterSetCombinator.h in Headers */,
+				D42ED40918FB12C3005BEC10 /* HMRMemoization.h in Headers */,
 				D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
