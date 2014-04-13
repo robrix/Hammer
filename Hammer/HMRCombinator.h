@@ -22,6 +22,10 @@
 @end
 
 
+/// The type of a reduction combinator’s block, which maps parse trees.
+typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
+
+
 #pragma mark Constructors
 
 /// Constructs the alternation of \c left and \c right.
@@ -57,7 +61,7 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) __attribute__((nonnull
 /// \param combinator  The combinator to reduce. Must not be nil.
 /// \param block       The block to map the parse trees produced by \c combinator with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
 /// \return            A combinator representing the reduction of \c combinator by \c block.
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying> each)) __attribute__((nonnull));
+id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
 
 
 /// Constructs a literal combinator.
