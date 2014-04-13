@@ -145,6 +145,13 @@ REDPredicateBlock const HMRBind = ^bool (id object) {
 	return self;
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(id)object {
+	return [self matchObject:object];
+}
+
 @end
 
 
