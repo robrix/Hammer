@@ -39,6 +39,12 @@
 	&&	[self.object isEqual:object.object];
 }
 
+-(NSUInteger)hash {
+	return
+		@"HMRLiteralCombinator".hash
+	^	self.object.hash;
+}
+
 @end
 
 

@@ -44,6 +44,10 @@
 	return [self matchObject:object];
 }
 
+-(NSUInteger)hash {
+	return @"HMRAny".hash;
+}
+
 @end
 
 

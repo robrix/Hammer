@@ -84,4 +84,8 @@
 	return [@"λ." stringByAppendingString:[self.forced description]];
 }
 
+-(NSUInteger)hash {
+	return ((id<NSObject>)self.forced).hash;
+}
+
 @end

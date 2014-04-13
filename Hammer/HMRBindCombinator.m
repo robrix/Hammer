@@ -21,6 +21,10 @@
 	return @"↓";
 }
 
+-(NSUInteger)hash {
+	return @"HMRBind".hash;
+}
+
 @end
 
 

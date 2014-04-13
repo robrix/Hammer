@@ -56,6 +56,12 @@ l3_test(@selector(description)) {
 	&&	[self.characterSet isEqual:object.characterSet];
 }
 
+-(NSUInteger)hash {
+	return
+		@"HMRCharacterSetCombinator".hash
+	^	self.characterSet.hash;
+}
+
 
 #pragma mark Named sets
 
