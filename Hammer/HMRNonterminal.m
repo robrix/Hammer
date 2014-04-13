@@ -86,7 +86,7 @@
 @synthesize name = _name;
 
 -(instancetype)withName:(NSString *)name {
-	if (!_name) _name = name;
+	if (!_name) _name = [name copy];
 	return self;
 }
 
