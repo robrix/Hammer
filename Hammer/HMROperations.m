@@ -56,7 +56,7 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 			[HMRRepeat(HMRBindCombinator()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
-			[HMRCase case:REDTruePredicateBlock then:^{ return @NO; }],
+			[HMRBindCombinator() then:^(id _){ return @NO; }],
 		])) boolValue];
 	};
 	recur = computeCyclic;
