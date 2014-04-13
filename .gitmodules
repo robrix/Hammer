@@ -4,3 +4,6 @@
 [submodule "External/Reducers"]
 	path = External/Reducers
 	url = https://github.com/robrix/Reducers.git
+[submodule "External/Obstruct"]
+	path = External/Obstruct
+	url = https://github.com/robrix/Obstruct.git
