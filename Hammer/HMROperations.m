@@ -49,7 +49,7 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 			[HMRAlternate(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
 				return @(recur(left) || recur(right));
 			}],
-			[HMRReduce(HMRBind(), HMRBind()) then:^(id<HMRCombinator> combinator, HMRReductionBlock f) {
+			[HMRReduce(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
 			[HMRRepeat(HMRBind()) then:^(id<HMRCombinator> combinator) {
