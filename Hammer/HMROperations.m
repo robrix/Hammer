@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRCase.h"
+#import "HMRMemoization.h"
 #import "HMROperations.h"
 
 NSUInteger HMRCombinatorSize(id<HMRCombinator> combinator) {
@@ -42,7 +43,7 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 	NSMutableDictionary *cache = [NSMutableDictionary new];
 	bool (^__weak __block recur)(id<HMRCombinator>);
 	bool (^computeCyclic)(id<HMRCombinator>) = ^bool (id<HMRCombinator> combinator) {
-		return [cache[combinator] ?: (cache[combinator] = @YES, cache[combinator] = HMRMatch(combinator, @[
+		return [HMRMemoize(cache[combinator], @YES, HMRMatch(combinator, @[
 			[HMRCase case:HMRConcatenationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(recur(first) || recur(second));
 			}],
