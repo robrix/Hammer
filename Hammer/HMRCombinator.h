@@ -77,15 +77,15 @@ id<HMRCombinator> HMRCharacterSet(NSCharacterSet *characterSet) __attribute__((n
 ///
 /// This is rarely useful when constructing grammars.
 ///
-/// \param object  The object to treat as having been parsed.
+/// \param object  The object to treat as having been parsed. Must not be nil.
 /// \return        A null parse whose parse forest contains \c object as its sole parse tree.
-id<HMRCombinator> HMRCaptureTree(id object);
+id<HMRCombinator> HMRCaptureTree(id object) __attribute__((nonnull));
 
 /// Constructs a null parse consisting of \c forest.
 ///
 /// This is rarely useful when constructing grammars.
 ///
-/// \param forest  The set of parse trees to treat as having been parsed.
+/// \param forest  The set of parse trees to treat as having been parsed. Must not be nil.
 /// \return        A null parse consisting of \c forest.
 id<HMRCombinator> HMRCaptureForest(NSSet *forest) __attribute__((nonnull));
 
