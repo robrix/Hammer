@@ -53,7 +53,7 @@
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
-	return NO;
+	return [self isEqual:object];
 }
 
 -(id<HMRCase>)then:(id (^)())block {
