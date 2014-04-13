@@ -179,3 +179,16 @@ id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> seco
 	
 	return [[HMRConcatenation alloc] initWithFirst:first second:second];
 }
+
+
+REDPredicateBlock HMRConcatenationPredicate(REDPredicateBlock first, REDPredicateBlock second) {
+	first = first ?: REDTruePredicateBlock;
+	second = second ?: REDTruePredicateBlock;
+	
+	return [^bool (HMRConcatenation *combinator) {
+		return
+			[combinator isKindOfClass:[HMRConcatenation class]]
+		&&	first(combinator.first)
+		&&	second(combinator.second);
+	} copy];
+}
