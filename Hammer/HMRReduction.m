@@ -28,11 +28,6 @@
 }
 
 
--(bool)computeCyclic {
-	return self.combinator.cyclic;
-}
-
-
 -(NSSet *)reduceParseForest:(NSSet *)forest {
 	return [[NSSet set] red_append:REDMap(forest, self.block)];
 }

@@ -31,10 +31,6 @@
 	return self.forced.nullable;
 }
 
--(bool)isCyclic {
-	return self.forced.cyclic;
-}
-
 
 -(NSSet *)parseForest {
 	return self.forced.parseForest;

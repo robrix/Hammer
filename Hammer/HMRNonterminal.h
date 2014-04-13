@@ -10,8 +10,6 @@
 
 -(bool)computeNullability;
 
--(bool)computeCyclic;
-
 -(NSSet *)reduceParseForest;
 
 /// Produce a deeply compacted representation of the receiver.

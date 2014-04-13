@@ -16,10 +16,6 @@
 	return NO;
 }
 
--(bool)isCyclic {
-	return NO;
-}
-
 
 -(NSSet *)parseForest {
 	return [NSSet set];

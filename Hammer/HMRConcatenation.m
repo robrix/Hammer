@@ -68,28 +68,6 @@ l3_test(@selector(isNullable)) {
 }
 
 
--(bool)computeCyclic {
-	return self.first.cyclic || self.second.cyclic;
-}
-
-l3_test(@selector(isCyclic)) {
-	id<HMRCombinator> acyclic = HMRConcatenate(HMRNone(), HMRNone());
-	l3_expect(acyclic.cyclic).to.equal(@NO);
-	
-	__block id<HMRCombinator> leftRecursive;
-	leftRecursive = HMRConcatenate(HMRDelay(leftRecursive), HMRNone());
-	l3_expect(leftRecursive.cyclic).to.equal(@YES);
-	
-	__block id<HMRCombinator> rightRecursive;
-	rightRecursive = HMRConcatenate(HMRNone(), HMRDelay(rightRecursive));
-	l3_expect(rightRecursive.cyclic).to.equal(@YES);
-	
-	__block id<HMRCombinator> mutuallyRecursive;
-	mutuallyRecursive = HMRConcatenate(HMRDelay(mutuallyRecursive), HMRDelay(mutuallyRecursive));
-	l3_expect(mutuallyRecursive.cyclic).to.equal(@YES);
-}
-
-
 +(NSSet *)concatenateParseForestWithPrefix:(NSSet *)prefix suffix:(NSSet *)suffix {
 	return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
 		return REDMap(suffix, ^(id y) {

@@ -9,7 +9,6 @@
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
 	NSNumber *_nullable;
-	NSNumber *_cyclic;
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
 	bool _reducing;
@@ -49,15 +48,6 @@
 
 -(bool)isNullable {
 	return HMRMemoize(_nullable, @NO, @([self computeNullability])).boolValue;
-}
-
-
--(bool)computeCyclic {
-	return NO;
-}
-
--(bool)isCyclic {
-	return HMRMemoize(_cyclic, @YES, @([self computeCyclic])).boolValue;
 }
 
 
