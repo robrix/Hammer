@@ -19,4 +19,4 @@
 
 
 @protocol HMRCombinator;
-id<HMRCombinator> HMRBindCombinator(void);
+id HMRBindCombinator(void);

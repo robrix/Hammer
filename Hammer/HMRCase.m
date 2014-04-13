@@ -148,6 +148,6 @@ REDPredicateBlock const HMRBind = ^bool (id object) {
 @end
 
 
-id<HMRCombinator> HMRBindCombinator(void) {
+id HMRBindCombinator(void) {
 	return HMROnce([HMRBindingCombinator new]);
 }
