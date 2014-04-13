@@ -43,7 +43,7 @@ static bool HMRMemoizedCombinatorIsCyclic(id<HMRCombinator> combinator, NSMutabl
 	
 	cache[combinator] = @YES;
 	
-	NSNumber *isCyclic = [(id)combinator hmr_matchPredicates:@[
+	NSNumber *isCyclic = HMRMatch(combinator, @[
 		[HMRCase case:HMRConcatenationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 			return @(HMRMemoizedCombinatorIsCyclic(first, cache) || HMRMemoizedCombinatorIsCyclic(second, cache));
 		}],
@@ -57,7 +57,7 @@ static bool HMRMemoizedCombinatorIsCyclic(id<HMRCombinator> combinator, NSMutabl
 			return @(HMRMemoizedCombinatorIsCyclic(combinator, cache));
 		}],
 		[HMRCase case:REDTruePredicateBlock then:^{ return @NO; }],
-	]];
+	]);
 	return isCyclic.boolValue;
 }
 

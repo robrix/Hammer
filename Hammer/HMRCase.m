@@ -65,13 +65,21 @@ static _Thread_local CFMutableArrayRef variables;
 @end
 
 
-@implementation NSObject (HMRCase)
-
--(id)hmr_matchPredicates:(NSArray *)predicates {
-	return [HMRCase match:self withCases:predicates];
+id HMRMatch(id subject, NSArray *cases) {
+	id result;
+	for (HMRCase *each in cases) {
+		if ((result = [each evaluateWithObject:subject])) break;
+	}
+	return result;
 }
 
-@end
+l3_addTestSubjectTypeWithFunction(HMRMatch)
+l3_test(&HMRMatch) {
+	id object = [NSObject new];
+	l3_expect(HMRMatch(object, @[ [HMRCase case:REDTruePredicateBlock then:^{ return @YES; }] ])).to.equal(@YES);
+	l3_expect(HMRMatch(object, @[ [HMRCase case:HMRBind then:REDIdentityMapBlock] ])).to.equal(object);
+	l3_expect(HMRMatch(HMRConcatenate(HMRLiteral(@"x"), HMRLiteral(@"y")), @[ [HMRCase case:HMRConcatenationPredicate(nil, HMRBind) then:REDIdentityMapBlock] ])).to.equal(HMRLiteral(@"y"));
+}
 
 
 REDPredicateBlock const HMRBind = ^bool (id object) {
