@@ -22,5 +22,6 @@
 id HMRMatch(id subject, NSArray *cases);
 
 
-@protocol HMRCombinator;
-id HMRBindCombinator(void);
+id HMRBind(void);
+
+id HMRAny(void);

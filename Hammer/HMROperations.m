@@ -43,19 +43,19 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 	bool (^__weak __block recur)(id<HMRCombinator>);
 	bool (^computeCyclic)(id<HMRCombinator>) = ^bool (id<HMRCombinator> combinator) {
 		return [HMRMemoize(cache[combinator], @YES, HMRMatch(combinator, @[
-			[HMRConcatenate(HMRBindCombinator(), HMRBindCombinator()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
+			[HMRConcatenate(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(recur(first) || recur(second));
 			}],
-			[HMRAlternate(HMRBindCombinator(), HMRBindCombinator()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
+			[HMRAlternate(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
 				return @(recur(left) || recur(right));
 			}],
-			[HMRReduce(HMRBindCombinator(), HMRBindCombinator()) then:^(id<HMRCombinator> combinator, HMRReductionBlock f) {
+			[HMRReduce(HMRBind(), HMRBind()) then:^(id<HMRCombinator> combinator, HMRReductionBlock f) {
 				return @(recur(combinator));
 			}],
-			[HMRRepeat(HMRBindCombinator()) then:^(id<HMRCombinator> combinator) {
+			[HMRRepeat(HMRBind()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
-			[HMRBindCombinator() then:^(id _){ return @NO; }],
+			[HMRAny() then:^{ return @NO; }],
 		])) boolValue];
 	};
 	recur = computeCyclic;

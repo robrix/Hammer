@@ -63,22 +63,15 @@ l3_addTestSubjectTypeWithFunction(HMRMatch)
 l3_test(&HMRMatch) {
 	id object = [NSObject new];
 	l3_expect(HMRMatch(object, @[ [HMRCase case:REDTruePredicateBlock then:^{ return @YES; }] ])).to.equal(@YES);
-	l3_expect(HMRMatch(object, @[ [HMRCase case:HMRBind then:REDIdentityMapBlock] ])).to.equal(object);
-	l3_expect(HMRMatch(HMRConcatenate(HMRLiteral(@"x"), HMRLiteral(@"y")), @[ [HMRCase case:HMRConcatenationPredicate(nil, HMRBind) then:REDIdentityMapBlock] ])).to.equal(HMRLiteral(@"y"));
+	l3_expect(HMRMatch(object, @[ [HMRBind() then:REDIdentityMapBlock] ])).to.equal(object);
+	l3_expect(HMRMatch(HMRConcatenate(HMRLiteral(@"x"), HMRLiteral(@"y")), @[ [HMRConcatenate(HMRAny(), HMRBind()) then:REDIdentityMapBlock] ])).to.equal(HMRLiteral(@"y"));
 }
 
 
-REDPredicateBlock const HMRBind = ^bool (id object) {
-	NSMutableArray *bindings = (__bridge NSMutableArray *)HMRBindings;
-	[bindings addObject:object];
-	return YES;
-};
-
-
-@interface HMRBindingCombinator : NSObject <HMRCombinator>
+@interface HMRAnyCombinator : NSObject <HMRCombinator>
 @end
 
-@implementation HMRBindingCombinator
+@implementation HMRAnyCombinator
 
 #pragma mark HMRCombinator
 
@@ -122,8 +115,6 @@ REDPredicateBlock const HMRBind = ^bool (id object) {
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
-	NSMutableArray *bindings = (__bridge NSMutableArray *)HMRBindings;
-	[bindings addObject:object];
 	return YES;
 }
 
@@ -155,6 +146,26 @@ REDPredicateBlock const HMRBind = ^bool (id object) {
 @end
 
 
-id HMRBindCombinator(void) {
-	return HMROnce([HMRBindingCombinator new]);
+@interface HMRBindCombinator : HMRAnyCombinator <HMRCombinator>
+@end
+
+@implementation HMRBindCombinator
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	NSMutableArray *bindings = (__bridge NSMutableArray *)HMRBindings;
+	[bindings addObject:object];
+	return YES;
+}
+
+@end
+
+
+id HMRBind(void) {
+	return HMROnce([HMRBindCombinator new]);
+}
+
+id HMRAny(void) {
+	return HMROnce([HMRAnyCombinator new]);
 }
