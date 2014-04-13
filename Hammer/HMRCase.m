@@ -49,7 +49,7 @@ static _Thread_local CFMutableArrayRef variables;
 -(id)evaluateWithObject:(id)object {
 	CFMutableArrayRef previous = variables;
 	NSMutableArray *bindings = [NSMutableArray new];
-	variables = (CFMutableArrayRef)CFBridgingRetain(bindings);
+	variables = (__bridge CFMutableArrayRef)bindings;
 	
 	id result;
 	
@@ -66,6 +66,7 @@ static _Thread_local CFMutableArrayRef variables;
 
 
 REDPredicateBlock const HMRBind = ^bool (id object) {
-	[(NSMutableArray *)CFBridgingRelease(variables) addObject:object];
+	NSMutableArray *bindings = (__bridge NSMutableArray *)variables;
+	[bindings addObject:object];
 	return YES;
 };
