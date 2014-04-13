@@ -16,3 +16,7 @@
 -(id<HMRCase>)then:(id(^)())block;
 
 @end
+
+
+@protocol HMRCombinator;
+id<HMRCombinator> HMRBindCombinator(void);
