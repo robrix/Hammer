@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAnyCombinator.h"
+#import "HMROnce.h"
 
 @implementation HMRAnyCombinator
 
@@ -44,3 +45,8 @@
 }
 
 @end
+
+
+id HMRAny(void) {
+	return HMROnce([HMRAnyCombinator new]);
+}

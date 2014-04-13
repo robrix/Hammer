@@ -96,7 +96,3 @@ l3_test(&HMRMatch) {
 id HMRBind(void) {
 	return HMROnce([HMRBindCombinator new]);
 }
-
-id HMRAny(void) {
-	return HMROnce([HMRAnyCombinator new]);
-}
