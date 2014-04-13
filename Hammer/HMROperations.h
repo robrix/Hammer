@@ -12,4 +12,14 @@ NSUInteger HMRCombinatorSize(id<HMRCombinator> combinator);
 
 
 /// Pretty-prints a grammar starting with \c combinator.
+///
+/// \param combinator  The combinator to pretty-print.
+/// \return            A string representing the pretty-printed grammar which starts with \c combinator.
 NSString *HMRPrettyPrint(id<HMRCombinator> combinator);
+
+
+/// Determines whether a given combinator is cyclic.
+///
+/// \param combinator  The combinator to recurse through.
+/// \return            YES if \c combinator is cyclic, NO otherwise.
+bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator);
