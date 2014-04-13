@@ -12,3 +12,9 @@
 
 @end
 
+
+@interface NSObject (HMRCase)
+
+-(id)hmr_matchPredicates:(NSArray *)predicates;
+
+@end

@@ -65,6 +65,15 @@ static _Thread_local CFMutableArrayRef variables;
 @end
 
 
+@implementation NSObject (HMRCase)
+
+-(id)hmr_matchPredicates:(NSArray *)predicates {
+	return [HMRCase match:self withCases:predicates];
+}
+
+@end
+
+
 REDPredicateBlock const HMRBind = ^bool (id object) {
 	NSMutableArray *bindings = (__bridge NSMutableArray *)variables;
 	[bindings addObject:object];
