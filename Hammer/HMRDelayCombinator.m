@@ -57,6 +57,9 @@ l3_test(@selector(parseForest)) {
 }
 
 
+@dynamic hash;
+
+
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
