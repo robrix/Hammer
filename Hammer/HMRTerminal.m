@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRCase.h"
 #import "HMRTerminal.h"
 
 @implementation HMRTerminal
@@ -12,10 +13,6 @@
 
 
 -(bool)isNullable {
-	return NO;
-}
-
--(bool)isCyclic {
 	return NO;
 }
 
@@ -44,8 +41,19 @@
 @synthesize name = _name;
 
 -(instancetype)withName:(NSString *)name {
-	_name = name;
+	if (!_name) _name = [name copy];
 	return self;
+}
+
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self isEqual:object];
+}
+
+-(id<HMRCase>)then:(id (^)())block {
+	return [HMRCase caseWithPredicate:self block:block];
 }
 
 

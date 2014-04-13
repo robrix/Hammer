@@ -31,33 +31,6 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(bool)computeNullability {
-	return self.left.nullable || self.right.nullable;
-}
-
-
--(bool)computeCyclic {
-	return self.left.cyclic || self.right.cyclic;
-}
-
-l3_test(@selector(isCyclic)) {
-	id<HMRCombinator> acyclic = HMRConcatenate(HMRNone(), HMRNone());
-	l3_expect(acyclic.cyclic).to.equal(@NO);
-	
-	__block id<HMRCombinator> leftRecursive;
-	leftRecursive = HMRAlternate(HMRDelay(leftRecursive), HMRNone());
-	l3_expect(leftRecursive.cyclic).to.equal(@YES);
-	
-	__block id<HMRCombinator> rightRecursive;
-	rightRecursive = HMRAlternate(HMRNone(), HMRDelay(rightRecursive));
-	l3_expect(rightRecursive.cyclic).to.equal(@YES);
-	
-	__block id<HMRCombinator> mutuallyRecursive;
-	mutuallyRecursive = HMRAlternate(HMRDelay(mutuallyRecursive), HMRDelay(mutuallyRecursive));
-	l3_expect(mutuallyRecursive.cyclic).to.equal(@YES);
-}
-
-
 -(NSSet *)reduceParseForest {
 	return [self.left.parseForest setByAddingObjectsFromSet:self.right.parseForest];
 }
@@ -122,8 +95,8 @@ l3_test(@selector(compaction)) {
 -(BOOL)isEqual:(HMRAlternation *)object {
 	return
 		[object isKindOfClass:self.class]
-	&&	[object.left isEqual:self.left]
-	&&	[object.right isEqual:self.right];
+	&&	[self.left isEqual:object.left]
+	&&	[self.right isEqual:object.right];
 }
 
 @end
@@ -134,4 +107,17 @@ id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) 
 	NSCParameterAssert(right != nil);
 	
 	return [[HMRAlternation alloc] initWithLeft:left right:right];
+}
+
+
+REDPredicateBlock HMRAlternationPredicate(REDPredicateBlock left, REDPredicateBlock right) {
+	left = left ?: REDTruePredicateBlock;
+	right = right ?: REDTruePredicateBlock;
+	
+	return [^bool (HMRAlternation *combinator) {
+		return
+			[combinator isKindOfClass:[HMRAlternation class]]
+		&&	left(combinator.left)
+		&&	right(combinator.right);
+	} copy];
 }

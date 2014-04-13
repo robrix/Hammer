@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRCase.h"
 #import "HMRDelayCombinator.h"
 #import "HMRNonterminal.h"
 
@@ -23,15 +24,6 @@
 
 -(id<HMRCombinator>)derivative:(id)object {
 	return [self.forced derivative:object];
-}
-
-
--(bool)isNullable {
-	return self.forced.nullable;
-}
-
--(bool)isCyclic {
-	return self.forced.cyclic;
 }
 
 
@@ -62,6 +54,17 @@ l3_test(@selector(parseForest)) {
 
 -(id<HMRCombinator>)withName:(NSString *)name {
 	return (id)[self.forced withName:name];
+}
+
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self.forced matchObject:object];
+}
+
+-(id<HMRCase>)then:(id (^)())block {
+	return [HMRCase caseWithPredicate:self.forced block:block];
 }
 
 

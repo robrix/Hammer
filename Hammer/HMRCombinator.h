@@ -2,13 +2,11 @@
 
 #import <Foundation/Foundation.h>
 #import <Reducers/REDReducible.h>
+#import <Hammer/HMRPredicate.h>
 
-@protocol HMRCombinator <NSObject, NSCopying, REDReducible>
+@protocol HMRCombinator <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object;
-
-@property (readonly, getter = isNullable) bool nullable;
-@property (readonly, getter = isCyclic) bool cyclic;
 
 @property (readonly) NSSet *parseForest;
 
@@ -20,6 +18,10 @@
 -(instancetype)withName:(NSString *)name;
 
 @end
+
+
+/// The type of a reduction combinator’s block, which maps parse trees.
+typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 
 #pragma mark Constructors
@@ -57,7 +59,7 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) __attribute__((nonnull
 /// \param combinator  The combinator to reduce. Must not be nil.
 /// \param block       The block to map the parse trees produced by \c combinator with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
 /// \return            A combinator representing the reduction of \c combinator by \c block.
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying> each)) __attribute__((nonnull));
+id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
 
 
 /// Constructs a literal combinator.
@@ -77,15 +79,15 @@ id<HMRCombinator> HMRCharacterSet(NSCharacterSet *characterSet) __attribute__((n
 ///
 /// This is rarely useful when constructing grammars.
 ///
-/// \param object  The object to treat as having been parsed.
+/// \param object  The object to treat as having been parsed. Must not be nil.
 /// \return        A null parse whose parse forest contains \c object as its sole parse tree.
-id<HMRCombinator> HMRCaptureTree(id object);
+id<HMRCombinator> HMRCaptureTree(id object) __attribute__((nonnull));
 
 /// Constructs a null parse consisting of \c forest.
 ///
 /// This is rarely useful when constructing grammars.
 ///
-/// \param forest  The set of parse trees to treat as having been parsed.
+/// \param forest  The set of parse trees to treat as having been parsed. Must not be nil.
 /// \return        A null parse consisting of \c forest.
 id<HMRCombinator> HMRCaptureForest(NSSet *forest) __attribute__((nonnull));
 

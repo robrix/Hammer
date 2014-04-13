@@ -8,10 +8,6 @@
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object;
 
--(bool)computeNullability;
-
--(bool)computeCyclic;
-
 -(NSSet *)reduceParseForest;
 
 /// Produce a deeply compacted representation of the receiver.

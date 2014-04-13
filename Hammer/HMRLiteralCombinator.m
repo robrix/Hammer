@@ -36,7 +36,7 @@
 -(BOOL)isEqual:(HMRLiteralCombinator *)object {
 	return
 		[super isEqual:object]
-	&&	[object.object isEqual:self.object];
+	&&	[self.object isEqual:object.object];
 }
 
 @end
@@ -44,4 +44,14 @@
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object) {
 	return [[HMRLiteralCombinator alloc] initWithObject:object];
+}
+
+
+REDPredicateBlock HMRLiteralPredicate(REDPredicateBlock object) {
+	object = object ?: REDTruePredicateBlock;
+	return [^ bool (HMRLiteralCombinator *combinator) {
+		return
+			[combinator isKindOfClass:[HMRLiteralCombinator class]]
+		&&	object(combinator.object);
+	} copy];
 }

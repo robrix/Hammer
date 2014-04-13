@@ -23,16 +23,6 @@
 }
 
 
--(bool)computeNullability {
-	return self.combinator.nullable;
-}
-
-
--(bool)computeCyclic {
-	return self.combinator.cyclic;
-}
-
-
 -(NSSet *)reduceParseForest:(NSSet *)forest {
 	return [[NSSet set] red_append:REDMap(forest, self.block)];
 }
@@ -112,6 +102,16 @@ l3_test(@selector(compaction)) {
 	return self;
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRReduction *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[self.combinator isEqual:object.combinator]
+	&&	[self.block isEqual:object.block];
+}
+
 @end
 
 
@@ -120,4 +120,15 @@ id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying
 	NSCParameterAssert(block != nil);
 	
 	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
+}
+
+
+REDPredicateBlock HMRReductionPredicate(REDPredicateBlock combinator) {
+	combinator = combinator ?: REDTruePredicateBlock;
+	
+	return [^bool (HMRReduction *reduction) {
+		return
+			[reduction isKindOfClass:[HMRReduction class]]
+		&&	combinator(reduction.combinator);
+	} copy];
 }

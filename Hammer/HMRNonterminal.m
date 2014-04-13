@@ -1,16 +1,14 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRCase.h"
 #import "HMRDelay.h"
+#import "HMRMemoization.h"
 #import "HMRNonterminal.h"
-
-#define HMRMemoize(var, initial, recursive) \
-	((var) ?: ((var = (initial)), (var = (recursive))))
 
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
 	NSNumber *_nullable;
-	NSNumber *_cyclic;
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
 	bool _reducing;
@@ -44,24 +42,6 @@
 }
 
 
--(bool)computeNullability {
-	return NO;
-}
-
--(bool)isNullable {
-	return HMRMemoize(_nullable, @NO, @([self computeNullability])).boolValue;
-}
-
-
--(bool)computeCyclic {
-	return NO;
-}
-
--(bool)isCyclic {
-	return HMRMemoize(_cyclic, @YES, @([self computeCyclic])).boolValue;
-}
-
-
 -(id<HMRCombinator>)compact {
 	return self;
 }
@@ -87,8 +67,19 @@
 @synthesize name = _name;
 
 -(instancetype)withName:(NSString *)name {
-	if (!_name) _name = name;
+	if (!_name) _name = [name copy];
 	return self;
+}
+
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self isEqual:object];
+}
+
+-(id<HMRCase>)then:(id (^)())block {
+	return [HMRCase caseWithPredicate:self block:block];
 }
 
 

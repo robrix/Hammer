@@ -53,7 +53,7 @@ l3_test(@selector(description)) {
 -(BOOL)isEqual:(HMRCharacterSetCombinator *)object {
 	return
 		[super isEqual:object]
-	&&	[object.characterSet isEqual:self.characterSet];
+	&&	[self.characterSet isEqual:object.characterSet];
 }
 
 
