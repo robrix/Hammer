@@ -112,6 +112,16 @@ l3_test(@selector(compaction)) {
 	return self;
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRReduction *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[self.combinator isEqual:object.combinator]
+	&&	[self.block isEqual:object.block];
+}
+
 @end
 
 

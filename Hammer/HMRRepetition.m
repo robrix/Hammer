@@ -69,6 +69,15 @@ l3_test(@selector(compaction)) {
 	return [self.combinator red_reduce:[super reduce:initial usingBlock:block] usingBlock:block];
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRRepetition *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[self.combinator isEqual:object.combinator];
+}
+
 @end
 
 

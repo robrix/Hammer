@@ -36,7 +36,7 @@
 -(BOOL)isEqual:(HMRLiteralCombinator *)object {
 	return
 		[super isEqual:object]
-	&&	[object.object isEqual:self.object];
+	&&	[self.object isEqual:object.object];
 }
 
 @end
