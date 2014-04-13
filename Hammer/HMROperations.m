@@ -98,16 +98,16 @@ bool HMRCombinatorIsNullable(id<HMRCombinator> combinator) {
 l3_test(&HMRCombinatorIsNullable) {
 	id<HMRCombinator> nonNullable = HMRLiteral(@"x");
 	id<HMRCombinator> nullable = HMRRepeat(nonNullable);
-	l3_expect(HMRConcatenate(nonNullable, nonNullable).nullable).to.equal(@NO);
-	l3_expect(HMRConcatenate(nonNullable, nullable).nullable).to.equal(@NO);
-	l3_expect(HMRConcatenate(nullable, nonNullable).nullable).to.equal(@NO);
-	l3_expect(HMRConcatenate(nullable, nullable).nullable).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable(HMRConcatenate(nonNullable, nonNullable))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(HMRConcatenate(nonNullable, nullable))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(HMRConcatenate(nullable, nonNullable))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(HMRConcatenate(nullable, nullable))).to.equal(@YES);
 	
 	__block id<HMRCombinator> cyclic;
-	l3_expect((cyclic = HMRConcatenate(HMRDelay(cyclic), nullable)).nullable).to.equal(@NO);
-	l3_expect((cyclic = HMRConcatenate(nullable, HMRDelay(cyclic))).nullable).to.equal(@NO);
-	l3_expect((cyclic = HMRConcatenate(HMRAlternate(nullable, HMRDelay(cyclic)), nullable)).nullable).to.equal(@YES);
-	l3_expect((cyclic = HMRConcatenate(nullable, HMRAlternate(nullable, HMRDelay(cyclic)))).nullable).to.equal(@YES);
-	l3_expect((cyclic = HMRConcatenate(HMRAlternate(nonNullable, HMRDelay(cyclic)), nullable)).nullable).to.equal(@NO);
-	l3_expect((cyclic = HMRConcatenate(nullable, HMRAlternate(nonNullable, HMRDelay(cyclic)))).nullable).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(cyclic = HMRConcatenate(HMRDelay(cyclic), nullable))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(cyclic = HMRConcatenate(nullable, HMRDelay(cyclic)))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(cyclic = HMRConcatenate(HMRAlternate(nullable, HMRDelay(cyclic)), nullable))).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable(cyclic = HMRConcatenate(nullable, HMRAlternate(nullable, HMRDelay(cyclic))))).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable(cyclic = HMRConcatenate(HMRAlternate(nonNullable, HMRDelay(cyclic)), nullable))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(cyclic = HMRConcatenate(nullable, HMRAlternate(nonNullable, HMRDelay(cyclic))))).to.equal(@NO);
 }
