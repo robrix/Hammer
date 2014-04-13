@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRCase.h"
 #import "HMROperations.h"
 
 NSUInteger HMRCombinatorSize(id<HMRCombinator> combinator) {
@@ -34,4 +35,23 @@ l3_test(&HMRPrettyPrint) {
 	__block id<HMRCombinator> nonterminal = [HMRConcatenate(terminal1, HMRAlternate(terminal2, HMRDelay(nonterminal))) withName:@"S"];
 	NSString *expected = [NSString stringWithFormat:@"%@\n%@\n%@\n", nonterminal.description, terminal1.description, terminal2.description];
 	l3_expect(HMRPrettyPrint(nonterminal)).to.equal(expected);
+}
+
+
+bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
+	NSNumber *cyclic = [combinator red_reduce:@YES usingBlock:^(NSNumber *into, id<HMRCombinator> each) {
+		return [HMRCase match:each withCases:@[
+			[HMRCase case:HMRConcatenationPredicate(HMRBind, HMRBind) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
+				return @(HMRCombinatorIsCyclic(first) || HMRCombinatorIsCyclic(second));
+			}],
+			[HMRCase case:REDTruePredicateBlock then:^{ return @NO; }],
+		]];
+	}];
+	return cyclic.boolValue;
+}
+
+l3_addTestSubjectTypeWithFunction(HMRCombinatorIsCyclic)
+l3_test(&HMRCombinatorIsCyclic) {
+	l3_expect(HMRCombinatorIsCyclic(HMRConcatenate(HMRLiteral(@"x"), HMRLiteral(@"y")))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsCyclic(HMRLiteral(@"x"))).to.equal(@NO);
 }
