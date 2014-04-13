@@ -12,6 +12,3 @@
 
 @end
 
-
-/// Match \c subject against a series of \c cases.
-id HMRMatch(id subject, NSArray *cases);
