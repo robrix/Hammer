@@ -42,15 +42,6 @@
 }
 
 
--(bool)computeNullability {
-	return NO;
-}
-
--(bool)isNullable {
-	return HMRMemoize(_nullable, @NO, @([self computeNullability])).boolValue;
-}
-
-
 -(id<HMRCombinator>)compact {
 	return self;
 }

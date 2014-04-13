@@ -29,11 +29,6 @@
 }
 
 
--(bool)isNullable {
-	return YES;
-}
-
-
 -(NSSet *)parseForest {
 	return self.forest;
 }

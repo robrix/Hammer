@@ -23,11 +23,6 @@
 }
 
 
--(bool)computeNullability {
-	return self.combinator.nullable;
-}
-
-
 -(NSSet *)reduceParseForest:(NSSet *)forest {
 	return [[NSSet set] red_append:REDMap(forest, self.block)];
 }
