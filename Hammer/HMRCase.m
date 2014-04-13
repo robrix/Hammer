@@ -9,11 +9,17 @@
 	id (^_block)();
 }
 
-+(instancetype)case:(REDPredicateBlock)predicate then:(id(^)())block {
++(instancetype)case:(REDPredicateBlock)predicate then:(id (^)())block {
 	return [[self alloc] initWithPredicate:predicate thenBlock:block];
 }
 
--(instancetype)initWithPredicate:(REDPredicateBlock)predicate thenBlock:(id(^)())block {
++(instancetype)caseWithPredicate:(id<HMRPredicate>)predicate block:(id (^)())block {
+	return [[self alloc] initWithPredicate:^(id subject) {
+		return [predicate matchObject:subject];
+	} thenBlock:block];
+}
+
+-(instancetype)initWithPredicate:(REDPredicateBlock)predicate thenBlock:(id (^)())block {
 	NSParameterAssert(block != nil);
 	
 	if ((self = [super init])) {
