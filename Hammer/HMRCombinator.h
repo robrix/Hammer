@@ -65,17 +65,23 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) __attribute__((nonnull
 id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
 
 
-/// Constructs a literal combinator.
+/// Constructs an equality combinator.
 ///
 /// \param object  The object to compare input against. May be nil.
 /// \return        A combinator which matches input equal to \c object by pointer equality or by \c -isEqual:.
 id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object);
 
-/// Constructs a character set combinator.
+/// Constructs a containment combinator.
 ///
-/// \param set  The character set to compare input against. Must not be nil.
-/// \return     A combinator which matches strings whose characters are all within \c characterSet.
+/// \param set  The set to compare input against. Must not be nil.
+/// \return     A combinator which matches objects contained in \c set.
 id<HMRCombinator> HMRContains(id<HMRSet> set) __attribute__((nonnull));
+
+/// Constructs a kind-of combinator.
+///
+/// \param class  The class to compare input against. Must not be nil.
+/// \return       A combinator which matches objects whose which respond YES to \c -isKindOfClass: when passed \c class.
+id<HMRCombinator> HMRKindOf(Class class) __attribute__((nonnull));
 
 
 /// Constructs a null parse with a forest containing \c object.
