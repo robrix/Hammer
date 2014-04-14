@@ -52,7 +52,7 @@
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
-	return [self isEqual:object];
+	return ![[self derivative:object] isEqual:HMRNone()];
 }
 
 -(id<HMRCase>)then:(id (^)())block {
