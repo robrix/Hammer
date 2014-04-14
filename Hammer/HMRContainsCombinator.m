@@ -12,11 +12,11 @@
 
 @implementation HMRContainsCombinator
 
--(instancetype)initWithCharacterSet:(NSCharacterSet *)characterSet {
-	NSParameterAssert(characterSet != nil);
+-(instancetype)initWithSet:(id<HMRSet>)set {
+	NSParameterAssert(set != nil);
 	
 	if ((self = [super init])) {
-		_set = [characterSet copy];
+		_set = [set copyWithZone:NULL];
 	}
 	return self;
 }
@@ -29,7 +29,7 @@
 }
 
 l3_test(@selector(evaluateWithObject:)) {
-	HMRContainsCombinator *combinator = [[HMRContainsCombinator alloc] initWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
+	HMRContainsCombinator *combinator = [[HMRContainsCombinator alloc] initWithSet:[NSCharacterSet alphanumericCharacterSet]];
 	l3_expect([combinator evaluateWithObject:@"a"]).to.equal(@YES);
 	l3_expect([combinator evaluateWithObject:@"1"]).to.equal(@YES);
 }
@@ -90,6 +90,6 @@ l3_test(@selector(namesByCharacterSet)) {
 @end
 
 
-id<HMRCombinator> HMRContains(NSCharacterSet *characterSet) {
-	return [[HMRContainsCombinator alloc] initWithCharacterSet:characterSet];
+id<HMRCombinator> HMRContains(id<HMRSet> set) {
+	return [[HMRContainsCombinator alloc] initWithSet:set];
 }

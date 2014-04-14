@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 #import <Reducers/REDReducible.h>
 #import <Hammer/HMRPredicate.h>
+#import <Hammer/HMRSet.h>
 
 @protocol HMRCombinator <NSObject, NSCopying, REDReducible, HMRPredicate>
 
@@ -72,9 +73,9 @@ id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object);
 
 /// Constructs a character set combinator.
 ///
-/// \param characterSet  The character set to compare input against. Must not be nil.
-/// \return              A combinator which matches strings whose characters are all within \c characterSet.
-id<HMRCombinator> HMRContains(NSCharacterSet *characterSet) __attribute__((nonnull));
+/// \param set  The character set to compare input against. Must not be nil.
+/// \return     A combinator which matches strings whose characters are all within \c characterSet.
+id<HMRCombinator> HMRContains(id<HMRSet> set) __attribute__((nonnull));
 
 
 /// Constructs a null parse with a forest containing \c object.
