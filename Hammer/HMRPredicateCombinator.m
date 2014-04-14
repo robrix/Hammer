@@ -17,4 +17,11 @@
 	:	HMRNone();
 }
 
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self evaluateWithObject:object];
+}
+
 @end

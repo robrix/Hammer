@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
+#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
@@ -98,6 +99,15 @@ l3_test(@selector(compaction)) {
 }
 
 
+#pragma mark HMRAlternation
+
+-(bool)matchObject:(id)object {
+	return
+		[self.left matchObject:object]
+	||	[self.right matchObject:object];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRAlternation *)object {
@@ -117,15 +127,13 @@ id<HMRCombinator> HMROr(id<HMRCombinator> left, id<HMRCombinator> right) {
 	return [[HMRAlternation alloc] initWithLeft:left right:right];
 }
 
-
-REDPredicateBlock HMRAlternationPredicate(REDPredicateBlock left, REDPredicateBlock right) {
-	left = left ?: REDTruePredicateBlock;
-	right = right ?: REDTruePredicateBlock;
-	
-	return [^bool (HMRAlternation *combinator) {
+id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right) {
+	left = left ?: HMRAny();
+	right = right ?: HMRAny();
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRAlternation *subject) {
 		return
-			[combinator isKindOfClass:[HMRAlternation class]]
-		&&	left(combinator.left)
-		&&	right(combinator.right);
-	} copy];
+			[subject isKindOfClass:[HMRAlternation class]]
+		&&	[left matchObject:subject.left]
+		&&	[right matchObject:subject.right];
+	}];
 }

@@ -121,3 +121,39 @@ id<HMRCombinator> HMRLazyCombinator(id<HMRCombinator>(^delayed)(void)) __attribu
 
 /// The empty combinator, i.e. a combinator which cannot match anything.
 id<HMRCombinator> HMRNone(void);
+
+
+#pragma mark Predicate constructors
+
+/// Constructs a concatenation predicate.
+///
+/// \param first   The predicate to match against a concatenation’s first combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param second  The predicate to match against a concatenation’s second combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return        A predicate which matches concatenations whose first and second combinators are matched by the given \c first and \c second predicates.
+id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second);
+
+/// Constructs an alternation predicate.
+///
+/// \param left   The predicate to match against an alternation’s left combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param right  The predicate to match against an alternation’s right combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return       A predicate which matches alternations whose left and right combinators are matched by the given \c left and \c right predicates.
+id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right);
+
+/// Constructs a repetition predicate.
+///
+/// \param combinator  The predicate to match against a repetition’s interior combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return            A predicate which matches repetitions whose combinators are matched by the given \c combinator predicate.
+id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator);
+
+/// Constructs a reduction predicate.
+///
+/// \param combinator  The predicate to match against a reduction’s interior combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param block       The predicate to match against a reduction’s block. May be nil, in which case it matches with \c HMRAny().
+/// \return            A predicate which matches reductions whose combinators and blocks are matched by the given \c combinator and \c block predicates.
+id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block);
+
+/// Constructs a capture predicate.
+///
+/// \param forest  The predicate to match against a capture’s parse forest. May be nil, in which case it matches with \c HMRAny().
+/// \return        A predicate which matches captures whose parse forests are matched by the given \c forest predicate.
+id<HMRPredicate> HMRCaptured(id<HMRPredicate> forest);

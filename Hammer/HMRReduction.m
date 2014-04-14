@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
@@ -110,6 +111,13 @@ l3_test(@selector(compaction)) {
 }
 
 
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self.combinator matchObject:object];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRReduction *)object {
@@ -129,13 +137,12 @@ id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^
 	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
 }
 
-
-REDPredicateBlock HMRReductionPredicate(REDPredicateBlock combinator) {
-	combinator = combinator ?: REDTruePredicateBlock;
-	
-	return [^bool (HMRReduction *reduction) {
+id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block) {
+	combinator = combinator ?: HMRAny();
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRReduction *subject) {
 		return
-			[reduction isKindOfClass:[HMRReduction class]]
-		&&	combinator(reduction.combinator);
-	} copy];
+			[subject isKindOfClass:[HMRReduction class]]
+		&&	[combinator matchObject:subject.combinator]
+		&&	[block matchObject:subject.block];
+	}];
 }

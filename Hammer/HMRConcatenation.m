@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
 #import "HMROperations.h"
@@ -126,6 +127,15 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 }
 
 
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return
+		[self.first matchObject:object]
+	&&	[self.second matchObject:object];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRConcatenation *)object {
@@ -145,15 +155,13 @@ id<HMRCombinator> HMRAnd(id<HMRCombinator> first, id<HMRCombinator> second) {
 	return [[HMRConcatenation alloc] initWithFirst:first second:second];
 }
 
-
-REDPredicateBlock HMRConcatenationPredicate(REDPredicateBlock first, REDPredicateBlock second) {
-	first = first ?: REDTruePredicateBlock;
-	second = second ?: REDTruePredicateBlock;
-	
-	return [^bool (HMRConcatenation *combinator) {
+id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second) {
+	first = first ?: HMRAny();
+	second = second ?: HMRAny();
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRConcatenation *subject) {
 		return
-			[combinator isKindOfClass:[HMRConcatenation class]]
-		&&	first(combinator.first)
-		&&	second(combinator.second);
-	} copy];
+			[subject isKindOfClass:[HMRConcatenation class]]
+		&&	[first matchObject:subject.first]
+		&&	[second matchObject:subject.second];
+	}];
 }

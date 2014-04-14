@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRAnyCombinator.h"
 #import "HMRMemoization.h"
 #import "HMROperations.h"
 
@@ -43,16 +44,16 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 	bool (^__weak __block recur)(id<HMRCombinator>);
 	bool (^computeCyclic)(id<HMRCombinator>) = ^bool (id<HMRCombinator> combinator) {
 		return [HMRMemoize(cache[combinator], @YES, HMRMatch(combinator, @[
-			[HMRAnd(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
+			[HMRConcatenated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(recur(first) || recur(second));
 			}],
-			[HMROr(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
+			[HMRAlternated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
 				return @(recur(left) || recur(right));
 			}],
-			[HMRMap(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
+			[HMRReduced(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
-			[HMRRepeat(HMRBind()) then:^(id<HMRCombinator> combinator) {
+			[HMRRepeated(HMRBind()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
 			[HMRAny() then:^{ return @NO; }],
@@ -77,17 +78,18 @@ bool HMRCombinatorIsNullable(id<HMRCombinator> combinator) {
 	bool (^__weak __block recur)(id<HMRCombinator>);
 	bool (^isNullable)(id<HMRCombinator>) = ^bool (id<HMRCombinator> combinator) {
 		return [HMRMemoize(cache[combinator], @NO, HMRMatch(combinator, @[
-			[HMRAnd(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
+			[HMRConcatenated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(recur(first) && recur(second));
 			}],
-			[HMROr(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
+			[HMRAlternated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
 				return @(recur(left) || recur(right));
 			}],
-			[HMRMap(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
+			[HMRReduced(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
-			[HMRRepeat(HMRAny()) then:^{ return @YES; }],
-			[HMRCaptureForest(HMRAny()) then:^{ return @YES; }],
+			[HMRRepeated(HMRAny()) then:^{ return @YES; }],
+			[HMRCaptured(HMRAny()) then:^{ return @YES; }],
+			[HMRKindOf([HMRAnyCombinator class]) then:^{ return @YES; }],
 			[HMRAny() then:^{ return @NO; }]
 		])) boolValue];
 	};
@@ -110,4 +112,7 @@ l3_test(&HMRCombinatorIsNullable) {
 	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(nullable, HMROr(nullable, HMRDelay(cyclic))))).to.equal(@YES);
 	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(HMROr(nonNullable, HMRDelay(cyclic)), nullable))).to.equal(@NO);
 	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(nullable, HMROr(nonNullable, HMRDelay(cyclic))))).to.equal(@NO);
+	
+	l3_expect(HMRCombinatorIsNullable(HMRMap(nullable, REDIdentityMapBlock))).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable(HMRMap(nonNullable, REDIdentityMapBlock))).to.equal(@NO);
 }

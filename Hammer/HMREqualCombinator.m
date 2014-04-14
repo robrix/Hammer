@@ -51,13 +51,3 @@
 id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object) {
 	return [[HMREqualCombinator alloc] initWithObject:object];
 }
-
-
-REDPredicateBlock HMREqualPredicate(REDPredicateBlock object) {
-	object = object ?: REDTruePredicateBlock;
-	return [^ bool (HMREqualCombinator *combinator) {
-		return
-			[combinator isKindOfClass:[HMREqualCombinator class]]
-		&&	object(combinator.object);
-	} copy];
-}
