@@ -1,22 +1,22 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRCharacterSetCombinator.h"
+#import "HMRContainsCombinator.h"
 #import "HMROnce.h"
 
-@interface HMRCharacterSetCombinator ()
+@interface HMRContainsCombinator ()
 
 +(NSDictionary *)namesByCharacterSet;
 +(NSDictionary *)characterSetsByName;
 
 @end
 
-@implementation HMRCharacterSetCombinator
+@implementation HMRContainsCombinator
 
 -(instancetype)initWithCharacterSet:(NSCharacterSet *)characterSet {
 	NSParameterAssert(characterSet != nil);
 	
 	if ((self = [super init])) {
-		_characterSet = [characterSet copy];
+		_set = [characterSet copy];
 	}
 	return self;
 }
@@ -24,14 +24,12 @@
 
 #pragma mark HMRPredicateCombinator
 
--(bool)evaluateWithObject:(NSString *)string {
-	return
-		[string isKindOfClass:[NSString class]]
-	&&	[[string stringByTrimmingCharactersInSet:self.characterSet] isEqual:@""];
+-(bool)evaluateWithObject:(id)object {
+	return [self.set hmr_containsObject:object];
 }
 
 l3_test(@selector(evaluateWithObject:)) {
-	HMRCharacterSetCombinator *combinator = [[HMRCharacterSetCombinator alloc] initWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
+	HMRContainsCombinator *combinator = [[HMRContainsCombinator alloc] initWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
 	l3_expect([combinator evaluateWithObject:@"a"]).to.equal(@YES);
 	l3_expect([combinator evaluateWithObject:@"1"]).to.equal(@YES);
 }
@@ -40,26 +38,26 @@ l3_test(@selector(evaluateWithObject:)) {
 #pragma mark HMRTerminal
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"[%@]", self.class.namesByCharacterSet[self.characterSet] ?: self.characterSet];
+	return [NSString stringWithFormat:@"[%@]", self.class.namesByCharacterSet[self.set] ?: self.set];
 }
 
 l3_test(@selector(description)) {
-	l3_expect(HMRCharacterSet([NSCharacterSet alphanumericCharacterSet]).description).to.equal(@"[[:alnum:]]");
+	l3_expect(HMRContains([NSCharacterSet alphanumericCharacterSet]).description).to.equal(@"[[:alnum:]]");
 }
 
 
 #pragma mark NSObject
 
--(BOOL)isEqual:(HMRCharacterSetCombinator *)object {
+-(BOOL)isEqual:(HMRContainsCombinator *)object {
 	return
 		[super isEqual:object]
-	&&	[self.characterSet isEqual:object.characterSet];
+	&&	[self.set isEqual:object.set];
 }
 
 -(NSUInteger)hash {
 	return
-		@"HMRCharacterSetCombinator".hash
-	^	self.characterSet.hash;
+		@"HMRContainsCombinator".hash
+	^	self.set.hash;
 }
 
 
@@ -86,12 +84,12 @@ static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 }
 
 l3_test(@selector(namesByCharacterSet)) {
-	l3_expect(HMRCharacterSetCombinator.namesByCharacterSet[HMRCharacterSetCombinator.characterSetsByName[HMRAlphabeticCharacterSetName]]).to.equal(HMRAlphabeticCharacterSetName);
+	l3_expect(HMRContainsCombinator.namesByCharacterSet[HMRContainsCombinator.characterSetsByName[HMRAlphabeticCharacterSetName]]).to.equal(HMRAlphabeticCharacterSetName);
 }
 
 @end
 
 
-id<HMRCombinator> HMRCharacterSet(NSCharacterSet *characterSet) {
-	return [[HMRCharacterSetCombinator alloc] initWithCharacterSet:characterSet];
+id<HMRCombinator> HMRContains(NSCharacterSet *characterSet) {
+	return [[HMRContainsCombinator alloc] initWithCharacterSet:characterSet];
 }

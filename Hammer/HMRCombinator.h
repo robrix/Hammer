@@ -74,7 +74,7 @@ id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object);
 ///
 /// \param characterSet  The character set to compare input against. Must not be nil.
 /// \return              A combinator which matches strings whose characters are all within \c characterSet.
-id<HMRCombinator> HMRCharacterSet(NSCharacterSet *characterSet) __attribute__((nonnull));
+id<HMRCombinator> HMRContains(NSCharacterSet *characterSet) __attribute__((nonnull));
 
 
 /// Constructs a null parse with a forest containing \c object.
