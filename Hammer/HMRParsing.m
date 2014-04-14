@@ -25,7 +25,7 @@ l3_test(&HMRParseCollection) {
 	id nonterminalPrefix = @"+";
 	// S -> "+" S | "x"
 	__block id<HMRCombinator> nonterminal;
-	nonterminal = [HMRReduce(HMROr(HMRAnd([HMRLiteral(nonterminalPrefix) withName:@"prefix"], HMRDelay(nonterminal)), [HMRLiteral(terminal) withName:@"final"]), ^(id each) { return HMRList(each, nil); }) withName:@"S"];
+	nonterminal = [HMRMap(HMROr(HMRAnd([HMRLiteral(nonterminalPrefix) withName:@"prefix"], HMRDelay(nonterminal)), [HMRLiteral(terminal) withName:@"final"]), ^(id each) { return HMRList(each, nil); }) withName:@"S"];
 	l3_expect(HMRParseCollection(nonterminal, @[ terminal ])).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
 	l3_expect(HMRParseCollection(nonterminal, @[ nonterminalPrefix, terminal ])).to.equal([NSSet setWithObject:HMRList(HMRList(nonterminalPrefix, terminal, nil), nil)]);
 	id nested = [NSSet setWithObject:HMRList(HMRList(nonterminalPrefix, HMRList(nonterminalPrefix, terminal, nil), nil), nil)];

@@ -68,13 +68,13 @@ l3_test(@selector(derivative:)) {
 		concatenation = HMRNone();
 	else if ([first isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = first.parseForest;
-		concatenation = [(HMRReduction *)HMRReduce(second, ^(id<NSObject,NSCopying> each) {
+		concatenation = [(HMRReduction *)HMRMap(second, ^(id<NSObject,NSCopying> each) {
 			return HMRCons(parseForest.anyObject, each);
 		}) withFunctionDescription:[NSString stringWithFormat:@"(%@ .)", first]];
 	}
 	else if ([second isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = second.parseForest;
-		concatenation = [(HMRReduction *)HMRReduce(first, ^(id<NSObject,NSCopying> each) {
+		concatenation = [(HMRReduction *)HMRMap(first, ^(id<NSObject,NSCopying> each) {
 			return HMRCons(each, parseForest.anyObject);
 		}) withFunctionDescription:[NSString stringWithFormat:@"(. %@)", second]];
 	}

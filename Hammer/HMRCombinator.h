@@ -61,7 +61,7 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) __attribute__((nonnull
 /// \param combinator  The combinator to reduce. Must not be nil.
 /// \param block       The block to map the parse trees produced by \c combinator with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
 /// \return            A combinator representing the reduction of \c combinator by \c block.
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
+id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
 
 
 /// Constructs a literal combinator.
