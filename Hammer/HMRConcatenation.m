@@ -144,3 +144,8 @@ id<HMRCombinator> HMRAnd(id<HMRCombinator> first, id<HMRCombinator> second) {
 	
 	return [[HMRConcatenation alloc] initWithFirst:first second:second];
 }
+
+id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second) {
+//	return HMRAnd(HMRKindOf([HMRConcatenation class]), HMRAnd(first, second));
+	return nil;
+}
