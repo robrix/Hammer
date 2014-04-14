@@ -127,7 +127,14 @@ id<HMRCombinator> HMRNone(void);
 
 /// Constructs a concatenation predicate.
 ///
-/// \param first   The predicate to match against a concatenation’s first combinator.
-/// \param second  The predicate to match against a concatenation’s second combinator.
+/// \param first   The predicate to match against a concatenation’s first combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param second  The predicate to match against a concatenation’s second combinator. May be nil, in which case it matches with \c HMRAny().
 /// \return        A predicate which matches concatenations whose first and second combinators are matched by the given \c first and \c second predicates.
 id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second);
+
+/// Constructs an alternation predicate.
+///
+/// \param first   The predicate to match against an alternation’s left combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param second  The predicate to match against an alternation’s right combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return        A predicate which matches alternations whose left and right combinators are matched by the given \c left and \c right predicates.
+id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right);

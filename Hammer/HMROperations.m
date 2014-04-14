@@ -46,7 +46,7 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 			[HMRConcatenated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(recur(first) || recur(second));
 			}],
-			[HMROr(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
+			[HMRAlternated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
 				return @(recur(left) || recur(right));
 			}],
 			[HMRMap(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
@@ -80,7 +80,7 @@ bool HMRCombinatorIsNullable(id<HMRCombinator> combinator) {
 			[HMRConcatenated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(recur(first) && recur(second));
 			}],
-			[HMROr(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
+			[HMRAlternated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
 				return @(recur(left) || recur(right));
 			}],
 			[HMRMap(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {

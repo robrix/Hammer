@@ -147,6 +147,8 @@ id<HMRCombinator> HMRAnd(id<HMRCombinator> first, id<HMRCombinator> second) {
 }
 
 id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second) {
+	first = first ?: HMRAny();
+	second = second ?: HMRAny();
 	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRConcatenation *subject) {
 		return
 			[subject isKindOfClass:[HMRConcatenation class]]
