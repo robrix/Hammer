@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRLexer.h"
+#import "HMROperations.h"
 #import "HMRPair.h"
 #import "HMRParsing.h"
 #import <Reducers/REDReducer.h>
