@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRDelay.h"
+#import <objc/runtime.h>
 
 @implementation HMRDelay {
 	Class _class;
@@ -64,7 +65,9 @@
 }
 
 -(BOOL)respondsToSelector:(SEL)selector {
-	return [_class instancesRespondToSelector:selector];
+	return
+		(class_getInstanceMethod(object_getClass(self), selector) != NULL)
+	||	[_class instancesRespondToSelector:selector];
 }
 
 
