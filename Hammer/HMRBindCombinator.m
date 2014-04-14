@@ -9,8 +9,7 @@
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
-	NSMutableArray *bindings = [HMRCase bindings];
-	[bindings addObject:object];
+	[HMRCase.bindings addObject:object];
 	return YES;
 }
 

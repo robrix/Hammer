@@ -20,10 +20,10 @@
  while computing this, when we determine that we have produced a word, then perform its reduction
  */
 l3_test("null reduction of partially parsed strings") {
-	id<HMRCombinator> alternatives = HMRAlternate(HMRConcatenate(HMRLiteral(@"f"), HMRConcatenate(HMRLiteral(@"o"), HMRConcatenate(HMRLiteral(@"o"), HMRLiteral(@"t")))), HMRConcatenate(HMRLiteral(@"f"), HMRConcatenate(HMRLiteral(@"o"), HMRConcatenate(HMRLiteral(@"o"), HMRLiteral(@"d")))));
+	id<HMRCombinator> alternatives = HMROr(HMRAnd(HMREqual(@"f"), HMRAnd(HMREqual(@"o"), HMRAnd(HMREqual(@"o"), HMREqual(@"t")))), HMRAnd(HMREqual(@"f"), HMRAnd(HMREqual(@"o"), HMRAnd(HMREqual(@"o"), HMREqual(@"d")))));
 	id<HMRCombinator> derivative = [[[alternatives derivative:@"f"].compaction derivative:@"o"].compaction derivative:@"o"].compaction;
 	
-	id<HMRCombinator> expected = HMRAlternate(HMRConcatenate(HMRCaptureTree(@"f"), HMRConcatenate(HMRCaptureTree(@"o"), HMRConcatenate(HMRCaptureTree(@"o"), HMRLiteral(@"t")))), HMRConcatenate(HMRCaptureTree(@"f"), HMRConcatenate(HMRCaptureTree(@"o"), HMRConcatenate(HMRCaptureTree(@"o"), HMRLiteral(@"d"))))).compaction;
+	id<HMRCombinator> expected = HMROr(HMRAnd(HMRCaptureTree(@"f"), HMRAnd(HMRCaptureTree(@"o"), HMRAnd(HMRCaptureTree(@"o"), HMREqual(@"t")))), HMRAnd(HMRCaptureTree(@"f"), HMRAnd(HMRCaptureTree(@"o"), HMRAnd(HMRCaptureTree(@"o"), HMREqual(@"d"))))).compaction;
 	
 	l3_expect(derivative).to.equal(expected);
 }
@@ -40,20 +40,20 @@ l3_test("null reduction of partially parsed strings") {
 
 l3_test("lexer grammar") {
 	NSMutableArray *reductions = [NSMutableArray new];
-	id<HMRCombinator> wordSet = HMRCharacterSet([NSCharacterSet alphanumericCharacterSet]);
-	id<HMRCombinator> word = [[(HMRReduction *)HMRReduce(HMRConcatenate(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
+	id<HMRCombinator> wordSet = HMRContains([NSCharacterSet alphanumericCharacterSet]);
+	id<HMRCombinator> word = [[(HMRReduction *)HMRMap(HMRAnd(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
 		id reduced = [@"" red_append:(id)x];
 		[reductions addObject:reduced];
 		return reduced;
 	}) withFunctionDescription:@"produce"] withName:@"word"];
 	
-	id<HMRCombinator> whitespaceSet = HMRCharacterSet([NSCharacterSet whitespaceAndNewlineCharacterSet]);
-	id<HMRCombinator> whitespace = [[(HMRReduction *)HMRReduce(HMRConcatenate(whitespaceSet, HMRRepeat(whitespaceSet)), ^(id _){ return [HMRPair null]; }) withFunctionDescription:@"ignore"] withName:@"whitespace"];
+	id<HMRCombinator> whitespaceSet = HMRContains([NSCharacterSet whitespaceAndNewlineCharacterSet]);
+	id<HMRCombinator> whitespace = [[(HMRReduction *)HMRMap(HMRAnd(whitespaceSet, HMRRepeat(whitespaceSet)), ^(id _){ return [HMRPair null]; }) withFunctionDescription:@"ignore"] withName:@"whitespace"];
 	
-	id<HMRCombinator> period = [[(HMRReduction *)HMRReduce(HMRLiteral(@"."), ^(id _) { return [HMRPair null]; }) withFunctionDescription:@"ignore"] withName:@"period"];
+	id<HMRCombinator> period = [[(HMRReduction *)HMRMap(HMREqual(@"."), ^(id _) { return [HMRPair null]; }) withFunctionDescription:@"ignore"] withName:@"period"];
 	
-	__block id<HMRCombinator> start = [HMRConcatenate(HMRAlternate(word, whitespace), HMRAlternate(HMRCaptureTree([HMRPair null]), HMRDelay(start))) withName:@"start"];
-	start = [HMRConcatenate(word, HMRAlternate(HMRConcatenate(whitespace, HMRDelay(start)), period)) withName:@"start"];
+	__block id<HMRCombinator> start = [HMRAnd(HMROr(word, whitespace), HMROr(HMRCaptureTree([HMRPair null]), HMRDelay(start))) withName:@"start"];
+	start = [HMRAnd(word, HMROr(HMRAnd(whitespace, HMRDelay(start)), period)) withName:@"start"];
 	
 	__block id<HMRCombinator> grammar = start;
 	

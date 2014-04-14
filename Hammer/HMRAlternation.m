@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
+#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
@@ -21,13 +22,13 @@
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	id<HMRCombinator> left = self.left;
 	id<HMRCombinator> right = self.right;
-	return HMRAlternate([left derivative:object], [right derivative:object]);
+	return HMROr([left derivative:object], [right derivative:object]);
 }
 
 l3_test(@selector(derivative:)) {
-	id<HMRCombinator> a = HMRLiteral(@"a"), b = HMRLiteral(@"b");
-	l3_expect([HMRAlternate(a, b) derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
-	l3_expect([HMRAlternate(a, a) derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
+	id<HMRCombinator> a = HMREqual(@"a"), b = HMREqual(@"b");
+	l3_expect([HMROr(a, b) derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
+	l3_expect([HMROr(a, a) derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
 }
 
 
@@ -50,31 +51,31 @@ l3_test(@selector(derivative:)) {
 		id<HMRCombinator> alternation;
 		id<HMRCombinator> innerLeft = ((HMRConcatenation *)left).second;
 		id<HMRCombinator> innerRight = ((HMRConcatenation *)right).second;
-		alternation = HMRAlternate(innerLeft, innerRight);
-		compacted = HMRConcatenate(((HMRConcatenation *)left).first, alternation);
+		alternation = HMROr(innerLeft, innerRight);
+		compacted = HMRAnd(((HMRConcatenation *)left).first, alternation);
 	}
 	else if (left == self.left && right == self.right)
 		compacted = self;
 	else
-		compacted = HMRAlternate(left, right);
+		compacted = HMROr(left, right);
 	return compacted;
 }
 
 l3_test(@selector(compaction)) {
-	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> anything = HMREqual(@0);
 	id<HMRCombinator> empty = HMRNone();
-	l3_expect(HMRAlternate(empty, anything).compaction).to.equal(anything);
-	l3_expect(HMRAlternate(anything, empty).compaction).to.equal(anything);
+	l3_expect(HMROr(empty, anything).compaction).to.equal(anything);
+	l3_expect(HMROr(anything, empty).compaction).to.equal(anything);
 	
 	id<HMRCombinator> nullParse = HMRCaptureTree(@"a");
 	id<HMRCombinator> same = HMRCaptureTree(@"a");
-	id<HMRCombinator> p = HMRLiteral(@"p");
-	l3_expect(HMRAlternate(nullParse, same).compaction).to.equal(same);
+	id<HMRCombinator> p = HMREqual(@"p");
+	l3_expect(HMROr(nullParse, same).compaction).to.equal(same);
 	
-	__block id<HMRCombinator> cyclic = [HMRAlternate(HMRNone(), HMRConcatenate(HMRNone(), HMRDelay(cyclic))) withName:@"S"];
+	__block id<HMRCombinator> cyclic = [HMROr(HMRNone(), HMRAnd(HMRNone(), HMRDelay(cyclic))) withName:@"S"];
 	l3_expect(cyclic.compaction).to.equal(HMRNone());
 	
-	cyclic = [HMRAlternate(HMRConcatenate(nullParse, p), HMRConcatenate(same, HMRDelay(cyclic))) withName:@"S"];
+	cyclic = [HMROr(HMRAnd(nullParse, p), HMRAnd(same, HMRDelay(cyclic))) withName:@"S"];
 	id<HMRCombinator> derivative = [cyclic.compaction derivative:@"p"];
 	l3_expect(derivative.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"p")]);
 }
@@ -98,6 +99,15 @@ l3_test(@selector(compaction)) {
 }
 
 
+#pragma mark HMRAlternation
+
+-(bool)matchObject:(id)object {
+	return
+		[self.left matchObject:object]
+	||	[self.right matchObject:object];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRAlternation *)object {
@@ -110,22 +120,20 @@ l3_test(@selector(compaction)) {
 @end
 
 
-id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) {
+id<HMRCombinator> HMROr(id<HMRCombinator> left, id<HMRCombinator> right) {
 	NSCParameterAssert(left != nil);
 	NSCParameterAssert(right != nil);
 	
 	return [[HMRAlternation alloc] initWithLeft:left right:right];
 }
 
-
-REDPredicateBlock HMRAlternationPredicate(REDPredicateBlock left, REDPredicateBlock right) {
-	left = left ?: REDTruePredicateBlock;
-	right = right ?: REDTruePredicateBlock;
-	
-	return [^bool (HMRAlternation *combinator) {
+id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right) {
+	left = left ?: HMRAny();
+	right = right ?: HMRAny();
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRAlternation *subject) {
 		return
-			[combinator isKindOfClass:[HMRAlternation class]]
-		&&	left(combinator.left)
-		&&	right(combinator.right);
-	} copy];
+			[subject isKindOfClass:[HMRAlternation class]]
+		&&	[left matchObject:subject.left]
+		&&	[right matchObject:subject.right];
+	}];
 }

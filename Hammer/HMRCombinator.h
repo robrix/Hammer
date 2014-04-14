@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 #import <Reducers/REDReducible.h>
 #import <Hammer/HMRPredicate.h>
+#import <Hammer/HMRSet.h>
 
 @protocol HMRCombinator <NSObject, NSCopying, REDReducible, HMRPredicate>
 
@@ -35,7 +36,7 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// \param left   An operand to the alternation. Must not be nil.
 /// \param right  An operand to the alternation. Must not be nil.
 /// \return       A combinator representing the union of \c left and \c right.
-id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) __attribute__((nonnull));
+id<HMRCombinator> HMROr(id<HMRCombinator> left, id<HMRCombinator> right) __attribute__((nonnull));
 
 /// Constructs the concatenation of \c left and \c right.
 ///
@@ -44,7 +45,7 @@ id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) 
 /// \param first   The first operand to the concatenation. Must not be nil.
 /// \param second  The second operand to the concatenation. Must not be nil.
 /// \return        A combinator representing the concatenation of \c first and \c second.
-id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) __attribute__((nonnull));
+id<HMRCombinator> HMRAnd(id<HMRCombinator> first, id<HMRCombinator> second) __attribute__((nonnull));
 
 /// Constructs the repetition of \c combinator.
 ///
@@ -61,20 +62,26 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) __attribute__((nonnull
 /// \param combinator  The combinator to reduce. Must not be nil.
 /// \param block       The block to map the parse trees produced by \c combinator with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
 /// \return            A combinator representing the reduction of \c combinator by \c block.
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
+id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
 
 
-/// Constructs a literal combinator.
+/// Constructs an equality combinator.
 ///
 /// \param object  The object to compare input against. May be nil.
 /// \return        A combinator which matches input equal to \c object by pointer equality or by \c -isEqual:.
-id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
+id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object);
 
-/// Constructs a character set combinator.
+/// Constructs a containment combinator.
 ///
-/// \param characterSet  The character set to compare input against. Must not be nil.
-/// \return              A combinator which matches strings whose characters are all within \c characterSet.
-id<HMRCombinator> HMRCharacterSet(NSCharacterSet *characterSet) __attribute__((nonnull));
+/// \param set  The set to compare input against. Must not be nil.
+/// \return     A combinator which matches objects contained in \c set.
+id<HMRCombinator> HMRContains(id<HMRSet> set) __attribute__((nonnull));
+
+/// Constructs a kind-of combinator.
+///
+/// \param class  The class to compare input against. Must not be nil.
+/// \return       A combinator which matches objects whose which respond YES to \c -isKindOfClass: when passed \c class.
+id<HMRCombinator> HMRKindOf(Class class) __attribute__((nonnull));
 
 
 /// Constructs a null parse with a forest containing \c object.
@@ -114,3 +121,39 @@ id<HMRCombinator> HMRLazyCombinator(id<HMRCombinator>(^delayed)(void)) __attribu
 
 /// The empty combinator, i.e. a combinator which cannot match anything.
 id<HMRCombinator> HMRNone(void);
+
+
+#pragma mark Predicate constructors
+
+/// Constructs a concatenation predicate.
+///
+/// \param first   The predicate to match against a concatenation’s first combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param second  The predicate to match against a concatenation’s second combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return        A predicate which matches concatenations whose first and second combinators are matched by the given \c first and \c second predicates.
+id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second);
+
+/// Constructs an alternation predicate.
+///
+/// \param left   The predicate to match against an alternation’s left combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param right  The predicate to match against an alternation’s right combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return       A predicate which matches alternations whose left and right combinators are matched by the given \c left and \c right predicates.
+id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right);
+
+/// Constructs a repetition predicate.
+///
+/// \param combinator  The predicate to match against a repetition’s interior combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return            A predicate which matches repetitions whose combinators are matched by the given \c combinator predicate.
+id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator);
+
+/// Constructs a reduction predicate.
+///
+/// \param combinator  The predicate to match against a reduction’s interior combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param block       The predicate to match against a reduction’s block. May be nil, in which case it matches with \c HMRAny().
+/// \return            A predicate which matches reductions whose combinators and blocks are matched by the given \c combinator and \c block predicates.
+id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block);
+
+/// Constructs a capture predicate.
+///
+/// \param forest  The predicate to match against a capture’s parse forest. May be nil, in which case it matches with \c HMRAny().
+/// \return        A predicate which matches captures whose parse forests are matched by the given \c forest predicate.
+id<HMRPredicate> HMRCaptured(id<HMRPredicate> forest);

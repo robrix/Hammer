@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRBlockCombinator.h"
 #import "HMRPair.h"
 #import "HMRRepetition.h"
 
@@ -16,19 +17,19 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return HMRConcatenate([self.combinator derivative:object], self);
+	return HMRAnd([self.combinator derivative:object], self);
 }
 
 l3_test(@selector(derivative:)) {
 	id each = @"a";
-	id<HMRCombinator> repetition = HMRRepeat(HMRLiteral(each));
+	id<HMRCombinator> repetition = HMRRepeat(HMREqual(each));
 	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, nil)]);
 	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, nil)]);
 	l3_expect([[[repetition derivative:each] derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, each, nil)]);
 	
 	// S -> ("x" | S)*
 	id terminal = @"x";
-	__block id nonterminal = HMRDelay([HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)) withName:@"S"]);
+	__block id nonterminal = HMRDelay([HMRRepeat(HMROr(HMREqual(terminal), nonterminal)) withName:@"S"]);
 	
 	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
 	l3_expect([[nonterminal derivative:terminal] derivative:terminal].parseForest).to.equal([NSSet setWithObject:HMRList(terminal, terminal, nil)]);
@@ -69,6 +70,13 @@ l3_test(@selector(compaction)) {
 }
 
 
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self.combinator matchObject:object] || YES;
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRRepetition *)object {
@@ -87,12 +95,11 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
 }
 
 
-REDPredicateBlock HMRRepetitionPredicate(REDPredicateBlock combinator) {
-	combinator = combinator ?: REDTruePredicateBlock;
-	
-	return [^bool (HMRRepetition *repetition) {
+id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator) {
+	combinator = combinator ?: HMRAny();
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRRepetition *subject) {
 		return
-			[repetition isKindOfClass:[HMRRepetition class]]
-		&&	combinator(repetition.combinator);
-	} copy];
+			[subject isKindOfClass:[HMRRepetition class]]
+		&&	[combinator matchObject:subject.combinator];
+	}];
 }
