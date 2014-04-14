@@ -43,7 +43,7 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 	bool (^__weak __block recur)(id<HMRCombinator>);
 	bool (^computeCyclic)(id<HMRCombinator>) = ^bool (id<HMRCombinator> combinator) {
 		return [HMRMemoize(cache[combinator], @YES, HMRMatch(combinator, @[
-			[HMRAnd(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
+			[HMRConcatenated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(recur(first) || recur(second));
 			}],
 			[HMROr(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
@@ -77,7 +77,7 @@ bool HMRCombinatorIsNullable(id<HMRCombinator> combinator) {
 	bool (^__weak __block recur)(id<HMRCombinator>);
 	bool (^isNullable)(id<HMRCombinator>) = ^bool (id<HMRCombinator> combinator) {
 		return [HMRMemoize(cache[combinator], @NO, HMRMatch(combinator, @[
-			[HMRAnd(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
+			[HMRConcatenated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> first, id<HMRCombinator> second) {
 				return @(recur(first) && recur(second));
 			}],
 			[HMROr(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
