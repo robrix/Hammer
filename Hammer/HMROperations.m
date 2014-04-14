@@ -87,7 +87,7 @@ bool HMRCombinatorIsNullable(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
 			[HMRRepeated(HMRAny()) then:^{ return @YES; }],
-			[HMRCaptureForest(HMRAny()) then:^{ return @YES; }],
+			[HMRCaptured(HMRAny()) then:^{ return @YES; }],
 			[HMRAny() then:^{ return @NO; }]
 		])) boolValue];
 	};

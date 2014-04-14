@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRBlockCombinator.h"
 #import "HMREmpty.h"
 #import "HMRNull.h"
 #import "HMROnce.h"
@@ -118,4 +119,12 @@ id<HMRCombinator> HMRCaptureTree(id object) {
 
 id<HMRCombinator> HMRCaptureForest(NSSet *forest) {
 	return [[HMRNull alloc] initWithForest:forest];
+}
+
+id<HMRPredicate> HMRCaptured(id<HMRPredicate> forest) {
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRNull *subject) {
+		return
+			[subject isKindOfClass:[HMRNull class]]
+		&&	[forest matchObject:subject.parseForest];
+	}];
 }

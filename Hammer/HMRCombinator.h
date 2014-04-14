@@ -151,3 +151,9 @@ id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator);
 /// \param block       The predicate to match against a reduction’s block. May be nil, in which case it matches with \c HMRAny().
 /// \return            A predicate which matches reductions whose combinators and blocks are matched by the given \c combinator and \c block predicates.
 id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block);
+
+/// Constructs a capture predicate.
+///
+/// \param forest  The predicate to match against a capture’s parse forest. May be nil, in which case it matches with \c HMRAny().
+/// \return        A predicate which matches captures whose parse forests are matched by the given \c forest predicate.
+id<HMRPredicate> HMRCaptured(id<HMRPredicate> forest);
