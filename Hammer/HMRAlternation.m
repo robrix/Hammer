@@ -25,7 +25,7 @@
 }
 
 l3_test(@selector(derivative:)) {
-	id<HMRCombinator> a = HMRLiteral(@"a"), b = HMRLiteral(@"b");
+	id<HMRCombinator> a = HMREqual(@"a"), b = HMREqual(@"b");
 	l3_expect([HMROr(a, b) derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
 	l3_expect([HMROr(a, a) derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
 }
@@ -61,14 +61,14 @@ l3_test(@selector(derivative:)) {
 }
 
 l3_test(@selector(compaction)) {
-	id<HMRCombinator> anything = HMRLiteral(@0);
+	id<HMRCombinator> anything = HMREqual(@0);
 	id<HMRCombinator> empty = HMRNone();
 	l3_expect(HMROr(empty, anything).compaction).to.equal(anything);
 	l3_expect(HMROr(anything, empty).compaction).to.equal(anything);
 	
 	id<HMRCombinator> nullParse = HMRCaptureTree(@"a");
 	id<HMRCombinator> same = HMRCaptureTree(@"a");
-	id<HMRCombinator> p = HMRLiteral(@"p");
+	id<HMRCombinator> p = HMREqual(@"p");
 	l3_expect(HMROr(nullParse, same).compaction).to.equal(same);
 	
 	__block id<HMRCombinator> cyclic = [HMROr(HMRNone(), HMRAnd(HMRNone(), HMRDelay(cyclic))) withName:@"S"];

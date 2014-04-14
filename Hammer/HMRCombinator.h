@@ -68,7 +68,7 @@ id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, HMRReductionBlock) __attr
 ///
 /// \param object  The object to compare input against. May be nil.
 /// \return        A combinator which matches input equal to \c object by pointer equality or by \c -isEqual:.
-id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
+id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object);
 
 /// Constructs a character set combinator.
 ///
