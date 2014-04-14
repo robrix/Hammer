@@ -51,7 +51,7 @@ l3_test(@selector(derivative:)) {
 		id<HMRCombinator> innerLeft = ((HMRConcatenation *)left).second;
 		id<HMRCombinator> innerRight = ((HMRConcatenation *)right).second;
 		alternation = HMROr(innerLeft, innerRight);
-		compacted = HMRConcatenate(((HMRConcatenation *)left).first, alternation);
+		compacted = HMRAnd(((HMRConcatenation *)left).first, alternation);
 	}
 	else if (left == self.left && right == self.right)
 		compacted = self;
@@ -71,10 +71,10 @@ l3_test(@selector(compaction)) {
 	id<HMRCombinator> p = HMRLiteral(@"p");
 	l3_expect(HMROr(nullParse, same).compaction).to.equal(same);
 	
-	__block id<HMRCombinator> cyclic = [HMROr(HMRNone(), HMRConcatenate(HMRNone(), HMRDelay(cyclic))) withName:@"S"];
+	__block id<HMRCombinator> cyclic = [HMROr(HMRNone(), HMRAnd(HMRNone(), HMRDelay(cyclic))) withName:@"S"];
 	l3_expect(cyclic.compaction).to.equal(HMRNone());
 	
-	cyclic = [HMROr(HMRConcatenate(nullParse, p), HMRConcatenate(same, HMRDelay(cyclic))) withName:@"S"];
+	cyclic = [HMROr(HMRAnd(nullParse, p), HMRAnd(same, HMRDelay(cyclic))) withName:@"S"];
 	id<HMRCombinator> derivative = [cyclic.compaction derivative:@"p"];
 	l3_expect(derivative.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"p")]);
 }

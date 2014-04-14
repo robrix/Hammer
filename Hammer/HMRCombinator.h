@@ -44,7 +44,7 @@ id<HMRCombinator> HMROr(id<HMRCombinator> left, id<HMRCombinator> right) __attri
 /// \param first   The first operand to the concatenation. Must not be nil.
 /// \param second  The second operand to the concatenation. Must not be nil.
 /// \return        A combinator representing the concatenation of \c first and \c second.
-id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) __attribute__((nonnull));
+id<HMRCombinator> HMRAnd(id<HMRCombinator> first, id<HMRCombinator> second) __attribute__((nonnull));
 
 /// Constructs the repetition of \c combinator.
 ///

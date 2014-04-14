@@ -16,7 +16,7 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return HMRConcatenate([self.combinator derivative:object], self);
+	return HMRAnd([self.combinator derivative:object], self);
 }
 
 l3_test(@selector(derivative:)) {

@@ -19,13 +19,13 @@ l3_test(&HMRParseCollection) {
 	id anythingElse = @1;
 	l3_expect(HMRParseCollection(literal, @[ anythingElse ])).to.equal([NSSet set]);
 	
-	l3_expect(HMRParseCollection(HMRConcatenate(literal, literal), @[ object, object ])).to.equal([NSSet setWithObject:HMRCons(object, object)]);
+	l3_expect(HMRParseCollection(HMRAnd(literal, literal), @[ object, object ])).to.equal([NSSet setWithObject:HMRCons(object, object)]);
 	
 	id terminal = @"x";
 	id nonterminalPrefix = @"+";
 	// S -> "+" S | "x"
 	__block id<HMRCombinator> nonterminal;
-	nonterminal = [HMRReduce(HMROr(HMRConcatenate([HMRLiteral(nonterminalPrefix) withName:@"prefix"], HMRDelay(nonterminal)), [HMRLiteral(terminal) withName:@"final"]), ^(id each) { return HMRList(each, nil); }) withName:@"S"];
+	nonterminal = [HMRReduce(HMROr(HMRAnd([HMRLiteral(nonterminalPrefix) withName:@"prefix"], HMRDelay(nonterminal)), [HMRLiteral(terminal) withName:@"final"]), ^(id each) { return HMRList(each, nil); }) withName:@"S"];
 	l3_expect(HMRParseCollection(nonterminal, @[ terminal ])).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
 	l3_expect(HMRParseCollection(nonterminal, @[ nonterminalPrefix, terminal ])).to.equal([NSSet setWithObject:HMRList(HMRList(nonterminalPrefix, terminal, nil), nil)]);
 	id nested = [NSSet setWithObject:HMRList(HMRList(nonterminalPrefix, HMRList(nonterminalPrefix, terminal, nil), nil), nil)];
