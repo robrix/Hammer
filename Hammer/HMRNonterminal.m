@@ -1,19 +1,18 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRCase.h"
 #import "HMRDelay.h"
+#import "HMRMemoization.h"
 #import "HMRNonterminal.h"
-
-#define HMRMemoize(var, initial, recursive) \
-	((var) ?: ((var = (initial)), (var = (recursive))))
 
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
 	NSNumber *_nullable;
-	NSNumber *_cyclic;
 	__weak id<HMRCombinator> _compaction;
 	NSString *_description;
-	NSOrderedSet *_prettyPrinted;
+	NSNumber *_hash;
+	bool _reducing;
 }
 
 -(instancetype)init {
@@ -44,24 +43,6 @@
 }
 
 
--(bool)computeNullability {
-	return NO;
-}
-
--(bool)isNullable {
-	return HMRMemoize(_nullable, @NO, @([self computeNullability])).boolValue;
-}
-
-
--(bool)computeCyclic {
-	return NO;
-}
-
--(bool)isCyclic {
-	return HMRMemoize(_cyclic, @YES, @([self computeCyclic])).boolValue;
-}
-
-
 -(id<HMRCombinator>)compact {
 	return self;
 }
@@ -83,20 +64,49 @@
 		:	[self describe]);
 }
 
--(NSOrderedSet *)prettyPrint {
-	return self.name? [NSOrderedSet orderedSetWithObject:self.description] : [NSOrderedSet orderedSet];
-}
-
--(NSOrderedSet *)prettyPrinted {
-	return HMRMemoize(_prettyPrinted, [NSOrderedSet orderedSet], [self prettyPrint]);
-}
-
 
 @synthesize name = _name;
 
 -(instancetype)withName:(NSString *)name {
-	if (!_name) _name = name;
+	if (!_name) _name = [name copy];
 	return self;
+}
+
+
+-(NSUInteger)computeHash {
+	return self.class.description.hash;
+}
+
+-(NSUInteger)hash {
+	return HMRMemoize(_hash, @0, @([self computeHash])).unsignedIntegerValue;
+}
+
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self isEqual:object];
+}
+
+-(id<HMRCase>)then:(id (^)())block {
+	return [HMRCase caseWithPredicate:self block:block];
+}
+
+
+#pragma mark REDReducible
+
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return block(initial, self);
+}
+
+-(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	id reduced = initial;
+	if (!_reducing) {
+		_reducing = YES;
+		reduced = [self reduce:reduced usingBlock:block];
+		_reducing = NO;
+	}
+	return reduced;
 }
 
 

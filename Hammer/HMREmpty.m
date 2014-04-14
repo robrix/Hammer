@@ -11,6 +11,11 @@
 	return @"∅";
 }
 
+
+-(NSUInteger)hash {
+	return @"HMREmpty".hash;
+}
+
 @end
 
 

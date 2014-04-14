@@ -85,8 +85,8 @@
 }
 
 
--(instancetype)self {
-	return self.forced ?: self;
+-(NSUInteger)hash {
+	return ((id<NSObject>)self.forced).hash;
 }
 
 @end

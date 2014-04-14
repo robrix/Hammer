@@ -35,16 +35,6 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(bool)computeNullability {
-	return YES;
-}
-
-
--(bool)computeCyclic {
-	return self.combinator.cyclic;
-}
-
-
 -(NSSet *)reduceParseForest {
 	return [NSSet setWithObject:[HMRPair null]];
 }
@@ -66,10 +56,25 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"%@*", self.combinator.name ?: self.combinator.description];
 }
 
--(NSOrderedSet *)prettyPrint {
-	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
-	[prettyPrint unionOrderedSet:self.combinator.prettyPrinted];
-	return prettyPrint;
+
+-(NSUInteger)computeHash {
+	return
+		[super computeHash]
+	^	self.combinator.hash;
+}
+
+
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [self.combinator red_reduce:[super reduce:initial usingBlock:block] usingBlock:block];
+}
+
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRRepetition *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[self.combinator isEqual:object.combinator];
 }
 
 @end
@@ -81,3 +86,13 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
 	return [[HMRRepetition alloc] initWithCombinator:combinator];
 }
 
+
+REDPredicateBlock HMRRepetitionPredicate(REDPredicateBlock combinator) {
+	combinator = combinator ?: REDTruePredicateBlock;
+	
+	return [^bool (HMRRepetition *repetition) {
+		return
+			[repetition isKindOfClass:[HMRRepetition class]]
+		&&	combinator(repetition.combinator);
+	} copy];
+}

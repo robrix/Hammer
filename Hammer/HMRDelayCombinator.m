@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRCase.h"
 #import "HMRDelayCombinator.h"
 #import "HMRNonterminal.h"
 #import "HMRReduction.h"
@@ -31,15 +32,6 @@
 }
 
 
--(bool)isNullable {
-	return self.forced.nullable;
-}
-
--(bool)isCyclic {
-	return self.forced.cyclic;
-}
-
-
 -(NSSet *)parseForest {
 	return self.forced.parseForest;
 }
@@ -65,17 +57,34 @@ l3_test(@selector(parseForest)) {
 
 @dynamic description;
 
--(NSOrderedSet *)prettyPrinted {
-	return self.forced.prettyPrinted;
-}
-
 
 -(NSString *)name {
 	return self.forced.name;
 }
 
--(instancetype)withName:(NSString *)name {
-	return [self.forced withName:name];
+-(id<HMRCombinator>)withName:(NSString *)name {
+	return (id)[self.forced withName:name];
+}
+
+
+@dynamic hash;
+
+
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self.forced matchObject:object];
+}
+
+-(id<HMRCase>)then:(id (^)())block {
+	return [HMRCase caseWithPredicate:self.forced block:block];
+}
+
+
+#pragma mark REDReducible
+
+-(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [(id<REDReducible>)self.forced red_reduce:initial usingBlock:block];
 }
 
 @end

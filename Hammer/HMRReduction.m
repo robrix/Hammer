@@ -23,16 +23,6 @@
 }
 
 
--(bool)computeNullability {
-	return self.combinator.nullable;
-}
-
-
--(bool)computeCyclic {
-	return self.combinator.cyclic;
-}
-
-
 -(NSSet *)reduceParseForest:(NSSet *)forest {
 	return [[NSSet set] red_append:REDMap(forest, self.block)];
 }
@@ -68,7 +58,7 @@ l3_test(&HMRComposeReduction) {
 		compacted = HMRComposeReduction(combinator, self.block, self.functionDescription);
 	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
 		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
-		HMRNull *first = concatenation.first;
+		HMRNull *first = (HMRNull *)concatenation.first;
 		HMRReductionBlock block = self.block;
 		compacted = [(HMRReduction *)HMRReduce(concatenation.second, ^(id<NSObject,NSCopying> each) {
 			return block(HMRCons(first.parseForest.anyObject, each));
@@ -101,16 +91,32 @@ l3_test(@selector(compaction)) {
 	return [NSString stringWithFormat:@"%@ → %@", self.combinator.name ?: self.combinator.description, self.functionDescription ?: @"𝑓"];
 }
 
--(NSOrderedSet *)prettyPrint {
-	NSMutableOrderedSet *prettyPrint = [[super prettyPrint] mutableCopy];
-	[prettyPrint unionOrderedSet:self.combinator.prettyPrinted];
-	return prettyPrint;
+
+-(NSUInteger)computeHash {
+	return
+		[super computeHash]
+	^	self.combinator.hash;
+}
+
+
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [self.combinator red_reduce:[super reduce:initial usingBlock:block] usingBlock:block];
 }
 
 
 -(instancetype)withFunctionDescription:(NSString *)functionDescription {
 	_functionDescription = functionDescription;
 	return self;
+}
+
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRReduction *)object {
+	return
+		[object isKindOfClass:self.class]
+	&&	[self.combinator isEqual:object.combinator]
+	&&	[self.block isEqual:object.block];
 }
 
 @end
@@ -121,4 +127,15 @@ id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, id<NSObject, NSCopying
 	NSCParameterAssert(block != nil);
 	
 	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
+}
+
+
+REDPredicateBlock HMRReductionPredicate(REDPredicateBlock combinator) {
+	combinator = combinator ?: REDTruePredicateBlock;
+	
+	return [^bool (HMRReduction *reduction) {
+		return
+			[reduction isKindOfClass:[HMRReduction class]]
+		&&	combinator(reduction.combinator);
+	} copy];
 }

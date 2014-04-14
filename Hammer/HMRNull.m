@@ -29,11 +29,6 @@
 }
 
 
--(bool)isNullable {
-	return YES;
-}
-
-
 -(NSSet *)parseForest {
 	return self.forest;
 }
@@ -102,8 +97,14 @@ l3_test(@selector(description)) {
 
 -(BOOL)isEqual:(HMRNull *)object {
 	return
-		[object isKindOfClass:[self class]]
-	&&	[object.forest isEqual:self.forest];
+		[object isKindOfClass:self.class]
+	&&	[self.forest isEqual:object.forest];
+}
+
+-(NSUInteger)hash {
+	return
+		@"HMRNull".hash
+	^	self.forest.hash;
 }
 
 @end

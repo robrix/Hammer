@@ -2,8 +2,6 @@
 
 #import "HMRNonterminal.h"
 
-typedef id<NSObject, NSCopying>(^HMRReductionBlock)(id<NSObject, NSCopying> each);
-
 @interface HMRReduction : HMRNonterminal
 
 @property (readonly) id<HMRCombinator> combinator;

@@ -18,7 +18,9 @@
 #pragma mark HMRPredicateCombinator
 
 -(bool)evaluateWithObject:(id)object {
-	return [self.object isEqual:object];
+	return
+		self.object == object
+	||	[self.object isEqual:object];
 }
 
 
@@ -34,7 +36,13 @@
 -(BOOL)isEqual:(HMRLiteralCombinator *)object {
 	return
 		[super isEqual:object]
-	&&	[object.object isEqual:self.object];
+	&&	[self.object isEqual:object.object];
+}
+
+-(NSUInteger)hash {
+	return
+		@"HMRLiteralCombinator".hash
+	^	self.object.hash;
 }
 
 @end
@@ -42,4 +50,14 @@
 
 id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object) {
 	return [[HMRLiteralCombinator alloc] initWithObject:object];
+}
+
+
+REDPredicateBlock HMRLiteralPredicate(REDPredicateBlock object) {
+	object = object ?: REDTruePredicateBlock;
+	return [^ bool (HMRLiteralCombinator *combinator) {
+		return
+			[combinator isKindOfClass:[HMRLiteralCombinator class]]
+		&&	object(combinator.object);
+	} copy];
 }
