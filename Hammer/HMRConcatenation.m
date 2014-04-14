@@ -127,6 +127,15 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 }
 
 
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return
+		[self.first matchObject:object]
+	&&	[self.second matchObject:object];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRConcatenation *)object {

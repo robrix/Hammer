@@ -111,6 +111,13 @@ l3_test(@selector(compaction)) {
 }
 
 
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return [self.combinator matchObject:object];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRReduction *)object {

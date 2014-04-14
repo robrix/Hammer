@@ -99,6 +99,15 @@ l3_test(@selector(compaction)) {
 }
 
 
+#pragma mark HMRAlternation
+
+-(bool)matchObject:(id)object {
+	return
+		[self.left matchObject:object]
+	||	[self.right matchObject:object];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRAlternation *)object {
