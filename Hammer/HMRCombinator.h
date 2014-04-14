@@ -77,6 +77,12 @@ id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object);
 /// \return     A combinator which matches objects contained in \c set.
 id<HMRCombinator> HMRContains(id<HMRSet> set) __attribute__((nonnull));
 
+/// Constructs a kind-of combinator.
+///
+/// \param class  The class to compare input against. Must not be nil.
+/// \return       A combinator which matches objects whose which respond YES to \c -isKindOfClass: when passed \c class.
+id<HMRCombinator> HMRKindOf(Class class) __attribute__((nonnull));
+
 
 /// Constructs a null parse with a forest containing \c object.
 ///
