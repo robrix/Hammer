@@ -136,6 +136,6 @@ id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block)
 		return
 			[subject isKindOfClass:[HMRReduction class]]
 		&&	[combinator matchObject:subject.combinator]
-		&&	[combinator matchObject:subject.block];
+		&&	[block matchObject:subject.block];
 	}];
 }
