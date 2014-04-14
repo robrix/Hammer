@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
@@ -127,4 +128,14 @@ id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^
 	NSCParameterAssert(block != nil);
 	
 	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
+}
+
+id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block) {
+	combinator = combinator ?: HMRAny();
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRReduction *subject) {
+		return
+			[subject isKindOfClass:[HMRReduction class]]
+		&&	[combinator matchObject:subject.combinator]
+		&&	[combinator matchObject:subject.block];
+	}];
 }

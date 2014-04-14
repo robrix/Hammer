@@ -49,7 +49,7 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 			[HMRAlternated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
 				return @(recur(left) || recur(right));
 			}],
-			[HMRMap(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
+			[HMRReduced(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
 			[HMRRepeated(HMRBind()) then:^(id<HMRCombinator> combinator) {
@@ -83,7 +83,7 @@ bool HMRCombinatorIsNullable(id<HMRCombinator> combinator) {
 			[HMRAlternated(HMRBind(), HMRBind()) then:^(id<HMRCombinator> left, id<HMRCombinator> right) {
 				return @(recur(left) || recur(right));
 			}],
-			[HMRMap(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
+			[HMRReduced(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
 			[HMRRepeated(HMRAny()) then:^{ return @YES; }],

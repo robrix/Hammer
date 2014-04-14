@@ -144,3 +144,10 @@ id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right);
 /// \param combinator  The predicate to match against a repetition’s interior combinator. May be nil, in which case it matches with \c HMRAny().
 /// \return            A predicate which matches repetitions whose combinators are matched by the given \c combinator predicate.
 id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator);
+
+/// Constructs a reduction predicate.
+///
+/// \param combinator  The predicate to match against a reduction’s interior combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param block       The predicate to match against a reduction’s block. May be nil, in which case it matches with \c HMRAny().
+/// \return            A predicate which matches reductions whose combinators and blocks are matched by the given \c combinator and \c block predicates.
+id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block);
