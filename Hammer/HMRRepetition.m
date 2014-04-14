@@ -83,14 +83,3 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
 	
 	return [[HMRRepetition alloc] initWithCombinator:combinator];
 }
-
-
-REDPredicateBlock HMRRepetitionPredicate(REDPredicateBlock combinator) {
-	combinator = combinator ?: REDTruePredicateBlock;
-	
-	return [^bool (HMRRepetition *repetition) {
-		return
-			[repetition isKindOfClass:[HMRRepetition class]]
-		&&	combinator(repetition.combinator);
-	} copy];
-}

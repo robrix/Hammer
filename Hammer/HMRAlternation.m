@@ -116,16 +116,3 @@ id<HMRCombinator> HMROr(id<HMRCombinator> left, id<HMRCombinator> right) {
 	
 	return [[HMRAlternation alloc] initWithLeft:left right:right];
 }
-
-
-REDPredicateBlock HMRAlternationPredicate(REDPredicateBlock left, REDPredicateBlock right) {
-	left = left ?: REDTruePredicateBlock;
-	right = right ?: REDTruePredicateBlock;
-	
-	return [^bool (HMRAlternation *combinator) {
-		return
-			[combinator isKindOfClass:[HMRAlternation class]]
-		&&	left(combinator.left)
-		&&	right(combinator.right);
-	} copy];
-}

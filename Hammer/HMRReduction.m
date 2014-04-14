@@ -128,14 +128,3 @@ id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^
 	
 	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
 }
-
-
-REDPredicateBlock HMRReductionPredicate(REDPredicateBlock combinator) {
-	combinator = combinator ?: REDTruePredicateBlock;
-	
-	return [^bool (HMRReduction *reduction) {
-		return
-			[reduction isKindOfClass:[HMRReduction class]]
-		&&	combinator(reduction.combinator);
-	} copy];
-}
