@@ -17,17 +17,10 @@
 }
 
 
-#pragma mark HMRPredicate
+#pragma mark HMRPredicateCombinator
 
--(bool)matchObject:(id)object {
+-(bool)evaluateWithObject:(id)object {
 	return YES;
-}
-
-
-#pragma mark REDReducible
-
--(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
-	return block(initial, self);
 }
 
 
