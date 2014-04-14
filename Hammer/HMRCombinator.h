@@ -35,7 +35,7 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// \param left   An operand to the alternation. Must not be nil.
 /// \param right  An operand to the alternation. Must not be nil.
 /// \return       A combinator representing the union of \c left and \c right.
-id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) __attribute__((nonnull));
+id<HMRCombinator> HMROr(id<HMRCombinator> left, id<HMRCombinator> right) __attribute__((nonnull));
 
 /// Constructs the concatenation of \c left and \c right.
 ///
