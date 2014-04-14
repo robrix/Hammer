@@ -110,4 +110,7 @@ l3_test(&HMRCombinatorIsNullable) {
 	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(nullable, HMROr(nullable, HMRDelay(cyclic))))).to.equal(@YES);
 	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(HMROr(nonNullable, HMRDelay(cyclic)), nullable))).to.equal(@NO);
 	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(nullable, HMROr(nonNullable, HMRDelay(cyclic))))).to.equal(@NO);
+	
+	l3_expect(HMRCombinatorIsNullable(HMRMap(nullable, REDIdentityMapBlock))).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable(HMRMap(nonNullable, REDIdentityMapBlock))).to.equal(@NO);
 }
