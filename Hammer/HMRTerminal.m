@@ -67,7 +67,7 @@
 }
 
 l3_test(@selector(red_reduce:usingBlock:)) {
-	HMRTerminal *terminal = (HMRTerminal *)HMRLiteral(@"x");
+	HMRTerminal *terminal = (HMRTerminal *)HMREqual(@"x");
 	NSNumber *count = [terminal red_reduce:@0 usingBlock:^(NSNumber *into, HMRTerminal *each) {
 		return @(into.integerValue + 1);
 	}];

@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 #import <Reducers/REDReducible.h>
 #import <Hammer/HMRPredicate.h>
+#import <Hammer/HMRSet.h>
 
 @protocol HMRCombinator <NSObject, NSCopying, REDReducible, HMRPredicate>
 
@@ -35,7 +36,7 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// \param left   An operand to the alternation. Must not be nil.
 /// \param right  An operand to the alternation. Must not be nil.
 /// \return       A combinator representing the union of \c left and \c right.
-id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) __attribute__((nonnull));
+id<HMRCombinator> HMROr(id<HMRCombinator> left, id<HMRCombinator> right) __attribute__((nonnull));
 
 /// Constructs the concatenation of \c left and \c right.
 ///
@@ -44,7 +45,7 @@ id<HMRCombinator> HMRAlternate(id<HMRCombinator> left, id<HMRCombinator> right) 
 /// \param first   The first operand to the concatenation. Must not be nil.
 /// \param second  The second operand to the concatenation. Must not be nil.
 /// \return        A combinator representing the concatenation of \c first and \c second.
-id<HMRCombinator> HMRConcatenate(id<HMRCombinator> first, id<HMRCombinator> second) __attribute__((nonnull));
+id<HMRCombinator> HMRAnd(id<HMRCombinator> first, id<HMRCombinator> second) __attribute__((nonnull));
 
 /// Constructs the repetition of \c combinator.
 ///
@@ -61,20 +62,20 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) __attribute__((nonnull
 /// \param combinator  The combinator to reduce. Must not be nil.
 /// \param block       The block to map the parse trees produced by \c combinator with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
 /// \return            A combinator representing the reduction of \c combinator by \c block.
-id<HMRCombinator> HMRReduce(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
+id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, HMRReductionBlock) __attribute__((nonnull));
 
 
 /// Constructs a literal combinator.
 ///
 /// \param object  The object to compare input against. May be nil.
 /// \return        A combinator which matches input equal to \c object by pointer equality or by \c -isEqual:.
-id<HMRCombinator> HMRLiteral(id<NSObject, NSCopying> object);
+id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object);
 
 /// Constructs a character set combinator.
 ///
-/// \param characterSet  The character set to compare input against. Must not be nil.
-/// \return              A combinator which matches strings whose characters are all within \c characterSet.
-id<HMRCombinator> HMRCharacterSet(NSCharacterSet *characterSet) __attribute__((nonnull));
+/// \param set  The character set to compare input against. Must not be nil.
+/// \return     A combinator which matches strings whose characters are all within \c characterSet.
+id<HMRCombinator> HMRContains(id<HMRSet> set) __attribute__((nonnull));
 
 
 /// Constructs a null parse with a forest containing \c object.

@@ -16,19 +16,19 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return HMRConcatenate([self.combinator derivative:object], self);
+	return HMRAnd([self.combinator derivative:object], self);
 }
 
 l3_test(@selector(derivative:)) {
 	id each = @"a";
-	id<HMRCombinator> repetition = HMRRepeat(HMRLiteral(each));
+	id<HMRCombinator> repetition = HMRRepeat(HMREqual(each));
 	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, nil)]);
 	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, nil)]);
 	l3_expect([[[repetition derivative:each] derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, each, nil)]);
 	
 	// S -> ("x" | S)*
 	id terminal = @"x";
-	__block id nonterminal = HMRDelay(HMRRepeat(HMRAlternate(HMRLiteral(terminal), nonterminal)));
+	__block id nonterminal = HMRDelay(HMRRepeat(HMROr(HMREqual(terminal), nonterminal)));
 	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
 }
 
