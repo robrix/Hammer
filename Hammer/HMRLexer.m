@@ -4,6 +4,7 @@
 #import "HMROperations.h"
 #import "HMRPair.h"
 #import "HMRParsing.h"
+#import "HMRReduction.h"
 #import <Reducers/REDReducer.h>
 
 /*
@@ -40,24 +41,28 @@ l3_test("null reduction of partially parsed strings") {
 l3_test("lexer grammar") {
 	NSMutableArray *reductions = [NSMutableArray new];
 	id<HMRCombinator> wordSet = HMRCharacterSet([NSCharacterSet alphanumericCharacterSet]);
-	id<HMRCombinator> word = [HMRReduce(HMRConcatenate(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
+	id<HMRCombinator> word = [[(HMRReduction *)HMRReduce(HMRConcatenate(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
 		id reduced = [@"" red_append:(id)x];
 		[reductions addObject:reduced];
 		return reduced;
-	}) withName:@"word"];
+	}) withFunctionDescription:@"produce"] withName:@"word"];
 	
 	id<HMRCombinator> whitespaceSet = HMRCharacterSet([NSCharacterSet whitespaceAndNewlineCharacterSet]);
-	id<HMRCombinator> whitespace = [HMRConcatenate(whitespaceSet, HMRRepeat(whitespaceSet)) withName:@"whitespace"];
+	id<HMRCombinator> whitespace = [[(HMRReduction *)HMRReduce(HMRConcatenate(whitespaceSet, HMRRepeat(whitespaceSet)), ^(id _){ return [HMRPair null]; }) withFunctionDescription:@"ignore"] withName:@"whitespace"];
+	
+	id<HMRCombinator> period = [[(HMRReduction *)HMRReduce(HMRLiteral(@"."), ^(id _) { return [HMRPair null]; }) withFunctionDescription:@"ignore"] withName:@"period"];
 	
 	__block id<HMRCombinator> start = [HMRConcatenate(HMRAlternate(word, whitespace), HMRAlternate(HMRCaptureTree([HMRPair null]), HMRDelay(start))) withName:@"start"];
-	start = [HMRAlternate(word, whitespace) withName:@"start"];
+	start = [HMRConcatenate(word, HMRAlternate(HMRConcatenate(whitespace, HMRDelay(start)), period)) withName:@"start"];
 	
 	__block id<HMRCombinator> grammar = start;
 	
+	// S -> (word × ((whitespace × S) | '.'))
+	// word -> ([[:alnum:]] × [[:alnum]]*)
+	// whitespace -> ([[:space:]] × [[:space]]*)
 	
-	
-	NSSet *parseForest = [[@"word" red_reduce:grammar usingBlock:^id(id<HMRCombinator> into, id each) {
-		printf("%s\n\n", HMRPrettyPrint(into).UTF8String);
+	NSSet *parseForest = [[@"one fish." red_reduce:grammar usingBlock:^id(id<HMRCombinator> into, id each) {
+		printf("\n%s\n", HMRPrettyPrint(into).UTF8String);
 		fflush(stdout);
 		return [into derivative:each];
 	}] parseForest];
