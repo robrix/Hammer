@@ -52,7 +52,7 @@ bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator) {
 			[HMRMap(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
-			[HMRRepeat(HMRBind()) then:^(id<HMRCombinator> combinator) {
+			[HMRRepeated(HMRBind()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
 			[HMRAny() then:^{ return @NO; }],
@@ -86,7 +86,7 @@ bool HMRCombinatorIsNullable(id<HMRCombinator> combinator) {
 			[HMRMap(HMRBind(), HMRAny()) then:^(id<HMRCombinator> combinator) {
 				return @(recur(combinator));
 			}],
-			[HMRRepeat(HMRAny()) then:^{ return @YES; }],
+			[HMRRepeated(HMRAny()) then:^{ return @YES; }],
 			[HMRCaptureForest(HMRAny()) then:^{ return @YES; }],
 			[HMRAny() then:^{ return @NO; }]
 		])) boolValue];

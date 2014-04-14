@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRBlockCombinator.h"
 #import "HMRPair.h"
 #import "HMRRepetition.h"
 
@@ -82,4 +83,13 @@ id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
 	NSCParameterAssert(combinator != nil);
 	
 	return [[HMRRepetition alloc] initWithCombinator:combinator];
+}
+
+id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator) {
+	combinator = combinator ?: HMRAny();
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRRepetition *subject) {
+		return
+			[subject isKindOfClass:[HMRRepetition class]]
+		&&	[combinator matchObject:subject.combinator];
+	}];
 }
