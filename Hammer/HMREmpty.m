@@ -16,6 +16,13 @@
 	return @"HMREmpty".hash;
 }
 
+
+-(instancetype)withName:(NSString *)name {
+	return (self == HMRNone())?
+		[[[self class] new] withName:name]
+	:	[super withName:name];
+}
+
 @end
 
 
