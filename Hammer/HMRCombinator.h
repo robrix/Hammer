@@ -121,3 +121,13 @@ id<HMRCombinator> HMRLazyCombinator(id<HMRCombinator>(^delayed)(void)) __attribu
 
 /// The empty combinator, i.e. a combinator which cannot match anything.
 id<HMRCombinator> HMRNone(void);
+
+
+#pragma mark Predicate constructors
+
+/// Constructs a concatenation predicate.
+///
+/// \param first   The predicate to match against a concatenation’s first combinator.
+/// \param second  The predicate to match against a concatenation’s second combinator.
+/// \return        A predicate which matches concatenations whose first and second combinators are matched by the given \c first and \c second predicates.
+id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second);

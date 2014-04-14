@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
 #import "HMROperations.h"
@@ -146,6 +147,10 @@ id<HMRCombinator> HMRAnd(id<HMRCombinator> first, id<HMRCombinator> second) {
 }
 
 id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second) {
-//	return HMRAnd(HMRKindOf([HMRConcatenation class]), HMRAnd(first, second));
-	return nil;
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRConcatenation *subject) {
+		return
+			[subject isKindOfClass:[HMRConcatenation class]]
+		&&	[first matchObject:subject.first]
+		&&	[second matchObject:subject.second];
+	}];
 }
