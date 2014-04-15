@@ -3,7 +3,6 @@
 #import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRNull.h"
-#import "HMRNullDelay.h"
 #import "HMROperations.h"
 #import "HMRPair.h"
 #import "HMRReduction.h"
@@ -26,7 +25,7 @@
 	id<HMRCombinator> second = self.second;
 	id<HMRCombinator> derivativeAfterFirst = HMRAnd([first derivative:object], second);
 	return HMRCombinatorIsNullable(first)?
-		HMROr(derivativeAfterFirst, HMRAnd(HMRDelayNull(HMRCaptureForest(first.parseForest)), [second derivative:object]))
+		HMROr(derivativeAfterFirst, HMRAnd(HMRCaptureForest(first.parseForest), [second derivative:object]))
 	:	derivativeAfterFirst;
 }
 

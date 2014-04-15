@@ -23,16 +23,12 @@
 		D42ED41518FB2683005BEC10 /* HMRBindCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D42ED41318FB2683005BEC10 /* HMRBindCombinator.m */; };
 		D46AB17C18E7EA9E00501D3C /* HMRLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = D46AB17A18E7EA9E00501D3C /* HMRLexer.h */; };
 		D46AB17D18E7EA9E00501D3C /* HMRLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = D46AB17B18E7EA9E00501D3C /* HMRLexer.m */; };
-		D491548E18F718A4001B1FBE /* HMRNullDelay.h in Headers */ = {isa = PBXBuildFile; fileRef = D491548C18F718A4001B1FBE /* HMRNullDelay.h */; };
-		D491548F18F718A4001B1FBE /* HMRNullDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = D491548D18F718A4001B1FBE /* HMRNullDelay.m */; };
 		D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */; };
 		D499A49318EFEDF1004DF7E3 /* HMRTerminal.m in Sources */ = {isa = PBXBuildFile; fileRef = D499A49118EFEDF1004DF7E3 /* HMRTerminal.m */; };
 		D499A49618F067D4004DF7E3 /* HMRParsing.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49418F067D4004DF7E3 /* HMRParsing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D499A49718F067D4004DF7E3 /* HMRParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = D499A49518F067D4004DF7E3 /* HMRParsing.m */; };
 		D499A5FE18F4D848004DF7E3 /* HMRPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A5FC18F4D848004DF7E3 /* HMRPair.h */; };
 		D499A5FF18F4D848004DF7E3 /* HMRPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D499A5FD18F4D848004DF7E3 /* HMRPair.m */; };
-		D46AB17C18E7EA9E00501D3C /* HMRLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = D46AB17A18E7EA9E00501D3C /* HMRLexer.h */; };
-		D46AB17D18E7EA9E00501D3C /* HMRLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = D46AB17B18E7EA9E00501D3C /* HMRLexer.m */; };
 		D4ACA5C118DD188A00EBD899 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4ACA5BF18DD188A00EBD899 /* InfoPlist.strings */; };
 		D4ACA5E118DD19A400EBD899 /* Hammer.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ACA5C318DD188A00EBD899 /* Hammer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4ACA5F218DD19FE00EBD899 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4ACA5F118DD19FE00EBD899 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -99,16 +95,12 @@
 		D42ED41318FB2683005BEC10 /* HMRBindCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRBindCombinator.m; sourceTree = "<group>"; };
 		D46AB17A18E7EA9E00501D3C /* HMRLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRLexer.h; sourceTree = "<group>"; };
 		D46AB17B18E7EA9E00501D3C /* HMRLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRLexer.m; sourceTree = "<group>"; };
-		D491548C18F718A4001B1FBE /* HMRNullDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRNullDelay.h; sourceTree = "<group>"; };
-		D491548D18F718A4001B1FBE /* HMRNullDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRNullDelay.m; sourceTree = "<group>"; };
 		D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRTerminal.h; sourceTree = "<group>"; };
 		D499A49118EFEDF1004DF7E3 /* HMRTerminal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRTerminal.m; sourceTree = "<group>"; };
 		D499A49418F067D4004DF7E3 /* HMRParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRParsing.h; sourceTree = "<group>"; };
 		D499A49518F067D4004DF7E3 /* HMRParsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRParsing.m; sourceTree = "<group>"; };
 		D499A5FC18F4D848004DF7E3 /* HMRPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRPair.h; sourceTree = "<group>"; };
 		D499A5FD18F4D848004DF7E3 /* HMRPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRPair.m; sourceTree = "<group>"; };
-		D46AB17A18E7EA9E00501D3C /* HMRLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRLexer.h; sourceTree = "<group>"; };
-		D46AB17B18E7EA9E00501D3C /* HMRLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRLexer.m; sourceTree = "<group>"; };
 		D4ACA5B318DD188A00EBD899 /* Hammer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hammer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4ACA5B918DD188A00EBD899 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D4ACA5BE18DD188A00EBD899 /* Hammer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Hammer-Info.plist"; sourceTree = "<group>"; };
@@ -272,8 +264,6 @@
 				D4C87CF118ED3D9700567D57 /* Nonterminals */,
 				D4C87CDF18ED356E00567D57 /* HMRDelayCombinator.h */,
 				D4C87CE018ED356E00567D57 /* HMRDelayCombinator.m */,
-				D491548C18F718A4001B1FBE /* HMRNullDelay.h */,
-				D491548D18F718A4001B1FBE /* HMRNullDelay.m */,
 			);
 			name = "Parser combinators";
 			sourceTree = "<group>";
@@ -347,7 +337,6 @@
 				D42ED3B818FA1480005BEC10 /* HMRCase.h in Headers */,
 				D4ACA61718DD3CDB00EBD899 /* HMRReduction.h in Headers */,
 				D4ACA5F918DD258E00EBD899 /* HMRNull.h in Headers */,
-				D491548E18F718A4001B1FBE /* HMRNullDelay.h in Headers */,
 				D4ACA62318DD4F5200EBD899 /* HMRRepetition.h in Headers */,
 				D499A49618F067D4004DF7E3 /* HMRParsing.h in Headers */,
 				D4B1556218FBA4CE0051285B /* HMRBlockCombinator.h in Headers */,
@@ -486,7 +475,6 @@
 				D4ACA62418DD4F5200EBD899 /* HMRRepetition.m in Sources */,
 				D42ED3B918FA1480005BEC10 /* HMRCase.m in Sources */,
 				D4C87CEE18ED3D5F00567D57 /* HMRContainsCombinator.m in Sources */,
-				D491548F18F718A4001B1FBE /* HMRNullDelay.m in Sources */,
 				D4C87CE218ED356E00567D57 /* HMRDelayCombinator.m in Sources */,
 				D4ACA5FF18DD33DC00EBD899 /* HMRNonterminal.m in Sources */,
 				D4C87CEA18ED3AC300567D57 /* HMRPredicateCombinator.m in Sources */,
