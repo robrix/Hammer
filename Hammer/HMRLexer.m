@@ -16,10 +16,12 @@ l3_test("lexer grammar") {
 		return reduced;
 	}) withFunctionDescription:@"produce"] withName:@"word"];
 	
-	id<HMRCombinator> whitespaceSet = HMRContains([NSCharacterSet whitespaceAndNewlineCharacterSet]);
-	id<HMRCombinator> whitespace = [[(HMRReduction *)HMRMap(HMRAnd(whitespaceSet, HMRRepeat(whitespaceSet)), ^(id _){ return [HMRPair null]; }) withFunctionDescription:@"ignore"] withName:@"whitespace"];
+	HMRReductionBlock ignore = ^(id _) { return [HMRPair null]; };
 	
-	id<HMRCombinator> period = [[(HMRReduction *)HMRMap(HMREqual(@"."), ^(id _) { return [HMRPair null]; }) withFunctionDescription:@"ignore"] withName:@"period"];
+	id<HMRCombinator> whitespaceSet = HMRContains([NSCharacterSet whitespaceAndNewlineCharacterSet]);
+	id<HMRCombinator> whitespace = [[(HMRReduction *)HMRMap(HMRAnd(whitespaceSet, HMRRepeat(whitespaceSet)), ignore) withFunctionDescription:@"ignore"] withName:@"whitespace"];
+	
+	id<HMRCombinator> period = [[(HMRReduction *)HMRMap(HMREqual(@"."), ignore) withFunctionDescription:@"ignore"] withName:@"period"];
 	
 	__block id<HMRCombinator> start = [HMRAnd(HMROr(word, whitespace), HMROr(HMRCaptureTree([HMRPair null]), HMRDelay(start))) withName:@"start"];
 	start = [HMRAnd(word, HMROr(HMRAnd(whitespace, HMRDelay(start)), period)) withName:@"start"];
