@@ -23,8 +23,7 @@ l3_test("lexer grammar") {
 	
 	id<HMRCombinator> period = [[(HMRReduction *)HMRMap(HMREqual(@"."), ignore) withFunctionDescription:@"ignore"] withName:@"period"];
 	
-	__block id<HMRCombinator> start = [HMRAnd(HMROr(word, whitespace), HMROr(HMRCaptureTree([HMRPair null]), HMRDelay(start))) withName:@"start"];
-	start = [HMRAnd(word, HMROr(HMRAnd(whitespace, HMRDelay(start)), period)) withName:@"start"];
+	__block id<HMRCombinator> start = [HMRAnd(word, HMROr(HMRAnd(whitespace, HMRDelay(start)), period)) withName:@"start"];
 	
 	__block id<HMRCombinator> grammar = start;
 	
