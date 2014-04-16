@@ -2,6 +2,7 @@
 
 #import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
+#import "HMRDelay.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
 #import "HMRReduction.h"
@@ -29,7 +30,9 @@
 }
 
 -(NSSet *)reduceParseForest {
-	return [self reduceParseForest:self.combinator.parseForest];
+	return [self.combinator isKindOfClass:[HMRNull class]]?
+		[self reduceParseForest:self.combinator.parseForest]
+	:	HMRDelaySpecific([NSSet class], [self reduceParseForest:self.combinator.parseForest]);
 }
 
 
