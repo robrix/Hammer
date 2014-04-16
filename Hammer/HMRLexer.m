@@ -7,37 +7,6 @@
 #import "HMRReduction.h"
 #import <Reducers/REDReducer.h>
 
-/*
- depth-first problem solving
- 
- match a series of regular patterns like so:
- 
- word = [A-Za-z]+ -> produce token
- whitespace = [ \s\t\n\r]+
- 
- start = (word | whitespace)+
- 
- while computing this, when we determine that we have produced a word, then perform its reduction
- */
-l3_test("null reduction of partially parsed strings") {
-	id<HMRCombinator> alternatives = HMROr(HMRAnd(HMREqual(@"f"), HMRAnd(HMREqual(@"o"), HMRAnd(HMREqual(@"o"), HMREqual(@"t")))), HMRAnd(HMREqual(@"f"), HMRAnd(HMREqual(@"o"), HMRAnd(HMREqual(@"o"), HMREqual(@"d")))));
-	id<HMRCombinator> derivative = [[[alternatives derivative:@"f"].compaction derivative:@"o"].compaction derivative:@"o"].compaction;
-	
-	id<HMRCombinator> expected = HMROr(HMRAnd(HMRCaptureTree(@"f"), HMRAnd(HMRCaptureTree(@"o"), HMRAnd(HMRCaptureTree(@"o"), HMREqual(@"t")))), HMRAnd(HMRCaptureTree(@"f"), HMRAnd(HMRCaptureTree(@"o"), HMRAnd(HMRCaptureTree(@"o"), HMREqual(@"d"))))).compaction;
-	
-	l3_expect(derivative).to.equal(expected);
-}
-
-
-//id<REDReducible> HMRLexer(id<REDReducible> input) {
-//	return [REDReducer reducerWithReducible:input transformer:^REDReducingBlock(REDReducingBlock reduce) {
-//		return ^(id into, id each) {
-//			grammar = [grammar derivative:each];
-//			return reduce(into, each);
-//		};
-//	}];
-//}
-
 l3_test("lexer grammar") {
 	NSMutableArray *reductions = [NSMutableArray new];
 	id<HMRCombinator> wordSet = HMRContains([NSCharacterSet alphanumericCharacterSet]);
