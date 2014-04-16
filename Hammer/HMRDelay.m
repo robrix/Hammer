@@ -40,6 +40,10 @@
 	return self;
 }
 
+-(instancetype)copy {
+	return self;
+}
+
 
 #pragma mark NSObject
 
