@@ -3,6 +3,7 @@
 #import "HMRAnyCombinator.h"
 #import "HMRMemoization.h"
 #import "HMROperations.h"
+#import <Hammer/Hammer.h>
 
 NSUInteger HMRCombinatorSize(HMRCombinator *combinator) {
 	NSNumber *size = [combinator red_reduce:@0 usingBlock:^(NSNumber *into, HMRCombinator *each) {

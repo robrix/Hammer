@@ -120,7 +120,7 @@ l3_test(@selector(compaction)) {
 @end
 
 
-HMRCombinator *HMROr(HMRCombinator *left, HMRCombinator *right) {
+HMRAlternation *HMROr(HMRCombinator *left, HMRCombinator *right) {
 	NSCParameterAssert(left != nil);
 	NSCParameterAssert(right != nil);
 	

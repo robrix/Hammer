@@ -8,7 +8,7 @@
 /// The type of a reduction combinator’s block, which maps parse trees.
 typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
-
+@class HMRAlternation, HMRConcatenation, HMRReduction, HMRRepetition;
 @interface HMRCombinator : NSObject <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object;
@@ -17,16 +17,20 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 @property (readonly) HMRCombinator *compaction;
 
+
+#pragma mark Nonterminal construction
+
+-(HMRConcatenation *)and:(HMRCombinator *)other;
+-(HMRAlternation *)or:(HMRCombinator *)other;
+
+-(HMRReduction *)map:(HMRReductionBlock)f;
+
+-(HMRRepetition *)repeat;
+
+
+#pragma mark Pretty-printing
+
 @property (readonly) NSString *name;
-
-
--(HMRCombinator *)and:(HMRCombinator *)other;
--(HMRCombinator *)or:(HMRCombinator *)other;
-
--(HMRCombinator *)map:(HMRReductionBlock)f;
-
--(HMRCombinator *)repeat;
-
 -(instancetype)withName:(NSString *)name;
 
 @end
@@ -41,7 +45,7 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// \param left   An operand to the alternation. Must not be nil.
 /// \param right  An operand to the alternation. Must not be nil.
 /// \return       A combinator representing the union of \c left and \c right.
-HMRCombinator *HMROr(HMRCombinator *left, HMRCombinator *right) __attribute__((nonnull));
+HMRAlternation *HMROr(HMRCombinator *left, HMRCombinator *right) __attribute__((nonnull));
 
 /// Constructs the concatenation of \c left and \c right.
 ///
@@ -50,7 +54,7 @@ HMRCombinator *HMROr(HMRCombinator *left, HMRCombinator *right) __attribute__((n
 /// \param first   The first operand to the concatenation. Must not be nil.
 /// \param second  The second operand to the concatenation. Must not be nil.
 /// \return        A combinator representing the concatenation of \c first and \c second.
-HMRCombinator *HMRAnd(HMRCombinator *first, HMRCombinator *second) __attribute__((nonnull));
+HMRConcatenation *HMRAnd(HMRCombinator *first, HMRCombinator *second) __attribute__((nonnull));
 
 /// Constructs the repetition of \c combinator.
 ///
@@ -58,7 +62,7 @@ HMRCombinator *HMRAnd(HMRCombinator *first, HMRCombinator *second) __attribute__
 ///
 /// \param combinator  The combinator to repeat. Must not be nil.
 /// \return            A combinator representing the repetition of \c combinator.
-HMRCombinator *HMRRepeat(HMRCombinator *combinator) __attribute__((nonnull));
+HMRRepetition *HMRRepeat(HMRCombinator *combinator) __attribute__((nonnull));
 
 /// Constructs the reduction of \c combinator by \c block.
 ///
@@ -67,7 +71,7 @@ HMRCombinator *HMRRepeat(HMRCombinator *combinator) __attribute__((nonnull));
 /// \param combinator  The combinator to reduce. Must not be nil.
 /// \param block       The block to map the parse trees produced by \c combinator with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
 /// \return            A combinator representing the reduction of \c combinator by \c block.
-HMRCombinator *HMRMap(HMRCombinator *combinator, HMRReductionBlock) __attribute__((nonnull));
+HMRReduction *HMRMap(HMRCombinator *combinator, HMRReductionBlock) __attribute__((nonnull));
 
 
 /// Constructs an equality combinator.

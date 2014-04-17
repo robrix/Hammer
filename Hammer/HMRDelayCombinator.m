@@ -74,19 +74,19 @@ l3_test(@selector(parseForest)) {
 
 #pragma mark Construction
 
--(HMRCombinator *)and:(HMRCombinator *)other {
+-(HMRConcatenation *)and:(HMRCombinator *)other {
 	return HMRAnd((HMRCombinator *)self, other);
 }
 
--(HMRCombinator *)or:(HMRCombinator *)other {
+-(HMRAlternation *)or:(HMRCombinator *)other {
 	return HMROr((HMRCombinator *)self, other);
 }
 
--(HMRCombinator *)map:(HMRReductionBlock)block {
+-(HMRReduction *)map:(HMRReductionBlock)block {
 	return HMRMap((HMRCombinator *)self, block);
 }
 
--(HMRCombinator *)repeat {
+-(HMRRepetition *)repeat {
 	return HMRRepeat((HMRCombinator *)self);
 }
 

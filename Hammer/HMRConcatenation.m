@@ -148,7 +148,7 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 @end
 
 
-HMRCombinator *HMRAnd(HMRCombinator *first, HMRCombinator *second) {
+HMRConcatenation *HMRAnd(HMRCombinator *first, HMRCombinator *second) {
 	NSCParameterAssert(first != nil);
 	NSCParameterAssert(second != nil);
 	

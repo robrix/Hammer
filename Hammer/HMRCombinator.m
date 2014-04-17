@@ -5,21 +5,21 @@
 
 @implementation HMRCombinator
 
--(HMRCombinator *)and:(HMRCombinator *)other {
+-(HMRConcatenation *)and:(HMRCombinator *)other {
 	return HMRAnd((HMRCombinator *)self, (HMRCombinator *)other);
 }
 
--(HMRCombinator *)or:(HMRCombinator *)other {
+-(HMRAlternation *)or:(HMRCombinator *)other {
 	return HMROr((HMRCombinator *)self, (HMRCombinator *)other);
 }
 
 
--(HMRCombinator *)map:(HMRReductionBlock)f {
+-(HMRReduction *)map:(HMRReductionBlock)f {
 	return HMRMap((HMRCombinator *)self, f);
 }
 
 
--(HMRCombinator *)repeat {
+-(HMRRepetition *)repeat {
 	return HMRRepeat((HMRCombinator *)self);
 }
 

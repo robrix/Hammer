@@ -86,7 +86,7 @@ l3_test(@selector(compaction)) {
 @end
 
 
-HMRCombinator *HMRRepeat(HMRCombinator *combinator) {
+HMRRepetition *HMRRepeat(HMRCombinator *combinator) {
 	NSCParameterAssert(combinator != nil);
 	
 	return [[HMRRepetition alloc] initWithCombinator:combinator];
