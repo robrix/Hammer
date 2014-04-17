@@ -129,6 +129,10 @@ NSSet *HMRCombinatorParseForest(HMRCombinator *combinator) {
 				return [HMRCombinatorParseForest(left) setByAddingObjectsFromSet:HMRCombinatorParseForest(right)];
 			}],
 			
+			[HMRRepeated(HMRAny()) then:^{
+				return [NSSet setWithObject:[HMRPair null]];
+			}],
+			
 			[[HMRKindOf kindOfClass:[HMRNull class]] then:^{
 				return ((HMRNull *)combinator).parseForest;
 			}],
