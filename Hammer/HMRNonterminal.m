@@ -50,7 +50,7 @@
 -(id<HMRCombinator>)compaction {
 	return
 		_compaction
-	?:	(_compaction = HMRDelay([[self compact] withName:self.name]));
+	?:	(_compaction = HMRDelay([(id)[self compact] withName:self.name]));
 }
 
 
@@ -62,14 +62,6 @@
 	return HMRMemoize(_description, self.name ?: super.description, self.name?
 			[[self.name stringByAppendingString:@" -> "] stringByAppendingString:[self describe]]
 		:	[self describe]);
-}
-
-
-@synthesize name = _name;
-
--(instancetype)withName:(NSString *)name {
-	if (!_name) _name = [name copy];
-	return self;
 }
 
 

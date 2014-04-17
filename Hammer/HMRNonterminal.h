@@ -2,7 +2,7 @@
 
 #import <Hammer/HMRCombinator.h>
 
-@interface HMRNonterminal : NSObject <HMRCombinator>
+@interface HMRNonterminal : HMRCombinator <HMRCombinator>
 
 #pragma mark Subclass responsibilities
 
