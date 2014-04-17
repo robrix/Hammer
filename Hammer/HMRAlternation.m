@@ -8,7 +8,14 @@
 
 @implementation HMRAlternation
 
--(instancetype)initWithLeft:(id<HMRCombinator>)left right:(id<HMRCombinator>)right {
++(instancetype)alternateLeft:(HMRCombinator *)left right:(HMRCombinator *)right {
+	return [[self alloc] initWithLeft:left right:right];
+}
+
+-(instancetype)initWithLeft:(HMRCombinator *)left right:(HMRCombinator *)right {
+	NSParameterAssert(left != nil);
+	NSParameterAssert(right != nil);
+	
 	if ((self = [super init])) {
 		_left = [left copyWithZone:NULL];
 		_right = [right copyWithZone:NULL];
@@ -19,16 +26,16 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	id<HMRCombinator> left = self.left;
-	id<HMRCombinator> right = self.right;
-	return HMROr([left derivative:object], [right derivative:object]);
+-(HMRCombinator *)deriveWithRespectToObject:(id<NSObject,NSCopying>)object {
+	HMRCombinator *left = self.left;
+	HMRCombinator *right = self.right;
+	return [[left derivative:object] or:[right derivative:object]];
 }
 
 l3_test(@selector(derivative:)) {
-	id<HMRCombinator> a = HMREqual(@"a"), b = HMREqual(@"b");
-	l3_expect([HMROr(a, b) derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
-	l3_expect([HMROr(a, a) derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
+	HMRCombinator *a = [HMRCombinator literal:@"a"], *b = [HMRCombinator literal:@"b"];
+	l3_expect([[a or:b] derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
+	l3_expect([[a or:a] derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
 }
 
 
@@ -37,46 +44,46 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(id<HMRCombinator>)compact {
-	id<HMRCombinator> compacted;
-	id<HMRCombinator> left = self.left.compaction;
-	id<HMRCombinator> right = self.right.compaction;
-	if ([left isEqual:HMRNone()])
+-(HMRCombinator *)compact {
+	HMRCombinator *compacted;
+	HMRCombinator *left = self.left.compaction;
+	HMRCombinator *right = self.right.compaction;
+	if ([left isEqual:[HMRCombinator empty]])
 		compacted = right;
-	else if ([right isEqual:HMRNone()])
+	else if ([right isEqual:[HMRCombinator empty]])
 		compacted = left;
 	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
 		compacted = left;
 	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first]) {
-		id<HMRCombinator> alternation;
-		id<HMRCombinator> innerLeft = ((HMRConcatenation *)left).second;
-		id<HMRCombinator> innerRight = ((HMRConcatenation *)right).second;
-		alternation = HMROr(innerLeft, innerRight);
-		compacted = HMRAnd(((HMRConcatenation *)left).first, alternation);
+		HMRCombinator *alternation;
+		HMRCombinator *innerLeft = ((HMRConcatenation *)left).second;
+		HMRCombinator *innerRight = ((HMRConcatenation *)right).second;
+		alternation = [innerLeft or:innerRight];
+		compacted = [((HMRConcatenation *)left).first and:alternation];
 	}
 	else if (left == self.left && right == self.right)
 		compacted = self;
 	else
-		compacted = HMROr(left, right);
+		compacted = [left or:right];
 	return compacted;
 }
 
 l3_test(@selector(compaction)) {
-	id<HMRCombinator> anything = HMREqual(@0);
-	id<HMRCombinator> empty = HMRNone();
-	l3_expect(HMROr(empty, anything).compaction).to.equal(anything);
-	l3_expect(HMROr(anything, empty).compaction).to.equal(anything);
+	HMRCombinator *anything = [HMRCombinator literal:@0];
+	HMRCombinator *empty = [HMRCombinator empty];
+	l3_expect([empty or:anything].compaction).to.equal(anything);
+	l3_expect([anything or:empty].compaction).to.equal(anything);
 	
-	id<HMRCombinator> nullParse = HMRCaptureTree(@"a");
-	id<HMRCombinator> same = HMRCaptureTree(@"a");
-	id<HMRCombinator> p = HMREqual(@"p");
-	l3_expect(HMROr(nullParse, same).compaction).to.equal(same);
+	HMRCombinator *nullParse = [HMRCombinator captureTree:@"a"];
+	HMRCombinator *same = [HMRCombinator captureTree:@"a"];
+	HMRCombinator *p = [HMRCombinator literal:@"p"];
+	l3_expect([nullParse or:same].compaction).to.equal(same);
 	
-	__block id<HMRCombinator> cyclic = [HMROr(HMRNone(), HMRAnd(HMRNone(), HMRDelay(cyclic))) withName:@"S"];
-	l3_expect(cyclic.compaction).to.equal(HMRNone());
+	__block HMRCombinator *cyclic = [[[HMRCombinator empty] or:[[HMRCombinator empty] and:HMRDelay(cyclic)]] withName:@"S"];
+	l3_expect(cyclic.compaction).to.equal([HMRCombinator empty]);
 	
-	cyclic = [HMROr(HMRAnd(nullParse, p), HMRAnd(same, HMRDelay(cyclic))) withName:@"S"];
-	id<HMRCombinator> derivative = [cyclic.compaction derivative:@"p"];
+	cyclic = [[[nullParse and:p] or:[same and:HMRDelay(cyclic)]] withName:@"S"];
+	HMRCombinator *derivative = [cyclic.compaction derivative:@"p"];
 	l3_expect(derivative.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"p")]);
 }
 
@@ -119,13 +126,6 @@ l3_test(@selector(compaction)) {
 
 @end
 
-
-id<HMRCombinator> HMROr(id<HMRCombinator> left, id<HMRCombinator> right) {
-	NSCParameterAssert(left != nil);
-	NSCParameterAssert(right != nil);
-	
-	return [[HMRAlternation alloc] initWithLeft:left right:right];
-}
 
 id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right) {
 	left = left ?: HMRAny();

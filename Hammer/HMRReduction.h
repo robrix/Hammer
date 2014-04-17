@@ -1,10 +1,12 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRNonterminal.h"
+#import <Hammer/HMRNonterminal.h>
 
 @interface HMRReduction : HMRNonterminal
 
-@property (readonly) id<HMRCombinator> combinator;
++(instancetype)reduce:(HMRCombinator *)combinator usingBlock:(HMRReductionBlock)block;
+
+@property (readonly) HMRCombinator *combinator;
 @property (readonly) NSString *functionDescription;
 @property (readonly) HMRReductionBlock block;
 

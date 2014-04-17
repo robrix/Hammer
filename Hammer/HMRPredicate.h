@@ -44,7 +44,7 @@ id HMRMatch(id subject, NSArray *cases);
 
 /// Returns a predicate which binds any object it is matched against, making it available to its case’s block as an argument.
 ///
-/// The returned object is also a combinator, so that it can be used when using combinators as predicates to match combinators, e.g. using \c HMRAnd(HMRBind(), HMRBind()) to destructure a concatenation. It is not useful for parsing, however, only for destructuring pattern matching.
+/// The returned object is also a combinator, so that it can be used when using combinators as predicates to match combinators, e.g. using \c [HMRBind() and:HMRBind()] to destructure a concatenation. It is not useful for parsing, however, only for destructuring pattern matching.
 id HMRBind(void);
 
 /// Returns a predicate which matches (but does not bind) all objects.

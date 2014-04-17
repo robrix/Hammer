@@ -11,10 +11,10 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivative:(id<NSObject,NSCopying>)object {
+-(HMRCombinator *)derivative:(id<NSObject,NSCopying>)object {
 	return [self evaluateWithObject:object]?
-		HMRCaptureTree(object)
-	:	HMRNone();
+		[HMRCombinator captureTree:object]
+	:	[HMRCombinator empty];
 }
 
 

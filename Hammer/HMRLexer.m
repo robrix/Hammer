@@ -9,25 +9,25 @@
 
 l3_test("lexer grammar") {
 	NSMutableArray *reductions = [NSMutableArray new];
-	id<HMRCombinator> wordSet = HMRContains([NSCharacterSet alphanumericCharacterSet]);
-	id<HMRCombinator> word = [[(HMRReduction *)HMRMap(HMRAnd(wordSet, HMRRepeat(wordSet)), ^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
+	HMRCombinator *wordSet = [HMRCombinator containedIn:[NSCharacterSet alphanumericCharacterSet]];
+	HMRCombinator *word = [[[[wordSet and:[wordSet repeat]] map:^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
 		id reduced = [@"" red_append:(id)x];
 		[reductions addObject:reduced];
 		return reduced;
-	}) withFunctionDescription:@"produce"] withName:@"word"];
+	}] withFunctionDescription:@"produce"] withName:@"word"];
 	
 	HMRReductionBlock ignore = ^(id _) { return [HMRPair null]; };
 	
-	id<HMRCombinator> whitespaceSet = HMRContains([NSCharacterSet whitespaceAndNewlineCharacterSet]);
-	id<HMRCombinator> whitespace = [[(HMRReduction *)HMRMap(HMRAnd(whitespaceSet, HMRRepeat(whitespaceSet)), ignore) withFunctionDescription:@"ignore"] withName:@"whitespace"];
+	HMRCombinator *whitespaceSet = [HMRCombinator containedIn:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	HMRCombinator *whitespace = [[[[whitespaceSet and:[whitespaceSet repeat]] map:ignore] withFunctionDescription:@"ignore"] withName:@"whitespace"];
 	
-	id<HMRCombinator> period = [[(HMRReduction *)HMRMap(HMREqual(@"."), ignore) withFunctionDescription:@"ignore"] withName:@"period"];
+	HMRCombinator *period = [[[[HMRCombinator literal:@"."] map:ignore] withFunctionDescription:@"ignore"] withName:@"period"];
 	
-	__block id<HMRCombinator> start = [HMRAnd(word, HMROr(HMRAnd(whitespace, HMRDelay(start)), period)) withName:@"start"];
+	__block HMRCombinator *start = [[word and:[[whitespace and:HMRDelay(start)] or:period]] withName:@"start"];
 	
-	__block id<HMRCombinator> grammar = start;
+	__block HMRCombinator *grammar = start;
 	
-	NSSet *parseForest = [[@"one fish two fish red fish blue fish." red_reduce:grammar usingBlock:^id(id<HMRCombinator> into, id each) {
+	NSSet *parseForest = [[@"one fish two fish red fish blue fish." red_reduce:grammar usingBlock:^(HMRCombinator *into, id each) {
 		printf("\n%s\n", HMRPrettyPrint(into).UTF8String);
 		fflush(stdout);
 		return [into derivative:each];

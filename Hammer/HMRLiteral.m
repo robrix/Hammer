@@ -1,9 +1,13 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMREqualCombinator.h"
+#import "HMRLiteral.h"
 #import "HMREmpty.h"
 
-@implementation HMREqualCombinator
+@implementation HMRLiteral
+
++(instancetype)literal:(id)object {
+	return [[HMRLiteral alloc] initWithObject:object];
+}
 
 -(instancetype)initWithObject:(id<NSObject, NSCopying>)object {
 	NSParameterAssert(object != nil);
@@ -33,7 +37,7 @@
 
 #pragma mark NSObject
 
--(BOOL)isEqual:(HMREqualCombinator *)object {
+-(BOOL)isEqual:(HMRLiteral *)object {
 	return
 		[super isEqual:object]
 	&&	[self.object isEqual:object.object];
@@ -41,13 +45,8 @@
 
 -(NSUInteger)hash {
 	return
-		@"HMREqualCombinator".hash
+		@"HMRLiteral".hash
 	^	self.object.hash;
 }
 
 @end
-
-
-id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object) {
-	return [[HMREqualCombinator alloc] initWithObject:object];
-}

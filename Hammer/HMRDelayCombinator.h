@@ -3,7 +3,7 @@
 #import <Hammer/HMRCombinator.h>
 #import <Hammer/HMRDelay.h>
 
-@interface HMRDelayCombinator : HMRDelay <HMRCombinator>
+@interface HMRDelayCombinator : HMRDelay
 
 -(instancetype)initWithBlock:(HMRDelayBlock)block;
 -(instancetype)initWithBlock:(HMRDelayBlock)block class:(Class)class UNAVAILABLE_ATTRIBUTE;

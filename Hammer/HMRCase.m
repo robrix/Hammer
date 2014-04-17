@@ -64,5 +64,5 @@ l3_test(&HMRMatch) {
 	id object = [NSObject new];
 	l3_expect(HMRMatch(object, @[ [HMRCase caseWithPredicate:HMRAny() block:^{ return @YES; }] ])).to.equal(@YES);
 	l3_expect(HMRMatch(object, @[ [HMRBind() then:REDIdentityMapBlock] ])).to.equal(object);
-	l3_expect(HMRMatch(HMRAnd(HMREqual(@"x"), HMREqual(@"y")), @[ [HMRConcatenated(HMRAny(), HMRBind()) then:REDIdentityMapBlock] ])).to.equal(HMREqual(@"y"));
+	l3_expect(HMRMatch([[HMRCombinator literal:@"x"] and:[HMRCombinator literal:@"y"]], @[ [HMRConcatenated(HMRAny(), HMRBind()) then:REDIdentityMapBlock] ])).to.equal([HMRCombinator literal:@"y"]);
 }

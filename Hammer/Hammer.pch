@@ -2,4 +2,5 @@
 	#import <Foundation/Foundation.h>
 	#import <Reducers/Reducers.h>
 	#import <Lagrangian/Lagrangian.h>
+	#import <Hammer/Hammer.h>
 #endif

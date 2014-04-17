@@ -7,7 +7,7 @@
 
 @interface HMRDelayCombinator ()
 
-@property (readonly) id<HMRCombinator> forced;
+@property (readonly) HMRCombinator *forced;
 
 @end
 
@@ -27,7 +27,7 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivative:(id)object {
+-(HMRCombinator *)derivative:(id)object {
 	return [self.forced derivative:object];
 }
 
@@ -38,15 +38,15 @@
 
 l3_test(@selector(parseForest)) {
 	NSSet *forest = [NSSet setWithObject:@"a"];
-	id<HMRCombinator> capture = HMRCaptureForest(forest);
-	id<HMRCombinator> delayed = HMRDelay(capture);
+	HMRCombinator *capture = [HMRCombinator capture:forest];
+	HMRCombinator *delayed = HMRDelay(capture);
 	l3_expect(HMRDelaySpecific([NSSet class], delayed.parseForest)).to.equal(forest);
 	l3_expect(forest).to.equal(delayed.parseForest);
 }
 
 
--(id<HMRCombinator>)compaction {
-	return self.forcing? self : self.forced.compaction;
+-(HMRCombinator *)compaction {
+	return self.forcing? (HMRCombinator *)self : self.forced.compaction;
 }
 
 
@@ -55,19 +55,13 @@ l3_test(@selector(parseForest)) {
 }
 
 
-@dynamic description;
-
-
 -(NSString *)name {
 	return self.forced.name;
 }
 
--(id<HMRCombinator>)withName:(NSString *)name {
-	return (id)[self.forced withName:name];
+-(HMRCombinator *)withName:(NSString *)name {
+	return (id)[(id)self.forced withName:name];
 }
-
-
-@dynamic hash;
 
 
 #pragma mark HMRPredicate
@@ -87,9 +81,34 @@ l3_test(@selector(parseForest)) {
 	return [(id<REDReducible>)self.forced red_reduce:initial usingBlock:block];
 }
 
+
+#pragma mark Construction
+
+-(HMRConcatenation *)and:(HMRCombinator *)other {
+	return [HMRConcatenation concatenateFirst:(HMRCombinator *)self second:other];
+}
+
+-(HMRAlternation *)or:(HMRCombinator *)other {
+	return [HMRAlternation alternateLeft:(HMRCombinator *)self right:other];
+}
+
+-(HMRReduction *)mapSet:(HMRReductionBlock)block {
+	return [HMRReduction reduce:(HMRCombinator *)self usingBlock:block];
+}
+
+-(HMRReduction *)map:(REDMapBlock)block {
+	return [HMRReduction reduce:(HMRCombinator *)self usingBlock:^(id<REDReducible> forest) {
+		return REDMap(forest, block);
+	}];
+}
+
+-(HMRRepetition *)repeat {
+	return [HMRRepetition repeat:(HMRCombinator *)self];
+}
+
 @end
 
 
-id<HMRCombinator> HMRLazyCombinator(id<HMRCombinator>(^block)(void)) {
-	return [[HMRDelayCombinator alloc] initWithBlock:block];
+HMRCombinator *HMRLazyCombinator(HMRCombinator *(^block)(void)) {
+	return (id)[[HMRDelayCombinator alloc] initWithBlock:block];
 }
