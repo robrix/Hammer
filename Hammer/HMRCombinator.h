@@ -28,6 +28,12 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// \return       A combinator representing the union of \c self and \c right.
 -(HMRAlternation *)or:(HMRCombinator *)other;
 
+/// Constructs the alternation of a variadic list of combinators.
+///
+/// \param leftmost  The leftmost operand to the alternation. Must not be nil.
+/// \return          A combinator representing the union of all the passed combinators.
++(HMRCombinator *)alternate:(HMRCombinator *)leftmost, ... NS_REQUIRES_NIL_TERMINATION;
+
 /// Constructs the concatenation of \c self and \c second.
 ///
 /// Corresponds to a product type, and the cartesian product of context-free languages.

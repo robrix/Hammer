@@ -5,13 +5,41 @@
 
 @implementation HMRCombinator
 
+-(HMRAlternation *)or:(HMRCombinator *)other {
+	return [HMRAlternation alternateLeft:self right:other];
+}
+
+HMRCombinator *(^HMRCombineVariadics)(HMRCombinator *, va_list) = ^HMRCombinator *(HMRCombinator *each, va_list args) {
+	if (each) {
+		HMRCombinator *rest = HMRCombineVariadics(va_arg(args, HMRCombinator *), args);
+		each = rest?
+			[each or:rest]
+		:	each;
+	}
+	return each;
+};
+
++(HMRCombinator *)alternate:(HMRCombinator *)leftmost, ... {
+	va_list args;
+	va_start(args, leftmost);
+	
+	HMRCombinator *alternation = HMRCombineVariadics(leftmost, args);
+	
+	va_end(args);
+	
+	return alternation;
+}
+
+l3_test(@selector(alternate:)) {
+	HMRCombinator *sub = HMREqual(@"x");
+	l3_expect([HMRCombinator alternate:sub, sub, sub, nil]).to.equal([sub or:[sub or:sub]]);
+}
+
+
 -(HMRConcatenation *)and:(HMRCombinator *)other {
 	return [HMRConcatenation concatenateFirst:self second:other];
 }
 
--(HMRAlternation *)or:(HMRCombinator *)other {
-	return [HMRAlternation alternateLeft:self right:other];
-}
 
 
 -(HMRReduction *)map:(HMRReductionBlock)f {
