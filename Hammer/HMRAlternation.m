@@ -27,8 +27,8 @@
 
 l3_test(@selector(derivative:)) {
 	HMRCombinator *a = HMREqual(@"a"), *b = HMREqual(@"b");
-	l3_expect([HMROr(a, b) derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
-	l3_expect([HMROr(a, a) derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
+	l3_expect([[a or:b] derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
+	l3_expect([[a or:a] derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
 }
 
 
@@ -51,31 +51,31 @@ l3_test(@selector(derivative:)) {
 		HMRCombinator *alternation;
 		HMRCombinator *innerLeft = ((HMRConcatenation *)left).second;
 		HMRCombinator *innerRight = ((HMRConcatenation *)right).second;
-		alternation = HMROr(innerLeft, innerRight);
-		compacted = HMRAnd(((HMRConcatenation *)left).first, alternation);
+		alternation = [innerLeft or:innerRight];
+		compacted = [((HMRConcatenation *)left).first and:alternation];
 	}
 	else if (left == self.left && right == self.right)
 		compacted = self;
 	else
-		compacted = HMROr(left, right);
+		compacted = [left or:right];
 	return compacted;
 }
 
 l3_test(@selector(compaction)) {
 	HMRCombinator *anything = HMREqual(@0);
 	HMRCombinator *empty = HMRNone();
-	l3_expect(HMROr(empty, anything).compaction).to.equal(anything);
-	l3_expect(HMROr(anything, empty).compaction).to.equal(anything);
+	l3_expect([empty or:anything].compaction).to.equal(anything);
+	l3_expect([anything or:empty].compaction).to.equal(anything);
 	
 	HMRCombinator *nullParse = HMRCaptureTree(@"a");
 	HMRCombinator *same = HMRCaptureTree(@"a");
 	HMRCombinator *p = HMREqual(@"p");
-	l3_expect(HMROr(nullParse, same).compaction).to.equal(same);
+	l3_expect([nullParse or:same].compaction).to.equal(same);
 	
-	__block HMRCombinator *cyclic = [HMROr(HMRNone(), HMRAnd(HMRNone(), HMRDelay(cyclic))) withName:@"S"];
+	__block HMRCombinator *cyclic = [[HMRNone() or:[HMRNone() and:HMRDelay(cyclic)]] withName:@"S"];
 	l3_expect(cyclic.compaction).to.equal(HMRNone());
 	
-	cyclic = [HMROr(HMRAnd(nullParse, p), HMRAnd(same, HMRDelay(cyclic))) withName:@"S"];
+	cyclic = [[[nullParse and:p] or:[same and:HMRDelay(cyclic)]] withName:@"S"];
 	HMRCombinator *derivative = [cyclic.compaction derivative:@"p"];
 	l3_expect(derivative.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"p")]);
 }

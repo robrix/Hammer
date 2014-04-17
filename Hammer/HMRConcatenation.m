@@ -9,7 +9,14 @@
 
 @implementation HMRConcatenation
 
++(instancetype)concatenateFirst:(HMRCombinator *)first second:(HMRCombinator *)second {
+	return [[self alloc] initWithFirst:first second:second];
+}
+
 -(instancetype)initWithFirst:(HMRCombinator *)first second:(HMRCombinator *)second {
+	NSParameterAssert(first != nil);
+	NSParameterAssert(second != nil);
+	
 	if ((self = [super init])) {
 		_first = [first copyWithZone:NULL];
 		_second = [second copyWithZone:NULL];
@@ -38,10 +45,10 @@ l3_test(@selector(derivative:)) {
 	l3_expect([[concatenation derivative:first] derivative:other].parseForest).to.equal([NSSet set]);
 	
 	id third = @"c";
-	concatenation = HMRAnd(HMREqual(first), HMRAnd(HMREqual(second), HMREqual(third)));
+	concatenation = [HMREqual(first) and:[HMREqual(second) and:HMREqual(third)]];
 	l3_expect([[[concatenation derivative:first] derivative:second] derivative:third].parseForest).to.equal([NSSet setWithObject:HMRCons(first, HMRCons(second, third))]);
 	
-	__block HMRCombinator *cyclic = HMRAnd(HMREqual(first), HMROr(HMRDelay(cyclic), HMREqual(second)));
+	__block HMRCombinator *cyclic = [HMREqual(first) and:[HMRDelay(cyclic) or:HMREqual(second)]];
 	l3_expect([[cyclic derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:HMRCons(first, second)]));
 	l3_expect([[[cyclic derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:HMRCons(first, HMRCons(first, second))]));
 	l3_expect([[[[cyclic derivative:first] derivative:first] derivative:first] derivative:second].parseForest).to.equal(([NSSet setWithObject:HMRCons(first, HMRCons(first, HMRCons(first, second)))]));
@@ -84,15 +91,15 @@ l3_test(@selector(derivative:)) {
 	else if (first == self.first && second == self.second)
 		concatenation = self;
 	else
-		concatenation = HMRAnd(first, second);
+		concatenation = [first and:second];
 	return concatenation;
 }
 
 l3_test(@selector(compaction)) {
 	HMRCombinator *anything = HMREqual(@0);
 	HMRCombinator *empty = HMRNone();
-	l3_expect(HMRAnd(empty, anything).compaction).to.equal(empty);
-	l3_expect(HMRAnd(anything, empty).compaction).to.equal(empty);
+	l3_expect([empty and:anything].compaction).to.equal(empty);
+	l3_expect([anything and:empty].compaction).to.equal(empty);
 }
 
 
@@ -117,10 +124,10 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 	NSNumber *(^count)(NSNumber *, HMRCombinator *) = ^(NSNumber *into, HMRCombinator *each) {
 		return @(into.integerValue + 1);
 	};
-	NSNumber *size = [HMRAnd(HMREqual(@"x"), HMREqual(@"y")) red_reduce:@0 usingBlock:count];
+	NSNumber *size = [[HMREqual(@"x") and:HMREqual(@"y")] red_reduce:@0 usingBlock:count];
 	l3_expect(size).to.equal(@3);
 	__block HMRCombinator *cyclic;
-	cyclic = HMRAnd(HMREqual(@"x"), HMRDelay(cyclic));
+	cyclic = [HMREqual(@"x") and:HMRDelay(cyclic)];
 	
 	size = [cyclic red_reduce:@0 usingBlock:count];
 	l3_expect(size).to.equal(@2);
@@ -147,13 +154,6 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 
 @end
 
-
-HMRConcatenation *HMRAnd(HMRCombinator *first, HMRCombinator *second) {
-	NSCParameterAssert(first != nil);
-	NSCParameterAssert(second != nil);
-	
-	return [[HMRConcatenation alloc] initWithFirst:first second:second];
-}
 
 id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second) {
 	first = first ?: HMRAny();

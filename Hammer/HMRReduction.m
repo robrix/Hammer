@@ -61,29 +61,29 @@ l3_test(&HMRComposeReduction) {
 		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
 		HMRNull *first = (HMRNull *)concatenation.first;
 		HMRReductionBlock block = self.block;
-		compacted = [(HMRReduction *)HMRMap(concatenation.second, ^(id<NSObject,NSCopying> each) {
+		compacted = [[concatenation.second map:^(id<NSObject,NSCopying> each) {
 			return block(HMRCons(first.parseForest.anyObject, each));
-		}) withFunctionDescription:[self.functionDescription stringByAppendingString:[NSString stringWithFormat:@"(%@ .)", first]]];
+		}] withFunctionDescription:[self.functionDescription stringByAppendingString:[NSString stringWithFormat:@"(%@ .)", first]]];
 	}
 	else if ([combinator isKindOfClass:[HMRNull class]])
 		compacted = HMRCaptureForest([self reduceParseForest:combinator.parseForest]);
 	else if (combinator == self.combinator)
 		compacted = self;
 	else
-		compacted = [(HMRReduction *)HMRMap(combinator, self.block) withFunctionDescription:self.functionDescription];
+		compacted = [[combinator map:self.block] withFunctionDescription:self.functionDescription];
 	return compacted;
 }
 
 l3_test(@selector(compaction)) {
-	HMRReduction *reduction = [(HMRReduction *)HMRMap(HMRAnd(HMRCaptureTree(@"a"), HMREqual(@"b")), ^(HMRPair *each) {
-		return [[HMRPair null] red_append:REDMap(each, ^(NSString *each){
+	HMRReduction *reduction = [[[HMRCaptureTree(@"a") and:HMREqual(@"b")] map:^(HMRPair *each) {
+		return [[HMRPair null] red_append:REDMap(each, ^(NSString *each) {
 			return [each stringByAppendingString:each];
 		})];
-	}) withFunctionDescription:@"(map append .)"];
+	}] withFunctionDescription:@"(map append .)"];
 	l3_expect([reduction derivative:@"b"].parseForest).to.equal([NSSet setWithObject:HMRList(@"aa", @"bb", nil)]);
 	l3_expect(reduction.compaction.description).to.equal(@"λ.'b' → (map append .)∘(ε↓{'a'} .)");
 	
-	reduction = (id)HMRMap(HMRAnd(HMREqual(@"a"), HMRAnd(HMREqual(@"b"), HMREqual(@"c"))), REDIdentityMapBlock);
+	reduction = [[HMREqual(@"a") and:[HMREqual(@"b") and:HMREqual(@"c")]] map:REDIdentityMapBlock];
 	l3_expect([[[reduction derivative:@"a"] derivative:@"b"] derivative:@"c"].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", HMRCons(@"b", @"c"))]);
 }
 

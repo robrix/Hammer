@@ -20,11 +20,37 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 #pragma mark Nonterminal construction
 
--(HMRConcatenation *)and:(HMRCombinator *)other;
+/// Constructs the alternation of \c self and \c right.
+///
+/// Corresponds to a sum type, and the union of context-free languages.
+///
+/// \param right  An operand to the alternation. Must not be nil.
+/// \return       A combinator representing the union of \c self and \c right.
 -(HMRAlternation *)or:(HMRCombinator *)other;
 
+/// Constructs the concatenation of \c self and \c second.
+///
+/// Corresponds to a product type, and the cartesian product of context-free languages.
+///
+/// \param second  The second operand to the concatenation. Must not be nil.
+/// \return        A combinator representing the concatenation of \c self and \c second.
+-(HMRConcatenation *)and:(HMRCombinator *)second;
+
+
+/// Constructs the reduction of \c self by \c block.
+///
+/// Reductions map parse trees into a form more readily operated upon, e.g. abstract syntax trees.
+///
+/// \param block  The block to map the parse trees produced by \c self with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
+/// \return       A combinator representing the reduction of \c self by \c block.
 -(HMRReduction *)map:(HMRReductionBlock)f;
 
+
+/// Constructs the repetition of \c self.
+///
+/// Corresponds to the Kleene star of \c self, i.e. zero or more repetitions.
+///
+/// \return  A combinator representing the repetition of \c self.
 -(HMRRepetition *)repeat;
 
 
@@ -38,39 +64,8 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 #pragma mark Constructors
 
-/// Constructs the alternation of \c left and \c right.
-///
-/// Corresponds to a sum type, and the union of context-free languages.
-///
-/// \param left   An operand to the alternation. Must not be nil.
-/// \param right  An operand to the alternation. Must not be nil.
-/// \return       A combinator representing the union of \c left and \c right.
 HMRAlternation *HMROr(HMRCombinator *left, HMRCombinator *right) __attribute__((nonnull));
-
-/// Constructs the concatenation of \c left and \c right.
-///
-/// Corresponds to a product type, and the cartesian product of context-free languages.
-///
-/// \param first   The first operand to the concatenation. Must not be nil.
-/// \param second  The second operand to the concatenation. Must not be nil.
-/// \return        A combinator representing the concatenation of \c first and \c second.
-HMRConcatenation *HMRAnd(HMRCombinator *first, HMRCombinator *second) __attribute__((nonnull));
-
-/// Constructs the repetition of \c combinator.
-///
-/// Corresponds to the Kleene star of \c combinator, i.e. zero or more repetitions.
-///
-/// \param combinator  The combinator to repeat. Must not be nil.
-/// \return            A combinator representing the repetition of \c combinator.
 HMRRepetition *HMRRepeat(HMRCombinator *combinator) __attribute__((nonnull));
-
-/// Constructs the reduction of \c combinator by \c block.
-///
-/// Reductions map parse trees into a form more readily operated upon, e.g. abstract syntax trees.
-///
-/// \param combinator  The combinator to reduce. Must not be nil.
-/// \param block       The block to map the parse trees produced by \c combinator with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
-/// \return            A combinator representing the reduction of \c combinator by \c block.
 HMRReduction *HMRMap(HMRCombinator *combinator, HMRReductionBlock) __attribute__((nonnull));
 
 

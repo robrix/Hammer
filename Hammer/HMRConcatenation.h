@@ -4,6 +4,8 @@
 
 @interface HMRConcatenation : HMRNonterminal
 
++(instancetype)concatenateFirst:(HMRCombinator *)first second:(HMRCombinator *)second;
+
 @property (readonly) HMRCombinator *first;
 @property (readonly) HMRCombinator *second;
 

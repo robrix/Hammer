@@ -34,7 +34,7 @@ l3_addTestSubjectTypeWithFunction(HMRPrettyPrint)
 l3_test(&HMRPrettyPrint) {
 	HMRCombinator *terminal1 = [HMREqual(@"x") withName:@"x"];
 	HMRCombinator *terminal2 = [HMREqual(@"y") withName:@"y"];
-	__block HMRCombinator *nonterminal = [HMRAnd(terminal1, HMROr(terminal2, HMRDelay(nonterminal))) withName:@"S"];
+	__block HMRCombinator *nonterminal = [[terminal1 and:[terminal2 or:HMRDelay(nonterminal)]] withName:@"S"];
 	NSString *expected = [NSString stringWithFormat:@"%@\n%@\n%@\n", nonterminal.description, terminal1.description, terminal2.description];
 	l3_expect(HMRPrettyPrint(nonterminal)).to.equal(expected);
 }
@@ -66,10 +66,10 @@ bool HMRCombinatorIsCyclic(HMRCombinator *combinator) {
 
 l3_addTestSubjectTypeWithFunction(HMRCombinatorIsCyclic)
 l3_test(&HMRCombinatorIsCyclic) {
-	l3_expect(HMRCombinatorIsCyclic(HMRAnd(HMREqual(@"x"), HMREqual(@"y")))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsCyclic([HMREqual(@"x") and:HMREqual(@"y")])).to.equal(@NO);
 	l3_expect(HMRCombinatorIsCyclic(HMREqual(@"x"))).to.equal(@NO);
 	
-	__block HMRCombinator *cyclic = HMRAnd(HMREqual(@"x"), HMRDelay(cyclic));
+	__block HMRCombinator *cyclic = [HMREqual(@"x") and:HMRDelay(cyclic)];
 	l3_expect(HMRCombinatorIsCyclic(cyclic)).to.equal(@YES);
 }
 
@@ -101,19 +101,19 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 l3_test(&HMRCombinatorIsNullable) {
 	HMRCombinator *nonNullable = HMREqual(@"x");
 	HMRCombinator *nullable = HMRRepeat(nonNullable);
-	l3_expect(HMRCombinatorIsNullable(HMRAnd(nonNullable, nonNullable))).to.equal(@NO);
-	l3_expect(HMRCombinatorIsNullable(HMRAnd(nonNullable, nullable))).to.equal(@NO);
-	l3_expect(HMRCombinatorIsNullable(HMRAnd(nullable, nonNullable))).to.equal(@NO);
-	l3_expect(HMRCombinatorIsNullable(HMRAnd(nullable, nullable))).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable([nonNullable and:nonNullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nonNullable and:nullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nullable and:nonNullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nullable and:nullable])).to.equal(@YES);
 	
 	__block HMRCombinator *cyclic;
-	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(HMRDelay(cyclic), nullable))).to.equal(@NO);
-	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(nullable, HMRDelay(cyclic)))).to.equal(@NO);
-	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(HMROr(nullable, HMRDelay(cyclic)), nullable))).to.equal(@YES);
-	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(nullable, HMROr(nullable, HMRDelay(cyclic))))).to.equal(@YES);
-	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(HMROr(nonNullable, HMRDelay(cyclic)), nullable))).to.equal(@NO);
-	l3_expect(HMRCombinatorIsNullable(cyclic = HMRAnd(nullable, HMROr(nonNullable, HMRDelay(cyclic))))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(cyclic = [HMRDelay(cyclic) and:nullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(cyclic = [nullable and:HMRDelay(cyclic)])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(cyclic = [[nullable or:HMRDelay(cyclic)] and:nullable])).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable(cyclic = [nullable and:[nullable or:HMRDelay(cyclic)]])).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable(cyclic = [[nonNullable or:HMRDelay(cyclic)] and:nullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable(cyclic = [nullable and:[nonNullable or:HMRDelay(cyclic)]])).to.equal(@NO);
 	
-	l3_expect(HMRCombinatorIsNullable(HMRMap(nullable, REDIdentityMapBlock))).to.equal(@YES);
-	l3_expect(HMRCombinatorIsNullable(HMRMap(nonNullable, REDIdentityMapBlock))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nullable map:REDIdentityMapBlock])).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable([nonNullable map:REDIdentityMapBlock])).to.equal(@NO);
 }
