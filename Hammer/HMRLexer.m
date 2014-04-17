@@ -16,22 +16,25 @@ l3_test("lexer grammar") {
 		return reduced;
 	}] withFunctionDescription:@"produce"] withName:@"word"];
 	
-	HMRReductionBlock ignore = ^(id _) { return [HMRPair null]; };
+	HMRReductionBlock ignore = ^(id<REDReducible> all) { return [NSSet set]; };
 	
 	HMRCombinator *whitespaceSet = [HMRCombinator containedIn:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	HMRCombinator *whitespace = [[[[whitespaceSet and:[whitespaceSet repeat]] map:ignore] withFunctionDescription:@"ignore"] withName:@"whitespace"];
+	HMRCombinator *whitespace = [[[[whitespaceSet and:[whitespaceSet repeat]] mapSet:ignore] withFunctionDescription:@"ignore"] withName:@"whitespace"];
 	
-	HMRCombinator *period = [[[[HMRCombinator literal:@"."] map:ignore] withFunctionDescription:@"ignore"] withName:@"period"];
+	HMRCombinator *period = [[[[HMRCombinator literal:@"."] mapSet:^(id all) { return [NSSet setWithObject:[HMRPair null]]; }] withFunctionDescription:@"ignore"] withName:@"period"];
 	
 	__block HMRCombinator *start = [[word and:[[whitespace and:HMRDelay(start)] or:period]] withName:@"start"];
 	
 	__block HMRCombinator *grammar = start;
 	
-	NSSet *parseForest = [[@"one fish two fish red fish blue fish." red_reduce:grammar usingBlock:^(HMRCombinator *into, id each) {
+	HMRCombinator *parsed = [@"one fish two fish red fish blue fish." red_reduce:grammar usingBlock:^(HMRCombinator *into, id each) {
 		printf("\n%s\n", HMRPrettyPrint(into).UTF8String);
 		fflush(stdout);
 		return [into derivative:each];
-	}] parseForest];
+	}];
+	printf("\n%s\n", HMRPrettyPrint(parsed).UTF8String);
+	fflush(stdout);
+	NSSet *parseForest = [parsed parseForest];
 	
 	l3_expect(parseForest).to.equal([NSSet setWithObject:HMRList(@"one", @"fish", @"two", @"fish", @"red", @"fish", @"blue", @"fish", nil)]);
 	l3_expect(reductions).to.equal(@[ @"one", @"fish", @"two", @"fish", @"red", @"fish", @"blue", @"fish" ]);
