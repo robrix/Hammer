@@ -4,8 +4,8 @@
 #import <Hammer/HMRPredicate.h>
 #import <Hammer/HMRSet.h>
 
-/// The type of a reduction combinator’s block, which maps parse trees.
-typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
+/// The type of a reduction combinator’s block, which maps parse forests.
+typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 
 @class HMRAlternation, HMRConcatenation, HMRReduction, HMRRepetition;
 @class HMREmpty, HMRNull, HMRPredicateCombinator, HMRLiteral, HMRContainment;
@@ -88,13 +88,21 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 +(HMRCombinator *)concatenate:(HMRCombinator *)first, ... NS_REQUIRES_NIL_TERMINATION;
 
 
-/// Constructs the reduction of \c self by \c block.
+/// Constructs the setwise reduction of \c self by \c block.
+///
+/// Reductions map parse trees into a form more readily operated upon, e.g. abstract syntax trees.
+///
+/// \param block  The block to map the parse trees produced by \c self with. Will be called setwise, i.e. once per parse forest. Must not be nil.
+/// \return       A combinator representing the reduction of \c self by \c block.
+-(HMRReduction *)mapSet:(HMRReductionBlock)block;
+
+/// Constructs the pointwise reduction of \c self by \c block.
 ///
 /// Reductions map parse trees into a form more readily operated upon, e.g. abstract syntax trees.
 ///
 /// \param block  The block to map the parse trees produced by \c self with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
 /// \return       A combinator representing the reduction of \c self by \c block.
--(HMRReduction *)map:(HMRReductionBlock)f;
+-(HMRReduction *)map:(REDMapBlock)block;
 
 
 /// Constructs the repetition of \c self.

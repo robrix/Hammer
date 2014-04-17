@@ -96,8 +96,14 @@ l3_test(@selector(concatenate:)) {
 }
 
 
--(HMRReduction *)map:(HMRReductionBlock)f {
-	return [HMRReduction reduce:self usingBlock:f];
+-(HMRReduction *)mapSet:(HMRReductionBlock)block {
+	return [HMRReduction reduce:self usingBlock:block];
+}
+
+-(HMRReduction *)map:(REDMapBlock)block {
+	return [HMRReduction reduce:self usingBlock:^(id<REDReducible> forest) {
+		return REDMap(forest, block);
+	}];
 }
 
 

@@ -82,8 +82,14 @@ l3_test(@selector(parseForest)) {
 	return [HMRAlternation alternateLeft:(HMRCombinator *)self right:other];
 }
 
--(HMRReduction *)map:(HMRReductionBlock)block {
+-(HMRReduction *)mapSet:(HMRReductionBlock)block {
 	return [HMRReduction reduce:(HMRCombinator *)self usingBlock:block];
+}
+
+-(HMRReduction *)map:(REDMapBlock)block {
+	return [HMRReduction reduce:(HMRCombinator *)self usingBlock:^(id<REDReducible> forest) {
+		return REDMap(forest, block);
+	}];
 }
 
 -(HMRRepetition *)repeat {
