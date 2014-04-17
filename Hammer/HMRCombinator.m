@@ -27,20 +27,17 @@
 #pragma mark HMRCombinator
 
 -(id<HMRCombinator>)derivative:(id<NSObject,NSCopying>)object {
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
+	return HMRNone();
 }
 
 
 -(NSSet *)parseForest {
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
+	return [NSSet set];
 }
 
 
 -(id<HMRCombinator>)compaction {
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
+	return self;
 }
 
 

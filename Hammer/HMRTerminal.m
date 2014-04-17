@@ -12,16 +12,6 @@
 }
 
 
--(NSSet *)parseForest {
-	return [NSSet set];
-}
-
-
--(instancetype)compaction {
-	return self;
-}
-
-
 -(NSString *)describe {
 	return super.description;
 }
@@ -31,8 +21,5 @@
 		[NSString stringWithFormat:@"%@ -> %@", self.name, [self describe]]
 	:	[self describe];
 }
-
-
-@dynamic hash;
 
 @end

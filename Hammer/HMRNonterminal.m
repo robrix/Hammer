@@ -74,17 +74,6 @@
 }
 
 
-#pragma mark HMRPredicate
-
--(bool)matchObject:(id)object {
-	return ![[self derivative:object] isEqual:HMRNone()];
-}
-
--(id<HMRCase>)then:(id (^)())block {
-	return [HMRCase caseWithPredicate:self block:block];
-}
-
-
 #pragma mark REDReducible
 
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
@@ -99,13 +88,6 @@
 		_reducing = NO;
 	}
 	return reduced;
-}
-
-
-#pragma mark NSCopying
-
--(instancetype)copyWithZone:(NSZone *)zone {
-	return self;
 }
 
 @end
