@@ -8,7 +8,14 @@
 
 @implementation HMRAlternation
 
++(instancetype)alternateLeft:(HMRCombinator *)left right:(HMRCombinator *)right {
+	return [[self alloc] initWithLeft:left right:right];
+}
+
 -(instancetype)initWithLeft:(HMRCombinator *)left right:(HMRCombinator *)right {
+	NSParameterAssert(left != nil);
+	NSParameterAssert(right != nil);
+	
 	if ((self = [super init])) {
 		_left = [left copyWithZone:NULL];
 		_right = [right copyWithZone:NULL];
@@ -19,10 +26,10 @@
 
 #pragma mark HMRCombinator
 
--(HMRCombinator *)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
+-(HMRCombinator *)deriveWithRespectToObject:(id<NSObject,NSCopying>)object {
 	HMRCombinator *left = self.left;
 	HMRCombinator *right = self.right;
-	return HMROr([left derivative:object], [right derivative:object]);
+	return [[left derivative:object] or:[right derivative:object]];
 }
 
 l3_test(@selector(derivative:)) {
@@ -119,13 +126,6 @@ l3_test(@selector(compaction)) {
 
 @end
 
-
-HMRAlternation *HMROr(HMRCombinator *left, HMRCombinator *right) {
-	NSCParameterAssert(left != nil);
-	NSCParameterAssert(right != nil);
-	
-	return [[HMRAlternation alloc] initWithLeft:left right:right];
-}
 
 id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right) {
 	left = left ?: HMRAny();

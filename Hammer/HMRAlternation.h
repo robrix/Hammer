@@ -4,6 +4,8 @@
 
 @interface HMRAlternation : HMRNonterminal
 
++(instancetype)alternateLeft:(HMRCombinator *)left right:(HMRCombinator *)right;
+
 @property (readonly) HMRCombinator *left;
 @property (readonly) HMRCombinator *right;
 

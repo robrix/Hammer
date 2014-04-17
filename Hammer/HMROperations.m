@@ -16,7 +16,7 @@ l3_addTestSubjectTypeWithFunction(HMRCombinatorSize)
 l3_test(&HMRCombinatorSize) {
 	__block HMRCombinator *cyclic;
 	HMRCombinator *cycle = HMRDelay(cyclic);
-	cyclic = HMROr(HMROr(cycle, cycle), HMROr(cycle, cycle));
+	cyclic = [[cycle or:cycle] or:[cycle or:cycle]];
 	l3_expect(HMRCombinatorSize(cyclic)).to.equal(@3);
 }
 

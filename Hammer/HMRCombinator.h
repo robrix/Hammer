@@ -64,7 +64,6 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 #pragma mark Constructors
 
-HMRAlternation *HMROr(HMRCombinator *left, HMRCombinator *right) __attribute__((nonnull));
 HMRRepetition *HMRRepeat(HMRCombinator *combinator) __attribute__((nonnull));
 HMRReduction *HMRMap(HMRCombinator *combinator, HMRReductionBlock) __attribute__((nonnull));
 

@@ -10,7 +10,7 @@
 }
 
 -(HMRAlternation *)or:(HMRCombinator *)other {
-	return HMROr(self, other);
+	return [HMRAlternation alternateLeft:self right:other];
 }
 
 
