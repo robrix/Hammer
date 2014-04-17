@@ -96,7 +96,7 @@ l3_test(@selector(concatenate:)) {
 }
 
 
--(HMRReduction *)map:(HMRReductionBlock)f {
+-(HMRReduction *)reduce:(HMRReductionBlock)f {
 	return [HMRReduction reduce:self usingBlock:f];
 }
 

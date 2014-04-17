@@ -88,13 +88,13 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 +(HMRCombinator *)concatenate:(HMRCombinator *)first, ... NS_REQUIRES_NIL_TERMINATION;
 
 
-/// Constructs the reduction of \c self by \c block.
+/// Constructs the setwise reduction of \c self by \c block.
 ///
 /// Reductions map parse trees into a form more readily operated upon, e.g. abstract syntax trees.
 ///
-/// \param block  The block to map the parse trees produced by \c self with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
+/// \param block  The block to map the parse trees produced by \c self with. Will be called setwise, i.e. once per parse forest. Must not be nil.
 /// \return       A combinator representing the reduction of \c self by \c block.
--(HMRReduction *)map:(HMRReductionBlock)f;
+-(HMRReduction *)reduce:(HMRReductionBlock)f;
 
 
 /// Constructs the repetition of \c self.

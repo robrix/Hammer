@@ -25,7 +25,7 @@ l3_test(&HMRParseCollection) {
 	id nonterminalPrefix = @"+";
 	// S -> "+" S | "x"
 	__block HMRCombinator *nonterminal;
-	nonterminal = [[[[[[HMRCombinator literal:nonterminalPrefix] withName:@"prefix"] and:HMRDelay(nonterminal)] or:[[HMRCombinator literal:terminal] withName:@"final"]] map:^(id<REDReducible> all) {
+	nonterminal = [[[[[[HMRCombinator literal:nonterminalPrefix] withName:@"prefix"] and:HMRDelay(nonterminal)] or:[[HMRCombinator literal:terminal] withName:@"final"]] reduce:^(id<REDReducible> all) {
 		return REDMap(all, ^(id each) {
 			return HMRList(each, nil);
 		});

@@ -76,7 +76,7 @@ l3_test(@selector(derivative:)) {
 		concatenation = [HMRCombinator empty];
 	else if ([first isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = first.parseForest;
-		concatenation = [[second map:^(id<REDReducible> all) {
+		concatenation = [[second reduce:^(id<REDReducible> all) {
 			return REDMap(all, ^(id each) {
 				return HMRCons(parseForest.anyObject, each);
 			});
@@ -84,7 +84,7 @@ l3_test(@selector(derivative:)) {
 	}
 	else if ([second isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = second.parseForest;
-		concatenation = [[first map:^(id<REDReducible> all) {
+		concatenation = [[first reduce:^(id<REDReducible> all) {
 			return REDMap(all, ^id(id each) {
 				return HMRCons(each, parseForest.anyObject);
 			});
