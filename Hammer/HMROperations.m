@@ -117,3 +117,27 @@ l3_test(&HMRCombinatorIsNullable) {
 	l3_expect(HMRCombinatorIsNullable([nullable map:REDIdentityMapBlock])).to.equal(@YES);
 	l3_expect(HMRCombinatorIsNullable([nonNullable map:REDIdentityMapBlock])).to.equal(@NO);
 }
+
+
+NSSet *HMRCombinatorParseForest(HMRCombinator *combinator) {
+	NSMutableDictionary *cache = [NSMutableDictionary new];
+	NSSet *(^__weak __block recur)(HMRCombinator *);
+	NSSet *(^parseForest)(HMRCombinator *);
+	recur = parseForest = ^NSSet *(HMRCombinator *combinator) {
+		return HMRMemoize(cache[combinator], [NSSet set], HMRMatch(combinator, @[
+			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+				return [HMRCombinatorParseForest(left) setByAddingObjectsFromSet:HMRCombinatorParseForest(right)];
+			}],
+			
+			[[HMRKindOf kindOfClass:[HMRNull class]] then:^{
+				return ((HMRNull *)combinator).parseForest;
+			}],
+		]));
+	};
+	return parseForest(combinator);
+}
+
+l3_addTestSubjectTypeWithFunction(HMRCombinatorParseForest)
+l3_test(&HMRCombinatorParseForest) {
+	l3_expect(HMRCombinatorParseForest([[HMRCombinator captureTree:@"a"] or:[HMRCombinator captureTree:@"b"]])).to.equal([NSSet setWithObjects:@"a", @"b", nil]);
+}
