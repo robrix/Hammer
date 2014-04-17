@@ -74,8 +74,8 @@ l3_test(@selector(compaction)) {
 	l3_expect([empty or:anything].compaction).to.equal(anything);
 	l3_expect([anything or:empty].compaction).to.equal(anything);
 	
-	HMRCombinator *nullParse = HMRCaptureTree(@"a");
-	HMRCombinator *same = HMRCaptureTree(@"a");
+	HMRCombinator *nullParse = [HMRCombinator captureTree:@"a"];
+	HMRCombinator *same = [HMRCombinator captureTree:@"a"];
 	HMRCombinator *p = [HMRCombinator literal:@"p"];
 	l3_expect([nullParse or:same].compaction).to.equal(same);
 	

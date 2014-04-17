@@ -73,7 +73,7 @@ l3_test(&HMRComposeReduction) {
 		}] withFunctionDescription:[self.functionDescription stringByAppendingString:[NSString stringWithFormat:@"(%@ .)", first]]];
 	}
 	else if ([combinator isKindOfClass:[HMRNull class]])
-		compacted = HMRCaptureForest([self reduceParseForest:combinator.parseForest]);
+		compacted = [HMRCombinator capture:[self reduceParseForest:combinator.parseForest]];
 	else if (combinator == self.combinator)
 		compacted = self;
 	else
@@ -82,7 +82,7 @@ l3_test(&HMRComposeReduction) {
 }
 
 l3_test(@selector(compaction)) {
-	HMRReduction *reduction = [[[HMRCaptureTree(@"a") and:[HMRCombinator literal:@"b"]] map:^(HMRPair *each) {
+	HMRReduction *reduction = [[[[HMRCombinator captureTree:@"a"] and:[HMRCombinator literal:@"b"]] map:^(HMRPair *each) {
 		return [[HMRPair null] red_append:REDMap(each, ^(NSString *each) {
 			return [each stringByAppendingString:each];
 		})];

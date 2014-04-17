@@ -26,6 +26,7 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// The null combinator, i.e. a combinator which matches the null (empty) string, ε.
 +(HMRNull *)null;
 
+
 /// Constructs a literal combinator.
 ///
 /// \param object  The object to compare input against. May be nil.
@@ -39,8 +40,21 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 +(HMRContainment *)containedIn:(id<HMRSet>)set;
 
 
-+(HMRNull *)capture:(NSSet *)parseForest;
-+(HMRNull *)captureTree:(id)x;
+/// Constructs a null parse with a forest containing \c object.
+///
+/// This is rarely useful when constructing grammars.
+///
+/// \param object  The object to treat as having been parsed. Must not be nil.
+/// \return        A null parse whose parse forest contains \c object as its sole parse tree.
++(HMRNull *)captureTree:(id)object;
+
+/// Constructs a null parse consisting of \c forest.
+///
+/// This is rarely useful when constructing grammars.
+///
+/// \param forest  The set of parse trees to treat as having been parsed. Must not be nil.
+/// \return        A null parse consisting of \c forest.
++(HMRNull *)capture:(NSSet *)forest;
 
 
 #pragma mark Nonterminal construction
@@ -100,23 +114,6 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 
 #pragma mark Constructors
-
-/// Constructs a null parse with a forest containing \c object.
-///
-/// This is rarely useful when constructing grammars.
-///
-/// \param object  The object to treat as having been parsed. Must not be nil.
-/// \return        A null parse whose parse forest contains \c object as its sole parse tree.
-HMRCombinator *HMRCaptureTree(id object) __attribute__((nonnull));
-
-/// Constructs a null parse consisting of \c forest.
-///
-/// This is rarely useful when constructing grammars.
-///
-/// \param forest  The set of parse trees to treat as having been parsed. Must not be nil.
-/// \return        A null parse consisting of \c forest.
-HMRCombinator *HMRCaptureForest(NSSet *forest) __attribute__((nonnull));
-
 
 /// A delayed combinator. Lazily evaluated.
 ///

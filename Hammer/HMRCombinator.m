@@ -22,9 +22,17 @@
 	return [HMRLiteral literal:object];
 }
 
-
 +(HMRContainment *)containedIn:(id<HMRSet>)set {
 	return [HMRContainment containedIn:set];
+}
+
+
++(HMRNull *)captureTree:(id)object {
+	return [HMRNull captureForest:[NSSet setWithObject:object]];
+}
+
++(HMRNull *)capture:(NSSet *)forest {
+	return [HMRNull captureForest:forest];
 }
 
 

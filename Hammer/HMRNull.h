@@ -4,6 +4,8 @@
 
 @interface HMRNull : HMRTerminal
 
++(instancetype)captureForest:(NSSet *)forest;
+
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 
 @end

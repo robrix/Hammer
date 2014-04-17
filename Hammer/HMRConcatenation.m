@@ -32,7 +32,7 @@
 	HMRCombinator *second = self.second;
 	HMRCombinator *derivativeAfterFirst = [[first derivative:object] and:second];
 	return HMRCombinatorIsNullable(first)?
-		[derivativeAfterFirst or:[HMRCaptureForest(first.parseForest) and:[second derivative:object]]]
+		[derivativeAfterFirst or:[[HMRCombinator capture:first.parseForest] and:[second derivative:object]]]
 	:	derivativeAfterFirst;
 }
 
@@ -87,7 +87,7 @@ l3_test(@selector(derivative:)) {
 		}] withFunctionDescription:[NSString stringWithFormat:@"(. %@)", second]];
 	}
 	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
-		concatenation = HMRCaptureForest([HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]);
+		concatenation = [HMRCombinator capture:[HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]];
 	else if (first == self.first && second == self.second)
 		concatenation = self;
 	else

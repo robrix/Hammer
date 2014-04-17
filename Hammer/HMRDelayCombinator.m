@@ -33,7 +33,7 @@
 
 l3_test(@selector(parseForest)) {
 	NSSet *forest = [NSSet setWithObject:@"a"];
-	HMRCombinator *capture = HMRCaptureForest(forest);
+	HMRCombinator *capture = [HMRCombinator capture:forest];
 	HMRCombinator *delayed = HMRDelay(capture);
 	l3_expect(HMRDelaySpecific([NSSet class], delayed.parseForest)).to.equal(forest);
 	l3_expect(forest).to.equal(delayed.parseForest);
