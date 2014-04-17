@@ -19,7 +19,7 @@
 #import <Hammer/HMRNull.h>
 
 #import <Hammer/HMRPredicateCombinator.h>
-#import <Hammer/HMRContainsCombinator.h>
+#import <Hammer/HMRContainment.h>
 #import <Hammer/HMRLiteral.h>
 
 

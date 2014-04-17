@@ -1,16 +1,20 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRContainsCombinator.h"
+#import "HMRContainment.h"
 #import "HMROnce.h"
 
-@interface HMRContainsCombinator ()
+@interface HMRContainment ()
 
 +(NSDictionary *)namesByCharacterSet;
 +(NSDictionary *)characterSetsByName;
 
 @end
 
-@implementation HMRContainsCombinator
+@implementation HMRContainment
+
++(instancetype)containedIn:(id<HMRSet>)set {
+	return [[HMRContainment alloc] initWithSet:set];
+}
 
 -(instancetype)initWithSet:(id<HMRSet>)set {
 	NSParameterAssert(set != nil);
@@ -29,7 +33,7 @@
 }
 
 l3_test(@selector(evaluateWithObject:)) {
-	HMRContainsCombinator *combinator = [[HMRContainsCombinator alloc] initWithSet:[NSCharacterSet alphanumericCharacterSet]];
+	HMRContainment *combinator = [[HMRContainment alloc] initWithSet:[NSCharacterSet alphanumericCharacterSet]];
 	l3_expect([combinator evaluateWithObject:@"a"]).to.equal(@YES);
 	l3_expect([combinator evaluateWithObject:@"1"]).to.equal(@YES);
 }
@@ -42,13 +46,13 @@ l3_test(@selector(evaluateWithObject:)) {
 }
 
 l3_test(@selector(description)) {
-	l3_expect(HMRContains([NSCharacterSet alphanumericCharacterSet]).description).to.equal(@"[[:alnum:]]");
+	l3_expect([HMRCombinator containedIn:[NSCharacterSet alphanumericCharacterSet]].description).to.equal(@"[[:alnum:]]");
 }
 
 
 #pragma mark NSObject
 
--(BOOL)isEqual:(HMRContainsCombinator *)object {
+-(BOOL)isEqual:(HMRContainment *)object {
 	return
 		[super isEqual:object]
 	&&	[self.set isEqual:object.set];
@@ -56,7 +60,7 @@ l3_test(@selector(description)) {
 
 -(NSUInteger)hash {
 	return
-		@"HMRContainsCombinator".hash
+		@"HMRContainment".hash
 	^	self.set.hash;
 }
 
@@ -84,12 +88,7 @@ static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 }
 
 l3_test(@selector(namesByCharacterSet)) {
-	l3_expect(HMRContainsCombinator.namesByCharacterSet[HMRContainsCombinator.characterSetsByName[HMRAlphabeticCharacterSetName]]).to.equal(HMRAlphabeticCharacterSetName);
+	l3_expect(HMRContainment.namesByCharacterSet[HMRContainment.characterSetsByName[HMRAlphabeticCharacterSetName]]).to.equal(HMRAlphabeticCharacterSetName);
 }
 
 @end
-
-
-HMRCombinator *HMRContains(id<HMRSet> set) {
-	return [[HMRContainsCombinator alloc] initWithSet:set];
-}

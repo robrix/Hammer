@@ -23,6 +23,11 @@
 }
 
 
++(HMRContainment *)containedIn:(id<HMRSet>)set {
+	return [HMRContainment containedIn:set];
+}
+
+
 
 #pragma mark Nonterminal construction
 

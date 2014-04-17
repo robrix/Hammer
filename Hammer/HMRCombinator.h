@@ -8,7 +8,7 @@
 typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 @class HMRAlternation, HMRConcatenation, HMRReduction, HMRRepetition;
-@class HMREmpty, HMRNull, HMRPredicateCombinator, HMRLiteral, HMRContainsCombinator;
+@class HMREmpty, HMRNull, HMRPredicateCombinator, HMRLiteral, HMRContainment;
 @interface HMRCombinator : NSObject <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object;
@@ -32,7 +32,13 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// \return        A combinator which matches input equal to \c object by pointer equality or by \c -isEqual:.
 +(HMRLiteral *)literal:(id<NSObject,NSCopying>)object;
 
-+(HMRContainsCombinator *)containedIn:(id<HMRSet>)container;
+/// Constructs a containment combinator.
+///
+/// \param set  The set to compare input against. Must not be nil.
+/// \return     A combinator which matches objects contained in \c set.
++(HMRContainment *)containedIn:(id<HMRSet>)set;
+
+
 +(HMRNull *)capture:(NSSet *)parseForest;
 +(HMRNull *)captureTree:(id)x;
 
@@ -95,11 +101,6 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 #pragma mark Constructors
 
-/// Constructs a containment combinator.
-///
-/// \param set  The set to compare input against. Must not be nil.
-/// \return     A combinator which matches objects contained in \c set.
-HMRCombinator *HMRContains(id<HMRSet> set) __attribute__((nonnull));
 
 /// Constructs a kind-of combinator.
 ///

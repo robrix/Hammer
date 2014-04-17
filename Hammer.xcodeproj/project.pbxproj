@@ -61,8 +61,8 @@
 		D4C87CE218ED356E00567D57 /* HMRDelayCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C87CE018ED356E00567D57 /* HMRDelayCombinator.m */; };
 		D4C87CE918ED3AC300567D57 /* HMRPredicateCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C87CE718ED3AC300567D57 /* HMRPredicateCombinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4C87CEA18ED3AC300567D57 /* HMRPredicateCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C87CE818ED3AC300567D57 /* HMRPredicateCombinator.m */; };
-		D4C87CED18ED3D5F00567D57 /* HMRContainsCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C87CEB18ED3D5F00567D57 /* HMRContainsCombinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D4C87CEE18ED3D5F00567D57 /* HMRContainsCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C87CEC18ED3D5F00567D57 /* HMRContainsCombinator.m */; };
+		D4C87CED18ED3D5F00567D57 /* HMRContainment.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C87CEB18ED3D5F00567D57 /* HMRContainment.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4C87CEE18ED3D5F00567D57 /* HMRContainment.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C87CEC18ED3D5F00567D57 /* HMRContainment.m */; };
 		D4E0192318F9BE3000442926 /* HMROperations.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0192118F9BE3000442926 /* HMROperations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4E0192418F9BE3000442926 /* HMROperations.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0192218F9BE3000442926 /* HMROperations.m */; };
 /* End PBXBuildFile section */
@@ -137,8 +137,8 @@
 		D4C87CE018ED356E00567D57 /* HMRDelayCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRDelayCombinator.m; sourceTree = "<group>"; };
 		D4C87CE718ED3AC300567D57 /* HMRPredicateCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRPredicateCombinator.h; sourceTree = "<group>"; };
 		D4C87CE818ED3AC300567D57 /* HMRPredicateCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRPredicateCombinator.m; sourceTree = "<group>"; };
-		D4C87CEB18ED3D5F00567D57 /* HMRContainsCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRContainsCombinator.h; sourceTree = "<group>"; };
-		D4C87CEC18ED3D5F00567D57 /* HMRContainsCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRContainsCombinator.m; sourceTree = "<group>"; };
+		D4C87CEB18ED3D5F00567D57 /* HMRContainment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRContainment.h; sourceTree = "<group>"; };
+		D4C87CEC18ED3D5F00567D57 /* HMRContainment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRContainment.m; sourceTree = "<group>"; };
 		D4E0192118F9BE3000442926 /* HMROperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMROperations.h; sourceTree = "<group>"; };
 		D4E0192218F9BE3000442926 /* HMROperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMROperations.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -270,8 +270,8 @@
 			children = (
 				D4C87CE718ED3AC300567D57 /* HMRPredicateCombinator.h */,
 				D4C87CE818ED3AC300567D57 /* HMRPredicateCombinator.m */,
-				D4C87CEB18ED3D5F00567D57 /* HMRContainsCombinator.h */,
-				D4C87CEC18ED3D5F00567D57 /* HMRContainsCombinator.m */,
+				D4C87CEB18ED3D5F00567D57 /* HMRContainment.h */,
+				D4C87CEC18ED3D5F00567D57 /* HMRContainment.m */,
 				D4ACA60418DD359C00EBD899 /* HMRLiteral.h */,
 				D4ACA60518DD359C00EBD899 /* HMRLiteral.m */,
 				D42ED40E18FB25A3005BEC10 /* HMRAnyCombinator.h */,
@@ -345,7 +345,7 @@
 				D42ED40D18FB1AC2005BEC10 /* HMRPredicate.h in Headers */,
 				D4C87CE118ED356E00567D57 /* HMRDelayCombinator.h in Headers */,
 				D4ACA60218DD34C400EBD899 /* HMREmpty.h in Headers */,
-				D4C87CED18ED3D5F00567D57 /* HMRContainsCombinator.h in Headers */,
+				D4C87CED18ED3D5F00567D57 /* HMRContainment.h in Headers */,
 				D42ED41018FB25A3005BEC10 /* HMRAnyCombinator.h in Headers */,
 				D42ED40918FB12C3005BEC10 /* HMRMemoization.h in Headers */,
 				D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */,
@@ -470,7 +470,7 @@
 				D4B1555B18FB9E600051285B /* HMRSet.m in Sources */,
 				D4ACA62418DD4F5200EBD899 /* HMRRepetition.m in Sources */,
 				D42ED3B918FA1480005BEC10 /* HMRCase.m in Sources */,
-				D4C87CEE18ED3D5F00567D57 /* HMRContainsCombinator.m in Sources */,
+				D4C87CEE18ED3D5F00567D57 /* HMRContainment.m in Sources */,
 				D4B158E418FF99770051285B /* HMRCombinator.m in Sources */,
 				D4C87CE218ED356E00567D57 /* HMRDelayCombinator.m in Sources */,
 				D4ACA5FF18DD33DC00EBD899 /* HMRNonterminal.m in Sources */,
