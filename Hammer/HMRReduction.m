@@ -67,16 +67,6 @@ l3_test(&HMRComposeReduction) {
 		compacted = [HMRCombinator empty];
 	else if ([combinator isKindOfClass:[HMRReduction class]])
 		compacted = HMRComposeReduction((HMRReduction *)combinator, self.block, self.functionDescription);
-	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
-		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
-		HMRNull *first = (HMRNull *)concatenation.first;
-		HMRReductionBlock block = self.block;
-		compacted = [[concatenation.second mapSet:^(id<REDReducible> all) {
-			return REDMap(all, ^(id each) {
-				return block(HMRCons(first.parseForest.anyObject, each));
-			});
-		}] withFunctionDescription:[self.functionDescription stringByAppendingString:[NSString stringWithFormat:@"(%@ .)", first]]];
-	}
 	else if ([combinator isKindOfClass:[HMRNull class]])
 		compacted = [HMRCombinator capture:[self reduceParseForest:combinator.parseForest]];
 	else if (combinator == self.combinator)
