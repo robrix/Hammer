@@ -74,6 +74,25 @@ l3_test(@selector(parseForest)) {
 	return [(id<REDReducible>)self.forced red_reduce:initial usingBlock:block];
 }
 
+
+#pragma mark Construction
+
+-(HMRCombinator *)and:(HMRCombinator *)other {
+	return HMRAnd(self, other);
+}
+
+-(HMRCombinator *)or:(HMRCombinator *)other {
+	return HMROr(self, other);
+}
+
+-(HMRCombinator *)map:(HMRReductionBlock)block {
+	return HMRMap(self, block);
+}
+
+-(HMRCombinator *)repeat {
+	return HMRRepeat(self);
+}
+
 @end
 
 
