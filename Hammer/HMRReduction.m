@@ -32,7 +32,7 @@
 
 
 -(NSSet *)reduceParseForest:(NSSet *)forest {
-	return [[NSSet set] red_append:REDMap(forest, self.block)];
+	return [[NSSet set] red_append:self.block(forest)];
 }
 
 -(NSSet *)reduceParseForest {
@@ -43,7 +43,7 @@
 static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g, NSString *functionDescription) {
 	HMRReductionBlock f = reduction.block;
 	NSString *description = [NSString stringWithFormat:@"%@∘%@", functionDescription ?: @"𝑔", reduction.functionDescription ?: @"𝑓"];
-	return [[reduction.combinator map:^(id<NSObject, NSCopying> x) {
+	return [[reduction.combinator map:^(id<REDReducible> x) {
 		id y = f(x);
 		id z = g(y);
 		return z;
@@ -68,8 +68,10 @@ l3_test(&HMRComposeReduction) {
 		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
 		HMRNull *first = (HMRNull *)concatenation.first;
 		HMRReductionBlock block = self.block;
-		compacted = [[concatenation.second map:^(id<NSObject,NSCopying> each) {
-			return block(HMRCons(first.parseForest.anyObject, each));
+		compacted = [[concatenation.second map:^(id<REDReducible> all) {
+			return REDMap(all, ^(id each) {
+				return block(HMRCons(first.parseForest.anyObject, each));
+			});
 		}] withFunctionDescription:[self.functionDescription stringByAppendingString:[NSString stringWithFormat:@"(%@ .)", first]]];
 	}
 	else if ([combinator isKindOfClass:[HMRNull class]])
@@ -82,10 +84,12 @@ l3_test(&HMRComposeReduction) {
 }
 
 l3_test(@selector(compaction)) {
-	HMRReduction *reduction = [[[[HMRCombinator captureTree:@"a"] and:[HMRCombinator literal:@"b"]] map:^(HMRPair *each) {
-		return [[HMRPair null] red_append:REDMap(each, ^(NSString *each) {
-			return [each stringByAppendingString:each];
-		})];
+	HMRReduction *reduction = [[[[HMRCombinator captureTree:@"a"] and:[HMRCombinator literal:@"b"]] map:^(id<REDReducible> all) {
+		return REDMap(all, ^(HMRPair *each) {
+			return [[HMRPair null] red_append:REDMap(each, ^(NSString *each) {
+				return [each stringByAppendingString:each];
+			})];
+		});
 	}] withFunctionDescription:@"(map append .)"];
 	l3_expect([reduction derivative:@"b"].parseForest).to.equal([NSSet setWithObject:HMRList(@"aa", @"bb", nil)]);
 	l3_expect(reduction.compaction.description).to.equal(@"λ.'b' → (map append .)∘(ε↓{'a'} .)");

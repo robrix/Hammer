@@ -4,8 +4,8 @@
 #import <Hammer/HMRPredicate.h>
 #import <Hammer/HMRSet.h>
 
-/// The type of a reduction combinator’s block, which maps parse trees.
-typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
+/// The type of a reduction combinator’s block, which maps parse forests.
+typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 
 @class HMRAlternation, HMRConcatenation, HMRReduction, HMRRepetition;
 @class HMREmpty, HMRNull, HMRPredicateCombinator, HMRLiteral, HMRContainment;
