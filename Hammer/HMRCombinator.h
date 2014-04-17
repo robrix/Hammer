@@ -1,6 +1,5 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
 #import <Reducers/REDReducible.h>
 #import <Hammer/HMRPredicate.h>
 #import <Hammer/HMRSet.h>
@@ -9,6 +8,7 @@
 typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 @class HMRAlternation, HMRConcatenation, HMRReduction, HMRRepetition;
+@class HMREmpty, HMRNull, HMRPredicateCombinator, HMREqualCombinator, HMRContainsCombinator;
 @interface HMRCombinator : NSObject <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object;
