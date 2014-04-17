@@ -45,6 +45,6 @@
 @end
 
 
-id<HMRCombinator> HMRKindOf(Class class) {
+HMRCombinator *HMRKindOf(Class class) {
 	return [[HMRKindOfCombinator alloc] initWithTargetClass:class];
 }

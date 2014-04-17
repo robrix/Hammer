@@ -3,8 +3,8 @@
 #import "HMRPair.h"
 #import "HMRParsing.h"
 
-NSSet *HMRParseCollection(id<HMRCombinator> parser, id<REDReducible> reducible) {
-	parser = [reducible red_reduce:parser usingBlock:^(id<HMRCombinator> parser, id each) {
+NSSet *HMRParseCollection(HMRCombinator *parser, id<REDReducible> reducible) {
+	parser = [reducible red_reduce:parser usingBlock:^(HMRCombinator *parser, id each) {
 		return [parser derivative:each];
 	}];
 	return parser.parseForest;
@@ -24,7 +24,7 @@ l3_test(&HMRParseCollection) {
 	id terminal = @"x";
 	id nonterminalPrefix = @"+";
 	// S -> "+" S | "x"
-	__block id<HMRCombinator> nonterminal;
+	__block HMRCombinator *nonterminal;
 	nonterminal = [HMRMap(HMROr(HMRAnd([HMREqual(nonterminalPrefix) withName:@"prefix"], HMRDelay(nonterminal)), [HMREqual(terminal) withName:@"final"]), ^(id each) { return HMRList(each, nil); }) withName:@"S"];
 	l3_expect(HMRParseCollection(nonterminal, @[ terminal ])).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
 	l3_expect(HMRParseCollection(nonterminal, @[ nonterminalPrefix, terminal ])).to.equal([NSSet setWithObject:HMRList(HMRList(nonterminalPrefix, terminal, nil), nil)]);
@@ -33,7 +33,7 @@ l3_test(&HMRParseCollection) {
 }
 
 
-id<HMRCombinator> HMRParseObject(id<HMRCombinator> parser, id<NSObject, NSCopying> object) {
+HMRCombinator *HMRParseObject(HMRCombinator *parser, id<NSObject, NSCopying> object) {
 	return object?
 		[parser derivative:object]
 	:	nil; // ???

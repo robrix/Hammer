@@ -4,8 +4,8 @@
 
 @interface HMRConcatenation : HMRNonterminal
 
-@property (readonly) id<HMRCombinator> first;
-@property (readonly) id<HMRCombinator> second;
+@property (readonly) HMRCombinator *first;
+@property (readonly) HMRCombinator *second;
 
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;

@@ -6,7 +6,7 @@
 
 @interface HMRDelayCombinator ()
 
-@property (readonly) id<HMRCombinator> forced;
+@property (readonly) HMRCombinator *forced;
 
 @end
 
@@ -22,7 +22,7 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivative:(id)object {
+-(HMRCombinator *)derivative:(id)object {
 	return [self.forced derivative:object];
 }
 
@@ -33,15 +33,15 @@
 
 l3_test(@selector(parseForest)) {
 	NSSet *forest = [NSSet setWithObject:@"a"];
-	id<HMRCombinator> capture = HMRCaptureForest(forest);
-	id<HMRCombinator> delayed = HMRDelay(capture);
+	HMRCombinator *capture = HMRCaptureForest(forest);
+	HMRCombinator *delayed = HMRDelay(capture);
 	l3_expect(HMRDelaySpecific([NSSet class], delayed.parseForest)).to.equal(forest);
 	l3_expect(forest).to.equal(delayed.parseForest);
 }
 
 
--(id<HMRCombinator>)compaction {
-	return self.forcing? self : self.forced.compaction;
+-(HMRCombinator *)compaction {
+	return self.forcing? (HMRCombinator *)self : self.forced.compaction;
 }
 
 
@@ -52,7 +52,7 @@ l3_test(@selector(parseForest)) {
 	return self.forced.name;
 }
 
--(id<HMRCombinator>)withName:(NSString *)name {
+-(HMRCombinator *)withName:(NSString *)name {
 	return (id)[(id)self.forced withName:name];
 }
 
@@ -78,24 +78,24 @@ l3_test(@selector(parseForest)) {
 #pragma mark Construction
 
 -(HMRCombinator *)and:(HMRCombinator *)other {
-	return HMRAnd(self, other);
+	return HMRAnd((HMRCombinator *)self, other);
 }
 
 -(HMRCombinator *)or:(HMRCombinator *)other {
-	return HMROr(self, other);
+	return HMROr((HMRCombinator *)self, other);
 }
 
 -(HMRCombinator *)map:(HMRReductionBlock)block {
-	return HMRMap(self, block);
+	return HMRMap((HMRCombinator *)self, block);
 }
 
 -(HMRCombinator *)repeat {
-	return HMRRepeat(self);
+	return HMRRepeat((HMRCombinator *)self);
 }
 
 @end
 
 
-HMRCombinator *HMRLazyCombinator(id<HMRCombinator>(^block)(void)) {
+HMRCombinator *HMRLazyCombinator(HMRCombinator *(^block)(void)) {
 	return (id)[[HMRDelayCombinator alloc] initWithBlock:block];
 }

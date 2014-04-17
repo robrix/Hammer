@@ -90,6 +90,6 @@ l3_test(@selector(namesByCharacterSet)) {
 @end
 
 
-id<HMRCombinator> HMRContains(id<HMRSet> set) {
+HMRCombinator *HMRContains(id<HMRSet> set) {
 	return [[HMRContainsCombinator alloc] initWithSet:set];
 }

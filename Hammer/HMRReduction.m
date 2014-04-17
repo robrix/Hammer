@@ -8,7 +8,7 @@
 
 @implementation HMRReduction
 
--(instancetype)initWithCombinator:(id<HMRCombinator>)combinator block:(HMRReductionBlock)block {
+-(instancetype)initWithCombinator:(HMRCombinator *)combinator block:(HMRReductionBlock)block {
 	if ((self = [super init])) {
 		_combinator = [combinator copyWithZone:NULL];
 		_block = [block copy];
@@ -50,13 +50,13 @@ l3_test(&HMRComposeReduction) {
 	l3_expect(HMRComposeReduction((id)HMRMap(HMREqual(a), f), f, nil).description).to.equal(@"'a' → 𝑔∘𝑓");
 }
 
--(id<HMRCombinator>)compact {
-	id<HMRCombinator> combinator = self.combinator.compaction;
-	id<HMRCombinator> compacted;
+-(HMRCombinator *)compact {
+	HMRCombinator *combinator = self.combinator.compaction;
+	HMRCombinator *compacted;
 	if ([combinator isEqual:HMRNone()])
 		compacted = HMRNone();
 	else if ([combinator isKindOfClass:[HMRReduction class]])
-		compacted = HMRComposeReduction(combinator, self.block, self.functionDescription);
+		compacted = HMRComposeReduction((HMRReduction *)combinator, self.block, self.functionDescription);
 	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
 		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
 		HMRNull *first = (HMRNull *)concatenation.first;
@@ -130,7 +130,7 @@ l3_test(@selector(compaction)) {
 @end
 
 
-HMRReduction *HMRMap(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
+HMRReduction *HMRMap(HMRCombinator *combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
 	NSCParameterAssert(combinator != nil);
 	NSCParameterAssert(block != nil);
 	

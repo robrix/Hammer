@@ -7,7 +7,7 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivative:(id<NSObject,NSCopying>)object {
+-(HMRCombinator *)derivative:(id<NSObject,NSCopying>)object {
 	return HMRCaptureTree(object);
 }
 

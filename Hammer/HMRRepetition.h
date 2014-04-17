@@ -4,7 +4,7 @@
 
 @interface HMRRepetition : HMRNonterminal
 
-@property (readonly) id<HMRCombinator> combinator;
+@property (readonly) HMRCombinator *combinator;
 
 
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;

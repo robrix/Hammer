@@ -25,7 +25,7 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
+-(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object {
 	return HMRNone();
 }
 
@@ -111,13 +111,13 @@ l3_test(@selector(description)) {
 @end
 
 
-id<HMRCombinator> HMRCaptureTree(id object) {
+HMRCombinator *HMRCaptureTree(id object) {
 	NSCParameterAssert(object != nil);
 	
 	return HMRCaptureForest([NSSet setWithObject:object]);
 }
 
-id<HMRCombinator> HMRCaptureForest(NSSet *forest) {
+HMRCombinator *HMRCaptureForest(NSSet *forest) {
 	return [[HMRNull alloc] initWithForest:forest];
 }
 

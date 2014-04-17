@@ -48,6 +48,6 @@
 @end
 
 
-id<HMRCombinator> HMREqual(id<NSObject, NSCopying> object) {
+HMRCombinator *HMREqual(id<NSObject, NSCopying> object) {
 	return [[HMREqualCombinator alloc] initWithObject:object];
 }

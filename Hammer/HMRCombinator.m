@@ -6,27 +6,27 @@
 @implementation HMRCombinator
 
 -(HMRCombinator *)and:(HMRCombinator *)other {
-	return HMRAnd((id<HMRCombinator>)self, (id<HMRCombinator>)other);
+	return HMRAnd((HMRCombinator *)self, (HMRCombinator *)other);
 }
 
 -(HMRCombinator *)or:(HMRCombinator *)other {
-	return HMROr((id<HMRCombinator>)self, (id<HMRCombinator>)other);
+	return HMROr((HMRCombinator *)self, (HMRCombinator *)other);
 }
 
 
 -(HMRCombinator *)map:(HMRReductionBlock)f {
-	return HMRMap((id<HMRCombinator>)self, f);
+	return HMRMap((HMRCombinator *)self, f);
 }
 
 
 -(HMRCombinator *)repeat {
-	return HMRRepeat((id<HMRCombinator>)self);
+	return HMRRepeat((HMRCombinator *)self);
 }
 
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivative:(id<NSObject,NSCopying>)object {
+-(HMRCombinator *)derivative:(id<NSObject,NSCopying>)object {
 	return HMRNone();
 }
 
@@ -36,7 +36,7 @@
 }
 
 
--(id<HMRCombinator>)compaction {
+-(HMRCombinator *)compaction {
 	return self;
 }
 

@@ -26,6 +26,6 @@
 @end
 
 
-id<HMRCombinator> HMRNone(void) {
+HMRCombinator *HMRNone(void) {
 	return HMROnce((HMREmpty *)[[HMREmpty class] new]);
 }
