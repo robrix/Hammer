@@ -6,7 +6,13 @@
 
 @implementation HMRRepetition
 
--(instancetype)initWithCombinator:(id<HMRCombinator>)combinator {
++(instancetype)repeat:(HMRCombinator *)combinator {
+	return [[self alloc] initWithCombinator:combinator];
+}
+
+-(instancetype)initWithCombinator:(HMRCombinator *)combinator {
+	NSParameterAssert(combinator != nil);
+	
 	if ((self = [super init])) {
 		_combinator = [combinator copyWithZone:NULL];
 	}
@@ -16,20 +22,20 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return HMRAnd([self.combinator derivative:object], self);
+-(HMRCombinator *)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
+	return [[self.combinator derivative:object] and:self];
 }
 
 l3_test(@selector(derivative:)) {
 	id each = @"a";
-	id<HMRCombinator> repetition = HMRRepeat(HMREqual(each));
+	HMRCombinator *repetition = [[HMRCombinator literal:each] repeat];
 	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, nil)]);
 	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, nil)]);
 	l3_expect([[[repetition derivative:each] derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, each, nil)]);
 	
 	// S -> ("x" | S)*
 	id terminal = @"x";
-	__block id nonterminal = HMRDelay(HMRRepeat(HMROr(HMREqual(terminal), nonterminal)));
+	__block id nonterminal = HMRDelay([[[HMRCombinator literal:terminal] or:nonterminal] repeat]);
 	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
 }
 
@@ -39,15 +45,15 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(id<HMRCombinator>)compact {
-	id<HMRCombinator> combinator = self.combinator.compaction;
-	return [combinator isEqual:HMRNone()]?
-		HMRCaptureTree([HMRPair null])
-	:	(combinator == self.combinator? self : HMRRepeat(combinator));
+-(HMRCombinator *)compact {
+	HMRCombinator *combinator = self.combinator.compaction;
+	return [combinator isEqual:[HMRCombinator empty]]?
+		[HMRCombinator captureTree:[HMRPair null]]
+	:	(combinator == self.combinator? self : [combinator repeat]);
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect(HMRRepeat(HMRNone()).compaction).to.equal(HMRCaptureTree([HMRPair null]));
+	l3_expect([[HMRCombinator empty] repeat].compaction).to.equal([HMRCombinator captureTree:[HMRPair null]]);
 }
 
 
@@ -85,12 +91,6 @@ l3_test(@selector(compaction)) {
 
 @end
 
-
-id<HMRCombinator> HMRRepeat(id<HMRCombinator> combinator) {
-	NSCParameterAssert(combinator != nil);
-	
-	return [[HMRRepetition alloc] initWithCombinator:combinator];
-}
 
 id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator) {
 	combinator = combinator ?: HMRAny();

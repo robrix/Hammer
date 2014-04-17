@@ -8,25 +8,25 @@
 ///
 /// \param combinator  The combinator to calculate the size of.
 /// \return            An unsigned integer representing the size of \c combinator.
-NSUInteger HMRCombinatorSize(id<HMRCombinator> combinator);
+NSUInteger HMRCombinatorSize(HMRCombinator *combinator);
 
 
 /// Pretty-prints a grammar starting with \c combinator.
 ///
 /// \param combinator  The combinator to pretty-print.
 /// \return            A string representing the pretty-printed grammar which starts with \c combinator.
-NSString *HMRPrettyPrint(id<HMRCombinator> combinator);
+NSString *HMRPrettyPrint(HMRCombinator *combinator);
 
 
 /// Recursively determines whether \c combinator is cyclic.
 ///
 /// \param combinator  The combinator to recurse through.
 /// \return            YES if \c combinator is cyclic, NO otherwise.
-bool HMRCombinatorIsCyclic(id<HMRCombinator> combinator);
+bool HMRCombinatorIsCyclic(HMRCombinator *combinator);
 
 
 /// Recursively determines whether \c combinator is nullable, i.e. whether it can parse the empty string (e.g. at the end of a parsed sequence).
 ///
 /// \c param combinator  The combinator to recurse through.
 /// \return              YES if \c combinator is nullable, NO otherwise.
-bool HMRCombinatorIsNullable(id<HMRCombinator> combinator);
+bool HMRCombinatorIsNullable(HMRCombinator *combinator);

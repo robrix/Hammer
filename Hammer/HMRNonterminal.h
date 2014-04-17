@@ -2,16 +2,16 @@
 
 #import <Hammer/HMRCombinator.h>
 
-@interface HMRNonterminal : NSObject <HMRCombinator>
+@interface HMRNonterminal : HMRCombinator
 
 #pragma mark Subclass responsibilities
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object;
+-(HMRCombinator *)deriveWithRespectToObject:(id<NSObject, NSCopying>)object;
 
 -(NSSet *)reduceParseForest;
 
 /// Produce a deeply compacted representation of the receiver.
--(id<HMRCombinator>)compact;
+-(HMRCombinator *)compact;
 
 -(NSString *)describe;
 

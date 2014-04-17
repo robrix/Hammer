@@ -9,7 +9,7 @@
 	NSMutableDictionary *_derivativesByElements;
 	NSSet *_parseForest;
 	NSNumber *_nullable;
-	__weak id<HMRCombinator> _compaction;
+	__weak HMRCombinator *_compaction;
 	NSString *_description;
 	NSNumber *_hash;
 	bool _reducing;
@@ -25,12 +25,12 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
+-(HMRCombinator *)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
 	return nil;
 }
 
--(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	return HMRMemoize(_derivativesByElements[object], HMRNone(), [self deriveWithRespectToObject:object].compaction);
+-(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object {
+	return HMRMemoize(_derivativesByElements[object], [HMRCombinator empty], [self deriveWithRespectToObject:object].compaction);
 }
 
 
@@ -43,14 +43,14 @@
 }
 
 
--(id<HMRCombinator>)compact {
+-(HMRCombinator *)compact {
 	return self;
 }
 
--(id<HMRCombinator>)compaction {
+-(HMRCombinator *)compaction {
 	return
 		_compaction
-	?:	(_compaction = HMRDelay([[self compact] withName:self.name]));
+	?:	(_compaction = HMRDelay([(id)[self compact] withName:self.name]));
 }
 
 
@@ -65,31 +65,12 @@
 }
 
 
-@synthesize name = _name;
-
--(instancetype)withName:(NSString *)name {
-	if (!_name) _name = [name copy];
-	return self;
-}
-
-
 -(NSUInteger)computeHash {
 	return self.class.description.hash;
 }
 
 -(NSUInteger)hash {
 	return HMRMemoize(_hash, @0, @([self computeHash])).unsignedIntegerValue;
-}
-
-
-#pragma mark HMRPredicate
-
--(bool)matchObject:(id)object {
-	return ![[self derivative:object] isEqual:HMRNone()];
-}
-
--(id<HMRCase>)then:(id (^)())block {
-	return [HMRCase caseWithPredicate:self block:block];
 }
 
 
@@ -107,13 +88,6 @@
 		_reducing = NO;
 	}
 	return reduced;
-}
-
-
-#pragma mark NSCopying
-
--(instancetype)copyWithZone:(NSZone *)zone {
-	return self;
 }
 
 @end

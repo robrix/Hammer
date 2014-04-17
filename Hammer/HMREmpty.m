@@ -18,14 +18,9 @@
 
 
 -(instancetype)withName:(NSString *)name {
-	return (self == HMRNone())?
+	return (self == [HMRCombinator empty])?
 		[[[self class] new] withName:name]
 	:	[super withName:name];
 }
 
 @end
-
-
-id<HMRCombinator> HMRNone(void) {
-	return HMROnce((HMREmpty *)[[HMREmpty class] new]);
-}

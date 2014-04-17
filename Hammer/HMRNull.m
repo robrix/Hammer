@@ -13,6 +13,10 @@
 
 @implementation HMRNull
 
++(instancetype)captureForest:(NSSet *)forest {
+	return [[self alloc] initWithForest:forest];
+}
+
 -(instancetype)initWithForest:(NSSet *)forest {
 	NSParameterAssert(forest != nil);
 	
@@ -25,8 +29,8 @@
 
 #pragma mark HMRCombinator
 
--(id<HMRCombinator>)derivative:(id<NSObject, NSCopying>)object {
-	return HMRNone();
+-(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object {
+	return [HMRCombinator empty];
 }
 
 
@@ -85,12 +89,12 @@ static NSString * const doubleQuote = @"\"";
 }
 
 l3_test(@selector(description)) {
-	l3_expect(HMRCaptureTree(singleQuote).description).to.equal(@"ε↓{\"'\"}");
-	l3_expect(HMRCaptureTree(doubleQuote).description).to.equal(@"ε↓{'\"'}");
+	l3_expect([HMRCombinator captureTree:singleQuote].description).to.equal(@"ε↓{\"'\"}");
+	l3_expect([HMRCombinator captureTree:doubleQuote].description).to.equal(@"ε↓{'\"'}");
 	NSString *singleAndDoubleQuotes = [singleQuote stringByAppendingString:doubleQuote];
-	l3_expect(HMRCaptureTree(singleAndDoubleQuotes).description).to.equal(@"ε↓{'\\'\"'}");
+	l3_expect([HMRCombinator captureTree:singleAndDoubleQuotes].description).to.equal(@"ε↓{'\\'\"'}");
 	
-	l3_expect(HMRCaptureTree(@[ singleQuote, doubleQuote, singleAndDoubleQuotes]).description).to.equal(@"ε↓{(\"'\", '\"', '\\'\"')}");
+	l3_expect([HMRCombinator captureTree:@[ singleQuote, doubleQuote, singleAndDoubleQuotes ]].description).to.equal(@"ε↓{(\"'\", '\"', '\\'\"')}");
 }
 
 
@@ -110,16 +114,6 @@ l3_test(@selector(description)) {
 
 @end
 
-
-id<HMRCombinator> HMRCaptureTree(id object) {
-	NSCParameterAssert(object != nil);
-	
-	return HMRCaptureForest([NSSet setWithObject:object]);
-}
-
-id<HMRCombinator> HMRCaptureForest(NSSet *forest) {
-	return [[HMRNull alloc] initWithForest:forest];
-}
 
 id<HMRPredicate> HMRCaptured(id<HMRPredicate> forest) {
 	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRNull *subject) {

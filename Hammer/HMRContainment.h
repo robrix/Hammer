@@ -3,7 +3,9 @@
 #import "HMRPredicateCombinator.h"
 #import "HMRSet.h"
 
-@interface HMRContainsCombinator : HMRPredicateCombinator
+@interface HMRContainment : HMRPredicateCombinator
+
++(instancetype)containedIn:(id<HMRSet>)set;
 
 @property (readonly) id<HMRSet> set;
 
