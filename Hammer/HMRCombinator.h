@@ -27,6 +27,10 @@
 typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 
+@interface HMRCombinator : NSObject <HMRCombinator>
+@end
+
+
 #pragma mark Constructors
 
 /// Constructs the alternation of \c left and \c right.
