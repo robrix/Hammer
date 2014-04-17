@@ -80,6 +80,4 @@
 	return [object isKindOfClass:self.class];
 }
 
-@dynamic description;
-
 @end

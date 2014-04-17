@@ -5,8 +5,11 @@
 #import <Hammer/HMRPredicate.h>
 #import <Hammer/HMRSet.h>
 
-@class HMRCombinator;
-@protocol HMRCombinator <NSObject, NSCopying, REDReducible, HMRPredicate>
+/// The type of a reduction combinator’s block, which maps parse trees.
+typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
+
+
+@interface HMRCombinator : NSObject <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object;
 
@@ -14,18 +17,8 @@
 
 @property (readonly) HMRCombinator *compaction;
 
-@property (readonly) NSString *description;
-
 @property (readonly) NSString *name;
 
-@end
-
-
-/// The type of a reduction combinator’s block, which maps parse trees.
-typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
-
-
-@interface HMRCombinator : NSObject <HMRCombinator>
 
 -(HMRCombinator *)and:(HMRCombinator *)other;
 -(HMRCombinator *)or:(HMRCombinator *)other;

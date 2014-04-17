@@ -45,9 +45,6 @@ l3_test(@selector(parseForest)) {
 }
 
 
-@dynamic description;
-
-
 -(NSString *)name {
 	return self.forced.name;
 }

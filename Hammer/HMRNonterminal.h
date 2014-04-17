@@ -2,7 +2,7 @@
 
 #import <Hammer/HMRCombinator.h>
 
-@interface HMRNonterminal : HMRCombinator <HMRCombinator>
+@interface HMRNonterminal : HMRCombinator
 
 #pragma mark Subclass responsibilities
 

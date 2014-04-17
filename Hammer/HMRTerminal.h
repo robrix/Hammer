@@ -2,7 +2,7 @@
 
 #import <Hammer/HMRCombinator.h>
 
-@interface HMRTerminal : HMRCombinator <HMRCombinator>
+@interface HMRTerminal : HMRCombinator
 
 -(NSString *)describe;
 
