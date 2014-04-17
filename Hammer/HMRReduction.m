@@ -2,11 +2,14 @@
 
 #import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
+#import "HMRDelay.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
 #import "HMRReduction.h"
 
-@implementation HMRReduction
+@implementation HMRReduction {
+	bool _isReducingParseForest;
+}
 
 +(instancetype)reduce:(HMRCombinator *)combinator usingBlock:(HMRReductionBlock)block {
 	return [[self alloc] initWithCombinator:combinator block:block];
@@ -32,11 +35,30 @@
 
 
 -(NSSet *)reduceParseForest:(NSSet *)forest {
-	return [[NSSet set] red_append:self.block(forest)];
+	NSSet *parseForest = [NSSet set];
+	if (!_isReducingParseForest) {
+		_isReducingParseForest = YES;
+		parseForest = [[NSSet set] red_append:self.block(forest)];
+		_isReducingParseForest = NO;
+	}
+	return parseForest;
 }
 
--(NSSet *)reduceParseForest {
-	return [self reduceParseForest:self.combinator.parseForest];
+-(NSSet *)parseForest {
+	NSSet *parseForest = [NSSet set];
+	if (!_isReducingParseForest) {
+		_isReducingParseForest = YES;
+		parseForest = [self.combinator isKindOfClass:[HMRNull class]]?
+			[self reduceParseForest:self.combinator.parseForest]
+		:	HMRDelaySpecific([NSSet class], [self reduceParseForest:self.combinator.parseForest]);
+		_isReducingParseForest = NO;
+	}
+	return parseForest;
+}
+
+l3_test(@selector(parseForest)) {
+	__block HMRCombinator *cyclic = [HMRDelay(cyclic) map:REDIdentityMapBlock];
+	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
 }
 
 
@@ -64,16 +86,6 @@ l3_test(&HMRComposeReduction) {
 		compacted = [HMRCombinator empty];
 	else if ([combinator isKindOfClass:[HMRReduction class]])
 		compacted = HMRComposeReduction((HMRReduction *)combinator, self.block, self.functionDescription);
-	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {
-		HMRConcatenation *concatenation = (HMRConcatenation *)combinator;
-		HMRNull *first = (HMRNull *)concatenation.first;
-		HMRReductionBlock block = self.block;
-		compacted = [[concatenation.second mapSet:^(id<REDReducible> all) {
-			return REDMap(all, ^(id each) {
-				return block(HMRCons(first.parseForest.anyObject, each));
-			});
-		}] withFunctionDescription:[self.functionDescription stringByAppendingString:[NSString stringWithFormat:@"(%@ .)", first]]];
-	}
 	else if ([combinator isKindOfClass:[HMRNull class]])
 		compacted = [HMRCombinator capture:[self reduceParseForest:combinator.parseForest]];
 	else if (combinator == self.combinator)

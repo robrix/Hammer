@@ -31,9 +31,12 @@
 -(BOOL)hmr_containsObject:(NSString *)object {
 	return
 		[object isKindOfClass:[NSString class]]
-	&&	[object red_reduce:@YES usingBlock:^(NSNumber *into, NSString *each) {
-			return @(into.boolValue && [self characterIsMember:[each characterAtIndex:0]]);
-		}];
+	&&	[object rangeOfCharacterFromSet:self].length > 0;
+}
+
+l3_test(@selector(hmr_containsObject:)) {
+	l3_expect([[NSCharacterSet whitespaceAndNewlineCharacterSet] hmr_containsObject:@" "]).to.equal(@YES);
+	l3_expect([[NSCharacterSet alphanumericCharacterSet] hmr_containsObject:@" "]).to.equal(@NO);
 }
 
 @end

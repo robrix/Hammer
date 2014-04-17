@@ -74,20 +74,28 @@ l3_test(@selector(derivative:)) {
 	__block HMRCombinator *concatenation;
 	if ([first isEqual:[HMRCombinator empty]] || [second isEqual:[HMRCombinator empty]])
 		concatenation = [HMRCombinator empty];
+	else if ([first isKindOfClass:[HMRNull class]] && [second isKindOfClass:[HMRNull class]])
+		concatenation = [HMRCombinator capture:[HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]];
 	else if ([first isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = first.parseForest;
-		concatenation = [[second map:^(id each) {
-			return HMRCons(parseForest.anyObject, each);
-		}] withFunctionDescription:[NSString stringWithFormat:@"(%@ .)", first]];
+		if (parseForest.count == 0) {
+			concatenation = second;
+		} else {
+			concatenation = [[second map:^(id each) {
+				return HMRCons(parseForest.anyObject, each);
+			}] withFunctionDescription:[NSString stringWithFormat:@"(%@ .)", first]];
+		}
 	}
 	else if ([second isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = second.parseForest;
-		concatenation = [[first map:^(id each) {
-			return HMRCons(each, parseForest.anyObject);
-		}] withFunctionDescription:[NSString stringWithFormat:@"(. %@)", second]];
+		if (parseForest.count == 0) {
+			concatenation = first;
+		} else {
+			concatenation = [[first map:^(id each) {
+				return HMRCons(each, parseForest.anyObject);
+			}] withFunctionDescription:[NSString stringWithFormat:@"(. %@)", second]];
+		}
 	}
-	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])
-		concatenation = [HMRCombinator capture:[HMRConcatenation concatenateParseForestWithPrefix:first.parseForest suffix:second.parseForest]];
 	else if (first == self.first && second == self.second)
 		concatenation = self;
 	else

@@ -23,7 +23,7 @@
 	_block = nil;
 	if (block) {
 		_forcing = YES;
-		_forced = block();
+		_forced = [block() self];
 		_forcing = NO;
 	}
 	return _forced;
@@ -40,6 +40,10 @@
 	return self;
 }
 
+-(instancetype)copy {
+	return self;
+}
+
 
 #pragma mark NSObject
 
@@ -53,7 +57,7 @@
 
 
 -(id)forwardingTargetForSelector:(SEL)selector {
-	return self.forced;
+	return [self.forced self];
 }
 
 -(NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
@@ -86,6 +90,7 @@
 -(NSString *)description {
 	return [@"λ." stringByAppendingString:[self.forced description]];
 }
+
 
 -(NSUInteger)hash {
 	return ((id<NSObject>)self.forced).hash;
