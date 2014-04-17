@@ -7,7 +7,9 @@
 #import "HMRPair.h"
 #import "HMRReduction.h"
 
-@implementation HMRReduction
+@implementation HMRReduction {
+	bool _isReducingParseForest;
+}
 
 +(instancetype)reduce:(HMRCombinator *)combinator usingBlock:(HMRReductionBlock)block {
 	return [[self alloc] initWithCombinator:combinator block:block];
@@ -33,13 +35,30 @@
 
 
 -(NSSet *)reduceParseForest:(NSSet *)forest {
-	return [[NSSet set] red_append:self.block(forest)];
+	NSSet *parseForest = [NSSet set];
+	if (!_isReducingParseForest) {
+		_isReducingParseForest = YES;
+		parseForest = [[NSSet set] red_append:self.block(forest)];
+		_isReducingParseForest = NO;
+	}
+	return parseForest;
 }
 
--(NSSet *)reduceParseForest {
-	return [self.combinator isKindOfClass:[HMRNull class]]?
-		[self reduceParseForest:self.combinator.parseForest]
-	:	HMRDelaySpecific([NSSet class], [self reduceParseForest:self.combinator.parseForest]);
+-(NSSet *)parseForest {
+	NSSet *parseForest = [NSSet set];
+	if (!_isReducingParseForest) {
+		_isReducingParseForest = YES;
+		parseForest = [self.combinator isKindOfClass:[HMRNull class]]?
+			[self reduceParseForest:self.combinator.parseForest]
+		:	HMRDelaySpecific([NSSet class], [self reduceParseForest:self.combinator.parseForest]);
+		_isReducingParseForest = NO;
+	}
+	return parseForest;
+}
+
+l3_test(@selector(parseForest)) {
+	__block HMRCombinator *cyclic = [HMRDelay(cyclic) map:REDIdentityMapBlock];
+	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
 }
 
 
