@@ -9,11 +9,12 @@
 	return [HMRAlternation alternateLeft:self right:other];
 }
 
-HMRCombinator *(^HMRCombineVariadics)(HMRCombinator *, va_list) = ^HMRCombinator *(HMRCombinator *each, va_list args) {
+typedef HMRCombinator *(^HMRCombinatorPairBlock)(HMRCombinator *, HMRCombinator *);
+HMRCombinator *(^HMRCombineVariadics)(HMRCombinator *, va_list, HMRCombinatorPairBlock) = ^HMRCombinator *(HMRCombinator *each, va_list args, HMRCombinatorPairBlock pair) {
 	if (each) {
-		HMRCombinator *rest = HMRCombineVariadics(va_arg(args, HMRCombinator *), args);
+		HMRCombinator *rest = HMRCombineVariadics(va_arg(args, HMRCombinator *), args, pair);
 		each = rest?
-			[each or:rest]
+			pair(each, rest)
 		:	each;
 	}
 	return each;
@@ -23,7 +24,9 @@ HMRCombinator *(^HMRCombineVariadics)(HMRCombinator *, va_list) = ^HMRCombinator
 	va_list args;
 	va_start(args, leftmost);
 	
-	HMRCombinator *alternation = HMRCombineVariadics(leftmost, args);
+	HMRCombinator *alternation = HMRCombineVariadics(leftmost, args, ^(HMRCombinator *left, HMRCombinator *right) {
+		return [left or:right];
+	});
 	
 	va_end(args);
 	
