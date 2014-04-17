@@ -81,6 +81,5 @@
 }
 
 @dynamic description;
-@dynamic hash;
 
 @end

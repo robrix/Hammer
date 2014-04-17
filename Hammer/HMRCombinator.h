@@ -17,8 +17,6 @@
 
 @property (readonly) NSString *name;
 
-@property (readonly) NSUInteger hash;
-
 @end
 
 
