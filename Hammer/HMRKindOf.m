@@ -1,8 +1,12 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRKindOfCombinator.h"
+#import "HMRKindOf.h"
 
-@implementation HMRKindOfCombinator
+@implementation HMRKindOf
+
++(instancetype)kindOfClass:(Class)targetClass {
+	return [[self alloc] initWithTargetClass:targetClass];
+}
 
 -(instancetype)initWithTargetClass:(Class)targetClass {
 	NSParameterAssert(targetClass != nil);
@@ -30,7 +34,7 @@
 
 #pragma mark NSObject
 
--(BOOL)isEqual:(HMRKindOfCombinator *)object {
+-(BOOL)isEqual:(HMRKindOf *)object {
 	return
 		[object isKindOfClass:self.class]
 	&&	[self.targetClass isEqual:object.targetClass];
@@ -38,13 +42,8 @@
 
 -(NSUInteger)hash {
 	return
-		@"HMRKindOfCombinator".hash
+		@"HMRKindOf".hash
 	^	self.targetClass.description.hash;
 }
 
 @end
-
-
-HMRCombinator *HMRKindOf(Class class) {
-	return [[HMRKindOfCombinator alloc] initWithTargetClass:class];
-}

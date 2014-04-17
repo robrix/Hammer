@@ -34,5 +34,5 @@
 #import <Hammer/HMRPredicate.h>
 #import <Hammer/HMRAnyCombinator.h>
 #import <Hammer/HMRBindCombinator.h>
-#import <Hammer/HMRKindOfCombinator.h>
+#import <Hammer/HMRKindOf.h>
 #import <Hammer/HMRBlockCombinator.h>

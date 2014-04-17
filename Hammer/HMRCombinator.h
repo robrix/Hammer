@@ -101,14 +101,6 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 #pragma mark Constructors
 
-
-/// Constructs a kind-of combinator.
-///
-/// \param class  The class to compare input against. Must not be nil.
-/// \return       A combinator which matches objects whose which respond YES to \c -isKindOfClass: when passed \c class.
-HMRCombinator *HMRKindOf(Class class) __attribute__((nonnull));
-
-
 /// Constructs a null parse with a forest containing \c object.
 ///
 /// This is rarely useful when constructing grammars.

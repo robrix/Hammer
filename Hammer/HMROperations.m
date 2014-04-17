@@ -90,7 +90,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 			}],
 			[HMRRepeated(HMRAny()) then:^{ return @YES; }],
 			[HMRCaptured(HMRAny()) then:^{ return @YES; }],
-			[HMRKindOf([HMRAnyCombinator class]) then:^{ return @YES; }],
+			[[HMRKindOf kindOfClass:[HMRAnyCombinator class]] then:^{ return @YES; }],
 			[HMRAny() then:^{ return @NO; }]
 		])) boolValue];
 	};
