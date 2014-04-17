@@ -76,18 +76,14 @@ l3_test(@selector(derivative:)) {
 		concatenation = [HMRCombinator empty];
 	else if ([first isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = first.parseForest;
-		concatenation = [[second reduce:^(id<REDReducible> all) {
-			return REDMap(all, ^(id each) {
-				return HMRCons(parseForest.anyObject, each);
-			});
+		concatenation = [[second map:^(id each) {
+			return HMRCons(parseForest.anyObject, each);
 		}] withFunctionDescription:[NSString stringWithFormat:@"(%@ .)", first]];
 	}
 	else if ([second isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = second.parseForest;
-		concatenation = [[first reduce:^(id<REDReducible> all) {
-			return REDMap(all, ^id(id each) {
-				return HMRCons(each, parseForest.anyObject);
-			});
+		concatenation = [[first map:^(id each) {
+			return HMRCons(each, parseForest.anyObject);
 		}] withFunctionDescription:[NSString stringWithFormat:@"(. %@)", second]];
 	}
 	else if ([first isKindOfClass:[HMRNull class]] && [second.parseForest isKindOfClass:[HMRNull class]])

@@ -94,7 +94,15 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 ///
 /// \param block  The block to map the parse trees produced by \c self with. Will be called setwise, i.e. once per parse forest. Must not be nil.
 /// \return       A combinator representing the reduction of \c self by \c block.
--(HMRReduction *)reduce:(HMRReductionBlock)f;
+-(HMRReduction *)reduce:(HMRReductionBlock)block;
+
+/// Constructs the pointwise reduction of \c self by \c block.
+///
+/// Reductions map parse trees into a form more readily operated upon, e.g. abstract syntax trees.
+///
+/// \param block  The block to map the parse trees produced by \c self with. Will be called pointwise, i.e. once per parse tree. Must not be nil.
+/// \return       A combinator representing the reduction of \c self by \c block.
+-(HMRReduction *)map:(REDMapBlock)block;
 
 
 /// Constructs the repetition of \c self.

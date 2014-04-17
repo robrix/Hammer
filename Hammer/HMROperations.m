@@ -114,6 +114,6 @@ l3_test(&HMRCombinatorIsNullable) {
 	l3_expect(HMRCombinatorIsNullable(cyclic = [[nonNullable or:HMRDelay(cyclic)] and:nullable])).to.equal(@NO);
 	l3_expect(HMRCombinatorIsNullable(cyclic = [nullable and:[nonNullable or:HMRDelay(cyclic)]])).to.equal(@NO);
 	
-	l3_expect(HMRCombinatorIsNullable([nullable reduce:REDIdentityMapBlock])).to.equal(@YES);
-	l3_expect(HMRCombinatorIsNullable([nonNullable reduce:REDIdentityMapBlock])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nullable map:REDIdentityMapBlock])).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable([nonNullable map:REDIdentityMapBlock])).to.equal(@NO);
 }

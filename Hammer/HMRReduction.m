@@ -84,12 +84,10 @@ l3_test(&HMRComposeReduction) {
 }
 
 l3_test(@selector(compaction)) {
-	HMRReduction *reduction = [[[[HMRCombinator captureTree:@"a"] and:[HMRCombinator literal:@"b"]] reduce:^(id<REDReducible> all) {
-		return REDMap(all, ^(HMRPair *each) {
-			return [[HMRPair null] red_append:REDMap(each, ^(NSString *each) {
-				return [each stringByAppendingString:each];
-			})];
-		});
+	HMRReduction *reduction = [[[[HMRCombinator captureTree:@"a"] and:[HMRCombinator literal:@"b"]] map:^(id each) {
+		return [[HMRPair null] red_append:REDMap(each, ^(NSString *each) {
+			return [each stringByAppendingString:each];
+		})];
 	}] withFunctionDescription:@"(map append .)"];
 	l3_expect([reduction derivative:@"b"].parseForest).to.equal([NSSet setWithObject:HMRList(@"aa", @"bb", nil)]);
 	l3_expect(reduction.compaction.description).to.equal(@"λ.'b' → (map append .)∘(ε↓{'a'} .)");
