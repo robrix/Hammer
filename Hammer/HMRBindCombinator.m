@@ -6,6 +6,13 @@
 
 @implementation HMRBindCombinator
 
+#pragma mark HMRCombinator
+
+-(NSString *)describe {
+	return @"↓";
+}
+
+
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
@@ -15,10 +22,6 @@
 
 
 #pragma mark NSObject
-
--(NSString *)description {
-	return @"↓";
-}
 
 -(NSUInteger)hash {
 	return @"HMRBind".hash;
