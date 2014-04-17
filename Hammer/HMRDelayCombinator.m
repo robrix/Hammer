@@ -87,7 +87,7 @@ l3_test(@selector(parseForest)) {
 }
 
 -(HMRRepetition *)repeat {
-	return HMRRepeat((HMRCombinator *)self);
+	return [HMRRepetition repeat:(HMRCombinator *)self];
 }
 
 @end

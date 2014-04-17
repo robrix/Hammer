@@ -100,7 +100,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 
 l3_test(&HMRCombinatorIsNullable) {
 	HMRCombinator *nonNullable = HMREqual(@"x");
-	HMRCombinator *nullable = HMRRepeat(nonNullable);
+	HMRCombinator *nullable = [nonNullable repeat];
 	l3_expect(HMRCombinatorIsNullable([nonNullable and:nonNullable])).to.equal(@NO);
 	l3_expect(HMRCombinatorIsNullable([nonNullable and:nullable])).to.equal(@NO);
 	l3_expect(HMRCombinatorIsNullable([nullable and:nonNullable])).to.equal(@NO);

@@ -20,7 +20,7 @@
 
 
 -(HMRRepetition *)repeat {
-	return HMRRepeat(self);
+	return [HMRRepetition repeat:self];
 }
 
 

@@ -4,6 +4,8 @@
 
 @interface HMRRepetition : HMRNonterminal
 
++(instancetype)repeat:(HMRCombinator *)combinator;
+
 @property (readonly) HMRCombinator *combinator;
 
 
