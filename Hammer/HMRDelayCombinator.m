@@ -82,7 +82,7 @@ l3_test(@selector(parseForest)) {
 	return [HMRAlternation alternateLeft:(HMRCombinator *)self right:other];
 }
 
--(HMRReduction *)reduce:(HMRReductionBlock)block {
+-(HMRReduction *)mapSet:(HMRReductionBlock)block {
 	return [HMRReduction reduce:(HMRCombinator *)self usingBlock:block];
 }
 

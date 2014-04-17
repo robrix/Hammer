@@ -94,7 +94,7 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 ///
 /// \param block  The block to map the parse trees produced by \c self with. Will be called setwise, i.e. once per parse forest. Must not be nil.
 /// \return       A combinator representing the reduction of \c self by \c block.
--(HMRReduction *)reduce:(HMRReductionBlock)block;
+-(HMRReduction *)mapSet:(HMRReductionBlock)block;
 
 /// Constructs the pointwise reduction of \c self by \c block.
 ///
