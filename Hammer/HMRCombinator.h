@@ -64,9 +64,6 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 #pragma mark Constructors
 
-HMRReduction *HMRMap(HMRCombinator *combinator, HMRReductionBlock) __attribute__((nonnull));
-
-
 /// Constructs an equality combinator.
 ///
 /// \param object  The object to compare input against. May be nil.

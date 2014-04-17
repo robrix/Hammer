@@ -15,7 +15,7 @@
 
 
 -(HMRReduction *)map:(HMRReductionBlock)f {
-	return HMRMap(self, f);
+	return [HMRReduction reduce:self usingBlock:f];
 }
 
 

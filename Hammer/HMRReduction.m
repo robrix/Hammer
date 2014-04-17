@@ -8,7 +8,14 @@
 
 @implementation HMRReduction
 
++(instancetype)reduce:(HMRCombinator *)combinator usingBlock:(HMRReductionBlock)block {
+	return [[self alloc] initWithCombinator:combinator block:block];
+}
+
 -(instancetype)initWithCombinator:(HMRCombinator *)combinator block:(HMRReductionBlock)block {
+	NSParameterAssert(combinator != nil);
+	NSParameterAssert(block != nil);
+	
 	if ((self = [super init])) {
 		_combinator = [combinator copyWithZone:NULL];
 		_block = [block copy];
@@ -20,7 +27,7 @@
 #pragma mark HMRCombinator
 
 -(HMRReduction *)deriveWithRespectToObject:(id<NSObject, NSCopying>)object {
-	return [(HMRReduction *)HMRMap([self.combinator derivative:object], self.block) withFunctionDescription:self.functionDescription];
+	return [[[self.combinator derivative:object] map:self.block] withFunctionDescription:self.functionDescription];
 }
 
 
@@ -36,18 +43,18 @@
 static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g, NSString *functionDescription) {
 	HMRReductionBlock f = reduction.block;
 	NSString *description = [NSString stringWithFormat:@"%@∘%@", functionDescription ?: @"𝑔", reduction.functionDescription ?: @"𝑓"];
-	return [(HMRReduction *)HMRMap(reduction.combinator, ^(id<NSObject, NSCopying> x) {
+	return [[reduction.combinator map:^(id<NSObject, NSCopying> x) {
 		id y = f(x);
 		id z = g(y);
 		return z;
-	}) withFunctionDescription:description];
+	}] withFunctionDescription:description];
 }
 
 l3_addTestSubjectTypeWithFunction(HMRComposeReduction)
 l3_test(&HMRComposeReduction) {
 	NSString *a = @"a";
 	HMRReductionBlock f = REDIdentityMapBlock;
-	l3_expect(HMRComposeReduction((id)HMRMap(HMREqual(a), f), f, nil).description).to.equal(@"'a' → 𝑔∘𝑓");
+	l3_expect(HMRComposeReduction([HMREqual(a) map:f], f, nil).description).to.equal(@"'a' → 𝑔∘𝑓");
 }
 
 -(HMRCombinator *)compact {
@@ -129,13 +136,6 @@ l3_test(@selector(compaction)) {
 
 @end
 
-
-HMRReduction *HMRMap(HMRCombinator *combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
-	NSCParameterAssert(combinator != nil);
-	NSCParameterAssert(block != nil);
-	
-	return [[HMRReduction alloc] initWithCombinator:combinator block:block];
-}
 
 id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block) {
 	combinator = combinator ?: HMRAny();

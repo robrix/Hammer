@@ -4,6 +4,8 @@
 
 @interface HMRReduction : HMRNonterminal
 
++(instancetype)reduce:(HMRCombinator *)combinator usingBlock:(HMRReductionBlock)block;
+
 @property (readonly) HMRCombinator *combinator;
 @property (readonly) NSString *functionDescription;
 @property (readonly) HMRReductionBlock block;
