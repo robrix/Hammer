@@ -53,7 +53,7 @@ l3_test(@selector(parseForest)) {
 }
 
 -(id<HMRCombinator>)withName:(NSString *)name {
-	return (id)[self.forced withName:name];
+	return (id)[(id)self.forced withName:name];
 }
 
 
@@ -80,6 +80,6 @@ l3_test(@selector(parseForest)) {
 @end
 
 
-id<HMRCombinator> HMRLazyCombinator(id<HMRCombinator>(^block)(void)) {
-	return [[HMRDelayCombinator alloc] initWithBlock:block];
+HMRCombinator *HMRLazyCombinator(id<HMRCombinator>(^block)(void)) {
+	return (id)[[HMRDelayCombinator alloc] initWithBlock:block];
 }

@@ -47,7 +47,7 @@ l3_addTestSubjectTypeWithFunction(HMRComposeReduction)
 l3_test(&HMRComposeReduction) {
 	NSString *a = @"a";
 	HMRReductionBlock f = REDIdentityMapBlock;
-	l3_expect(HMRComposeReduction(HMRMap(HMREqual(a), f), f, nil).description).to.equal(@"'a' → 𝑔∘𝑓");
+	l3_expect(HMRComposeReduction((id)HMRMap(HMREqual(a), f), f, nil).description).to.equal(@"'a' → 𝑔∘𝑓");
 }
 
 -(id<HMRCombinator>)compact {
@@ -83,7 +83,7 @@ l3_test(@selector(compaction)) {
 	l3_expect([reduction derivative:@"b"].parseForest).to.equal([NSSet setWithObject:HMRList(@"aa", @"bb", nil)]);
 	l3_expect(reduction.compaction.description).to.equal(@"λ.'b' → (map append .)∘(ε↓{'a'} .)");
 	
-	reduction = HMRMap(HMRAnd(HMREqual(@"a"), HMRAnd(HMREqual(@"b"), HMREqual(@"c"))), REDIdentityMapBlock);
+	reduction = (id)HMRMap(HMRAnd(HMREqual(@"a"), HMRAnd(HMREqual(@"b"), HMREqual(@"c"))), REDIdentityMapBlock);
 	l3_expect([[[reduction derivative:@"a"] derivative:@"b"] derivative:@"c"].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", HMRCons(@"b", @"c"))]);
 }
 
@@ -130,7 +130,7 @@ l3_test(@selector(compaction)) {
 @end
 
 
-id<HMRCombinator> HMRMap(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
+HMRReduction *HMRMap(id<HMRCombinator> combinator, id<NSObject, NSCopying>(^block)(id<NSObject, NSCopying>)) {
 	NSCParameterAssert(combinator != nil);
 	NSCParameterAssert(block != nil);
 	
