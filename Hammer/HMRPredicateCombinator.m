@@ -14,7 +14,7 @@
 -(HMRCombinator *)derivative:(id<NSObject,NSCopying>)object {
 	return [self evaluateWithObject:object]?
 		HMRCaptureTree(object)
-	:	HMRNone();
+	:	[HMRCombinator empty];
 }
 
 

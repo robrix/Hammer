@@ -26,7 +26,7 @@
 #pragma mark HMRCombinator
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object {
-	return HMRNone();
+	return [HMRCombinator empty];
 }
 
 

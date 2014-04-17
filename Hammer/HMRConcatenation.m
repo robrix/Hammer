@@ -72,8 +72,8 @@ l3_test(@selector(derivative:)) {
 	HMRCombinator *first = self.first.compaction;
 	HMRCombinator *second = self.second.compaction;
 	__block HMRCombinator *concatenation;
-	if ([first isEqual:HMRNone()] || [second isEqual:HMRNone()])
-		concatenation = HMRNone();
+	if ([first isEqual:[HMRCombinator empty]] || [second isEqual:[HMRCombinator empty]])
+		concatenation = [HMRCombinator empty];
 	else if ([first isKindOfClass:[HMRNull class]]) {
 		NSSet *parseForest = first.parseForest;
 		concatenation = [[second map:^(id<NSObject,NSCopying> each) {
@@ -97,7 +97,7 @@ l3_test(@selector(derivative:)) {
 
 l3_test(@selector(compaction)) {
 	HMRCombinator *anything = HMREqual(@0);
-	HMRCombinator *empty = HMRNone();
+	HMRCombinator *empty = [HMRCombinator empty];
 	l3_expect([empty and:anything].compaction).to.equal(empty);
 	l3_expect([anything and:empty].compaction).to.equal(empty);
 }

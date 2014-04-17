@@ -48,9 +48,9 @@ l3_test(@selector(derivative:)) {
 	HMRCombinator *compacted;
 	HMRCombinator *left = self.left.compaction;
 	HMRCombinator *right = self.right.compaction;
-	if ([left isEqual:HMRNone()])
+	if ([left isEqual:[HMRCombinator empty]])
 		compacted = right;
-	else if ([right isEqual:HMRNone()])
+	else if ([right isEqual:[HMRCombinator empty]])
 		compacted = left;
 	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
 		compacted = left;
@@ -70,7 +70,7 @@ l3_test(@selector(derivative:)) {
 
 l3_test(@selector(compaction)) {
 	HMRCombinator *anything = HMREqual(@0);
-	HMRCombinator *empty = HMRNone();
+	HMRCombinator *empty = [HMRCombinator empty];
 	l3_expect([empty or:anything].compaction).to.equal(anything);
 	l3_expect([anything or:empty].compaction).to.equal(anything);
 	
@@ -79,8 +79,8 @@ l3_test(@selector(compaction)) {
 	HMRCombinator *p = HMREqual(@"p");
 	l3_expect([nullParse or:same].compaction).to.equal(same);
 	
-	__block HMRCombinator *cyclic = [[HMRNone() or:[HMRNone() and:HMRDelay(cyclic)]] withName:@"S"];
-	l3_expect(cyclic.compaction).to.equal(HMRNone());
+	__block HMRCombinator *cyclic = [[[HMRCombinator empty] or:[[HMRCombinator empty] and:HMRDelay(cyclic)]] withName:@"S"];
+	l3_expect(cyclic.compaction).to.equal([HMRCombinator empty]);
 	
 	cyclic = [[[nullParse and:p] or:[same and:HMRDelay(cyclic)]] withName:@"S"];
 	HMRCombinator *derivative = [cyclic.compaction derivative:@"p"];

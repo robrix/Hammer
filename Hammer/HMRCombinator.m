@@ -1,9 +1,19 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRCase.h"
+#import "HMROnce.h"
 #import "HMRCombinator.h"
 
 @implementation HMRCombinator
+
+#pragma mark Terminal construction
+
++(HMREmpty *)empty {
+	return HMROnce([HMREmpty new]);
+}
+
+
+#pragma mark Nonterminal construction
 
 -(HMRAlternation *)or:(HMRCombinator *)other {
 	return [HMRAlternation alternateLeft:self right:other];
@@ -75,7 +85,7 @@ l3_test(@selector(concatenate:)) {
 #pragma mark HMRCombinator
 
 -(HMRCombinator *)derivative:(id<NSObject,NSCopying>)object {
-	return HMRNone();
+	return [self.class empty];
 }
 
 
@@ -100,7 +110,7 @@ l3_test(@selector(concatenate:)) {
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
-	return ![[self derivative:object] isEqual:HMRNone()];
+	return ![[self derivative:object] isEqual:[self.class empty]];
 }
 
 -(id<HMRCase>)then:(id (^)())block {

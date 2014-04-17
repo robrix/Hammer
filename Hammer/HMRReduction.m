@@ -60,8 +60,8 @@ l3_test(&HMRComposeReduction) {
 -(HMRCombinator *)compact {
 	HMRCombinator *combinator = self.combinator.compaction;
 	HMRCombinator *compacted;
-	if ([combinator isEqual:HMRNone()])
-		compacted = HMRNone();
+	if ([combinator isEqual:[HMRCombinator empty]])
+		compacted = [HMRCombinator empty];
 	else if ([combinator isKindOfClass:[HMRReduction class]])
 		compacted = HMRComposeReduction((HMRReduction *)combinator, self.block, self.functionDescription);
 	else if ([combinator isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)combinator).first isKindOfClass:[HMRNull class]]) {

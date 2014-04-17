@@ -30,7 +30,7 @@
 }
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object {
-	return HMRMemoize(_derivativesByElements[object], HMRNone(), [self deriveWithRespectToObject:object].compaction);
+	return HMRMemoize(_derivativesByElements[object], [HMRCombinator empty], [self deriveWithRespectToObject:object].compaction);
 }
 
 

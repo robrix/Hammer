@@ -47,13 +47,13 @@ l3_test(@selector(derivative:)) {
 
 -(HMRCombinator *)compact {
 	HMRCombinator *combinator = self.combinator.compaction;
-	return [combinator isEqual:HMRNone()]?
+	return [combinator isEqual:[HMRCombinator empty]]?
 		HMRCaptureTree([HMRPair null])
 	:	(combinator == self.combinator? self : [combinator repeat]);
 }
 
 l3_test(@selector(compaction)) {
-	l3_expect([HMRNone() repeat].compaction).to.equal(HMRCaptureTree([HMRPair null]));
+	l3_expect([[HMRCombinator empty] repeat].compaction).to.equal(HMRCaptureTree([HMRPair null]));
 }
 
 

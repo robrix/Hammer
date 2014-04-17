@@ -18,6 +18,12 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 @property (readonly) HMRCombinator *compaction;
 
 
+#pragma mark Terminal construction
+
+/// The empty combinator, i.e. a combinator which cannot match anything.
++(HMREmpty *)empty;
+
+
 #pragma mark Nonterminal construction
 
 /// Constructs the alternation of \c self and \c right.
@@ -128,10 +134,6 @@ HMRCombinator *HMRCaptureForest(NSSet *forest) __attribute__((nonnull));
 /// \param delayed  A block returning the combinator to delay the evaluation of. Must not be nil, and must not return nil.
 /// \return         A proxy for the lazy-evaluated result of \c delayed.
 HMRCombinator *HMRLazyCombinator(HMRCombinator *(^delayed)(void)) __attribute__((nonnull));
-
-
-/// The empty combinator, i.e. a combinator which cannot match anything.
-HMRCombinator *HMRNone(void);
 
 
 #pragma mark Predicate constructors
