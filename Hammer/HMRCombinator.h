@@ -42,6 +42,12 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// \return        A combinator representing the concatenation of \c self and \c second.
 -(HMRConcatenation *)and:(HMRCombinator *)second;
 
+/// Constructs the concatenation of a variadic list of combinators.
+///
+/// \param first  The first operand to the concatenation. Must not be nil.
+/// \return       A combinator representing the concatenation of all the passed combinators.
++(HMRCombinator *)concatenate:(HMRCombinator *)first, ... NS_REQUIRES_NIL_TERMINATION;
+
 
 /// Constructs the reduction of \c self by \c block.
 ///

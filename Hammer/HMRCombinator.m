@@ -43,6 +43,23 @@ l3_test(@selector(alternate:)) {
 	return [HMRConcatenation concatenateFirst:self second:other];
 }
 
++(HMRCombinator *)concatenate:(HMRCombinator *)first, ... {
+	va_list args;
+	va_start(args, first);
+	
+	HMRCombinator *concatenation = HMRCombineVariadics(first, args, ^(HMRCombinator *first, HMRCombinator *second) {
+		return [first and:second];
+	});
+	
+	va_end(args);
+	
+	return concatenation;
+}
+
+l3_test(@selector(concatenate:)) {
+	HMRCombinator *sub = HMREqual(@"x");
+	l3_expect([HMRConcatenation concatenate:sub, sub, sub, nil]).to.equal([sub and:[sub and:sub]]);
+}
 
 
 -(HMRReduction *)map:(HMRReductionBlock)f {
