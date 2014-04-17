@@ -21,10 +21,9 @@
 		D42ED41118FB25A3005BEC10 /* HMRAnyCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D42ED40F18FB25A3005BEC10 /* HMRAnyCombinator.m */; };
 		D42ED41418FB2683005BEC10 /* HMRBindCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D42ED41218FB2683005BEC10 /* HMRBindCombinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D42ED41518FB2683005BEC10 /* HMRBindCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D42ED41318FB2683005BEC10 /* HMRBindCombinator.m */; };
-		D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46AB17C18E7EA9E00501D3C /* HMRLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = D46AB17A18E7EA9E00501D3C /* HMRLexer.h */; };
 		D46AB17D18E7EA9E00501D3C /* HMRLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = D46AB17B18E7EA9E00501D3C /* HMRLexer.m */; };
-		D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */; };
+		D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D499A49318EFEDF1004DF7E3 /* HMRTerminal.m in Sources */ = {isa = PBXBuildFile; fileRef = D499A49118EFEDF1004DF7E3 /* HMRTerminal.m */; };
 		D499A49618F067D4004DF7E3 /* HMRParsing.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49418F067D4004DF7E3 /* HMRParsing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D499A49718F067D4004DF7E3 /* HMRParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = D499A49518F067D4004DF7E3 /* HMRParsing.m */; };
