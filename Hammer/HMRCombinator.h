@@ -8,7 +8,7 @@
 typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 @class HMRAlternation, HMRConcatenation, HMRReduction, HMRRepetition;
-@class HMREmpty, HMRNull, HMRPredicateCombinator, HMREqualCombinator, HMRContainsCombinator;
+@class HMREmpty, HMRNull, HMRPredicateCombinator, HMRLiteral, HMRContainsCombinator;
 @interface HMRCombinator : NSObject <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object;
@@ -26,8 +26,12 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// The null combinator, i.e. a combinator which matches the null (empty) string, ε.
 +(HMRNull *)null;
 
-+(HMRPredicateCombinator *)exactly:(id)x;
-+(HMREqualCombinator *)equal:(id<NSObject,NSCopying>)x;
+/// Constructs a literal combinator.
+///
+/// \param object  The object to compare input against. May be nil.
+/// \return        A combinator which matches input equal to \c object by pointer equality or by \c -isEqual:.
++(HMRLiteral *)literal:(id<NSObject,NSCopying>)object;
+
 +(HMRContainsCombinator *)containedIn:(id<HMRSet>)container;
 +(HMRNull *)capture:(NSSet *)parseForest;
 +(HMRNull *)captureTree:(id)x;
@@ -90,12 +94,6 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 
 #pragma mark Constructors
-
-/// Constructs an equality combinator.
-///
-/// \param object  The object to compare input against. May be nil.
-/// \return        A combinator which matches input equal to \c object by pointer equality or by \c -isEqual:.
-HMRCombinator *HMREqual(id<NSObject, NSCopying> object);
 
 /// Constructs a containment combinator.
 ///

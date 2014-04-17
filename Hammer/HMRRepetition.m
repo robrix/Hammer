@@ -28,14 +28,14 @@
 
 l3_test(@selector(derivative:)) {
 	id each = @"a";
-	HMRCombinator *repetition = [HMREqual(each) repeat];
+	HMRCombinator *repetition = [[HMRCombinator literal:each] repeat];
 	l3_expect([repetition derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, nil)]);
 	l3_expect([[repetition derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, nil)]);
 	l3_expect([[[repetition derivative:each] derivative:each] derivative:each].parseForest).to.equal([NSSet setWithObject:HMRList(each, each, each, nil)]);
 	
 	// S -> ("x" | S)*
 	id terminal = @"x";
-	__block id nonterminal = HMRDelay([[HMREqual(terminal) or:nonterminal] repeat]);
+	__block id nonterminal = HMRDelay([[[HMRCombinator literal:terminal] or:nonterminal] repeat]);
 	l3_expect([nonterminal derivative:terminal].parseForest).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
 }
 

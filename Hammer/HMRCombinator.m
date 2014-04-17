@@ -18,6 +18,12 @@
 }
 
 
++(HMRLiteral *)literal:(id<NSObject,NSCopying>)object {
+	return [HMRLiteral literal:object];
+}
+
+
+
 #pragma mark Nonterminal construction
 
 -(HMRAlternation *)or:(HMRCombinator *)other {
@@ -49,7 +55,7 @@ HMRCombinator *(^HMRCombineVariadics)(HMRCombinator *, va_list, HMRCombinatorPai
 }
 
 l3_test(@selector(alternate:)) {
-	HMRCombinator *sub = HMREqual(@"x");
+	HMRCombinator *sub = [HMRCombinator literal:@"x"];
 	l3_expect([HMRCombinator alternate:sub, sub, sub, nil]).to.equal([sub or:[sub or:sub]]);
 }
 
@@ -72,7 +78,7 @@ l3_test(@selector(alternate:)) {
 }
 
 l3_test(@selector(concatenate:)) {
-	HMRCombinator *sub = HMREqual(@"x");
+	HMRCombinator *sub = [HMRCombinator literal:@"x"];
 	l3_expect([HMRConcatenation concatenate:sub, sub, sub, nil]).to.equal([sub and:[sub and:sub]]);
 }
 

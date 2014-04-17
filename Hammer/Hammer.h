@@ -20,7 +20,7 @@
 
 #import <Hammer/HMRPredicateCombinator.h>
 #import <Hammer/HMRContainsCombinator.h>
-#import <Hammer/HMREqualCombinator.h>
+#import <Hammer/HMRLiteral.h>
 
 
 #pragma mark Misc

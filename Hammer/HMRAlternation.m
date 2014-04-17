@@ -33,7 +33,7 @@
 }
 
 l3_test(@selector(derivative:)) {
-	HMRCombinator *a = HMREqual(@"a"), *b = HMREqual(@"b");
+	HMRCombinator *a = [HMRCombinator literal:@"a"], *b = [HMRCombinator literal:@"b"];
 	l3_expect([[a or:b] derivative:@"a"].parseForest).to.equal([NSSet setWithObject:@"a"]);
 	l3_expect([[a or:a] derivative:@"a"].parseForest).to.equal([NSSet setWithObjects:@"a", @"a", nil]);
 }
@@ -69,14 +69,14 @@ l3_test(@selector(derivative:)) {
 }
 
 l3_test(@selector(compaction)) {
-	HMRCombinator *anything = HMREqual(@0);
+	HMRCombinator *anything = [HMRCombinator literal:@0];
 	HMRCombinator *empty = [HMRCombinator empty];
 	l3_expect([empty or:anything].compaction).to.equal(anything);
 	l3_expect([anything or:empty].compaction).to.equal(anything);
 	
 	HMRCombinator *nullParse = HMRCaptureTree(@"a");
 	HMRCombinator *same = HMRCaptureTree(@"a");
-	HMRCombinator *p = HMREqual(@"p");
+	HMRCombinator *p = [HMRCombinator literal:@"p"];
 	l3_expect([nullParse or:same].compaction).to.equal(same);
 	
 	__block HMRCombinator *cyclic = [[[HMRCombinator empty] or:[[HMRCombinator empty] and:HMRDelay(cyclic)]] withName:@"S"];

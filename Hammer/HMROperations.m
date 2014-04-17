@@ -32,8 +32,8 @@ NSString *HMRPrettyPrint(HMRCombinator *combinator) {
 
 l3_addTestSubjectTypeWithFunction(HMRPrettyPrint)
 l3_test(&HMRPrettyPrint) {
-	HMRCombinator *terminal1 = [HMREqual(@"x") withName:@"x"];
-	HMRCombinator *terminal2 = [HMREqual(@"y") withName:@"y"];
+	HMRCombinator *terminal1 = [[HMRCombinator literal:@"x"] withName:@"x"];
+	HMRCombinator *terminal2 = [[HMRCombinator literal:@"y"] withName:@"y"];
 	__block HMRCombinator *nonterminal = [[terminal1 and:[terminal2 or:HMRDelay(nonterminal)]] withName:@"S"];
 	NSString *expected = [NSString stringWithFormat:@"%@\n%@\n%@\n", nonterminal.description, terminal1.description, terminal2.description];
 	l3_expect(HMRPrettyPrint(nonterminal)).to.equal(expected);
@@ -66,10 +66,10 @@ bool HMRCombinatorIsCyclic(HMRCombinator *combinator) {
 
 l3_addTestSubjectTypeWithFunction(HMRCombinatorIsCyclic)
 l3_test(&HMRCombinatorIsCyclic) {
-	l3_expect(HMRCombinatorIsCyclic([HMREqual(@"x") and:HMREqual(@"y")])).to.equal(@NO);
-	l3_expect(HMRCombinatorIsCyclic(HMREqual(@"x"))).to.equal(@NO);
+	l3_expect(HMRCombinatorIsCyclic([[HMRCombinator literal:@"x"] and:[HMRCombinator literal:@"y"]])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsCyclic([HMRCombinator literal:@"x"])).to.equal(@NO);
 	
-	__block HMRCombinator *cyclic = [HMREqual(@"x") and:HMRDelay(cyclic)];
+	__block HMRCombinator *cyclic = [[HMRCombinator literal:@"x"] and:HMRDelay(cyclic)];
 	l3_expect(HMRCombinatorIsCyclic(cyclic)).to.equal(@YES);
 }
 
@@ -99,7 +99,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 }
 
 l3_test(&HMRCombinatorIsNullable) {
-	HMRCombinator *nonNullable = HMREqual(@"x");
+	HMRCombinator *nonNullable = [HMRCombinator literal:@"x"];
 	HMRCombinator *nullable = [nonNullable repeat];
 	l3_expect(HMRCombinatorIsNullable([nonNullable and:nonNullable])).to.equal(@NO);
 	l3_expect(HMRCombinatorIsNullable([nonNullable and:nullable])).to.equal(@NO);

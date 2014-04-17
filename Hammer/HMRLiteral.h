@@ -2,7 +2,9 @@
 
 #import "HMRPredicateCombinator.h"
 
-@interface HMREqualCombinator : HMRPredicateCombinator
+@interface HMRLiteral : HMRPredicateCombinator
+
++(instancetype)literal:(id)object;
 
 @property (readonly) id<NSObject, NSCopying> object;
 

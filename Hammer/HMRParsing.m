@@ -13,7 +13,7 @@ NSSet *HMRParseCollection(HMRCombinator *parser, id<REDReducible> reducible) {
 l3_addTestSubjectTypeWithFunction(HMRParseCollection);
 l3_test(&HMRParseCollection) {
 	id object = @0;
-	HMRCombinator *literal = HMREqual(object);
+	HMRCombinator *literal = [HMRCombinator literal:object];
 	l3_expect(HMRParseCollection(literal, @[ object ])).to.equal([NSSet setWithObject:object]);
 	l3_expect(HMRParseCollection(literal, @[])).to.equal([NSSet set]);
 	id anythingElse = @1;
@@ -25,7 +25,7 @@ l3_test(&HMRParseCollection) {
 	id nonterminalPrefix = @"+";
 	// S -> "+" S | "x"
 	__block HMRCombinator *nonterminal;
-	nonterminal = [[[[[HMREqual(nonterminalPrefix) withName:@"prefix"] and:HMRDelay(nonterminal)] or:[HMREqual(terminal) withName:@"final"]] map:^(id each) { return HMRList(each, nil); }] withName:@"S"];
+	nonterminal = [[[[[[HMRCombinator literal:nonterminalPrefix] withName:@"prefix"] and:HMRDelay(nonterminal)] or:[[HMRCombinator literal:terminal] withName:@"final"]] map:^(id each) { return HMRList(each, nil); }] withName:@"S"];
 	l3_expect(HMRParseCollection(nonterminal, @[ terminal ])).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);
 	l3_expect(HMRParseCollection(nonterminal, @[ nonterminalPrefix, terminal ])).to.equal([NSSet setWithObject:HMRList(HMRList(nonterminalPrefix, terminal, nil), nil)]);
 	id nested = [NSSet setWithObject:HMRList(HMRList(nonterminalPrefix, HMRList(nonterminalPrefix, terminal, nil), nil), nil)];
