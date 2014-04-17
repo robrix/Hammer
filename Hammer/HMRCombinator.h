@@ -16,7 +16,6 @@
 @property (readonly) NSString *description;
 
 @property (readonly) NSString *name;
--(instancetype)withName:(NSString *)name;
 
 @property (readonly) NSUInteger hash;
 
@@ -28,6 +27,9 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 
 @interface HMRCombinator : NSObject <HMRCombinator>
+
+-(instancetype)withName:(NSString *)name;
+
 @end
 
 
