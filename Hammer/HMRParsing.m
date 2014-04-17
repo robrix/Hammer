@@ -13,13 +13,13 @@ NSSet *HMRParseCollection(id<HMRCombinator> parser, id<REDReducible> reducible) 
 l3_addTestSubjectTypeWithFunction(HMRParseCollection);
 l3_test(&HMRParseCollection) {
 	id object = @0;
-	id<HMRCombinator> literal = HMREqual(object);
+	HMRCombinator *literal = HMREqual(object);
 	l3_expect(HMRParseCollection(literal, @[ object ])).to.equal([NSSet setWithObject:object]);
 	l3_expect(HMRParseCollection(literal, @[])).to.equal([NSSet set]);
 	id anythingElse = @1;
 	l3_expect(HMRParseCollection(literal, @[ anythingElse ])).to.equal([NSSet set]);
 	
-	l3_expect(HMRParseCollection(HMRAnd(literal, literal), @[ object, object ])).to.equal([NSSet setWithObject:HMRCons(object, object)]);
+	l3_expect(HMRParseCollection([literal and:literal], @[ object, object ])).to.equal([NSSet setWithObject:HMRCons(object, object)]);
 	
 	id terminal = @"x";
 	id nonterminalPrefix = @"+";

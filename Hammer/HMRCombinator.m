@@ -5,6 +5,24 @@
 
 @implementation HMRCombinator
 
+-(HMRCombinator *)and:(HMRCombinator *)other {
+	return HMRAnd((id<HMRCombinator>)self, (id<HMRCombinator>)other);
+}
+
+-(HMRCombinator *)or:(HMRCombinator *)other {
+	return HMROr((id<HMRCombinator>)self, (id<HMRCombinator>)other);
+}
+
+
+-(HMRCombinator *)map:(HMRReductionBlock)f {
+	return HMRMap((id<HMRCombinator>)self, f);
+}
+
+
+-(HMRCombinator *)repeat {
+	return HMRRepeat((id<HMRCombinator>)self);
+}
+
 
 #pragma mark HMRCombinator
 

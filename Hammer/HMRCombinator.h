@@ -28,6 +28,13 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 
 @interface HMRCombinator : NSObject <HMRCombinator>
 
+-(HMRCombinator *)and:(HMRCombinator *)other;
+-(HMRCombinator *)or:(HMRCombinator *)other;
+
+-(HMRCombinator *)map:(HMRReductionBlock)f;
+
+-(HMRCombinator *)repeat;
+
 -(instancetype)withName:(NSString *)name;
 
 @end
