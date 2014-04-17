@@ -13,6 +13,11 @@
 }
 
 
++(HMRNull *)null {
+	return HMROnce([HMRNull new]);
+}
+
+
 #pragma mark Nonterminal construction
 
 -(HMRAlternation *)or:(HMRCombinator *)other {

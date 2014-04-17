@@ -23,6 +23,15 @@ typedef id (^HMRReductionBlock)(id<NSObject, NSCopying> each);
 /// The empty combinator, i.e. a combinator which cannot match anything.
 +(HMREmpty *)empty;
 
+/// The null combinator, i.e. a combinator which matches the null (empty) string, ε.
++(HMRNull *)null;
+
++(HMRPredicateCombinator *)exactly:(id)x;
++(HMREqualCombinator *)equal:(id<NSObject,NSCopying>)x;
++(HMRContainsCombinator *)containedIn:(id<HMRSet>)container;
++(HMRNull *)capture:(NSSet *)parseForest;
++(HMRNull *)captureTree:(id)x;
+
 
 #pragma mark Nonterminal construction
 
