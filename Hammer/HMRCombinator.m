@@ -123,15 +123,16 @@ l3_test(@selector(concatenate:)) {
 
 -(NSSet *)parseForest {
 	NSMutableDictionary *cache = [NSMutableDictionary new];
-	static NSSet *(^parseForest)(HMRCombinator *, NSMutableDictionary *) = ^NSSet *(HMRCombinator *combinator, NSMutableDictionary *cache) {
+	NSSet *(^parseForest)(HMRCombinator *);
+	NSSet *(^__weak __block recur)(HMRCombinator *) = parseForest = ^NSSet *(HMRCombinator *combinator) {
 		return cache[combinator] ?: (cache[combinator] = [NSSet set], HMRMatch(combinator, @[
 			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
-				return [parseForest(left, cache) setByAddingObjectsFromSet:parseForest(right, cache)];
+				return [recur(left) setByAddingObjectsFromSet:recur(right)];
 			}],
 			
 			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
-				NSSet *prefix = parseForest(first, cache);
-				NSSet *suffix = parseForest(second, cache);
+				NSSet *prefix = recur(first);
+				NSSet *suffix = recur(second);
 				return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
 					return REDMap(suffix, ^(id y) {
 						return HMRCons(x, y);
@@ -140,9 +141,10 @@ l3_test(@selector(concatenate:)) {
 			}],
 			
 			[HMRReduced(HMRBind(), HMRBind()) then:^(HMRCombinator *combinator, HMRReductionBlock block) {
+				NSSet *parseForest = recur(combinator);
 				return [combinator isKindOfClass:[HMRNull class]]?
-					[[NSSet set] red_append:block(parseForest(combinator, cache))]
-				:	HMRDelaySpecific([NSSet class], [[NSSet set] red_append:block(parseForest(combinator, cache))]);
+					[[NSSet set] red_append:block(parseForest)]
+				:	HMRDelaySpecific([NSSet class], [[NSSet set] red_append:block(parseForest)]);
 			}],
 			
 			[HMRRepeated(HMRAny()) then:^{
@@ -156,7 +158,7 @@ l3_test(@selector(concatenate:)) {
 			[HMRAny() then:^{ return [NSSet set]; }],
 		]));
 	};
-	return parseForest(self, cache);
+	return parseForest(self);
 }
 
 l3_test(@selector(parseForest)) {
