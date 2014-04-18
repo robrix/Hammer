@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAnyCombinator.h"
+#import "HMRDelay.h"
 #import "HMRMemoization.h"
 #import "HMROperations.h"
 #import <Hammer/Hammer.h>
@@ -129,6 +130,12 @@ NSSet *HMRCombinatorParseForest(HMRCombinator *combinator) {
 				return [HMRCombinatorParseForest(left) setByAddingObjectsFromSet:HMRCombinatorParseForest(right)];
 			}],
 			
+			[HMRReduced(HMRBind(), HMRBind()) then:^(HMRCombinator *combinator, HMRReductionBlock block) {
+				return [combinator isKindOfClass:[HMRNull class]]?
+					[[NSSet set] red_append:block(((HMRNull *)combinator).parseForest)]
+				:	HMRDelaySpecific([NSSet class], [[NSSet set] red_append:block(((HMRNull *)combinator).parseForest)]);
+			}],
+			
 			[HMRRepeated(HMRAny()) then:^{
 				return [NSSet setWithObject:[HMRPair null]];
 			}],
@@ -144,4 +151,7 @@ NSSet *HMRCombinatorParseForest(HMRCombinator *combinator) {
 l3_addTestSubjectTypeWithFunction(HMRCombinatorParseForest)
 l3_test(&HMRCombinatorParseForest) {
 	l3_expect(HMRCombinatorParseForest([[HMRCombinator captureTree:@"a"] or:[HMRCombinator captureTree:@"b"]])).to.equal([NSSet setWithObjects:@"a", @"b", nil]);
+	
+	__block HMRCombinator *cyclic = [HMRDelay(cyclic) map:REDIdentityMapBlock];
+	l3_expect(HMRCombinatorParseForest(cyclic)).to.equal([NSSet set]);
 }
