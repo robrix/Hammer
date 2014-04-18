@@ -167,12 +167,17 @@ l3_test(@selector(parseForest)) {
 	
 	l3_expect([[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
 	
-	__block HMRCombinator *cyclic = [HMRDelay(cyclic) map:REDIdentityMapBlock];
+	__block HMRCombinator *cyclic = [[[HMRCombinator literal:@"a"] and:HMRDelay(cyclic)] map:REDIdentityMapBlock];
 	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
 	cyclic = [[[HMRCombinator capture:[NSSet setWithObjects:@"a", @"b", nil]] or:HMRDelay(cyclic)] map:^(id each) {
 		return [each stringByAppendingString:each];
 	}];
 	l3_expect(cyclic.parseForest).to.equal([NSSet setWithObjects:@"aa", @"bb", nil]);
+	
+	cyclic = [[[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]] or:HMRDelay(cyclic)];
+	l3_expect(cyclic.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
+	cyclic = [[[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]] and:HMRDelay(cyclic)];
+	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
 	
 	l3_expect([HMRAny() parseForest]).to.equal([NSSet set]);
 }
