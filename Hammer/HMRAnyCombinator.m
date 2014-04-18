@@ -7,11 +7,6 @@
 
 #pragma mark HMRCombinator
 
--(HMRCombinator *)derivative:(id<NSObject,NSCopying>)object {
-	return [HMRCombinator captureTree:object];
-}
-
-
 -(NSString *)describe {
 	return @".";
 }
@@ -24,18 +19,7 @@
 }
 
 
-#pragma mark NSCopying
-
--(instancetype)copyWithZone:(NSZone *)zone {
-	return self;
-}
-
-
 #pragma mark NSObject
-
--(BOOL)isEqual:(id)object {
-	return [self matchObject:object];
-}
 
 -(NSUInteger)hash {
 	return @"HMRAny".hash;

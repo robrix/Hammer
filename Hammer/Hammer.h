@@ -26,6 +26,7 @@
 #pragma mark Misc
 
 #import <Hammer/HMROperations.h>
+#import <Hammer/HMRPair.h>
 #import <Hammer/HMRParsing.h>
 
 

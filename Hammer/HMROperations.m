@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAnyCombinator.h"
+#import "HMRDelay.h"
 #import "HMRMemoization.h"
 #import "HMROperations.h"
 #import <Hammer/Hammer.h>

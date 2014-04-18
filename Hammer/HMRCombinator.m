@@ -1,8 +1,10 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRCase.h"
-#import "HMROnce.h"
 #import "HMRCombinator.h"
+#import "HMRDelay.h"
+#import "HMRMemoization.h"
+#import "HMROnce.h"
 
 @implementation HMRCombinator
 
@@ -120,7 +122,61 @@ l3_test(@selector(concatenate:)) {
 
 
 -(NSSet *)parseForest {
-	return [NSSet set];
+	NSMutableDictionary *cache = [NSMutableDictionary new];
+	static NSSet *(^parseForest)(HMRCombinator *, NSMutableDictionary *) = ^NSSet *(HMRCombinator *combinator, NSMutableDictionary *cache) {
+		return cache[combinator] ?: (cache[combinator] = [NSSet set], HMRMatch(combinator, @[
+			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+				return [parseForest(left, cache) setByAddingObjectsFromSet:parseForest(right, cache)];
+			}],
+			
+			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
+				NSSet *prefix = parseForest(first, cache);
+				NSSet *suffix = parseForest(second, cache);
+				return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
+					return REDMap(suffix, ^(id y) {
+						return HMRCons(x, y);
+					});
+				})];
+			}],
+			
+			[HMRReduced(HMRBind(), HMRBind()) then:^(HMRCombinator *combinator, HMRReductionBlock block) {
+				return [combinator isKindOfClass:[HMRNull class]]?
+					[[NSSet set] red_append:block(parseForest(combinator, cache))]
+				:	HMRDelaySpecific([NSSet class], [[NSSet set] red_append:block(parseForest(combinator, cache))]);
+			}],
+			
+			[HMRRepeated(HMRAny()) then:^{
+				return [NSSet setWithObject:[HMRPair null]];
+			}],
+			
+			[[HMRKindOf kindOfClass:[HMRNull class]] then:^{
+				return combinator.parseForest;
+			}],
+			
+			[HMRAny() then:^{ return [NSSet set]; }],
+		]));
+	};
+	return parseForest(self, cache);
+}
+
+l3_test(@selector(parseForest)) {
+	l3_expect([[HMRCombinator captureTree:@"a"] or:[HMRCombinator captureTree:@"b"]].parseForest).to.equal([NSSet setWithObjects:@"a", @"b", nil]);
+	
+	l3_expect([[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
+	
+	__block HMRCombinator *cyclic = [[[HMRCombinator literal:@"a"] and:HMRDelay(cyclic)] map:REDIdentityMapBlock];
+	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
+	cyclic = [[[HMRCombinator capture:[NSSet setWithObjects:@"a", @"b", nil]] or:HMRDelay(cyclic)] map:^(id each) {
+		return [each stringByAppendingString:each];
+	}];
+	l3_expect(cyclic.parseForest).to.equal([NSSet setWithObjects:@"aa", @"bb", nil]);
+	
+	cyclic = [[[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]] or:HMRDelay(cyclic)];
+	l3_expect(cyclic.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
+	cyclic = [[[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]] and:HMRDelay(cyclic)];
+	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
+	
+	l3_expect([HMRAny() parseForest]).to.equal([NSSet set]);
 }
 
 

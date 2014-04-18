@@ -44,23 +44,6 @@
 	return parseForest;
 }
 
--(NSSet *)parseForest {
-	NSSet *parseForest = [NSSet set];
-	if (!_isReducingParseForest) {
-		_isReducingParseForest = YES;
-		parseForest = [self.combinator isKindOfClass:[HMRNull class]]?
-			[self reduceParseForest:self.combinator.parseForest]
-		:	HMRDelaySpecific([NSSet class], [self reduceParseForest:self.combinator.parseForest]);
-		_isReducingParseForest = NO;
-	}
-	return parseForest;
-}
-
-l3_test(@selector(parseForest)) {
-	__block HMRCombinator *cyclic = [HMRDelay(cyclic) map:REDIdentityMapBlock];
-	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
-}
-
 
 static inline HMRReduction *HMRComposeReduction(HMRReduction *reduction, HMRReductionBlock g, NSString *functionDescription) {
 	HMRReductionBlock f = reduction.block;
@@ -153,6 +136,7 @@ l3_test(@selector(compaction)) {
 
 id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block) {
 	combinator = combinator ?: HMRAny();
+	block = block ?: HMRAny();
 	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRReduction *subject) {
 		return
 			[subject isKindOfClass:[HMRReduction class]]

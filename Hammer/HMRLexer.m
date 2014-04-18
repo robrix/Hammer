@@ -28,12 +28,8 @@ l3_test("lexer grammar") {
 	__block HMRCombinator *grammar = start;
 	
 	HMRCombinator *parsed = [@"one fish two fish red fish blue fish." red_reduce:grammar usingBlock:^(HMRCombinator *into, id each) {
-		printf("\n%s\n", HMRPrettyPrint(into).UTF8String);
-		fflush(stdout);
 		return [into derivative:each];
 	}];
-	printf("\n%s\n", HMRPrettyPrint(parsed).UTF8String);
-	fflush(stdout);
 	NSSet *parseForest = [parsed parseForest];
 	
 	l3_expect(parseForest).to.equal([NSSet setWithObject:HMRList(@"one", @"fish", @"two", @"fish", @"red", @"fish", @"blue", @"fish", nil)]);

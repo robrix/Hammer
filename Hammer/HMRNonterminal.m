@@ -7,7 +7,6 @@
 
 @implementation HMRNonterminal {
 	NSMutableDictionary *_derivativesByElements;
-	NSSet *_parseForest;
 	NSNumber *_nullable;
 	__weak HMRCombinator *_compaction;
 	NSString *_description;
@@ -31,15 +30,6 @@
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object {
 	return HMRMemoize(_derivativesByElements[object], [HMRCombinator empty], [[self deriveWithRespectToObject:object].compaction withName:[self.name stringByAppendingString:@"′"]]);
-}
-
-
--(NSSet *)reduceParseForest {
-	return [NSSet set];
-}
-
--(NSSet *)parseForest {
-	return HMRMemoize(_parseForest, [NSSet set], [self reduceParseForest]);
 }
 
 

@@ -42,11 +42,6 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(NSSet *)reduceParseForest {
-	return [NSSet setWithObject:[HMRPair null]];
-}
-
-
 -(HMRCombinator *)compact {
 	HMRCombinator *combinator = self.combinator.compaction;
 	return [combinator isEqual:[HMRCombinator empty]]?
