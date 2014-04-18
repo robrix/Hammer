@@ -153,6 +153,8 @@ NSSet *HMRCombinatorParseForest(HMRCombinator *combinator) {
 			[[HMRKindOf kindOfClass:[HMRNull class]] then:^{
 				return ((HMRNull *)combinator).parseForest;
 			}],
+			
+			[HMRAny() then:^{ return [NSSet set]; }],
 		]));
 	};
 	return parseForest(combinator);
@@ -166,4 +168,6 @@ l3_test(&HMRCombinatorParseForest) {
 	
 	__block HMRCombinator *cyclic = [HMRDelay(cyclic) map:REDIdentityMapBlock];
 	l3_expect(HMRCombinatorParseForest(cyclic)).to.equal([NSSet set]);
+	
+	l3_expect(HMRCombinatorParseForest(HMRAny())).to.equal([NSSet set]);
 }
