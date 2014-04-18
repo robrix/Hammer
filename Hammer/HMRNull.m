@@ -5,23 +5,17 @@
 #import "HMRNull.h"
 #import "HMROnce.h"
 
-@interface HMRNull ()
-
-@property (readonly) NSSet *forest;
-
-@end
-
 @implementation HMRNull
 
-+(instancetype)captureForest:(NSSet *)forest {
-	return [[self alloc] initWithForest:forest];
++(instancetype)captureForest:(NSSet *)parseForest {
+	return [[self alloc] initWithParseForest:parseForest];
 }
 
--(instancetype)initWithForest:(NSSet *)forest {
-	NSParameterAssert(forest != nil);
+-(instancetype)initWithParseForest:(NSSet *)parseForest {
+	NSParameterAssert(parseForest != nil);
 	
 	if ((self = [super init])) {
-		_forest = [forest copy];
+		_parseForest = [parseForest copy];
 	}
 	return self;
 }
@@ -34,9 +28,7 @@
 }
 
 
--(NSSet *)parseForest {
-	return self.forest;
-}
+@synthesize parseForest = _parseForest;
 
 
 -(NSString *)escapeBackslashesInString:(NSString *)string {
@@ -75,17 +67,17 @@ static NSString * const doubleQuote = @"\"";
 	return description;
 }
 
--(NSString *)describeParseForest:(id<REDReducible>)forest {
-	return [@"" red_append:REDJoin(REDMap(forest, ^(id each) {
+-(NSString *)describeParseForest:(id<REDReducible>)parseForest {
+	return [@"" red_append:REDJoin(REDMap(parseForest, ^(id each) {
 		return [self describeParseTree:each];
 	}), @", ")];
 }
 
 
 -(NSString *)describe {
-	return self.forest == nil?
+	return self.parseForest == nil?
 		@"ε"
-	:	[NSString stringWithFormat:@"ε↓{%@}", [self describeParseForest:self.forest]];
+	:	[NSString stringWithFormat:@"ε↓{%@}", [self describeParseForest:self.parseForest]];
 }
 
 l3_test(@selector(description)) {
@@ -103,22 +95,22 @@ l3_test(@selector(description)) {
 -(BOOL)isEqual:(HMRNull *)object {
 	return
 		[object isKindOfClass:self.class]
-	&&	[self.forest isEqual:object.forest];
+	&&	[self.parseForest isEqual:object.parseForest];
 }
 
 -(NSUInteger)hash {
 	return
 		@"HMRNull".hash
-	^	self.forest.hash;
+	^	self.parseForest.hash;
 }
 
 @end
 
 
-id<HMRPredicate> HMRCaptured(id<HMRPredicate> forest) {
+id<HMRPredicate> HMRCaptured(id<HMRPredicate> parseForest) {
 	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRNull *subject) {
 		return
 			[subject isKindOfClass:[HMRNull class]]
-		&&	[forest matchObject:subject.parseForest];
+		&&	[parseForest matchObject:subject.parseForest];
 	}];
 }

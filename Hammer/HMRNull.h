@@ -6,6 +6,8 @@
 
 +(instancetype)captureForest:(NSSet *)forest;
 
+@property (readonly) NSSet *parseForest;
+
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 
 @end
