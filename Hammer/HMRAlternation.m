@@ -39,11 +39,6 @@ l3_test(@selector(derivative:)) {
 }
 
 
--(NSSet *)reduceParseForest {
-	return [self.left.parseForest setByAddingObjectsFromSet:self.right.parseForest];
-}
-
-
 -(HMRCombinator *)compact {
 	HMRCombinator *compacted;
 	HMRCombinator *left = self.left.compaction;

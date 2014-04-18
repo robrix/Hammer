@@ -63,11 +63,6 @@ l3_test(@selector(derivative:)) {
 	})];
 }
 
--(NSSet *)reduceParseForest {
-	return [self.class concatenateParseForestWithPrefix:self.first.parseForest suffix:self.second.parseForest];
-}
-
-
 -(HMRCombinator *)compact {
 	HMRCombinator *first = self.first.compaction;
 	HMRCombinator *second = self.second.compaction;
