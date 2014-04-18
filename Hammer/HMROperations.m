@@ -130,6 +130,16 @@ NSSet *HMRCombinatorParseForest(HMRCombinator *combinator) {
 				return [HMRCombinatorParseForest(left) setByAddingObjectsFromSet:HMRCombinatorParseForest(right)];
 			}],
 			
+			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
+				NSSet *prefix = HMRCombinatorParseForest(first);
+				NSSet *suffix = HMRCombinatorParseForest(second);
+				return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
+					return REDMap(suffix, ^(id y) {
+						return HMRCons(x, y);
+					});
+				})];
+			}],
+			
 			[HMRReduced(HMRBind(), HMRBind()) then:^(HMRCombinator *combinator, HMRReductionBlock block) {
 				return [combinator isKindOfClass:[HMRNull class]]?
 					[[NSSet set] red_append:block(((HMRNull *)combinator).parseForest)]
@@ -151,6 +161,8 @@ NSSet *HMRCombinatorParseForest(HMRCombinator *combinator) {
 l3_addTestSubjectTypeWithFunction(HMRCombinatorParseForest)
 l3_test(&HMRCombinatorParseForest) {
 	l3_expect(HMRCombinatorParseForest([[HMRCombinator captureTree:@"a"] or:[HMRCombinator captureTree:@"b"]])).to.equal([NSSet setWithObjects:@"a", @"b", nil]);
+	
+	l3_expect(HMRCombinatorParseForest([[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]])).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
 	
 	__block HMRCombinator *cyclic = [HMRDelay(cyclic) map:REDIdentityMapBlock];
 	l3_expect(HMRCombinatorParseForest(cyclic)).to.equal([NSSet set]);
