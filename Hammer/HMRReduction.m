@@ -153,6 +153,7 @@ l3_test(@selector(compaction)) {
 
 id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block) {
 	combinator = combinator ?: HMRAny();
+	block = block ?: HMRAny();
 	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRReduction *subject) {
 		return
 			[subject isKindOfClass:[HMRReduction class]]
