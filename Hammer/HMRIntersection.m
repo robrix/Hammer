@@ -19,4 +19,16 @@
 	return self;
 }
 
+
+#pragma mark HMRCombinator
+
+-(HMRCombinator *)compact {
+	HMRCombinator *compacted;
+	HMRCombinator *left = self.left.compaction;
+	HMRCombinator *right = self.right.compaction;
+	if ([left isEqual:[HMRCombinator empty]] || [right isEqual:[HMRCombinator empty]])
+		compacted = [HMRCombinator empty];
+	return compacted;
+}
+
 @end
