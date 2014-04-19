@@ -219,6 +219,11 @@ l3_test(@selector(parseForest)) {
 }
 
 
+-(bool)isCyclic {
+	return HMRCombinatorIsCyclic(self);
+}
+
+
 @synthesize name = _name;
 
 -(instancetype)withName:(NSString *)name {

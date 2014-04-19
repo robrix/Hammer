@@ -9,6 +9,7 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 
 @class HMRAlternation, HMRIntersection, HMRConcatenation, HMRReduction, HMRRepetition;
 @class HMREmpty, HMRNull, HMRPredicateCombinator, HMRLiteral, HMRContainment;
+
 @interface HMRCombinator : NSObject <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object;
@@ -16,6 +17,9 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 @property (readonly) NSSet *parseForest;
 
 @property (readonly) HMRCombinator *compaction;
+
+/// Whether or not the receiver is cyclic.
+@property (readonly, getter = isCyclic) bool cyclic;
 
 
 #pragma mark Terminal construction
