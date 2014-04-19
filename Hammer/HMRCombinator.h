@@ -18,7 +18,9 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 
 @property (readonly) HMRCombinator *compaction;
 
-/// Whether or not the receiver is cyclic.
+/// Whether the receiver is cyclic.
+///
+/// \return  \c YES if the receiver is cyclic, \c NO otherwise.
 @property (readonly, getter = isCyclic) bool cyclic;
 
 
