@@ -7,7 +7,7 @@
 /// The type of a reduction combinator’s block, which maps parse forests.
 typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 
-@class HMRAlternation, HMRConcatenation, HMRReduction, HMRRepetition;
+@class HMRAlternation, HMRIntersection, HMRConcatenation, HMRReduction, HMRRepetition;
 @class HMREmpty, HMRNull, HMRPredicateCombinator, HMRLiteral, HMRContainment;
 @interface HMRCombinator : NSObject <NSObject, NSCopying, REDReducible, HMRPredicate>
 
@@ -72,6 +72,8 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \param leftmost  The leftmost operand to the alternation. Must not be nil.
 /// \return          A combinator representing the union of all the passed combinators.
 +(HMRCombinator *)alternate:(HMRCombinator *)leftmost, ... NS_REQUIRES_NIL_TERMINATION;
+
+-(HMRIntersection *)and:(HMRCombinator *)other;
 
 /// Constructs the concatenation of \c self and \c second.
 ///

@@ -75,6 +75,11 @@ l3_test(@selector(alternate:)) {
 }
 
 
+-(HMRIntersection *)and:(HMRCombinator *)other {
+	return [HMRIntersection intersectLeft:self right:other];
+}
+
+
 -(HMRConcatenation *)concat:(HMRCombinator *)other {
 	return [HMRConcatenation concatenateFirst:self second:other];
 }
