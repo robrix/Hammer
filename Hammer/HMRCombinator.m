@@ -127,6 +127,11 @@ l3_test(@selector(quote)) {
 }
 
 
+-(HMRCombinator *)quote {
+	return [self.class quote];
+}
+
+
 #pragma mark HMRCombinator
 
 -(HMRCombinator *)derivative:(id<NSObject,NSCopying>)object {

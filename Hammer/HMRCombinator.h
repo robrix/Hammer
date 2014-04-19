@@ -118,6 +118,13 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// Constructs a combinator to match instances of the receiver.
 +(HMRCombinator *)quote;
 
+/// Constructs a combinator to match the receiver.
+///
+/// For example, \code[[a and:b] quote]\endcode returns a combinator which will match \c HMRConcatenation instances whose \c first property is matched by \c a and whose \c second property is matched by \c b. This is performed shallowly.
+///
+/// \c return  A combinator which matches the structure of the receiver.
+-(HMRCombinator *)quote;
+
 
 #pragma mark Pretty-printing
 
