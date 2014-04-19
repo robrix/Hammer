@@ -75,7 +75,7 @@ l3_test(@selector(alternate:)) {
 }
 
 
--(HMRConcatenation *)and:(HMRCombinator *)other {
+-(HMRConcatenation *)concat:(HMRCombinator *)other {
 	return [HMRConcatenation concatenateFirst:self second:other];
 }
 
@@ -84,7 +84,7 @@ l3_test(@selector(alternate:)) {
 	va_start(args, first);
 	
 	HMRCombinator *concatenation = HMRCombineVariadics(first, args, ^(HMRCombinator *first, HMRCombinator *second) {
-		return [first and:second];
+		return [first concat:second];
 	});
 	
 	va_end(args);
@@ -94,7 +94,7 @@ l3_test(@selector(alternate:)) {
 
 l3_test(@selector(concatenate:)) {
 	HMRCombinator *sub = [HMRCombinator literal:@"x"];
-	l3_expect([HMRConcatenation concatenate:sub, sub, sub, nil]).to.equal([sub and:[sub and:sub]]);
+	l3_expect([HMRConcatenation concatenate:sub, sub, sub, nil]).to.equal([sub concat:[sub concat:sub]]);
 }
 
 
@@ -162,18 +162,18 @@ l3_test(@selector(concatenate:)) {
 l3_test(@selector(parseForest)) {
 	l3_expect([[HMRCombinator captureTree:@"a"] or:[HMRCombinator captureTree:@"b"]].parseForest).to.equal([NSSet setWithObjects:@"a", @"b", nil]);
 	
-	l3_expect([[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
+	l3_expect([[HMRCombinator captureTree:@"a"] concat:[HMRCombinator captureTree:@"b"]].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
 	
-	__block HMRCombinator *cyclic = [[[HMRCombinator literal:@"a"] and:HMRDelay(cyclic)] map:REDIdentityMapBlock];
+	__block HMRCombinator *cyclic = [[[HMRCombinator literal:@"a"] concat:HMRDelay(cyclic)] map:REDIdentityMapBlock];
 	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
 	cyclic = [[[HMRCombinator capture:[NSSet setWithObjects:@"a", @"b", nil]] or:HMRDelay(cyclic)] map:^(id each) {
 		return [each stringByAppendingString:each];
 	}];
 	l3_expect(cyclic.parseForest).to.equal([NSSet setWithObjects:@"aa", @"bb", nil]);
 	
-	cyclic = [[[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]] or:HMRDelay(cyclic)];
+	cyclic = [[[HMRCombinator captureTree:@"a"] concat:[HMRCombinator captureTree:@"b"]] or:HMRDelay(cyclic)];
 	l3_expect(cyclic.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
-	cyclic = [[[HMRCombinator captureTree:@"a"] and:[HMRCombinator captureTree:@"b"]] and:HMRDelay(cyclic)];
+	cyclic = [[[HMRCombinator captureTree:@"a"] concat:[HMRCombinator captureTree:@"b"]] concat:HMRDelay(cyclic)];
 	l3_expect(cyclic.parseForest).to.equal([NSSet set]);
 	
 	l3_expect([HMRAny() parseForest]).to.equal([NSSet set]);

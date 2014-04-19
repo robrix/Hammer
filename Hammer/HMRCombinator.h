@@ -79,7 +79,7 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 ///
 /// \param second  The second operand to the concatenation. Must not be nil.
 /// \return        A combinator representing the concatenation of \c self and \c second.
--(HMRConcatenation *)and:(HMRCombinator *)second;
+-(HMRConcatenation *)concat:(HMRCombinator *)second;
 
 /// Constructs the concatenation of a variadic list of combinators.
 ///
