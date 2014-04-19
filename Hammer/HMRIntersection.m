@@ -55,6 +55,11 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
+	return [self.right red_reduce:[self.left red_reduce:[super reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRIntersection *)object {
