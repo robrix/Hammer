@@ -49,15 +49,19 @@ bool HMRCombinatorIsCyclic(HMRCombinator *combinator) {
 			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
 				return @(recur(first) || recur(second));
 			}],
+			
 			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
 				return @(recur(left) || recur(right));
 			}],
+			
 			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
 				return @(recur(combinator));
 			}],
+			
 			[HMRRepeated(HMRBind()) then:^(HMRCombinator *combinator) {
 				return @(recur(combinator));
 			}],
+			
 			[HMRAny() then:^{ return @NO; }],
 		])) boolValue];
 	};
