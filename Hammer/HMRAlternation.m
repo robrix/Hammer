@@ -17,8 +17,8 @@
 	NSParameterAssert(right != nil);
 	
 	if ((self = [super init])) {
-		_left = [left copyWithZone:NULL];
-		_right = [right copyWithZone:NULL];
+		_left = [left copy];
+		_right = [right copy];
 	}
 	return self;
 }
@@ -27,9 +27,7 @@
 #pragma mark HMRCombinator
 
 -(HMRCombinator *)deriveWithRespectToObject:(id<NSObject,NSCopying>)object {
-	HMRCombinator *left = self.left;
-	HMRCombinator *right = self.right;
-	return [[left derivative:object] or:[right derivative:object]];
+	return [[self.left derivative:object] or:[self.right derivative:object]];
 }
 
 l3_test(@selector(derivative:)) {
@@ -54,7 +52,7 @@ l3_test(@selector(derivative:)) {
 		HMRCombinator *innerLeft = ((HMRConcatenation *)left).second;
 		HMRCombinator *innerRight = ((HMRConcatenation *)right).second;
 		alternation = [innerLeft or:innerRight];
-		compacted = [((HMRConcatenation *)left).first and:alternation];
+		compacted = [((HMRConcatenation *)left).first concat:alternation];
 	}
 	else if (left == self.left && right == self.right)
 		compacted = self;
@@ -74,17 +72,17 @@ l3_test(@selector(compaction)) {
 	HMRCombinator *p = [HMRCombinator literal:@"p"];
 	l3_expect([nullParse or:same].compaction).to.equal(same);
 	
-	__block HMRCombinator *cyclic = [[[HMRCombinator empty] or:[[HMRCombinator empty] and:HMRDelay(cyclic)]] withName:@"S"];
+	__block HMRCombinator *cyclic = [[[HMRCombinator empty] or:[[HMRCombinator empty] concat:HMRDelay(cyclic)]] withName:@"S"];
 	l3_expect(cyclic.compaction).to.equal([HMRCombinator empty]);
 	
-	cyclic = [[[nullParse and:p] or:[same and:HMRDelay(cyclic)]] withName:@"S"];
+	cyclic = [[[nullParse concat:p] or:[same concat:HMRDelay(cyclic)]] withName:@"S"];
 	HMRCombinator *derivative = [cyclic.compaction derivative:@"p"];
 	l3_expect(derivative.parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"p")]);
 }
 
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"(%@ | %@)", self.left.name ?: self.left.description, self.right.name ?: self.right.description];
+	return [NSString stringWithFormat:@"(%@ ∪ %@)", self.left.name ?: self.left.description, self.right.name ?: self.right.description];
 }
 
 
@@ -106,7 +104,7 @@ l3_test(@selector(compaction)) {
 }
 
 
-#pragma mark HMRAlternation
+#pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
 	return
@@ -119,7 +117,7 @@ l3_test(@selector(compaction)) {
 
 -(BOOL)isEqual:(HMRAlternation *)object {
 	return
-		[object isKindOfClass:self.class]
+		[super isEqual:object]
 	&&	[self.left isEqual:object.left]
 	&&	[self.right isEqual:object.right];
 }

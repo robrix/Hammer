@@ -19,13 +19,13 @@ l3_test(&HMRParseCollection) {
 	id anythingElse = @1;
 	l3_expect(HMRParseCollection(literal, @[ anythingElse ])).to.equal([NSSet set]);
 	
-	l3_expect(HMRParseCollection([literal and:literal], @[ object, object ])).to.equal([NSSet setWithObject:HMRCons(object, object)]);
+	l3_expect(HMRParseCollection([literal concat:literal], @[ object, object ])).to.equal([NSSet setWithObject:HMRCons(object, object)]);
 	
 	id terminal = @"x";
 	id nonterminalPrefix = @"+";
 	// S -> "+" S | "x"
 	__block HMRCombinator *nonterminal;
-	nonterminal = [[[[[[HMRCombinator literal:nonterminalPrefix] withName:@"prefix"] and:HMRDelay(nonterminal)] or:[[HMRCombinator literal:terminal] withName:@"final"]] map:^(id each) {
+	nonterminal = [[[[[[HMRCombinator literal:nonterminalPrefix] withName:@"prefix"] concat:HMRDelay(nonterminal)] or:[[HMRCombinator literal:terminal] withName:@"final"]] map:^(id each) {
 		return HMRList(each, nil);
 	}] withName:@"S"];
 	l3_expect(HMRParseCollection(nonterminal, @[ terminal ])).to.equal([NSSet setWithObject:HMRList(terminal, nil)]);

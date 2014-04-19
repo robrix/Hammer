@@ -7,8 +7,9 @@
 /// The type of a reduction combinator’s block, which maps parse forests.
 typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 
-@class HMRAlternation, HMRConcatenation, HMRReduction, HMRRepetition;
+@class HMRAlternation, HMRIntersection, HMRConcatenation, HMRReduction, HMRRepetition;
 @class HMREmpty, HMRNull, HMRPredicateCombinator, HMRLiteral, HMRContainment;
+
 @interface HMRCombinator : NSObject <NSObject, NSCopying, REDReducible, HMRPredicate>
 
 -(HMRCombinator *)derivative:(id<NSObject, NSCopying>)object;
@@ -16,6 +17,11 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 @property (readonly) NSSet *parseForest;
 
 @property (readonly) HMRCombinator *compaction;
+
+/// Whether the receiver is cyclic.
+///
+/// \return  \c YES if the receiver is cyclic, \c NO otherwise.
+@property (readonly, getter = isCyclic) bool cyclic;
 
 
 #pragma mark Terminal construction
@@ -59,12 +65,12 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 
 #pragma mark Nonterminal construction
 
-/// Constructs the alternation of \c self and \c right.
+/// Constructs the alternation of \c self and \c other.
 ///
 /// Corresponds to a sum type, and the union of context-free languages.
 ///
-/// \param right  An operand to the alternation. Must not be nil.
-/// \return       A combinator representing the union of \c self and \c right.
+/// \param other  An operand to the alternation. Must not be nil.
+/// \return       A combinator representing the union of \c self and \c other.
 -(HMRAlternation *)or:(HMRCombinator *)other;
 
 /// Constructs the alternation of a variadic list of combinators.
@@ -73,13 +79,27 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \return          A combinator representing the union of all the passed combinators.
 +(HMRCombinator *)alternate:(HMRCombinator *)leftmost, ... NS_REQUIRES_NIL_TERMINATION;
 
-/// Constructs the concatenation of \c self and \c second.
+/// Constructs the intersection of \c self and \c other.
+///
+/// Corresponds to the intersection of context-free languages.
+///
+/// \param other  An operand to the intersection. Must not be nil.
+/// \return       A combinator representing the intersection of \c self and \c other.
+-(HMRIntersection *)and:(HMRCombinator *)other;
+
+/// Constructs the itnersection of a variadic list of combinators.
+///
+/// \param leftmost  The leftmost operand to the intersection. Must not be nil.
+/// \return          A combinator representing the intersection of all the passed combinators.
++(HMRCombinator *)intersect:(HMRCombinator *)leftmost, ... NS_REQUIRES_NIL_TERMINATION;
+
+/// Constructs the concatenation of \c self and \c other.
 ///
 /// Corresponds to a product type, and the cartesian product of context-free languages.
 ///
 /// \param second  The second operand to the concatenation. Must not be nil.
-/// \return        A combinator representing the concatenation of \c self and \c second.
--(HMRConcatenation *)and:(HMRCombinator *)second;
+/// \return        A combinator representing the concatenation of \c self and \c other.
+-(HMRConcatenation *)concat:(HMRCombinator *)other;
 
 /// Constructs the concatenation of a variadic list of combinators.
 ///
@@ -169,6 +189,13 @@ id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second
 /// \param right  The predicate to match against an alternation’s right combinator. May be nil, in which case it matches with \c HMRAny().
 /// \return       A predicate which matches alternations whose left and right combinators are matched by the given \c left and \c right predicates.
 id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right);
+
+/// Constructs an intersection predicate.
+///
+/// \param left   The predicate to match against an intersection’s left combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param right  The predicate to match against an intersection’s right combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return       A predicate which matches intersections whose left and right combinators are matched by the given \c left and \c right predicates.
+id<HMRPredicate> HMRIntersected(id<HMRPredicate> left, id<HMRPredicate> right);
 
 /// Constructs a repetition predicate.
 ///

@@ -5,24 +5,31 @@
 #import "HMRNonterminal.h"
 #import "HMRReduction.h"
 
-@interface HMRDelayCombinator ()
-
-@property (readonly) HMRCombinator *forced;
-
-@end
-
-@implementation HMRDelayCombinator
+@implementation HMRDelayCombinator {
+	HMRCombinator *(^_block)(void);
+	HMRCombinator *_forced;
+}
 
 +(Class)delayedClass {
 	return [HMRNonterminal class];
 }
 
--(instancetype)initWithBlock:(HMRDelayBlock)block {
-	return [super initWithClass:self.class.delayedClass block:block];
+-(instancetype)initWithBlock:(HMRCombinator *(^)(void))block {
+	if ((self = [super init])) {
+		_block = [block copy];
+	}
+	return self;
 }
 
 
-@dynamic forced;
+-(HMRCombinator *)forced {
+	HMRCombinator *(^block)(void) = _block;
+	_block = nil;
+	if (block) {
+		_forced = block();
+	}
+	return _forced;
+}
 
 
 #pragma mark HMRCombinator
@@ -36,19 +43,20 @@
 	return self.forced.parseForest;
 }
 
-l3_test(@selector(parseForest)) {
-	NSSet *forest = [NSSet setWithObject:@"a"];
-	HMRCombinator *capture = [HMRCombinator capture:forest];
-	HMRCombinator *delayed = HMRDelay(capture);
-	l3_expect(HMRDelaySpecific([NSSet class], delayed.parseForest)).to.equal(forest);
-	l3_expect(forest).to.equal(delayed.parseForest);
-}
-
 
 -(HMRCombinator *)compaction {
-	return self.forcing? (HMRCombinator *)self : self.forced.compaction;
+	return self.forced.compaction;
 }
 
+
+-(NSString *)description {
+	return [@"λ." stringByAppendingString:[self.forced description]];
+}
+
+
+-(HMRCombinator *)withFunctionDescription:(NSString *)functionDescription {
+	return [(HMRReduction *)self.forced withFunctionDescription:functionDescription];
+}
 
 -(NSString *)functionDescription {
 	return ((HMRReduction *)self.forced).functionDescription;
@@ -60,7 +68,7 @@ l3_test(@selector(parseForest)) {
 }
 
 -(HMRCombinator *)withName:(NSString *)name {
-	return (id)[(id)self.forced withName:name];
+	return (id)[self.forced withName:name];
 }
 
 
@@ -78,32 +86,32 @@ l3_test(@selector(parseForest)) {
 #pragma mark REDReducible
 
 -(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
-	return [(id<REDReducible>)self.forced red_reduce:initial usingBlock:block];
+	return [self.forced red_reduce:initial usingBlock:block];
 }
 
 
-#pragma mark Construction
+#pragma mark NSObject
 
--(HMRConcatenation *)and:(HMRCombinator *)other {
-	return [HMRConcatenation concatenateFirst:(HMRCombinator *)self second:other];
+-(BOOL)isKindOfClass:(Class)class {
+	return
+		[super isKindOfClass:class]
+	||	[self.forced isKindOfClass:class];
 }
 
--(HMRAlternation *)or:(HMRCombinator *)other {
-	return [HMRAlternation alternateLeft:(HMRCombinator *)self right:other];
+-(id)forwardingTargetForSelector:(SEL)selector {
+	return self.forced;
 }
 
--(HMRReduction *)mapSet:(HMRReductionBlock)block {
-	return [HMRReduction reduce:(HMRCombinator *)self usingBlock:block];
+
+-(instancetype)self {
+	return (id)self.forced;
 }
 
--(HMRReduction *)map:(REDMapBlock)block {
-	return [HMRReduction reduce:(HMRCombinator *)self usingBlock:^(id<REDReducible> forest) {
-		return REDMap(forest, block);
-	}];
-}
-
--(HMRRepetition *)repeat {
-	return [HMRRepetition repeat:(HMRCombinator *)self];
+-(BOOL)isEqual:(id)object {
+	return
+		object == self
+	||	object == self.forced
+	||	[self.forced isEqual:object];
 }
 
 @end

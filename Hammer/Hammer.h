@@ -6,6 +6,7 @@
 
 #import <Hammer/HMRNonterminal.h>
 #import <Hammer/HMRAlternation.h>
+#import <Hammer/HMRIntersection.h>
 #import <Hammer/HMRConcatenation.h>
 #import <Hammer/HMRReduction.h>
 #import <Hammer/HMRRepetition.h>

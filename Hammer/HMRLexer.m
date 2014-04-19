@@ -10,7 +10,7 @@
 l3_test("lexer grammar") {
 	NSMutableArray *reductions = [NSMutableArray new];
 	HMRCombinator *wordSet = [HMRCombinator containedIn:[NSCharacterSet alphanumericCharacterSet]];
-	HMRCombinator *word = [[[[wordSet and:[wordSet repeat]] map:^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
+	HMRCombinator *word = [[[[wordSet concat:[wordSet repeat]] map:^id<NSObject,NSCopying>(id<NSObject,NSCopying> x) {
 		id reduced = [@"" red_append:(id)x];
 		[reductions addObject:reduced];
 		return reduced;
@@ -19,11 +19,11 @@ l3_test("lexer grammar") {
 	HMRReductionBlock ignore = ^(id<REDReducible> all) { return [NSSet set]; };
 	
 	HMRCombinator *whitespaceSet = [HMRCombinator containedIn:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	HMRCombinator *whitespace = [[[[whitespaceSet and:[whitespaceSet repeat]] mapSet:ignore] withFunctionDescription:@"ignore"] withName:@"whitespace"];
+	HMRCombinator *whitespace = [[[[whitespaceSet concat:[whitespaceSet repeat]] mapSet:ignore] withFunctionDescription:@"ignore"] withName:@"whitespace"];
 	
 	HMRCombinator *period = [[[[HMRCombinator literal:@"."] mapSet:^(id all) { return [NSSet setWithObject:[HMRPair null]]; }] withFunctionDescription:@"ignore"] withName:@"period"];
 	
-	__block HMRCombinator *start = [[word and:[[whitespace and:HMRDelay(start)] or:period]] withName:@"start"];
+	__block HMRCombinator *start = [[word concat:[[whitespace concat:HMRDelay(start)] or:period]] withName:@"start"];
 	
 	__block HMRCombinator *grammar = start;
 	

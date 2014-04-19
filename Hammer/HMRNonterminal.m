@@ -1,7 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRCase.h"
-#import "HMRDelay.h"
 #import "HMRMemoization.h"
 #import "HMRNonterminal.h"
 
@@ -40,7 +39,7 @@
 -(HMRCombinator *)compaction {
 	return
 		_compaction
-	?:	(_compaction = HMRDelay([(id)[self compact] withName:self.name]));
+	?:	(_compaction = self.isCyclic? HMRDelay([[self compact] withName:self.name]) : [[self compact] withName:self.name]);
 }
 
 
