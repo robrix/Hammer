@@ -21,6 +21,7 @@
 		D42ED41118FB25A3005BEC10 /* HMRAnyCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D42ED40F18FB25A3005BEC10 /* HMRAnyCombinator.m */; };
 		D42ED41418FB2683005BEC10 /* HMRBindCombinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D42ED41218FB2683005BEC10 /* HMRBindCombinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D42ED41518FB2683005BEC10 /* HMRBindCombinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D42ED41318FB2683005BEC10 /* HMRBindCombinator.m */; };
+		D469858F1902384F00041D92 /* HMRKeyValueCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D469858E1902384F00041D92 /* HMRKeyValueCoding.h */; };
 		D46AB17C18E7EA9E00501D3C /* HMRLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = D46AB17A18E7EA9E00501D3C /* HMRLexer.h */; };
 		D46AB17D18E7EA9E00501D3C /* HMRLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = D46AB17B18E7EA9E00501D3C /* HMRLexer.m */; };
 		D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */ = {isa = PBXBuildFile; fileRef = D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -94,6 +95,7 @@
 		D42ED40F18FB25A3005BEC10 /* HMRAnyCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRAnyCombinator.m; sourceTree = "<group>"; };
 		D42ED41218FB2683005BEC10 /* HMRBindCombinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRBindCombinator.h; sourceTree = "<group>"; };
 		D42ED41318FB2683005BEC10 /* HMRBindCombinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRBindCombinator.m; sourceTree = "<group>"; };
+		D469858E1902384F00041D92 /* HMRKeyValueCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRKeyValueCoding.h; sourceTree = "<group>"; };
 		D46AB17A18E7EA9E00501D3C /* HMRLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRLexer.h; sourceTree = "<group>"; };
 		D46AB17B18E7EA9E00501D3C /* HMRLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMRLexer.m; sourceTree = "<group>"; };
 		D499A49018EFEDF1004DF7E3 /* HMRTerminal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMRTerminal.h; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				D42ED40C18FB1AC2005BEC10 /* HMRPredicate.h */,
 				D4C87CD318EB79E400567D57 /* HMRDelay.h */,
 				D4C87CD418EB79E400567D57 /* HMRDelay.m */,
+				D469858E1902384F00041D92 /* HMRKeyValueCoding.h */,
 				D499A5FC18F4D848004DF7E3 /* HMRPair.h */,
 				D499A5FD18F4D848004DF7E3 /* HMRPair.m */,
 				D42ED3B618FA1480005BEC10 /* HMRCase.h */,
@@ -355,6 +358,7 @@
 				D4C87CED18ED3D5F00567D57 /* HMRContainment.h in Headers */,
 				D42ED41018FB25A3005BEC10 /* HMRAnyCombinator.h in Headers */,
 				D42ED40918FB12C3005BEC10 /* HMRMemoization.h in Headers */,
+				D469858F1902384F00041D92 /* HMRKeyValueCoding.h in Headers */,
 				D499A49218EFEDF1004DF7E3 /* HMRTerminal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
