@@ -6,7 +6,9 @@
 #import "HMRMemoization.h"
 #import "HMROnce.h"
 
-@implementation HMRCombinator
+@implementation HMRCombinator {
+	NSNumber *_cyclic;
+}
 
 #pragma mark Terminal construction
 
@@ -244,7 +246,7 @@ l3_test(@selector(parseForest)) {
 		])) boolValue];
 	};
 	
-	return isCyclic(self, cache);
+	return (_cyclic ?: (_cyclic = @(isCyclic(self, cache)))).boolValue;
 }
 
 l3_test(@selector(isCyclic)) {
