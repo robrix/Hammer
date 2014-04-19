@@ -3,6 +3,7 @@
 #import "HMRCase.h"
 #import "HMRCombinator.h"
 #import "HMRDelay.h"
+#import "HMRKindOf.h"
 #import "HMRMemoization.h"
 #import "HMROnce.h"
 
@@ -111,6 +112,18 @@ l3_test(@selector(concatenate:)) {
 
 -(HMRRepetition *)repeat {
 	return [HMRRepetition repeat:self];
+}
+
+
+#pragma mark Predicate construction
+
++(HMRCombinator *)quote {
+	return [HMRKindOf kindOfClass:self];
+}
+
+l3_test(@selector(quote)) {
+	l3_expect([[HMRNull quote] matchObject:[HMRCombinator captureTree:@"a"]]).to.equal(@YES);
+	l3_expect([[HMRNull quote] matchObject:[HMRCombinator literal:@"a"]]).to.equal(@NO);
 }
 
 

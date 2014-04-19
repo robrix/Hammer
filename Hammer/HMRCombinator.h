@@ -113,6 +113,12 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 -(HMRRepetition *)repeat;
 
 
+#pragma mark Predicate construction
+
+/// Constructs a combinator to match instances of the receiver.
++(HMRCombinator *)quote;
+
+
 #pragma mark Pretty-printing
 
 @property (readonly) NSString *name;
