@@ -220,7 +220,40 @@ l3_test(@selector(parseForest)) {
 
 
 -(bool)isCyclic {
-	return HMRCombinatorIsCyclic(self);
+	NSMutableDictionary *cache = [NSMutableDictionary new];
+	
+	static bool (^isCyclic)(HMRCombinator *, NSMutableDictionary *) = ^bool (HMRCombinator *combinator, NSMutableDictionary *cache) {
+		return [cache[combinator] ?: (cache[combinator] = @YES, cache[combinator] = HMRMatch(combinator, @[
+			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+				return @(isCyclic(left, cache) || isCyclic(right, cache));
+			}],
+			
+			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
+				return @(isCyclic(first, cache) || isCyclic(second, cache));
+			}],
+			
+			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
+				return @(isCyclic(combinator, cache));
+			}],
+			
+			[HMRRepeated(HMRBind()) then:^(HMRCombinator *combinator) {
+				return @(isCyclic(combinator, cache));
+			}],
+			
+			[HMRAny() then:^{ return @NO; }],
+		])) boolValue];
+	};
+	
+	return isCyclic(self, cache);
+}
+
+l3_test(@selector(isCyclic)) {
+	HMRCombinator *x = [HMRCombinator literal:@"x"];
+	l3_expect(x.isCyclic).to.equal(@NO);
+	l3_expect([x concat:x].isCyclic).to.equal(@NO);
+	
+	__block HMRCombinator *cyclic = [x concat:HMRDelay(cyclic)];
+	l3_expect(cyclic.isCyclic).to.equal(@YES);
 }
 
 
