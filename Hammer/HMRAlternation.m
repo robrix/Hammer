@@ -99,7 +99,7 @@ l3_test(@selector(compaction)) {
 }
 
 
-#pragma mark HMRAlternation
+#pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
 	return
@@ -112,7 +112,7 @@ l3_test(@selector(compaction)) {
 
 -(BOOL)isEqual:(HMRAlternation *)object {
 	return
-		[object isKindOfClass:self.class]
+		[super isEqual:object]
 	&&	[self.left isEqual:object.left]
 	&&	[self.right isEqual:object.right];
 }
