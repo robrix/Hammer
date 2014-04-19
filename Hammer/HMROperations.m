@@ -86,15 +86,21 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
 				return @(recur(first) && recur(second));
 			}],
+			
 			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
 				return @(recur(left) || recur(right));
 			}],
+			
 			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
 				return @(recur(combinator));
 			}],
+			
 			[HMRRepeated(HMRAny()) then:^{ return @YES; }],
+			
 			[HMRCaptured(HMRAny()) then:^{ return @YES; }],
+			
 			[[HMRKindOf kindOfClass:[HMRAnyCombinator class]] then:^{ return @YES; }],
+			
 			[HMRAny() then:^{ return @NO; }]
 		])) boolValue];
 	};
