@@ -17,8 +17,8 @@
 	NSParameterAssert(right != nil);
 	
 	if ((self = [super init])) {
-		_left = [left copyWithZone:NULL];
-		_right = [right copyWithZone:NULL];
+		_left = [left copy];
+		_right = [right copy];
 	}
 	return self;
 }
@@ -27,9 +27,7 @@
 #pragma mark HMRCombinator
 
 -(HMRCombinator *)deriveWithRespectToObject:(id<NSObject,NSCopying>)object {
-	HMRCombinator *left = self.left;
-	HMRCombinator *right = self.right;
-	return [[left derivative:object] or:[right derivative:object]];
+	return [[self.left derivative:object] or:[self.right derivative:object]];
 }
 
 l3_test(@selector(derivative:)) {
