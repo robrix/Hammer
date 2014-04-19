@@ -39,7 +39,7 @@
 -(HMRCombinator *)compaction {
 	return
 		_compaction
-	?:	(_compaction = HMRDelay([[self compact] withName:self.name]));
+	?:	(_compaction = self.isCyclic? HMRDelay([[self compact] withName:self.name]) : [[self compact] withName:self.name]);
 }
 
 
