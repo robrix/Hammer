@@ -2,7 +2,6 @@
 
 #import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
-#import "HMRDelay.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
 #import "HMRReduction.h"
@@ -85,7 +84,7 @@ l3_test(@selector(compaction)) {
 		})];
 	}] withFunctionDescription:@"(map append .)"];
 	l3_expect([reduction derivative:@"b"].parseForest).to.equal([NSSet setWithObject:HMRList(@"aa", @"bb", nil)]);
-	l3_expect(reduction.compaction.description).to.equal(@"λ.'b' → (map append .)∘(ε↓{'a'} .)");
+	l3_expect(reduction.compaction.description).to.equal(@"'b' → (map append .)∘(ε↓{'a'} .)");
 	
 	reduction = [[[HMRCombinator literal:@"a"] concat:[[HMRCombinator literal:@"b"] concat:[HMRCombinator literal:@"c"]]] mapSet:REDIdentityMapBlock];
 	l3_expect([[[reduction derivative:@"a"] derivative:@"b"] derivative:@"c"].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", HMRCons(@"b", @"c"))]);

@@ -1,7 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAnyCombinator.h"
-#import "HMRDelay.h"
 #import "HMRMemoization.h"
 #import "HMROperations.h"
 #import <Hammer/Hammer.h>
@@ -41,6 +40,35 @@ l3_test(&HMRPrettyPrint) {
 }
 
 
+bool HMRCombinatorIsCyclic(HMRCombinator *combinator) {
+	NSMutableDictionary *cache = [NSMutableDictionary new];
+	bool (^__weak __block recur)(HMRCombinator *);
+	bool (^computeCyclic)(HMRCombinator *) = ^bool (HMRCombinator *combinator) {
+		return [HMRMemoize(cache[combinator], @YES, HMRMatch(combinator, @[
+			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
+				return @(recur(first) || recur(second));
+			}],
+			
+			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+				return @(recur(left) || recur(right));
+			}],
+			
+			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
+				return @(recur(combinator));
+			}],
+			
+			[HMRRepeated(HMRBind()) then:^(HMRCombinator *combinator) {
+				return @(recur(combinator));
+			}],
+			
+			[HMRAny() then:^{ return @NO; }],
+		])) boolValue];
+	};
+	recur = computeCyclic;
+	return computeCyclic(combinator);
+}
+
+
 bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 	NSMutableDictionary *cache = [NSMutableDictionary new];
 	bool (^__weak __block recur)(HMRCombinator *);
@@ -49,15 +77,21 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
 				return @(recur(first) && recur(second));
 			}],
+			
 			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
 				return @(recur(left) || recur(right));
 			}],
+			
 			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
 				return @(recur(combinator));
 			}],
+			
 			[HMRRepeated(HMRAny()) then:^{ return @YES; }],
+			
 			[HMRCaptured(HMRAny()) then:^{ return @YES; }],
+			
 			[[HMRKindOf kindOfClass:[HMRAnyCombinator class]] then:^{ return @YES; }],
+			
 			[HMRAny() then:^{ return @NO; }]
 		])) boolValue];
 	};

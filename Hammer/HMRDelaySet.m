@@ -54,4 +54,11 @@
 	return self;
 }
 
+
+#pragma mark NSObject
+
+-(NSUInteger)hash {
+	return _forced.hash;
+}
+
 @end
