@@ -8,7 +8,6 @@
 @implementation HMRDelayCombinator {
 	HMRCombinator *(^_block)(void);
 	HMRCombinator *_forced;
-	bool _forcing;
 }
 
 +(Class)delayedClass {
@@ -27,9 +26,7 @@
 	HMRCombinator *(^block)(void) = _block;
 	_block = nil;
 	if (block) {
-		_forcing = YES;
 		_forced = block();
-		_forcing = NO;
 	}
 	return _forced;
 }
