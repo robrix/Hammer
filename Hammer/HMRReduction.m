@@ -2,7 +2,6 @@
 
 #import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
-#import "HMRDelay.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
 #import "HMRReduction.h"
