@@ -18,7 +18,7 @@
 }
 
 
--(id)force {
+-(id)forced {
 	HMRDelayBlock block = _block;
 	_block = nil;
 	if (block) {
@@ -27,10 +27,6 @@
 		_forcing = NO;
 	}
 	return _forced;
-}
-
--(id)forced {
-	return _forced ?: [self force];
 }
 
 

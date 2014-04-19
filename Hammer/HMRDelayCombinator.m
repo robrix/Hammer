@@ -84,7 +84,7 @@ l3_test(@selector(parseForest)) {
 
 #pragma mark Construction
 
--(HMRConcatenation *)and:(HMRCombinator *)other {
+-(HMRConcatenation *)concat:(HMRCombinator *)other {
 	return [HMRConcatenation concatenateFirst:(HMRCombinator *)self second:other];
 }
 
