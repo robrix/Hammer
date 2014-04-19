@@ -54,4 +54,14 @@ l3_test(@selector(derivative:)) {
 	^	self.right.hash;
 }
 
+
+#pragma mark NSObject
+
+-(BOOL)isEqual:(HMRIntersection *)object {
+	return
+		[super isEqual:object]
+	&&	[self.left isEqual:object.left]
+	&&	[self.right isEqual:object.right];
+}
+
 @end
