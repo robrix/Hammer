@@ -46,4 +46,12 @@ l3_test(@selector(derivative:)) {
 	return [NSString stringWithFormat:@"(%@ ∩ %@)", self.left.name ?: self.left.description, self.right.name ?: self.right.description];
 }
 
+
+-(NSUInteger)computeHash {
+	return
+		[super computeHash]
+	^	self.left.hash
+	^	self.right.hash;
+}
+
 @end
