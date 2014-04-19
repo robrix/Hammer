@@ -40,7 +40,7 @@
 -(HMRCombinator *)compaction {
 	return
 		_compaction
-	?:	(_compaction = HMRDelay([(id)[self compact] withName:self.name]));
+	?:	(_compaction = HMRDelay([[self compact] withName:self.name]));
 }
 
 
