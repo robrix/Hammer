@@ -147,7 +147,7 @@ l3_test(@selector(concatenate:)) {
 -(NSSet *)parseForest {
 	NSMutableDictionary *cache = [NSMutableDictionary new];
 	static NSSet *(^parseForest)(HMRCombinator *, NSMutableDictionary *) = ^NSSet *(HMRCombinator *combinator, NSMutableDictionary *cache) {
-		return cache[combinator] ?: (cache[combinator] = [NSSet set], HMRMatch(combinator, @[
+		return cache[combinator] ?: (cache[combinator] = [NSSet set], cache[combinator] = HMRMatch(combinator, @[
 			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
 				return [parseForest(left, cache) setByAddingObjectsFromSet:parseForest(right, cache)];
 			}],
