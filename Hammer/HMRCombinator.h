@@ -81,6 +81,12 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \return       A combinator representing the intersection of \c self and \c other.
 -(HMRIntersection *)and:(HMRCombinator *)other;
 
+/// Constructs the itnersection of a variadic list of combinators.
+///
+/// \param leftmost  The leftmost operand to the intersection. Must not be nil.
+/// \return          A combinator representing the intersection of all the passed combinators.
++(HMRCombinator *)intersect:(HMRCombinator *)leftmost, ... NS_REQUIRES_NIL_TERMINATION;
+
 /// Constructs the concatenation of \c self and \c other.
 ///
 /// Corresponds to a product type, and the cartesian product of context-free languages.

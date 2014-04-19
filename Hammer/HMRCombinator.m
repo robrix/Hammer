@@ -79,6 +79,24 @@ l3_test(@selector(alternate:)) {
 	return [HMRIntersection intersectLeft:self right:other];
 }
 
++(HMRCombinator *)intersect:(HMRCombinator *)leftmost, ... {
+	va_list args;
+	va_start(args, leftmost);
+	
+	HMRCombinator *intersection = HMRCombineVariadics(leftmost, args, ^(HMRCombinator *left, HMRCombinator *right) {
+		return [left and:right];
+	});
+	
+	va_end(args);
+	
+	return intersection;
+}
+
+l3_test(@selector(intersect:)) {
+	HMRCombinator *sub = [HMRCombinator literal:@"x"];
+	l3_expect([HMRCombinator intersect:sub, sub, sub, nil]).to.equal([sub and:[sub and:sub]]);
+}
+
 
 -(HMRConcatenation *)concat:(HMRCombinator *)other {
 	return [HMRConcatenation concatenateFirst:self second:other];
