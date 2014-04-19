@@ -152,6 +152,13 @@ l3_test(@selector(concatenate:)) {
 				return [parseForest(left, cache) setByAddingObjectsFromSet:parseForest(right, cache)];
 			}],
 			
+			[HMRIntersected(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+				NSSet *leftSet = parseForest(left, cache), *rightSet = parseForest(right, cache);
+				NSMutableSet *intersection = [leftSet mutableCopy];
+				[intersection intersectSet:rightSet];
+				return intersection;
+			}],
+			
 			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
 				NSSet *prefix = parseForest(first, cache);
 				NSSet *suffix = parseForest(second, cache);
@@ -185,6 +192,9 @@ l3_test(@selector(concatenate:)) {
 l3_test(@selector(parseForest)) {
 	HMRCombinator *a = [HMRCombinator captureTree:@"a"], *b = [HMRCombinator captureTree:@"b"];
 	l3_expect([a or:b].parseForest).to.equal([NSSet setWithObjects:@"a", @"b", nil]);
+	
+	l3_expect([a and:b].parseForest).to.equal([NSSet set]);
+	l3_expect([a and:a].parseForest).to.equal([NSSet setWithObject:@"a"]);
 	
 	l3_expect([a concat:b].parseForest).to.equal([NSSet setWithObject:HMRCons(@"a", @"b")]);
 	
