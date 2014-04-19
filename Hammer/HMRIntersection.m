@@ -22,6 +22,16 @@
 
 #pragma mark HMRCombinator
 
+-(HMRCombinator *)deriveWithRespectToObject:(id<NSObject,NSCopying>)object {
+	return [[self.left derivative:object] and:[self.right derivative:object]];
+}
+
+l3_test(@selector(derivative:)) {
+	HMRCombinator *a = [HMRCombinator literal:@"a"], *b = [HMRCombinator literal:@"b"];
+	l3_expect([[a and:b] derivative:@"a"]).to.equal([HMRCombinator empty]);
+}
+
+
 -(HMRCombinator *)compact {
 	HMRCombinator *compacted;
 	HMRCombinator *left = self.left.compaction;
