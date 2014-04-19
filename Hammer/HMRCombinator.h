@@ -171,6 +171,13 @@ id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second
 /// \return       A predicate which matches alternations whose left and right combinators are matched by the given \c left and \c right predicates.
 id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right);
 
+/// Constructs an intersection predicate.
+///
+/// \param left   The predicate to match against an intersection’s left combinator. May be nil, in which case it matches with \c HMRAny().
+/// \param right  The predicate to match against an intersection’s right combinator. May be nil, in which case it matches with \c HMRAny().
+/// \return       A predicate which matches intersections whose left and right combinators are matched by the given \c left and \c right predicates.
+id<HMRPredicate> HMRIntersected(id<HMRPredicate> left, id<HMRPredicate> right);
+
 /// Constructs a repetition predicate.
 ///
 /// \param combinator  The predicate to match against a repetition’s interior combinator. May be nil, in which case it matches with \c HMRAny().

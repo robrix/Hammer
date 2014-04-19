@@ -79,3 +79,15 @@ l3_test(@selector(derivative:)) {
 }
 
 @end
+
+
+id<HMRPredicate> HMRIntersected(id<HMRPredicate> left, id<HMRPredicate> right) {
+	left = left ?: HMRAny();
+	right = right ?: HMRAny();
+	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRIntersection *subject) {
+		return
+			[subject isKindOfClass:[HMRIntersection class]]
+		&&	[left matchObject:subject.left]
+		&&	[right matchObject:subject.right];
+	}];
+}
