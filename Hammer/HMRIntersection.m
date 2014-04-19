@@ -60,6 +60,15 @@ l3_test(@selector(derivative:)) {
 }
 
 
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id)object {
+	return
+		[self.left matchObject:object]
+	&&	[self.right matchObject:object];
+}
+
+
 #pragma mark NSObject
 
 -(BOOL)isEqual:(HMRIntersection *)object {
