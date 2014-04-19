@@ -18,13 +18,6 @@ NSUInteger HMRCombinatorSize(HMRCombinator *combinator);
 NSString *HMRPrettyPrint(HMRCombinator *combinator);
 
 
-/// Recursively determines whether \c combinator is cyclic.
-///
-/// \param combinator  The combinator to recurse through.
-/// \return            YES if \c combinator is cyclic, NO otherwise.
-bool HMRCombinatorIsCyclic(HMRCombinator *combinator);
-
-
 /// Recursively determines whether \c combinator is nullable, i.e. whether it can parse the empty string (e.g. at the end of a parsed sequence).
 ///
 /// \c param combinator  The combinator to recurse through.
