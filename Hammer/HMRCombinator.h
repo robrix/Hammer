@@ -59,12 +59,12 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 
 #pragma mark Nonterminal construction
 
-/// Constructs the alternation of \c self and \c right.
+/// Constructs the alternation of \c self and \c other.
 ///
 /// Corresponds to a sum type, and the union of context-free languages.
 ///
-/// \param right  An operand to the alternation. Must not be nil.
-/// \return       A combinator representing the union of \c self and \c right.
+/// \param other  An operand to the alternation. Must not be nil.
+/// \return       A combinator representing the union of \c self and \c other.
 -(HMRAlternation *)or:(HMRCombinator *)other;
 
 /// Constructs the alternation of a variadic list of combinators.
@@ -73,15 +73,21 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \return          A combinator representing the union of all the passed combinators.
 +(HMRCombinator *)alternate:(HMRCombinator *)leftmost, ... NS_REQUIRES_NIL_TERMINATION;
 
+/// Constructs the intersection of \c self and \c other.
+///
+/// Corresponds to the intersection of context-free languages.
+///
+/// \param other  An operand to the intersection. Must not be nil.
+/// \return       A combinator representing the intersection of \c self and \c other.
 -(HMRIntersection *)and:(HMRCombinator *)other;
 
-/// Constructs the concatenation of \c self and \c second.
+/// Constructs the concatenation of \c self and \c other.
 ///
 /// Corresponds to a product type, and the cartesian product of context-free languages.
 ///
 /// \param second  The second operand to the concatenation. Must not be nil.
-/// \return        A combinator representing the concatenation of \c self and \c second.
--(HMRConcatenation *)concat:(HMRCombinator *)second;
+/// \return        A combinator representing the concatenation of \c self and \c other.
+-(HMRConcatenation *)concat:(HMRCombinator *)other;
 
 /// Constructs the concatenation of a variadic list of combinators.
 ///
