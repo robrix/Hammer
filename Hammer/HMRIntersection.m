@@ -41,4 +41,9 @@ l3_test(@selector(derivative:)) {
 	return compacted;
 }
 
+
+-(NSString *)describe {
+	return [NSString stringWithFormat:@"(%@ ∩ %@)", self.left.name ?: self.left.description, self.right.name ?: self.right.description];
+}
+
 @end
