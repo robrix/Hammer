@@ -2,7 +2,7 @@
 
 #import "HMRCase.h"
 #import "HMRCombinator.h"
-#import "HMRDelay.h"
+#import "HMRDelaySet.h"
 #import "HMRMemoization.h"
 #import "HMROnce.h"
 
@@ -165,7 +165,7 @@ l3_test(@selector(concatenate:)) {
 			[HMRReduced(HMRBind(), HMRBind()) then:^(HMRCombinator *combinator, HMRReductionBlock block) {
 				return [combinator isKindOfClass:[HMRNull class]]?
 					[[NSSet set] red_append:block(parseForest(combinator, cache))]
-				:	HMRDelaySpecific([NSSet class], [[NSSet set] red_append:block(parseForest(combinator, cache))]);
+				:	HMRDelaySet([[NSSet set] red_append:block(parseForest(combinator, cache))]);
 			}],
 			
 			[HMRRepeated(HMRAny()) then:^{
