@@ -101,6 +101,11 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(HMRCombinator *)quote {
+	return [[[super quote] and:self.left] and:self.right];
+}
+
+
 #pragma mark HMRAlternation
 
 -(bool)matchObject:(id)object {
