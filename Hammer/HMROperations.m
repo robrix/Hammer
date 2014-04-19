@@ -41,40 +41,6 @@ l3_test(&HMRPrettyPrint) {
 }
 
 
-bool HMRCombinatorIsCyclic(HMRCombinator *combinator) {
-	NSMutableDictionary *cache = [NSMutableDictionary new];
-	bool (^__weak __block recur)(HMRCombinator *);
-	bool (^computeCyclic)(HMRCombinator *) = ^bool (HMRCombinator *combinator) {
-		return [HMRMemoize(cache[combinator], @YES, HMRMatch(combinator, @[
-			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
-				return @(recur(first) || recur(second));
-			}],
-			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
-				return @(recur(left) || recur(right));
-			}],
-			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
-				return @(recur(combinator));
-			}],
-			[HMRRepeated(HMRBind()) then:^(HMRCombinator *combinator) {
-				return @(recur(combinator));
-			}],
-			[HMRAny() then:^{ return @NO; }],
-		])) boolValue];
-	};
-	recur = computeCyclic;
-	return computeCyclic(combinator);
-}
-
-l3_addTestSubjectTypeWithFunction(HMRCombinatorIsCyclic)
-l3_test(&HMRCombinatorIsCyclic) {
-	l3_expect(HMRCombinatorIsCyclic([[HMRCombinator literal:@"x"] concat:[HMRCombinator literal:@"y"]])).to.equal(@NO);
-	l3_expect(HMRCombinatorIsCyclic([HMRCombinator literal:@"x"])).to.equal(@NO);
-	
-	__block HMRCombinator *cyclic = [[HMRCombinator literal:@"x"] concat:HMRDelay(cyclic)];
-	l3_expect(HMRCombinatorIsCyclic(cyclic)).to.equal(@YES);
-}
-
-
 bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 	NSMutableDictionary *cache = [NSMutableDictionary new];
 	bool (^__weak __block recur)(HMRCombinator *);
@@ -99,6 +65,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 	return isNullable(combinator);
 }
 
+l3_addTestSubjectTypeWithFunction(HMRCombinatorIsNullable)
 l3_test(&HMRCombinatorIsNullable) {
 	HMRCombinator *nonNullable = [HMRCombinator literal:@"x"];
 	HMRCombinator *nullable = [nonNullable repeat];
