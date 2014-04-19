@@ -48,7 +48,7 @@
 
 
 -(HMRCombinator *)compaction {
-	return _forcing? self : self.forced.compaction;
+	return self.forced.compaction;
 }
 
 
