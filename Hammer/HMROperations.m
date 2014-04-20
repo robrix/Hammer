@@ -45,7 +45,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 	bool (^__weak __block recur)(HMRCombinator *);
 	bool (^isNullable)(HMRCombinator *) = ^bool (HMRCombinator *combinator) {
 		return [HMRMemoize(cache[combinator], @NO, HMRMatch(combinator, @[
-			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
+			[[[HMRBind() concat:HMRBind()] quote] then:^(HMRCombinator *first, HMRCombinator *second) {
 				return @(recur(first) && recur(second));
 			}],
 			

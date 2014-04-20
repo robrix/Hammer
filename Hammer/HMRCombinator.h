@@ -176,13 +176,6 @@ HMRCombinator *HMRLazyCombinator(HMRCombinator *(^delayed)(void)) __attribute__(
 
 #pragma mark Predicate constructors
 
-/// Constructs a concatenation predicate.
-///
-/// \param first   The predicate to match against a concatenation’s first combinator. May be nil, in which case it matches with \c HMRAny().
-/// \param second  The predicate to match against a concatenation’s second combinator. May be nil, in which case it matches with \c HMRAny().
-/// \return        A predicate which matches concatenations whose first and second combinators are matched by the given \c first and \c second predicates.
-id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second);
-
 /// Constructs a repetition predicate.
 ///
 /// \param combinator  The predicate to match against a repetition’s interior combinator. May be nil, in which case it matches with \c HMRAny().
