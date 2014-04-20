@@ -2,6 +2,7 @@
 
 #import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
+#import "HMRKVCCombinator.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
 #import "HMRReduction.h"
@@ -105,6 +106,11 @@ l3_test(@selector(compaction)) {
 
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [self.combinator red_reduce:[super reduce:initial usingBlock:block] usingBlock:block];
+}
+
+
+-(HMRCombinator *)quote {
+	return [[[super quote] and:[HMRKVCCombinator keyPath:@"combinator" combinator:self.combinator]] and:[HMRKVCCombinator keyPath:@"block" combinator:HMRBind()]];
 }
 
 

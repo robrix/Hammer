@@ -189,7 +189,7 @@ l3_test(@selector(quote)) {
 				})];
 			}],
 			
-			[HMRReduced(HMRBind(), HMRBind()) then:^(HMRCombinator *combinator, HMRReductionBlock block) {
+			[[[HMRBind() map:REDIdentityMapBlock] quote] then:^(HMRCombinator *combinator, HMRReductionBlock block) {
 				return [combinator isKindOfClass:[HMRNull class]]?
 					[[NSSet set] red_append:block(parseForest(combinator, cache))]
 				:	HMRDelaySet([[NSSet set] red_append:block(parseForest(combinator, cache))]);
