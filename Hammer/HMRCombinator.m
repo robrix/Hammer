@@ -172,7 +172,7 @@ l3_test(@selector(quote)) {
 				return [parseForest(left, cache) setByAddingObjectsFromSet:parseForest(right, cache)];
 			}],
 			
-			[HMRIntersected(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+			[[[HMRBind() and:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
 				NSSet *leftSet = parseForest(left, cache), *rightSet = parseForest(right, cache);
 				NSMutableSet *intersection = [leftSet mutableCopy];
 				[intersection intersectSet:rightSet];

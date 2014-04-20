@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRIntersection.h"
+#import "HMRKVCCombinator.h"
 
 @implementation HMRIntersection
 
@@ -66,6 +67,20 @@ l3_test(@selector(derivative:)) {
 
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [self.right red_reduce:[self.left red_reduce:[super reduce:initial usingBlock:block] usingBlock:block] usingBlock:block];
+}
+
+
+-(HMRCombinator *)quote {
+	return [[[super quote] and:[HMRKVCCombinator keyPath:@"left" combinator:self.left]] and:[HMRKVCCombinator keyPath:@"right" combinator:self.right]];
+}
+
+l3_test(@selector(quote)) {
+	HMRCombinator *x = [HMRCombinator literal:@"x"];
+	HMRCombinator *any = HMRAny();
+	l3_expect([[[any and:any] quote] matchObject:[x and:x]]).to.equal(@YES);
+	l3_expect([[[any and:[x quote]] quote] matchObject:[x and:x]]).to.equal(@YES);
+	l3_expect([[[[x quote] and:[x quote]] quote] matchObject:[x and:x]]).to.equal(@YES);
+	l3_expect([[[[x quote] and:any] quote] matchObject:[x and:x]]).to.equal(@YES);
 }
 
 
