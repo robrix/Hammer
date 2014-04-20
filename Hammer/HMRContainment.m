@@ -69,6 +69,7 @@ l3_test(@selector(description)) {
 
 static NSString * const HMRAlphanumericCharacterSetName = @"[:alnum:]";
 static NSString * const HMRAlphabeticCharacterSetName = @"[:alpha:]";
+static NSString * const HMRDecimalDigitCharacterSetName = @"[:digit:]";
 static NSString * const HMRWhitespaceCharacterSetName = @"[:blank:]";
 static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 
@@ -76,6 +77,7 @@ static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 	return HMROnce(@{
 		HMRAlphanumericCharacterSetName: [NSCharacterSet alphanumericCharacterSet],
 		HMRAlphabeticCharacterSetName: [NSCharacterSet letterCharacterSet],
+		HMRDecimalDigitCharacterSetName: [NSCharacterSet decimalDigitCharacterSet],
 		HMRWhitespaceCharacterSetName: [NSCharacterSet whitespaceCharacterSet],
 		HMRWhitespaceAndNewlineCharacterSetName: [NSCharacterSet whitespaceAndNewlineCharacterSet],
 	});
