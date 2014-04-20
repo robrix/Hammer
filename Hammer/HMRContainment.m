@@ -73,6 +73,7 @@ static NSString * const HMRASCIICharacterSetName = @"[:ascii:]";
 static NSString * const HMRWhitespaceCharacterSetName = @"[:blank:]";
 static NSString * const HMRControlCharacterSetName = @"[:cntrl:]";
 static NSString * const HMRDecimalDigitCharacterSetName = @"[:digit:]";
+static NSString * const HMRLowercaseLetterCharacterSetName = @"[:lower:]";
 static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 
 +(NSDictionary *)characterSetsByName {
@@ -83,6 +84,7 @@ static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 		HMRWhitespaceCharacterSetName: [NSCharacterSet whitespaceCharacterSet],
 		HMRControlCharacterSetName: [NSCharacterSet controlCharacterSet],
 		HMRDecimalDigitCharacterSetName: [NSCharacterSet decimalDigitCharacterSet],
+		HMRLowercaseLetterCharacterSetName: [NSCharacterSet lowercaseLetterCharacterSet],
 		HMRWhitespaceAndNewlineCharacterSetName: [NSCharacterSet whitespaceAndNewlineCharacterSet],
 	});
 }
