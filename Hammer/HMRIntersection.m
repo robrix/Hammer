@@ -24,7 +24,11 @@
 #pragma mark HMRCombinator
 
 -(HMRCombinator *)deriveWithRespectToObject:(id<NSObject,NSCopying>)object {
-	return [[self.left derivative:object] and:[self.right derivative:object]];
+	HMRCombinator *left = [self.left derivative:object];
+	return
+		[left isEqual:[HMRCombinator empty]]?
+		left
+	:	[left and:[self.right derivative:object]];
 }
 
 l3_test(@selector(derivative:)) {
