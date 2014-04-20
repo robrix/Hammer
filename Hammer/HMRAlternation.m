@@ -3,6 +3,7 @@
 #import "HMRAlternation.h"
 #import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
+#import "HMRKVCCombinator.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
 
@@ -100,7 +101,7 @@ l3_test(@selector(compaction)) {
 
 
 -(HMRCombinator *)quote {
-	return [[[super quote] and:self.left] and:self.right];
+	return [[[super quote] and:[HMRKVCCombinator keyPath:@"left" combinator:self.left]] and:[HMRKVCCombinator keyPath:@"right" combinator:self.right]];
 }
 
 
