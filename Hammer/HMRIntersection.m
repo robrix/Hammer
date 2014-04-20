@@ -38,6 +38,8 @@ l3_test(@selector(derivative:)) {
 	HMRCombinator *right = self.right.compaction;
 	if ([left isEqual:[HMRCombinator empty]] || [right isEqual:[HMRCombinator empty]])
 		compacted = [HMRCombinator empty];
+	else
+		compacted = [left and:right];
 	return compacted;
 }
 
