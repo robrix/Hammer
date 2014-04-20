@@ -53,6 +53,10 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 				return @(recur(left) || recur(right));
 			}],
 			
+			[[[HMRBind() and:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
+				return @(recur(left) && recur(right));
+			}],
+			
 			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
 				return @(recur(combinator));
 			}],
@@ -78,6 +82,16 @@ l3_test(&HMRCombinatorIsNullable) {
 	l3_expect(HMRCombinatorIsNullable([nonNullable concat:nullable])).to.equal(@NO);
 	l3_expect(HMRCombinatorIsNullable([nullable concat:nonNullable])).to.equal(@NO);
 	l3_expect(HMRCombinatorIsNullable([nullable concat:nullable])).to.equal(@YES);
+	
+	l3_expect(HMRCombinatorIsNullable([nonNullable or:nonNullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nonNullable or:nullable])).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable([nullable or:nonNullable])).to.equal(@YES);
+	l3_expect(HMRCombinatorIsNullable([nullable or:nullable])).to.equal(@YES);
+	
+	l3_expect(HMRCombinatorIsNullable([nonNullable and:nonNullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nonNullable and:nullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nullable and:nonNullable])).to.equal(@NO);
+	l3_expect(HMRCombinatorIsNullable([nullable and:nullable])).to.equal(@YES);
 	
 	__block HMRCombinator *cyclic;
 	l3_expect(HMRCombinatorIsNullable(cyclic = [HMRDelay(cyclic) concat:nullable])).to.equal(@NO);
