@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRBlockCombinator.h"
+#import "HMRKVCCombinator.h"
 #import "HMRPair.h"
 #import "HMRRepetition.h"
 
@@ -68,6 +69,11 @@ l3_test(@selector(compaction)) {
 
 -(id)reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [self.combinator red_reduce:[super reduce:initial usingBlock:block] usingBlock:block];
+}
+
+
+-(HMRCombinator *)quote {
+	return [[super quote] and:[HMRKVCCombinator keyPath:@"combinator" combinator:self.combinator]];
 }
 
 

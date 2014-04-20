@@ -195,7 +195,7 @@ l3_test(@selector(quote)) {
 				:	HMRDelaySet([[NSSet set] red_append:block(parseForest(combinator, cache))]);
 			}],
 			
-			[HMRRepeated(HMRAny()) then:^{
+			[[[HMRAny() repeat] quote] then:^{
 				return [NSSet setWithObject:[HMRPair null]];
 			}],
 			
