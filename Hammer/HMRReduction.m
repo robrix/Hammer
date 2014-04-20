@@ -6,9 +6,7 @@
 #import "HMRPair.h"
 #import "HMRReduction.h"
 
-@implementation HMRReduction {
-	bool _isReducingParseForest;
-}
+@implementation HMRReduction
 
 +(instancetype)reduce:(HMRCombinator *)combinator usingBlock:(HMRReductionBlock)block {
 	return [[self alloc] initWithCombinator:combinator block:block];
@@ -34,13 +32,7 @@
 
 
 -(NSSet *)reduceParseForest:(NSSet *)forest {
-	NSSet *parseForest = [NSSet set];
-	if (!_isReducingParseForest) {
-		_isReducingParseForest = YES;
-		parseForest = [[NSSet set] red_append:self.block(forest)];
-		_isReducingParseForest = NO;
-	}
-	return parseForest;
+	return [[NSSet set] red_append:self.block(forest)];
 }
 
 
