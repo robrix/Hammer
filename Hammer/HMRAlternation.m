@@ -45,8 +45,8 @@ l3_test(@selector(derivative:)) {
 		compacted = right;
 	else if ([right isEqual:[HMRCombinator empty]])
 		compacted = left;
-	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
-		compacted = left;
+	else if ([left isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRNull class]])
+		compacted = [HMRCombinator capture:[left.parseForest setByAddingObjectsFromSet:right.parseForest]];
 	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first]) {
 		HMRCombinator *alternation;
 		HMRCombinator *innerLeft = ((HMRConcatenation *)left).second;
