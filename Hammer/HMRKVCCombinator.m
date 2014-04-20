@@ -25,6 +25,21 @@
 }
 
 
+#pragma mark HMRPredicate
+
+-(bool)matchObject:(id<HMRKeyValueCoding>)object {
+	return
+		[super matchObject:object]
+	&&	[self.combinator matchObject:[object valueForKeyPath:self.keyPath]];
+}
+
+l3_test(@selector(matchObject:)) {
+	NSString *string = @"description";
+	HMRCombinator *description = [HMRKVCCombinator keyPath:@"description" combinator:[HMRCombinator literal:string]];
+	l3_expect([description matchObject:string]).to.equal(@YES);
+}
+
+
 #pragma mark NSObject
 
 -(NSString *)description {
