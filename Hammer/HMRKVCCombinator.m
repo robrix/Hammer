@@ -24,4 +24,11 @@
 	return [self.combinator derivative:[object valueForKeyPath:self.keyPath]];
 }
 
+
+#pragma mark NSObject
+
+-(NSString *)description {
+	return [NSString stringWithFormat:@"%@:%@", self.keyPath, self.combinator.name ?: self.combinator.description];
+}
+
 @end
