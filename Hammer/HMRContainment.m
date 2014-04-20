@@ -73,10 +73,13 @@ static NSString * const HMRASCIICharacterSetName = @"[:ascii:]";
 static NSString * const HMRWhitespaceCharacterSetName = @"[:blank:]";
 static NSString * const HMRControlCharacterSetName = @"[:cntrl:]";
 static NSString * const HMRDecimalDigitCharacterSetName = @"[:digit:]";
+//static NSString * const HMRGraphemeCharacterSetName = @"[:graph:]";
 static NSString * const HMRLowercaseLetterCharacterSetName = @"[:lower:]";
+//static NSString * const HMRPrintableCharacterSetName = @"[:print:]";
 static NSString * const HMRPunctuationCharacterSetName = @"[:punct:]";
 static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 static NSString * const HMRUppercaseLetterCharacterSetName = @"[:upper:]";
+//static NSString * const HMRWordCharacterSetName = @"[:word:]";
 static NSString * const HMRHexadecimalDigitCharacterSetName = @"[:xdigit:]";
 
 +(NSDictionary *)characterSetsByName {
@@ -87,10 +90,13 @@ static NSString * const HMRHexadecimalDigitCharacterSetName = @"[:xdigit:]";
 		HMRWhitespaceCharacterSetName: [NSCharacterSet whitespaceCharacterSet],
 		HMRControlCharacterSetName: [NSCharacterSet controlCharacterSet],
 		HMRDecimalDigitCharacterSetName: [NSCharacterSet decimalDigitCharacterSet],
+//		HMRGraphemeCharacterSetName: [NSCharacterSet ],
 		HMRLowercaseLetterCharacterSetName: [NSCharacterSet lowercaseLetterCharacterSet],
+//		HMRPrintableCharacterSetName: [NSCharacterSet ],
 		HMRPunctuationCharacterSetName: [NSCharacterSet punctuationCharacterSet],
 		HMRWhitespaceAndNewlineCharacterSetName: [NSCharacterSet whitespaceAndNewlineCharacterSet],
 		HMRUppercaseLetterCharacterSetName: [NSCharacterSet uppercaseLetterCharacterSet],
+//		HMRWordCharacterSetName: [NSCharacterSet ],
 		HMRHexadecimalDigitCharacterSetName: [NSCharacterSet characterSetWithCharactersInString:@"abcdefABCDEF0123456789"],
 	});
 }
