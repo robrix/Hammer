@@ -260,7 +260,7 @@ l3_test(@selector(parseForest)) {
 				return @(isCyclic(combinator, cache));
 			}],
 			
-			[HMRRepeated(HMRBind()) then:^(HMRCombinator *combinator) {
+			[[[HMRBind() repeat] quote] then:^(HMRCombinator *combinator) {
 				return @(isCyclic(combinator, cache));
 			}],
 			

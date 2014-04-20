@@ -176,12 +176,6 @@ HMRCombinator *HMRLazyCombinator(HMRCombinator *(^delayed)(void)) __attribute__(
 
 #pragma mark Predicate constructors
 
-/// Constructs a repetition predicate.
-///
-/// \param combinator  The predicate to match against a repetition’s interior combinator. May be nil, in which case it matches with \c HMRAny().
-/// \return            A predicate which matches repetitions whose combinators are matched by the given \c combinator predicate.
-id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator);
-
 /// Constructs a reduction predicate.
 ///
 /// \param combinator  The predicate to match against a reduction’s interior combinator. May be nil, in which case it matches with \c HMRAny().
