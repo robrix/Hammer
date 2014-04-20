@@ -38,6 +38,11 @@ l3_test(@selector(derivative:)) {
 	HMRCombinator *right = self.right.compaction;
 	if ([left isEqual:[HMRCombinator empty]] || [right isEqual:[HMRCombinator empty]])
 		compacted = [HMRCombinator empty];
+	else if ([left isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRNull class]]) {
+		NSMutableSet *intersection = [left.parseForest mutableCopy];
+		[intersection intersectSet:right.parseForest];
+		compacted = [HMRCombinator capture:intersection];
+	}
 	else if (left == self.left && right == self.right)
 		compacted = self;
 	else
