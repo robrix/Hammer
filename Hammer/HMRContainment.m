@@ -76,6 +76,7 @@ static NSString * const HMRDecimalDigitCharacterSetName = @"[:digit:]";
 static NSString * const HMRLowercaseLetterCharacterSetName = @"[:lower:]";
 static NSString * const HMRPunctuationCharacterSetName = @"[:punct:]";
 static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
+static NSString * const HMRUppercaseLetterCharacterSetName = @"[:upper:]";
 
 +(NSDictionary *)characterSetsByName {
 	return HMROnce(@{
@@ -88,6 +89,7 @@ static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 		HMRLowercaseLetterCharacterSetName: [NSCharacterSet lowercaseLetterCharacterSet],
 		HMRPunctuationCharacterSetName: [NSCharacterSet punctuationCharacterSet],
 		HMRWhitespaceAndNewlineCharacterSetName: [NSCharacterSet whitespaceAndNewlineCharacterSet],
+		HMRUppercaseLetterCharacterSetName: [NSCharacterSet uppercaseLetterCharacterSet],
 	});
 }
 
