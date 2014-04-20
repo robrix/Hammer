@@ -256,7 +256,7 @@ l3_test(@selector(parseForest)) {
 				return @(isCyclic(first, cache) || isCyclic(second, cache));
 			}],
 			
-			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
+			[[[HMRBind() map:REDIdentityMapBlock] quote] then:^(HMRCombinator *combinator) {
 				return @(isCyclic(combinator, cache));
 			}],
 			

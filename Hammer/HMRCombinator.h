@@ -172,13 +172,3 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \param delayed  A block returning the combinator to delay the evaluation of. Must not be nil, and must not return nil.
 /// \return         A proxy for the lazy-evaluated result of \c delayed.
 HMRCombinator *HMRLazyCombinator(HMRCombinator *(^delayed)(void)) __attribute__((nonnull));
-
-
-#pragma mark Predicate constructors
-
-/// Constructs a reduction predicate.
-///
-/// \param combinator  The predicate to match against a reduction’s interior combinator. May be nil, in which case it matches with \c HMRAny().
-/// \param block       The predicate to match against a reduction’s block. May be nil, in which case it matches with \c HMRAny().
-/// \return            A predicate which matches reductions whose combinators and blocks are matched by the given \c combinator and \c block predicates.
-id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block);

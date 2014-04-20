@@ -57,7 +57,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 				return @(recur(left) && recur(right));
 			}],
 			
-			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
+			[[[HMRBind() map:REDIdentityMapBlock] quote] then:^(HMRCombinator *combinator) {
 				return @(recur(combinator));
 			}],
 			

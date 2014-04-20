@@ -1,6 +1,5 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRKVCCombinator.h"
 #import "HMRNull.h"
@@ -137,15 +136,3 @@ l3_test(@selector(compaction)) {
 }
 
 @end
-
-
-id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block) {
-	combinator = combinator ?: HMRAny();
-	block = block ?: HMRAny();
-	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRReduction *subject) {
-		return
-			[subject isKindOfClass:[HMRReduction class]]
-		&&	[combinator matchObject:subject.combinator]
-		&&	[block matchObject:subject.block];
-	}];
-}
