@@ -34,6 +34,13 @@
 l3_test(@selector(derivative:)) {
 	HMRCombinator *a = [HMRCombinator literal:@"a"], *b = [HMRCombinator literal:@"b"];
 	l3_expect([[a and:b] derivative:@"a"]).to.equal([HMRCombinator empty]);
+	
+	id x = @"x", y = @"y";
+	id (^match)(id, HMRCombinator *) = ^(id subject, HMRCombinator *predicate) {
+		return HMRMatch(subject, @[ [predicate then:REDIdentityMapBlock] ]);
+	};
+	l3_expect(match(x, [[HMRCombinator literal:x] and:HMRBind()])).to.equal(x);
+	l3_expect(match(x, [[HMRCombinator literal:y] and:HMRBind()])).to.equal(nil);
 }
 
 
