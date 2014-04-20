@@ -140,6 +140,13 @@ l3_test(@selector(concatenate:)) {
 }
 
 
+#pragma mark Conveniences
+
+-(HMRReduction *)ignore {
+	return [[self mapSet:HMRIgnoreReductionBlock] withFunctionDescription:@"ignore"];
+}
+
+
 #pragma mark Predicate construction
 
 +(HMRCombinator *)quote {

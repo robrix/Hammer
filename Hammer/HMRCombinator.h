@@ -133,6 +133,14 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 -(HMRRepetition *)repeat;
 
 
+#pragma mark Conveniences
+
+/// Constructs a combinator which parses the receiver but ignores any parse trees it produces.
+///
+/// \return  A reduction which ignores all of the receiver’s parse trees
+-(HMRReduction *)ignore;
+
+
 #pragma mark Predicate construction
 
 /// Constructs a combinator to match instances of the receiver.
