@@ -49,7 +49,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 				return @(recur(first) && recur(second));
 			}],
 			
-			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+			[[[HMRBind() or:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
 				return @(recur(left) || recur(right));
 			}],
 			

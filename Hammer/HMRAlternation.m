@@ -1,7 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
-#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
 #import "HMRKVCCombinator.h"
 #import "HMRNull.h"
@@ -124,15 +123,3 @@ l3_test(@selector(compaction)) {
 }
 
 @end
-
-
-id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right) {
-	left = left ?: HMRAny();
-	right = right ?: HMRAny();
-	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRAlternation *subject) {
-		return
-			[subject isKindOfClass:[HMRAlternation class]]
-		&&	[left matchObject:subject.left]
-		&&	[right matchObject:subject.right];
-	}];
-}

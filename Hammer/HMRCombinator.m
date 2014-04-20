@@ -244,7 +244,7 @@ l3_test(@selector(parseForest)) {
 	
 	static bool (^isCyclic)(HMRCombinator *, NSMutableDictionary *) = ^bool (HMRCombinator *combinator, NSMutableDictionary *cache) {
 		return [cache[combinator] ?: (cache[combinator] = @YES, cache[combinator] = HMRMatch(combinator, @[
-			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+			[[[HMRBind() or:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
 				return @(isCyclic(left, cache) || isCyclic(right, cache));
 			}],
 			
