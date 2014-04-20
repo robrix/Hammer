@@ -4,6 +4,7 @@
 #import "HMRDelayCombinator.h"
 #import "HMRNonterminal.h"
 #import "HMRReduction.h"
+#import "HMRKeyValueCoding.h"
 
 @implementation HMRDelayCombinator {
 	HMRCombinator *(^_block)(void);
@@ -87,6 +88,13 @@
 
 -(id)red_reduce:(id)initial usingBlock:(REDReducingBlock)block {
 	return [self.forced red_reduce:initial usingBlock:block];
+}
+
+
+#pragma mark HMRKeyValueCoding
+
+-(id)valueForKeyPath:(NSString *)keyPath {
+	return [self.forced valueForKeyPath:keyPath];
 }
 
 
