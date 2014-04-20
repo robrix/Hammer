@@ -80,8 +80,8 @@ static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
 		HMRAlphanumericCharacterSetName: [NSCharacterSet alphanumericCharacterSet],
 		HMRAlphabeticCharacterSetName: [NSCharacterSet letterCharacterSet],
 		HMRASCIICharacterSetName: [NSCharacterSet characterSetWithRange:(NSRange){ .length = 128 }],
-		HMRControlCharacterSetName: [NSCharacterSet controlCharacterSet],
 		HMRWhitespaceCharacterSetName: [NSCharacterSet whitespaceCharacterSet],
+		HMRControlCharacterSetName: [NSCharacterSet controlCharacterSet],
 		HMRDecimalDigitCharacterSetName: [NSCharacterSet decimalDigitCharacterSet],
 		HMRWhitespaceAndNewlineCharacterSetName: [NSCharacterSet whitespaceAndNewlineCharacterSet],
 	});
