@@ -24,12 +24,23 @@
 #pragma mark HMRCombinator
 
 -(HMRCombinator *)deriveWithRespectToObject:(id<NSObject,NSCopying>)object {
-	return [[self.left derivative:object] and:[self.right derivative:object]];
+	HMRCombinator *left = [self.left derivative:object];
+	return
+		[left isEqual:[HMRCombinator empty]]?
+		left
+	:	[left and:[self.right derivative:object]];
 }
 
 l3_test(@selector(derivative:)) {
 	HMRCombinator *a = [HMRCombinator literal:@"a"], *b = [HMRCombinator literal:@"b"];
 	l3_expect([[a and:b] derivative:@"a"]).to.equal([HMRCombinator empty]);
+	
+	id x = @"x", y = @"y";
+	id (^match)(id, HMRCombinator *) = ^(id subject, HMRCombinator *predicate) {
+		return HMRMatch(subject, @[ [predicate then:REDIdentityMapBlock] ]);
+	};
+	l3_expect(match(x, [[HMRCombinator literal:x] and:HMRBind()])).to.equal(x);
+	l3_expect(match(x, [[HMRCombinator literal:y] and:HMRBind()])).to.equal(nil);
 }
 
 
