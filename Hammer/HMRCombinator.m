@@ -248,6 +248,10 @@ l3_test(@selector(parseForest)) {
 				return @(isCyclic(left, cache) || isCyclic(right, cache));
 			}],
 			
+			[[[HMRBind() and:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
+				return @(isCyclic(left, cache) || isCyclic(right, cache));
+			}],
+			
 			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
 				return @(isCyclic(first, cache) || isCyclic(second, cache));
 			}],
