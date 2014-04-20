@@ -16,10 +16,8 @@ l3_test("lexer grammar") {
 		return reduced;
 	}] withFunctionDescription:@"produce"] withName:@"word"];
 	
-	HMRReductionBlock ignore = ^(id<REDReducible> all) { return [NSSet set]; };
-	
 	HMRCombinator *whitespaceSet = [HMRCombinator containedIn:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	HMRCombinator *whitespace = [[[[whitespaceSet concat:[whitespaceSet repeat]] mapSet:ignore] withFunctionDescription:@"ignore"] withName:@"whitespace"];
+	HMRCombinator *whitespace = [[[[whitespaceSet concat:[whitespaceSet repeat]] mapSet:HMRIgnoreReductionBlock] withFunctionDescription:@"ignore"] withName:@"whitespace"];
 	
 	HMRCombinator *period = [[[[HMRCombinator literal:@"."] mapSet:^(id all) { return [NSSet setWithObject:[HMRPair null]]; }] withFunctionDescription:@"ignore"] withName:@"period"];
 	

@@ -128,3 +128,8 @@ l3_test(@selector(compaction)) {
 }
 
 @end
+
+
+HMRReductionBlock const HMRIgnoreReductionBlock = ^(id<REDReducible> all) {
+	return [NSSet set];
+};

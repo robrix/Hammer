@@ -16,3 +16,6 @@
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 
 @end
+
+/// A reduction block that can be applied to ignore any produced parse trees.
+extern HMRReductionBlock const HMRIgnoreReductionBlock;
