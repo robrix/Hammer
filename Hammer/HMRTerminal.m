@@ -22,4 +22,9 @@
 	:	[self describe];
 }
 
+
+-(HMRCombinator *)quote {
+	return [[super quote] and:[HMRCombinator literal:self]];
+}
+
 @end
