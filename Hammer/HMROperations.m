@@ -65,7 +65,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 			
 			[HMRCaptured(HMRAny()) then:^{ return @YES; }],
 			
-			[[HMRKindOf kindOfClass:[HMRAnyCombinator class]] then:^{ return @YES; }],
+			[[HMRAny() quote] then:^{ return @YES; }],
 			
 			[HMRAny() then:^{ return @NO; }]
 		])) boolValue];
@@ -76,6 +76,8 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 
 l3_addTestSubjectTypeWithFunction(HMRCombinatorIsNullable)
 l3_test(&HMRCombinatorIsNullable) {
+	l3_expect(HMRCombinatorIsNullable(HMRAny())).to.equal(@YES);
+	
 	HMRCombinator *nonNullable = [HMRCombinator literal:@"x"];
 	HMRCombinator *nullable = [nonNullable repeat];
 	l3_expect(HMRCombinatorIsNullable([nonNullable concat:nonNullable])).to.equal(@NO);
