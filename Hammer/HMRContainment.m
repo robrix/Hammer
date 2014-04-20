@@ -69,15 +69,35 @@ l3_test(@selector(description)) {
 
 static NSString * const HMRAlphanumericCharacterSetName = @"[:alnum:]";
 static NSString * const HMRAlphabeticCharacterSetName = @"[:alpha:]";
+static NSString * const HMRASCIICharacterSetName = @"[:ascii:]";
 static NSString * const HMRWhitespaceCharacterSetName = @"[:blank:]";
+static NSString * const HMRControlCharacterSetName = @"[:cntrl:]";
+static NSString * const HMRDecimalDigitCharacterSetName = @"[:digit:]";
+//static NSString * const HMRGraphemeCharacterSetName = @"[:graph:]";
+static NSString * const HMRLowercaseLetterCharacterSetName = @"[:lower:]";
+//static NSString * const HMRPrintableCharacterSetName = @"[:print:]";
+static NSString * const HMRPunctuationCharacterSetName = @"[:punct:]";
 static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
+static NSString * const HMRUppercaseLetterCharacterSetName = @"[:upper:]";
+//static NSString * const HMRWordCharacterSetName = @"[:word:]";
+static NSString * const HMRHexadecimalDigitCharacterSetName = @"[:xdigit:]";
 
 +(NSDictionary *)characterSetsByName {
 	return HMROnce(@{
 		HMRAlphanumericCharacterSetName: [NSCharacterSet alphanumericCharacterSet],
 		HMRAlphabeticCharacterSetName: [NSCharacterSet letterCharacterSet],
+		HMRASCIICharacterSetName: [NSCharacterSet characterSetWithRange:(NSRange){ .length = 128 }],
 		HMRWhitespaceCharacterSetName: [NSCharacterSet whitespaceCharacterSet],
+		HMRControlCharacterSetName: [NSCharacterSet controlCharacterSet],
+		HMRDecimalDigitCharacterSetName: [NSCharacterSet decimalDigitCharacterSet],
+//		HMRGraphemeCharacterSetName: [NSCharacterSet ],
+		HMRLowercaseLetterCharacterSetName: [NSCharacterSet lowercaseLetterCharacterSet],
+//		HMRPrintableCharacterSetName: [NSCharacterSet ],
+		HMRPunctuationCharacterSetName: [NSCharacterSet punctuationCharacterSet],
 		HMRWhitespaceAndNewlineCharacterSetName: [NSCharacterSet whitespaceAndNewlineCharacterSet],
+		HMRUppercaseLetterCharacterSetName: [NSCharacterSet uppercaseLetterCharacterSet],
+//		HMRWordCharacterSetName: [NSCharacterSet ],
+		HMRHexadecimalDigitCharacterSetName: [NSCharacterSet characterSetWithCharactersInString:@"abcdefABCDEF0123456789"],
 	});
 }
 
