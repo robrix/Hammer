@@ -1,6 +1,5 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRBlockCombinator.h"
 #import "HMREmpty.h"
 #import "HMRNull.h"
 #import "HMROnce.h"
@@ -105,12 +104,3 @@ l3_test(@selector(description)) {
 }
 
 @end
-
-
-id<HMRPredicate> HMRCaptured(id<HMRPredicate> parseForest) {
-	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRNull *subject) {
-		return
-			[subject isKindOfClass:[HMRNull class]]
-		&&	[parseForest matchObject:subject.parseForest];
-	}];
-}

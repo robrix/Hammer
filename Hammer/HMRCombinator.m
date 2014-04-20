@@ -199,7 +199,7 @@ l3_test(@selector(quote)) {
 				return [NSSet setWithObject:[HMRPair null]];
 			}],
 			
-			[[HMRKindOf kindOfClass:[HMRNull class]] then:^{
+			[[HMRNull quote] then:^{
 				return combinator.parseForest;
 			}],
 			

@@ -63,7 +63,7 @@ bool HMRCombinatorIsNullable(HMRCombinator *combinator) {
 			
 			[[[HMRAny() repeat] quote] then:^{ return @YES; }],
 			
-			[HMRCaptured(HMRAny()) then:^{ return @YES; }],
+			[[HMRNull quote] then:^{ return @YES; }],
 			
 			[[HMRAny() quote] then:^{ return @YES; }],
 			
