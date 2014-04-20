@@ -28,7 +28,7 @@
 #pragma mark HMRTerminal
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"@%@", self.targetClass];
+	return [NSString stringWithFormat:@"isKindOfClass:%@", self.targetClass];
 }
 
 

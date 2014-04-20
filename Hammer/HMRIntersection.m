@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRIntersection.h"
+#import "HMRKVCCombinator.h"
 
 @implementation HMRIntersection
 
@@ -38,6 +39,15 @@ l3_test(@selector(derivative:)) {
 	HMRCombinator *right = self.right.compaction;
 	if ([left isEqual:[HMRCombinator empty]] || [right isEqual:[HMRCombinator empty]])
 		compacted = [HMRCombinator empty];
+	else if ([left isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRNull class]]) {
+		NSMutableSet *intersection = [left.parseForest mutableCopy];
+		[intersection intersectSet:right.parseForest];
+		compacted = [HMRCombinator capture:intersection];
+	}
+	else if (left == self.left && right == self.right)
+		compacted = self;
+	else
+		compacted = [left and:right];
 	return compacted;
 }
 
@@ -60,6 +70,20 @@ l3_test(@selector(derivative:)) {
 }
 
 
+-(HMRCombinator *)quote {
+	return [[[super quote] and:[HMRKVCCombinator keyPath:@"left" combinator:self.left]] and:[HMRKVCCombinator keyPath:@"right" combinator:self.right]];
+}
+
+l3_test(@selector(quote)) {
+	HMRCombinator *x = [HMRCombinator literal:@"x"];
+	HMRCombinator *any = HMRAny();
+	l3_expect([[[any and:any] quote] matchObject:[x and:x]]).to.equal(@YES);
+	l3_expect([[[any and:[x quote]] quote] matchObject:[x and:x]]).to.equal(@YES);
+	l3_expect([[[[x quote] and:[x quote]] quote] matchObject:[x and:x]]).to.equal(@YES);
+	l3_expect([[[[x quote] and:any] quote] matchObject:[x and:x]]).to.equal(@YES);
+}
+
+
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
@@ -79,15 +103,3 @@ l3_test(@selector(derivative:)) {
 }
 
 @end
-
-
-id<HMRPredicate> HMRIntersected(id<HMRPredicate> left, id<HMRPredicate> right) {
-	left = left ?: HMRAny();
-	right = right ?: HMRAny();
-	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRIntersection *subject) {
-		return
-			[subject isKindOfClass:[HMRIntersection class]]
-		&&	[left matchObject:subject.left]
-		&&	[right matchObject:subject.right];
-	}];
-}

@@ -1,6 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRBlockCombinator.h"
+#import "HMRKVCCombinator.h"
 #import "HMRPair.h"
 #import "HMRRepetition.h"
 
@@ -71,6 +71,11 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(HMRCombinator *)quote {
+	return [[super quote] and:[HMRKVCCombinator keyPath:@"combinator" combinator:self.combinator]];
+}
+
+
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
@@ -87,13 +92,3 @@ l3_test(@selector(compaction)) {
 }
 
 @end
-
-
-id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator) {
-	combinator = combinator ?: HMRAny();
-	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRRepetition *subject) {
-		return
-			[subject isKindOfClass:[HMRRepetition class]]
-		&&	[combinator matchObject:subject.combinator];
-	}];
-}

@@ -1,8 +1,8 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
 #import "HMRAlternation.h"
-#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
+#import "HMRKVCCombinator.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
 
@@ -45,8 +45,8 @@ l3_test(@selector(derivative:)) {
 		compacted = right;
 	else if ([right isEqual:[HMRCombinator empty]])
 		compacted = left;
-	else if ([left isKindOfClass:[HMRNull class]] && [left isEqual:right])
-		compacted = left;
+	else if ([left isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRNull class]])
+		compacted = [HMRCombinator capture:[left.parseForest setByAddingObjectsFromSet:right.parseForest]];
 	else if ([left isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isKindOfClass:[HMRNull class]] && [right isKindOfClass:[HMRConcatenation class]] && [((HMRConcatenation *)left).first isEqual:((HMRConcatenation *)right).first]) {
 		HMRCombinator *alternation;
 		HMRCombinator *innerLeft = ((HMRConcatenation *)left).second;
@@ -99,6 +99,11 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(HMRCombinator *)quote {
+	return [[[super quote] and:[HMRKVCCombinator keyPath:@"left" combinator:self.left]] and:[HMRKVCCombinator keyPath:@"right" combinator:self.right]];
+}
+
+
 #pragma mark HMRPredicate
 
 -(bool)matchObject:(id)object {
@@ -118,15 +123,3 @@ l3_test(@selector(compaction)) {
 }
 
 @end
-
-
-id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right) {
-	left = left ?: HMRAny();
-	right = right ?: HMRAny();
-	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRAlternation *subject) {
-		return
-			[subject isKindOfClass:[HMRAlternation class]]
-		&&	[left matchObject:subject.left]
-		&&	[right matchObject:subject.right];
-	}];
-}

@@ -3,6 +3,7 @@
 #import "HMRCase.h"
 #import "HMRCombinator.h"
 #import "HMRDelaySet.h"
+#import "HMRKindOf.h"
 #import "HMRMemoization.h"
 #import "HMROnce.h"
 
@@ -139,6 +140,23 @@ l3_test(@selector(concatenate:)) {
 }
 
 
+#pragma mark Predicate construction
+
++(HMRCombinator *)quote {
+	return [HMRKindOf kindOfClass:self];
+}
+
+l3_test(@selector(quote)) {
+	l3_expect([[HMRNull quote] matchObject:[HMRCombinator captureTree:@"a"]]).to.equal(@YES);
+	l3_expect([[HMRNull quote] matchObject:[HMRCombinator literal:@"a"]]).to.equal(@NO);
+}
+
+
+-(HMRCombinator *)quote {
+	return [self.class quote];
+}
+
+
 #pragma mark HMRCombinator
 
 -(HMRCombinator *)derivative:(id<NSObject,NSCopying>)object {
@@ -150,18 +168,18 @@ l3_test(@selector(concatenate:)) {
 	NSMutableDictionary *cache = [NSMutableDictionary new];
 	static NSSet *(^parseForest)(HMRCombinator *, NSMutableDictionary *) = ^NSSet *(HMRCombinator *combinator, NSMutableDictionary *cache) {
 		return cache[combinator] ?: (cache[combinator] = [NSSet set], cache[combinator] = HMRMatch(combinator, @[
-			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+			[[[HMRBind() or:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
 				return [parseForest(left, cache) setByAddingObjectsFromSet:parseForest(right, cache)];
 			}],
 			
-			[HMRIntersected(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+			[[[HMRBind() and:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
 				NSSet *leftSet = parseForest(left, cache), *rightSet = parseForest(right, cache);
 				NSMutableSet *intersection = [leftSet mutableCopy];
 				[intersection intersectSet:rightSet];
 				return intersection;
 			}],
 			
-			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
+			[[[HMRBind() concat:HMRBind()] quote] then:^(HMRCombinator *first, HMRCombinator *second) {
 				NSSet *prefix = parseForest(first, cache);
 				NSSet *suffix = parseForest(second, cache);
 				return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
@@ -171,17 +189,17 @@ l3_test(@selector(concatenate:)) {
 				})];
 			}],
 			
-			[HMRReduced(HMRBind(), HMRBind()) then:^(HMRCombinator *combinator, HMRReductionBlock block) {
+			[[[HMRBind() map:REDIdentityMapBlock] quote] then:^(HMRCombinator *combinator, HMRReductionBlock block) {
 				return [combinator isKindOfClass:[HMRNull class]]?
 					[[NSSet set] red_append:block(parseForest(combinator, cache))]
 				:	HMRDelaySet([[NSSet set] red_append:block(parseForest(combinator, cache))]);
 			}],
 			
-			[HMRRepeated(HMRAny()) then:^{
+			[[[HMRAny() repeat] quote] then:^{
 				return [NSSet setWithObject:[HMRPair null]];
 			}],
 			
-			[[HMRKindOf kindOfClass:[HMRNull class]] then:^{
+			[[HMRNull quote] then:^{
 				return combinator.parseForest;
 			}],
 			
@@ -226,19 +244,23 @@ l3_test(@selector(parseForest)) {
 	
 	static bool (^isCyclic)(HMRCombinator *, NSMutableDictionary *) = ^bool (HMRCombinator *combinator, NSMutableDictionary *cache) {
 		return [cache[combinator] ?: (cache[combinator] = @YES, cache[combinator] = HMRMatch(combinator, @[
-			[HMRAlternated(HMRBind(), HMRBind()) then:^(HMRCombinator *left, HMRCombinator *right) {
+			[[[HMRBind() or:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
 				return @(isCyclic(left, cache) || isCyclic(right, cache));
 			}],
 			
-			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
+			[[[HMRBind() and:HMRBind()] quote] then:^(HMRCombinator *left, HMRCombinator *right) {
+				return @(isCyclic(left, cache) || isCyclic(right, cache));
+			}],
+			
+			[[[HMRBind() concat:HMRBind()] quote] then:^(HMRCombinator *first, HMRCombinator *second) {
 				return @(isCyclic(first, cache) || isCyclic(second, cache));
 			}],
 			
-			[HMRReduced(HMRBind(), HMRAny()) then:^(HMRCombinator *combinator) {
+			[[[HMRBind() map:REDIdentityMapBlock] quote] then:^(HMRCombinator *combinator) {
 				return @(isCyclic(combinator, cache));
 			}],
 			
-			[HMRRepeated(HMRBind()) then:^(HMRCombinator *combinator) {
+			[[[HMRBind() repeat] quote] then:^(HMRCombinator *combinator) {
 				return @(isCyclic(combinator, cache));
 			}],
 			

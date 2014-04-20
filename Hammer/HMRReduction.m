@@ -1,14 +1,12 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-#import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
+#import "HMRKVCCombinator.h"
 #import "HMRNull.h"
 #import "HMRPair.h"
 #import "HMRReduction.h"
 
-@implementation HMRReduction {
-	bool _isReducingParseForest;
-}
+@implementation HMRReduction
 
 +(instancetype)reduce:(HMRCombinator *)combinator usingBlock:(HMRReductionBlock)block {
 	return [[self alloc] initWithCombinator:combinator block:block];
@@ -34,13 +32,7 @@
 
 
 -(NSSet *)reduceParseForest:(NSSet *)forest {
-	NSSet *parseForest = [NSSet set];
-	if (!_isReducingParseForest) {
-		_isReducingParseForest = YES;
-		parseForest = [[NSSet set] red_append:self.block(forest)];
-		_isReducingParseForest = NO;
-	}
-	return parseForest;
+	return [[NSSet set] red_append:self.block(forest)];
 }
 
 
@@ -108,6 +100,11 @@ l3_test(@selector(compaction)) {
 }
 
 
+-(HMRCombinator *)quote {
+	return [[[super quote] and:[HMRKVCCombinator keyPath:@"combinator" combinator:self.combinator]] and:[HMRKVCCombinator keyPath:@"block" combinator:HMRBind()]];
+}
+
+
 -(instancetype)withFunctionDescription:(NSString *)functionDescription {
 	_functionDescription = functionDescription;
 	return self;
@@ -131,15 +128,3 @@ l3_test(@selector(compaction)) {
 }
 
 @end
-
-
-id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block) {
-	combinator = combinator ?: HMRAny();
-	block = block ?: HMRAny();
-	return [[HMRBlockCombinator alloc] initWithBlock:^bool (HMRReduction *subject) {
-		return
-			[subject isKindOfClass:[HMRReduction class]]
-		&&	[combinator matchObject:subject.combinator]
-		&&	[block matchObject:subject.block];
-	}];
-}

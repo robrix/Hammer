@@ -133,6 +133,19 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 -(HMRRepetition *)repeat;
 
 
+#pragma mark Predicate construction
+
+/// Constructs a combinator to match instances of the receiver.
++(HMRCombinator *)quote;
+
+/// Constructs a combinator to match the receiver.
+///
+/// For example, \code[[a and:b] quote]\endcode returns a combinator which will match \c HMRConcatenation instances whose \c first property is matched by \c a and whose \c second property is matched by \c b. This is performed shallowly.
+///
+/// \c return  A combinator which matches the structure of the receiver.
+-(HMRCombinator *)quote;
+
+
 #pragma mark Pretty-printing
 
 @property (readonly) NSString *name;
@@ -159,46 +172,3 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \param delayed  A block returning the combinator to delay the evaluation of. Must not be nil, and must not return nil.
 /// \return         A proxy for the lazy-evaluated result of \c delayed.
 HMRCombinator *HMRLazyCombinator(HMRCombinator *(^delayed)(void)) __attribute__((nonnull));
-
-
-#pragma mark Predicate constructors
-
-/// Constructs a concatenation predicate.
-///
-/// \param first   The predicate to match against a concatenation’s first combinator. May be nil, in which case it matches with \c HMRAny().
-/// \param second  The predicate to match against a concatenation’s second combinator. May be nil, in which case it matches with \c HMRAny().
-/// \return        A predicate which matches concatenations whose first and second combinators are matched by the given \c first and \c second predicates.
-id<HMRPredicate> HMRConcatenated(id<HMRPredicate> first, id<HMRPredicate> second);
-
-/// Constructs an alternation predicate.
-///
-/// \param left   The predicate to match against an alternation’s left combinator. May be nil, in which case it matches with \c HMRAny().
-/// \param right  The predicate to match against an alternation’s right combinator. May be nil, in which case it matches with \c HMRAny().
-/// \return       A predicate which matches alternations whose left and right combinators are matched by the given \c left and \c right predicates.
-id<HMRPredicate> HMRAlternated(id<HMRPredicate> left, id<HMRPredicate> right);
-
-/// Constructs an intersection predicate.
-///
-/// \param left   The predicate to match against an intersection’s left combinator. May be nil, in which case it matches with \c HMRAny().
-/// \param right  The predicate to match against an intersection’s right combinator. May be nil, in which case it matches with \c HMRAny().
-/// \return       A predicate which matches intersections whose left and right combinators are matched by the given \c left and \c right predicates.
-id<HMRPredicate> HMRIntersected(id<HMRPredicate> left, id<HMRPredicate> right);
-
-/// Constructs a repetition predicate.
-///
-/// \param combinator  The predicate to match against a repetition’s interior combinator. May be nil, in which case it matches with \c HMRAny().
-/// \return            A predicate which matches repetitions whose combinators are matched by the given \c combinator predicate.
-id<HMRPredicate> HMRRepeated(id<HMRPredicate> combinator);
-
-/// Constructs a reduction predicate.
-///
-/// \param combinator  The predicate to match against a reduction’s interior combinator. May be nil, in which case it matches with \c HMRAny().
-/// \param block       The predicate to match against a reduction’s block. May be nil, in which case it matches with \c HMRAny().
-/// \return            A predicate which matches reductions whose combinators and blocks are matched by the given \c combinator and \c block predicates.
-id<HMRPredicate> HMRReduced(id<HMRPredicate> combinator, id<HMRPredicate> block);
-
-/// Constructs a capture predicate.
-///
-/// \param forest  The predicate to match against a capture’s parse forest. May be nil, in which case it matches with \c HMRAny().
-/// \return        A predicate which matches captures whose parse forests are matched by the given \c forest predicate.
-id<HMRPredicate> HMRCaptured(id<HMRPredicate> forest);
