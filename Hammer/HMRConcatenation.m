@@ -2,6 +2,7 @@
 
 #import "HMRBlockCombinator.h"
 #import "HMRConcatenation.h"
+#import "HMRKVCCombinator.h"
 #import "HMRNull.h"
 #import "HMROperations.h"
 #import "HMRPair.h"
@@ -134,6 +135,11 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 	
 	size = [cyclic red_reduce:@0 usingBlock:count];
 	l3_expect(size).to.equal(@2);
+}
+
+
+-(HMRCombinator *)quote {
+	return [[[super quote] and:[HMRKVCCombinator keyPath:@"first" combinator:self.first]] and:[HMRKVCCombinator keyPath:@"second" combinator:self.second]];
 }
 
 

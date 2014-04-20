@@ -179,7 +179,7 @@ l3_test(@selector(quote)) {
 				return intersection;
 			}],
 			
-			[HMRConcatenated(HMRBind(), HMRBind()) then:^(HMRCombinator *first, HMRCombinator *second) {
+			[[[HMRBind() concat:HMRBind()] quote] then:^(HMRCombinator *first, HMRCombinator *second) {
 				NSSet *prefix = parseForest(first, cache);
 				NSSet *suffix = parseForest(second, cache);
 				return [[NSSet set] red_append:REDFlattenMap(prefix, ^(id x) {
