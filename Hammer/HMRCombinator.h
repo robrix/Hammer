@@ -77,7 +77,7 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 ///
 /// \param operands  An array of operands to the alternation. Must not be empty. Must not be nil.
 /// \return          A combinator representing the union of all the passed combinators.
-+(HMRCombinator *)alternate:(NSArray *)operands;
++(HMRCombinator *)alternate:(id<REDReducible>)operands;
 
 /// Constructs the intersection of \c self and \c other.
 ///

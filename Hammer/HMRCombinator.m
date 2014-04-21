@@ -67,7 +67,7 @@ static id HMRReduceRight(id<REDReducible> collection, id initial, REDReducingBlo
 	return final(initial);
 }
 
-+(HMRCombinator *)alternate:(NSArray *)operands {
++(HMRCombinator *)alternate:(id<REDReducible>)operands {
 	return HMRReduceRight(operands, nil, ^id(id into, id each) {
 		return into? [each or:into] : each;
 	});
