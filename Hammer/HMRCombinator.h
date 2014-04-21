@@ -73,11 +73,11 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \return       A combinator representing the union of \c self and \c other.
 -(HMRAlternation *)or:(HMRCombinator *)other;
 
-/// Constructs the alternation of a variadic list of combinators.
+/// Constructs the alternation of an array of combinators.
 ///
-/// \param leftmost  The leftmost operand to the alternation. Must not be nil.
+/// \param operands  An array of operands to the alternation. Must not be empty. Must not be nil.
 /// \return          A combinator representing the union of all the passed combinators.
-+(HMRCombinator *)alternate:(HMRCombinator *)leftmost, ... NS_REQUIRES_NIL_TERMINATION;
++(HMRCombinator *)alternate:(NSArray *)operands;
 
 /// Constructs the intersection of \c self and \c other.
 ///

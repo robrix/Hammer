@@ -6,6 +6,7 @@
 #import "HMRKindOf.h"
 #import "HMRMemoization.h"
 #import "HMROnce.h"
+#import <Reducers/REDMap.h>
 
 @implementation HMRCombinator {
 	NSNumber *_cyclic;
@@ -49,7 +50,7 @@
 }
 
 typedef HMRCombinator *(^HMRCombinatorPairBlock)(HMRCombinator *, HMRCombinator *);
-HMRCombinator *(^HMRCombineVariadics)(HMRCombinator *, va_list, HMRCombinatorPairBlock) = ^HMRCombinator *(HMRCombinator *each, va_list args, HMRCombinatorPairBlock pair) {
+static HMRCombinator *(^HMRCombineVariadics)(HMRCombinator *, va_list, HMRCombinatorPairBlock) = ^HMRCombinator *(HMRCombinator *each, va_list args, HMRCombinatorPairBlock pair) {
 	if (each) {
 		HMRCombinator *rest = HMRCombineVariadics(va_arg(args, HMRCombinator *), args, pair);
 		each = rest?
@@ -59,22 +60,22 @@ HMRCombinator *(^HMRCombineVariadics)(HMRCombinator *, va_list, HMRCombinatorPai
 	return each;
 };
 
-+(HMRCombinator *)alternate:(HMRCombinator *)leftmost, ... {
-	va_list args;
-	va_start(args, leftmost);
-	
-	HMRCombinator *alternation = HMRCombineVariadics(leftmost, args, ^(HMRCombinator *left, HMRCombinator *right) {
-		return [left or:right];
+static id HMRReduceRight(id<REDReducible> collection, id initial, REDReducingBlock block) {
+	REDMapBlock final = [collection red_reduce:REDIdentityMapBlock usingBlock:^(REDMapBlock into, id each) {
+		return [^(id rest) { return into(block(rest, each)); } copy];
+	}];
+	return final(initial);
+}
+
++(HMRCombinator *)alternate:(NSArray *)operands {
+	return HMRReduceRight(operands, nil, ^id(id into, id each) {
+		return into? [each or:into] : each;
 	});
-	
-	va_end(args);
-	
-	return alternation;
 }
 
 l3_test(@selector(alternate:)) {
-	HMRCombinator *sub = [HMRCombinator literal:@"x"];
-	l3_expect([HMRCombinator alternate:sub, sub, sub, nil]).to.equal([sub or:[sub or:sub]]);
+	HMRCombinator *x = [HMRCombinator literal:@"x"], *y = [HMRCombinator literal:@"y"], *z = [HMRCombinator literal:@"z"];
+	l3_expect([HMRCombinator alternate:@[ x, y, z ]]).to.equal([x or:[y or:z]]);
 }
 
 
