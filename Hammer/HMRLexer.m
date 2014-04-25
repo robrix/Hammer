@@ -38,13 +38,13 @@ l3_test("lexer grammar") {
 //		whitespace,
 //	]);
 	
-	HMRCombinator *into = [symbol concat:[[whitespace concat: symbol] repeat]];
-	id input = @"colourless green ideas sleep furiously";
-	id lexed = [[input red_reduce:into usingBlock:^(HMRCombinator *into, id each) {
+	HMRCombinator *into = [symbol concat:[[whitespace concat:symbol] repeat]];
+	NSString *input = @"colourless green ideas sleep furiously";
+	NSSet *lexed = [[input red_reduce:into usingBlock:^(HMRCombinator *into, id each) {
 		return [into derivative:each];
 	}] parseForest];
 	
-	l3_expect(lexed).to.equal(@[@"colourless", @"green", @"ideas", @"sleep", @"furiously"]);
+	l3_expect(lexed.anyObject).to.equal(HMRList(@"colourless", @"green", @"ideas", @"sleep", @"furiously", nil));
 }
 
 l3_test("lexer incrementality") {
