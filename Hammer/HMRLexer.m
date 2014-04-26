@@ -15,9 +15,6 @@ id<REDReducible> HMRLex(id<REDReducible> input, id<REDReducible> patterns) {
 	}] parseForest];
 }
 
-@interface HMRToken : NSObject
-@end
-
 l3_test("lexer grammar") {
 	NSMutableCharacterSet *first = [NSMutableCharacterSet letterCharacterSet];
 	[first addCharactersInString:@"_-"];
@@ -30,13 +27,6 @@ l3_test("lexer grammar") {
 	
 	HMRCombinator *whitespaceSet = [HMRCombinator containedIn:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	HMRCombinator *whitespace = [[[whitespaceSet concat:[whitespaceSet repeat]] ignore] withName:@"whitespace"];
-	
-//	HMRCombinator *
-	
-//	id lexed = HMRLex(@"colourless green ideas sleep furiously", @[
-//		symbol,
-//		whitespace,
-//	]);
 	
 	HMRCombinator *into = [symbol concat:[[whitespace concat:symbol] repeat]];
 	NSString *input = @"colourless green ideas sleep furiously";
@@ -73,7 +63,3 @@ l3_test("lexer incrementality") {
 	l3_expect(parseForest).to.equal([NSSet setWithObject:HMRList(@"one", @"fish", @"two", @"fish", @"red", @"fish", @"blue", @"fish", nil)]);
 	l3_expect(reductions).to.equal(@[ @"one", @"fish", @"two", @"fish", @"red", @"fish", @"blue", @"fish" ]);
 }
-
-
-@implementation HMRToken
-@end
