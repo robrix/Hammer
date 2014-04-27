@@ -1,0 +1,24 @@
+start -> production ('\n' '\n'* production)* | ε
+
+symbol -> [[:alnum:]_] [-_[:alnum:]]*
+ws -> [[:blank:]]*
+wsnl -> [[:space:]]*
+
+production -> ws symbol wsnl '-' '>' wsnl nonterminal ws
+
+nonterminal -> alternation
+alternation -> concatenation (ws '|' ws concatenation)*
+concatenation -> repetition ws repetition*
+repetition -> (symbol | terminal | '(' nonterminal ')') ws ('*' | ε)
+
+terminal -> literal | character-set | any
+
+literal -> '\'' literal-character '\''
+literal-character -> '\\' (escaped-character | '\'') | [^']
+
+character-set -> '[' ('^' | ε) character-set-character character-set-character* ']'
+character-set-character -> ('[' ':' ('alnum' | 'alpha' | 'blank' | 'digit' | 'space' | '') ':' ']') | '\\' (escaped-character | ']') | [^\]]
+
+escaped-character -> '\\' | 'n' | 'r' | 't'
+
+any -> '.'
