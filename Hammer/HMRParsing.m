@@ -56,13 +56,13 @@ HMRCombinator *HMRParser(void) {
 		[[alphanumeric or:[HMRCombinator containedIn:[NSCharacterSet characterSetWithCharactersInString:@"_-"]]] repeat],
 	]];
 	
-	HMRCombinator *ws = [[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceCharacterSetName]] repeat];
-	HMRCombinator *wsnl = [[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceAndNewlineCharacterSetName]] repeat];
+	HMRCombinator *ws = [[[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceCharacterSetName]] repeat] withName:@"ws"];
+	HMRCombinator *wsnl = [[[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceAndNewlineCharacterSetName]] repeat] withName:@"wsnl"];
 	HMRCombinator *newlineCharacter = [HMRCombinator containedIn:[NSCharacterSet newlineCharacterSet]];
-	HMRCombinator *nl = [newlineCharacter concat:[newlineCharacter repeat]];
+	HMRCombinator *nl = [[newlineCharacter concat:[newlineCharacter repeat]] withName:@"nl"];
 	
-	HMRCombinator *any = [HMRCombinator literal:@"."];
-	HMRCombinator *escapedCharacter = [HMRCombinator alternate:@[ backslash, [HMRCombinator literal:@"n"], [HMRCombinator literal:@"r"], [HMRCombinator literal:@"t"], ]];
+	HMRCombinator *any = [[HMRCombinator literal:@"."] withName:@"any"];
+	HMRCombinator *escapedCharacter = [[HMRCombinator alternate:@[ backslash, [HMRCombinator literal:@"n"], [HMRCombinator literal:@"r"], [HMRCombinator literal:@"t"], ]] withName:@"escaped-character"];
 	
 	HMRCombinator *POSIXCharacterClasses = [HMRCombinator concatenate:@[
 		openBracket,
@@ -72,49 +72,49 @@ HMRCombinator *HMRParser(void) {
 		closeBracket,
 	]];
 	
-	HMRCombinator *characterSetCharacter = [HMRCombinator alternate:@[
+	HMRCombinator *characterSetCharacter = [[HMRCombinator alternate:@[
 		POSIXCharacterClasses,
 		[backslash concat:[escapedCharacter or:closeBracket]],
 		[HMRCombinator containedIn:[[NSCharacterSet characterSetWithCharactersInString:@"]"] invertedSet]],
-	]];
+	]] withName:@"character-set-character"];
 	
-	HMRCombinator *characterSet = [HMRCombinator concatenate:@[
+	HMRCombinator *characterSet = [[HMRCombinator concatenate:@[
 		openBracket,
 		[[HMRCombinator literal:@"^"] optional],
 		characterSetCharacter,
 		[characterSetCharacter repeat],
 		closeBracket,
-	]];
+	]] withName:@"character-set"];
 	
-	HMRCombinator *literalCharacter = [HMRCombinator alternate:@[
+	HMRCombinator *literalCharacter = [[HMRCombinator alternate:@[
 		[backslash concat:[escapedCharacter or:quote]],
 		[HMRCombinator containedIn:[[NSCharacterSet characterSetWithCharactersInString:@"'"] invertedSet]],
-	]];
+	]] withName:@"literal-character"];
 	
-	HMRCombinator *literal = [HMRCombinator concatenate:@[ quote, literalCharacter, quote, ]];
+	HMRCombinator *literal = [[HMRCombinator concatenate:@[ quote, literalCharacter, quote, ]] withName:@"literal"];
 	
-	HMRCombinator *terminal = [HMRCombinator alternate:@[ literal, characterSet, any ]];
+	HMRCombinator *terminal = [[HMRCombinator alternate:@[ literal, characterSet, any ]] withName:@"terminal"];
 	
 	__block HMRCombinator *nonterminal;
 	
 	HMRCombinator *parenthesized = [HMRCombinator concatenate:@[ [HMRCombinator literal:@"("], wsnl, HMRDelay(nonterminal), wsnl, [HMRCombinator literal:@")"], ]];
 	
-	HMRCombinator *repetition = [HMRCombinator concatenate:@[
+	HMRCombinator *repetition = [[HMRCombinator concatenate:@[
 		[HMRCombinator alternate:@[ symbol, terminal, parenthesized ]],
 		wsnl,
 		[[HMRCombinator literal:@"*"] optional],
-	]];
+	]] withName:@"repetition"];
 	
-	HMRCombinator *concatenation = [HMRCombinator concatenate:@[ repetition, [[wsnl concat:repetition] repeat] ]];
+	HMRCombinator *concatenation = [[HMRCombinator concatenate:@[ repetition, [[wsnl concat:repetition] repeat] ]] withName:@"concatenation"];
 	
-	HMRCombinator *alternation = [HMRCombinator concatenate:@[
+	HMRCombinator *alternation = [[HMRCombinator concatenate:@[
 		concatenation,
 		[[HMRCombinator concatenate:@[ wsnl, [HMRCombinator literal:@"|"], wsnl, concatenation ]] repeat],
-	]];
+	]] withName:@"alternation"];
 	
 	nonterminal = alternation;
 	
-	HMRCombinator *production = [HMRCombinator concatenate:@[
+	HMRCombinator *production = [[HMRCombinator concatenate:@[
 		ws,
 		symbol,
 		wsnl,
@@ -122,12 +122,12 @@ HMRCombinator *HMRParser(void) {
 		wsnl,
 		nonterminal,
 		ws,
-	]];
+	]] withName:@"production"];
 	
-	HMRCombinator *grammar = [[HMRCombinator concatenate:@[
+	HMRCombinator *grammar = [[[HMRCombinator concatenate:@[
 		production,
 		[[nl concat:production] repeat],
-	]] optional];
+	]] optional] withName:@"grammar"];
 	
 	return grammar;
 }
