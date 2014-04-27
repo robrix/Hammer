@@ -45,5 +45,7 @@ HMRCombinator *HMRParser(void) {
 	HMRCombinator *openBracket = [HMRCombinator literal:@"["];
 	HMRCombinator *closeBracket = [HMRCombinator literal:@"]"];
 	
+	HMRCombinator *any = [HMRCombinator literal:@"."];
+	
 	return nil;
 }
