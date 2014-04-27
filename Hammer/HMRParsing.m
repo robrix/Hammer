@@ -79,5 +79,7 @@ HMRCombinator *HMRParser(void) {
 	
 	HMRCombinator *literal = [HMRCombinator concatenate:@[ quote, literalCharacter, quote, ]];
 	
+	HMRCombinator *terminal = [HMRCombinator alternate:@[ literal, characterSet, any ]];
+	
 	return nil;
 }
