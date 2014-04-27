@@ -1,15 +1,16 @@
-start -> production ('\n' '\n'* production)* | ε
+start -> production (nl production)* | ε
 
 symbol -> [[:alnum:]_] [-_[:alnum:]]*
 ws -> [[:blank:]]*
 wsnl -> [[:space:]]*
+nl -> '\n' '\n'*
 
 production -> ws symbol wsnl '-' '>' wsnl nonterminal ws
 
 nonterminal -> alternation
-alternation -> concatenation (ws '|' ws concatenation)*
-concatenation -> repetition ws repetition*
-repetition -> (symbol | terminal | '(' nonterminal ')') ws ('*' | ε)
+alternation -> concatenation (wsnl '|' wsnl concatenation)*
+concatenation -> repetition wsnl repetition*
+repetition -> (symbol | terminal | '(' wsnl nonterminal wsnl ')') wsnl ('*' | ε)
 
 terminal -> literal | character-set | any
 
