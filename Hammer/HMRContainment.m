@@ -42,7 +42,10 @@ l3_test(@selector(evaluateWithObject:)) {
 #pragma mark HMRTerminal
 
 -(NSString *)describe {
-	return [NSString stringWithFormat:@"[%@]", self.class.namesByCharacterSet[self.set] ?: self.set];
+	NSString *name = self.class.namesByCharacterSet[self.set];
+	return name?
+		[NSString stringWithFormat:@"[[:%@:]]", name]
+	:	[NSString stringWithFormat:@"[%@]", self.set];
 }
 
 l3_test(@selector(description)) {
@@ -67,20 +70,20 @@ l3_test(@selector(description)) {
 
 #pragma mark Named sets
 
-static NSString * const HMRAlphanumericCharacterSetName = @"[:alnum:]";
-static NSString * const HMRAlphabeticCharacterSetName = @"[:alpha:]";
-static NSString * const HMRASCIICharacterSetName = @"[:ascii:]";
-static NSString * const HMRWhitespaceCharacterSetName = @"[:blank:]";
-static NSString * const HMRControlCharacterSetName = @"[:cntrl:]";
-static NSString * const HMRDecimalDigitCharacterSetName = @"[:digit:]";
-//static NSString * const HMRGraphemeCharacterSetName = @"[:graph:]";
-static NSString * const HMRLowercaseLetterCharacterSetName = @"[:lower:]";
-//static NSString * const HMRPrintableCharacterSetName = @"[:print:]";
-static NSString * const HMRPunctuationCharacterSetName = @"[:punct:]";
-static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"[:space:]";
-static NSString * const HMRUppercaseLetterCharacterSetName = @"[:upper:]";
-//static NSString * const HMRWordCharacterSetName = @"[:word:]";
-static NSString * const HMRHexadecimalDigitCharacterSetName = @"[:xdigit:]";
+static NSString * const HMRAlphanumericCharacterSetName = @"alnum";
+static NSString * const HMRAlphabeticCharacterSetName = @"alpha";
+static NSString * const HMRASCIICharacterSetName = @"ascii";
+static NSString * const HMRWhitespaceCharacterSetName = @"blank";
+static NSString * const HMRControlCharacterSetName = @"cntrl";
+static NSString * const HMRDecimalDigitCharacterSetName = @"digit";
+//static NSString * const HMRGraphemeCharacterSetName = @"graph";
+static NSString * const HMRLowercaseLetterCharacterSetName = @"lower";
+//static NSString * const HMRPrintableCharacterSetName = @"print";
+static NSString * const HMRPunctuationCharacterSetName = @"punct";
+static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"space";
+static NSString * const HMRUppercaseLetterCharacterSetName = @"upper";
+//static NSString * const HMRWordCharacterSetName = @"word";
+static NSString * const HMRHexadecimalDigitCharacterSetName = @"xdigit";
 
 +(NSDictionary *)characterSetsByName {
 	return HMROnce(@{
