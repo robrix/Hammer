@@ -46,6 +46,7 @@ HMRCombinator *HMRParser(void) {
 	HMRCombinator *closeBracket = [HMRCombinator literal:@"]"];
 	
 	HMRCombinator *any = [HMRCombinator literal:@"."];
+	HMRCombinator *escapedCharacter = [HMRCombinator alternate:@[ backslash, [HMRCombinator literal:@"n"], [HMRCombinator literal:@"r"], [HMRCombinator literal:@"t"], ]];
 	
 	return nil;
 }
