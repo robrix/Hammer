@@ -112,5 +112,15 @@ HMRCombinator *HMRParser(void) {
 	
 	nonterminal = alternation;
 	
+	HMRCombinator *production = [HMRCombinator concatenate:@[
+		ws,
+		symbol,
+		wsnl,
+		[[HMRCombinator literal:@"-"] concat:[HMRCombinator literal:@">"]],
+		wsnl,
+		nonterminal,
+		ws,
+	]];
+	
 	return nil;
 }
