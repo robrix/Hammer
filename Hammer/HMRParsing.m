@@ -40,3 +40,6 @@ HMRCombinator *HMRParseObject(HMRCombinator *parser, id<NSObject, NSCopying> obj
 		[parser derivative:object]
 	:	nil; // ???
 }
+HMRCombinator *HMRParser(void) {
+	return nil;
+}
