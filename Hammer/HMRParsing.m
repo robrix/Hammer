@@ -56,10 +56,10 @@ HMRCombinator *HMRParser(void) {
 		[[alphanumeric or:[HMRCombinator containedIn:[NSCharacterSet characterSetWithCharactersInString:@"_-"]]] repeat],
 	]];
 	
-	HMRCombinator *ws = [[[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceCharacterSetName]] repeat] withName:@"ws"];
-	HMRCombinator *wsnl = [[[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceAndNewlineCharacterSetName]] repeat] withName:@"wsnl"];
+	HMRCombinator *ws = [[[[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceCharacterSetName]] repeat] ignore] withName:@"ws"];
+	HMRCombinator *wsnl = [[[[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceAndNewlineCharacterSetName]] repeat] ignore] withName:@"wsnl"];
 	HMRCombinator *newlineCharacter = [HMRCombinator containedIn:[NSCharacterSet newlineCharacterSet]];
-	HMRCombinator *nl = [[newlineCharacter concat:[newlineCharacter repeat]] withName:@"nl"];
+	HMRCombinator *nl = [[[newlineCharacter concat:[newlineCharacter repeat]] ignore] withName:@"nl"];
 	
 	HMRCombinator *any = [[HMRCombinator literal:@"."] withName:@"any"];
 	HMRCombinator *escapedCharacter = [[HMRCombinator alternate:@[ backslash, [HMRCombinator literal:@"n"], [HMRCombinator literal:@"r"], [HMRCombinator literal:@"t"], ]] withName:@"escaped-character"];
@@ -118,7 +118,7 @@ HMRCombinator *HMRParser(void) {
 		ws,
 		symbol,
 		wsnl,
-		[[HMRCombinator literal:@"-"] concat:[HMRCombinator literal:@">"]],
+		[[[HMRCombinator literal:@"-"] concat:[HMRCombinator literal:@">"]] ignore],
 		wsnl,
 		nonterminal,
 		ws,
