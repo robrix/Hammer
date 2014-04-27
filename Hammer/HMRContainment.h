@@ -10,6 +10,10 @@
 @property (readonly) id<HMRSet> set;
 
 
+/// A dictionary of named character sets keyed by their names.
++(NSDictionary *)characterSetsByName;
+
+
 -(instancetype)init UNAVAILABLE_ATTRIBUTE;
 
 @end
