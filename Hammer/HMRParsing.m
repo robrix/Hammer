@@ -96,5 +96,11 @@ HMRCombinator *HMRParser(void) {
 	
 	HMRCombinator *parenthesized = [HMRCombinator concatenate:@[ [HMRCombinator literal:@"("], wsnl, HMRDelay(nonterminal), wsnl, [HMRCombinator literal:@")"], ]];
 	
+	HMRCombinator *repetition = [HMRCombinator concatenate:@[
+		[HMRCombinator alternate:@[ symbol, terminal, parenthesized ]],
+		wsnl,
+		[[HMRCombinator literal:@"*"] optional],
+	]];
+	
 	return nil;
 }
