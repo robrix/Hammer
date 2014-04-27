@@ -41,6 +41,8 @@ HMRCombinator *HMRParseObject(HMRCombinator *parser, id<NSObject, NSCopying> obj
 		[parser derivative:object]
 	:	nil; // ???
 }
+
+
 HMRCombinator *HMRParser(void) {
 	HMRCombinator *backslash = [HMRCombinator literal:@"\\"];
 	HMRCombinator *openBracket = [HMRCombinator literal:@"["];
