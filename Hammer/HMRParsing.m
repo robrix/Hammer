@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+#import "HMRContainment.h"
 #import "HMRPair.h"
 #import "HMRParsing.h"
 
@@ -53,6 +54,20 @@ HMRCombinator *HMRParser(void) {
 		[HMRCombinator literal:@":"],
 		[HMRCombinator alternate:REDMap([HMRContainment characterSetsByName], ^(NSString *name) { return [HMRCombinator literal:name]; })],
 		[HMRCombinator literal:@":"],
+		closeBracket,
+	]];
+	
+	HMRCombinator *characterSetCharacter = [HMRCombinator alternate:@[
+		POSIXCharacterClasses,
+		[backslash concat:[escapedCharacter or:closeBracket]],
+		[HMRCombinator containedIn:[[NSCharacterSet characterSetWithCharactersInString:@"]"] invertedSet]],
+	]];
+	
+	HMRCombinator *characterSet = [HMRCombinator concatenate:@[
+		openBracket,
+		[[HMRCombinator literal:@"^"] optional],
+		characterSetCharacter,
+		[characterSetCharacter repeat],
 		closeBracket,
 	]];
 	
