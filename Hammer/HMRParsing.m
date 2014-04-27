@@ -48,5 +48,13 @@ HMRCombinator *HMRParser(void) {
 	HMRCombinator *any = [HMRCombinator literal:@"."];
 	HMRCombinator *escapedCharacter = [HMRCombinator alternate:@[ backslash, [HMRCombinator literal:@"n"], [HMRCombinator literal:@"r"], [HMRCombinator literal:@"t"], ]];
 	
+	HMRCombinator *POSIXCharacterClasses = [HMRCombinator concatenate:@[
+		openBracket,
+		[HMRCombinator literal:@":"],
+		[HMRCombinator alternate:REDMap([HMRContainment characterSetsByName], ^(NSString *name) { return [HMRCombinator literal:name]; })],
+		[HMRCombinator literal:@":"],
+		closeBracket,
+	]];
+	
 	return nil;
 }
