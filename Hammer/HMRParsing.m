@@ -102,5 +102,7 @@ HMRCombinator *HMRParser(void) {
 		[[HMRCombinator literal:@"*"] optional],
 	]];
 	
+	HMRCombinator *concatenation = [HMRCombinator concatenate:@[ repetition, ws, [repetition repeat] ]];
+	
 	return nil;
 }
