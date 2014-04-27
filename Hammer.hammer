@@ -9,7 +9,7 @@ production -> ws symbol wsnl '-' '>' wsnl nonterminal ws
 
 nonterminal -> alternation
 alternation -> concatenation (wsnl '|' wsnl concatenation)*
-concatenation -> repetition wsnl repetition*
+concatenation -> repetition (wsnl repetition)*
 repetition -> (symbol | terminal | '(' wsnl nonterminal wsnl ')') wsnl ('*' | ε)
 
 terminal -> literal | character-set | any
