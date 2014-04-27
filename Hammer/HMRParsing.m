@@ -47,6 +47,13 @@ HMRCombinator *HMRParser(void) {
 	HMRCombinator *closeBracket = [HMRCombinator literal:@"]"];
 	HMRCombinator *quote = [HMRCombinator literal:@"'"];
 	
+	HMRCombinator *alphanumeric = [HMRContainment characterSetsByName][HMRAlphanumericCharacterSetName];
+	
+	HMRCombinator *symbol = [HMRCombinator concatenate:@[
+		[alphanumeric or:[HMRCombinator containedIn:[NSCharacterSet characterSetWithCharactersInString:@"_"]]],
+		[[alphanumeric or:[HMRCombinator containedIn:[NSCharacterSet characterSetWithCharactersInString:@"_-"]]] repeat],
+	]];
+	
 	HMRCombinator *any = [HMRCombinator literal:@"."];
 	HMRCombinator *escapedCharacter = [HMRCombinator alternate:@[ backslash, [HMRCombinator literal:@"n"], [HMRCombinator literal:@"r"], [HMRCombinator literal:@"t"], ]];
 	
