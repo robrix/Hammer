@@ -118,8 +118,8 @@ l3_test(@selector(compaction)) {
 -(BOOL)isEqual:(HMRAlternation *)object {
 	return
 		[super isEqual:object]
-	&&	[self.left isEqual:object.left]
-	&&	[self.right isEqual:object.right];
+	&&	(self.left == object.left || [self.left isEqual:object.left])
+	&&	(self.right == object.right || [self.right isEqual:object.right]);
 }
 
 @end

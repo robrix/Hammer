@@ -156,8 +156,8 @@ l3_test(@selector(red_reduce:usingBlock:)) {
 -(BOOL)isEqual:(HMRConcatenation *)object {
 	return
 		[object isKindOfClass:self.class]
-	&&	[self.first isEqual:object.first]
-	&&	[self.second isEqual:object.second];
+	&&	(self.first == object.first || [self.first isEqual:object.first])
+	&&	(self.second == object.second || [self.second isEqual:object.second]);
 }
 
 @end

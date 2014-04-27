@@ -88,7 +88,7 @@ l3_test(@selector(compaction)) {
 -(BOOL)isEqual:(HMRRepetition *)object {
 	return
 		[object isKindOfClass:self.class]
-	&&	[self.combinator isEqual:object.combinator];
+	&&	(self.combinator == object.combinator || [self.combinator isEqual:object.combinator]);
 }
 
 @end
