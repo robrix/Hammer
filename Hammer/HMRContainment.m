@@ -70,20 +70,20 @@ l3_test(@selector(description)) {
 
 #pragma mark Named sets
 
-static NSString * const HMRAlphanumericCharacterSetName = @"alnum";
-static NSString * const HMRAlphabeticCharacterSetName = @"alpha";
-static NSString * const HMRASCIICharacterSetName = @"ascii";
-static NSString * const HMRWhitespaceCharacterSetName = @"blank";
-static NSString * const HMRControlCharacterSetName = @"cntrl";
-static NSString * const HMRDecimalDigitCharacterSetName = @"digit";
+NSString * const HMRAlphanumericCharacterSetName = @"alnum";
+NSString * const HMRAlphabeticCharacterSetName = @"alpha";
+NSString * const HMRASCIICharacterSetName = @"ascii";
+NSString * const HMRWhitespaceCharacterSetName = @"blank";
+NSString * const HMRControlCharacterSetName = @"cntrl";
+NSString * const HMRDecimalDigitCharacterSetName = @"digit";
 //static NSString * const HMRGraphemeCharacterSetName = @"graph";
-static NSString * const HMRLowercaseLetterCharacterSetName = @"lower";
+NSString * const HMRLowercaseLetterCharacterSetName = @"lower";
 //static NSString * const HMRPrintableCharacterSetName = @"print";
-static NSString * const HMRPunctuationCharacterSetName = @"punct";
-static NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"space";
-static NSString * const HMRUppercaseLetterCharacterSetName = @"upper";
+NSString * const HMRPunctuationCharacterSetName = @"punct";
+NSString * const HMRWhitespaceAndNewlineCharacterSetName = @"space";
+NSString * const HMRUppercaseLetterCharacterSetName = @"upper";
 //static NSString * const HMRWordCharacterSetName = @"word";
-static NSString * const HMRHexadecimalDigitCharacterSetName = @"xdigit";
+NSString * const HMRHexadecimalDigitCharacterSetName = @"xdigit";
 
 +(NSDictionary *)characterSetsByName {
 	return HMROnce(@{
