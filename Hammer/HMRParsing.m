@@ -54,6 +54,10 @@ HMRCombinator *HMRParser(void) {
 		[[alphanumeric or:[HMRCombinator containedIn:[NSCharacterSet characterSetWithCharactersInString:@"_-"]]] repeat],
 	]];
 	
+	HMRCombinator *ws = [[HMRContainment characterSetsByName][HMRWhitespaceCharacterSetName] repeat];
+	HMRCombinator *wsnl = [[HMRContainment characterSetsByName][HMRWhitespaceAndNewlineCharacterSetName] repeat];
+	HMRCombinator *nl = [HMRCombinator containedIn:[NSCharacterSet newlineCharacterSet]];
+	
 	HMRCombinator *any = [HMRCombinator literal:@"."];
 	HMRCombinator *escapedCharacter = [HMRCombinator alternate:@[ backslash, [HMRCombinator literal:@"n"], [HMRCombinator literal:@"r"], [HMRCombinator literal:@"t"], ]];
 	
