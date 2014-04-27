@@ -106,22 +106,15 @@ l3_test(@selector(intersect:)) {
 	return [HMRConcatenation concatenateFirst:self second:other];
 }
 
-+(HMRCombinator *)concatenate:(HMRCombinator *)first, ... {
-	va_list args;
-	va_start(args, first);
-	
-	HMRCombinator *concatenation = HMRCombineVariadics(first, args, ^(HMRCombinator *first, HMRCombinator *second) {
-		return [first concat:second];
++(HMRCombinator *)concatenate:(id<REDReducible>)operands {
+	return HMRReduceRight(operands, nil, ^id(id into, id each) {
+		return into? [each concat:into] : each;
 	});
-	
-	va_end(args);
-	
-	return concatenation;
 }
 
 l3_test(@selector(concatenate:)) {
 	HMRCombinator *sub = [HMRCombinator literal:@"x"];
-	l3_expect([HMRConcatenation concatenate:sub, sub, sub, nil]).to.equal([sub concat:[sub concat:sub]]);
+	l3_expect([HMRConcatenation concatenate:@[ sub, sub, sub ]]).to.equal([sub concat:[sub concat:sub]]);
 }
 
 

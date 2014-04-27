@@ -73,10 +73,10 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \return       A combinator representing the union of \c self and \c other.
 -(HMRAlternation *)or:(HMRCombinator *)other;
 
-/// Constructs the alternation of an array of combinators.
+/// Constructs the alternation of a collection of combinators.
 ///
-/// \param operands  An array of operands to the alternation. Must not be empty. Must not be nil.
-/// \return          A combinator representing the union of all the passed combinators.
+/// \param operands  A collection of operands to the alternation. Must not be empty. Must not be nil.
+/// \return          A combinator representing the union of all the combinators in \c operands.
 +(HMRCombinator *)alternate:(id<REDReducible>)operands;
 
 /// Constructs the intersection of \c self and \c other.
@@ -101,11 +101,11 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 /// \return        A combinator representing the concatenation of \c self and \c other.
 -(HMRConcatenation *)concat:(HMRCombinator *)other;
 
-/// Constructs the concatenation of a variadic list of combinators.
+/// Constructs the concatenation of a collection of combinators.
 ///
-/// \param first  The first operand to the concatenation. Must not be nil.
-/// \return       A combinator representing the concatenation of all the passed combinators.
-+(HMRCombinator *)concatenate:(HMRCombinator *)first, ... NS_REQUIRES_NIL_TERMINATION;
+/// \param operands  A collection of operands to the concatenation. Must not be empty. Must not be nil.
+/// \return          A combinator representing the concatenation of all the combinators in \c operands.
++(HMRCombinator *)concatenate:(id<REDReducible>)operands;
 
 
 /// Constructs the setwise reduction of \c self by \c block.
