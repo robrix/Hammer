@@ -141,6 +141,11 @@ l3_test(@selector(concatenate:)) {
 }
 
 
+-(HMRAlternation *)optional {
+	return [self or:[self.class null]];
+}
+
+
 #pragma mark Predicate construction
 
 +(HMRCombinator *)quote {

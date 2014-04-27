@@ -141,6 +141,12 @@ typedef id<REDReducible> (^HMRReductionBlock)(id<REDReducible> forest);
 -(HMRReduction *)ignore;
 
 
+/// Constructs the alternation of the receiver and the null combinator.
+///
+/// Equivalent to '?' in regular expression syntax.
+-(HMRAlternation *)optional;
+
+
 #pragma mark Predicate construction
 
 /// Constructs a combinator to match instances of the receiver.
