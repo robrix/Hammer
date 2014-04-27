@@ -8,11 +8,20 @@
 #import <Reducers/REDReducer.h>
 
 id<REDReducible> HMRLex(id<REDReducible> input, id<REDReducible> patterns) {
-	__block HMRCombinator *into = [[[[HMRCombinator alternate:patterns] or:[HMRCombinator null]] concat:HMRDelay(into)] withName:@"S"];
+	HMRCombinator *lexer = [HMRCombinator alternate:patterns];
+	__block NSSet *parseForest = [NSSet set];
 	
-	return [[input red_reduce:into usingBlock:^(HMRCombinator *into, id each) {
-		return [into derivative:each];
+	return [[input red_reduce:[lexer withName:@"S"] usingBlock:^(HMRCombinator *into, id each) {
+		HMRCombinator *derivative = [into derivative:each];
+		
+		if ([derivative isEqual:[HMRCombinator empty]]) {
+			if (into.parseForest.count) parseForest = into.parseForest;
+			derivative = [[[[HMRCombinator capture:parseForest] concat:lexer] withName:@"S"] derivative:each];
+		}
+		return derivative;
 	}] parseForest];
+	
+	return parseForest;
 }
 
 l3_test("lexer grammar") {
@@ -28,13 +37,10 @@ l3_test("lexer grammar") {
 	HMRCombinator *whitespaceSet = [HMRCombinator containedIn:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	HMRCombinator *whitespace = [[[whitespaceSet concat:[whitespaceSet repeat]] ignore] withName:@"whitespace"];
 	
-	HMRCombinator *into = [symbol concat:[[whitespace concat:symbol] repeat]];
 	NSString *input = @"colourless green ideas sleep furiously";
-	NSSet *lexed = [[input red_reduce:into usingBlock:^(HMRCombinator *into, id each) {
-		return [into derivative:each];
-	}] parseForest];
+	NSSet *lexed = (NSSet *)HMRLex(input, @[ symbol, whitespace ]);
 	
-	l3_expect(lexed.anyObject).to.equal(HMRList(@"colourless", @"green", @"ideas", @"sleep", @"furiously", nil));
+	l3_expect(lexed).to.equal([NSSet setWithObject:HMRCons(HMRCons(HMRCons(HMRCons(@"colourless", @"green"), @"ideas"), @"sleep"), @"furiously")]);
 }
 
 l3_test("lexer incrementality") {
