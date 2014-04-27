@@ -49,15 +49,15 @@ HMRCombinator *HMRParser(void) {
 	HMRCombinator *closeBracket = [HMRCombinator literal:@"]"];
 	HMRCombinator *quote = [HMRCombinator literal:@"'"];
 	
-	HMRCombinator *alphanumeric = [HMRContainment characterSetsByName][HMRAlphanumericCharacterSetName];
+	HMRCombinator *alphanumeric = [HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRAlphanumericCharacterSetName]];
 	
 	HMRCombinator *symbol = [HMRCombinator concatenate:@[
 		[alphanumeric or:[HMRCombinator containedIn:[NSCharacterSet characterSetWithCharactersInString:@"_"]]],
 		[[alphanumeric or:[HMRCombinator containedIn:[NSCharacterSet characterSetWithCharactersInString:@"_-"]]] repeat],
 	]];
 	
-	HMRCombinator *ws = [[HMRContainment characterSetsByName][HMRWhitespaceCharacterSetName] repeat];
-	HMRCombinator *wsnl = [[HMRContainment characterSetsByName][HMRWhitespaceAndNewlineCharacterSetName] repeat];
+	HMRCombinator *ws = [[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceCharacterSetName]] repeat];
+	HMRCombinator *wsnl = [[HMRCombinator containedIn:[HMRContainment characterSetsByName][HMRWhitespaceAndNewlineCharacterSetName]] repeat];
 	HMRCombinator *newlineCharacter = [HMRCombinator containedIn:[NSCharacterSet newlineCharacterSet]];
 	HMRCombinator *nl = [newlineCharacter concat:[newlineCharacter repeat]];
 	
