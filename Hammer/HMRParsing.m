@@ -110,5 +110,7 @@ HMRCombinator *HMRParser(void) {
 		[[HMRCombinator concatenate:@[ wsnl, [HMRCombinator literal:@"|"], wsnl, concatenation ]] repeat],
 	]];
 	
+	nonterminal = alternation;
+	
 	return nil;
 }
