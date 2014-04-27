@@ -122,5 +122,10 @@ HMRCombinator *HMRParser(void) {
 		ws,
 	]];
 	
-	return nil;
+	HMRCombinator *grammar = [[HMRCombinator concatenate:@[
+		production,
+		[[nl concat:production] repeat],
+	]] optional];
+	
+	return grammar;
 }
