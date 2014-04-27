@@ -61,7 +61,8 @@ HMRCombinator *HMRParser(void) {
 	HMRCombinator *newlineCharacter = [HMRCombinator containedIn:[NSCharacterSet newlineCharacterSet]];
 	HMRCombinator *nl = [[[newlineCharacter concat:[newlineCharacter repeat]] ignore] withName:@"nl"];
 	
-	HMRCombinator *any = [[HMRCombinator literal:@"."] withName:@"any"];
+	HMRCombinator *any = [[[HMRCombinator literal:@"."] withName:@"any"] map:^(id _) { return HMRAny(); }];
+	
 	HMRCombinator *escapedCharacter = [[HMRCombinator alternate:@[ backslash, [HMRCombinator literal:@"n"], [HMRCombinator literal:@"r"], [HMRCombinator literal:@"t"], ]] withName:@"escaped-character"];
 	
 	HMRCombinator *POSIXCharacterClasses = [HMRCombinator concatenate:@[
