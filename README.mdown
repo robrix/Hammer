@@ -1,3 +1,5 @@
+This repository is not likely to see further development, but [development of a Swift version is proceeding](https://github.com/robrix/Hammer.swift).
+
 # Hammer
 
 *everything looks like a nail*
