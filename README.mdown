@@ -1,4 +1,6 @@
-This repository is not likely to see further development, but [development of a Swift version is proceeding](https://github.com/robrix/Hammer.swift).
+**Note:** This repository is not likely to see further development, but [development of a Swift version is proceeding](https://github.com/robrix/Hammer.swift).
+
+With that out of the way, here’s what this is:
 
 # Hammer
 
